@@ -1,3 +1,4 @@
+require('dotenv').config();
 
 export default {
   mode: 'spa',
@@ -28,6 +29,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~/plugins/vue2-google-maps.js' }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -41,7 +43,12 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/dotenv'
   ],
+  /*
+  ** Nuxt.js vendor
+  */
+  vendor: ['vue2-google-maps'],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
@@ -56,6 +63,16 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      config.externals = config.externals || [];
+      if (!ctx.isClient) {
+        config.externals.splice(0, 0, function(context, request, callback) {
+          if (/^vue2-google-maps($|\/)/.test(request)) {
+            callback(null, false);
+          } else {
+            callback();
+          }
+        });
+      }
     }
   }
 }
