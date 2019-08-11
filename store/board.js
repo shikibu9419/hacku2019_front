@@ -5,13 +5,13 @@ export const state = () => ({
 
 export const mutations = {
     addElement(state, prop) {
-        state.elements[prop.type].push(prop.position)
+        state.elements[prop.type].push(prop.attr)
     },
     selectElement(state, prop) {
         state.selected.push(prop)
     },
     clearSelection(state) {
-        state.selected.length = 0
+        state.selected = []
     },
     setPosition(state, pos) {
         for(const prop of state.selected) {
@@ -19,9 +19,6 @@ export const mutations = {
             elem.x = pos.x
             elem.y = pos.y
         }
-    },
-    getPosition(state, type, id) {
-        return state.elements[type][id]
     }
 }
 
@@ -37,14 +34,14 @@ export const actions = {
     },
     setPosition(context, pos) {
         context.commit('setPosition', pos)
-    },
-    getPosition(context, type, id) {
-        context.commit('getPosition', type, id)
     }
 }
 
 export const getters = {
     elements(state) {
         return state.elements
+    },
+    selected(state) {
+        return state.selected
     }
 }

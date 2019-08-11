@@ -1,9 +1,9 @@
 <template lang="pug">
     circle.pointer(
-        v-bind="property"
-        :cx="property.x" :cy="property.y"
-        @mousedown="select"
-        @mouseup="clear"
+        v-bind="attr"
+        :cx="attr.x" :cy="attr.y"
+        @mousedown.stop="select"
+        :style="{fill: color}"
     )
 </template>
 
@@ -15,29 +15,19 @@
 </style>
 
 <script>
+import BaseElement from './BaseElement.vue'
+
 export default {
-    props: {
-        id: {
-            type: Number,
-            required: true
-        },
-        property: {
-            type: Object,
-            required: true
-        }
-    },
     data() {
         return {
-            type: 'circle'
+            type: 'circle',
         }
     },
-    methods: {
-        select() {
-            this.$store.dispatch('board/selectElement', {type: this.type, id: this.id})
-        },
-        clear() {
-            this.$store.dispatch('board/clearSelection')
+    computed: {
+        color() {
+            return this.isSelected() ? '#42b983' : '#000'
         }
-    }
+    },
+    mixins: [BaseElement]
 }
 </script>
