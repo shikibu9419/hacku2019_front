@@ -13,7 +13,7 @@ export default {
     methods: {
         select() {
             this.$store.dispatch('toggleGrabbing')
-            if(!this.isSelected()) this.$store.dispatch('board/selectElement', {type: this.type, id: this.id})
+            if(!this.isSelected()) this.$store.dispatch('board/select', {type: this.type, id: this.id})
         },
         isSelected() {
             var selectedElems = this.$store.getters['board/selected']

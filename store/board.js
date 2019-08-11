@@ -23,10 +23,10 @@ export const mutations = {
 }
 
 export const actions = {
-    addElement(context, prop) {
+    add(context, prop) {
         context.commit('addElement', prop)
     },
-    selectElement(context, prop) {
+    select(context, prop) {
         context.commit('selectElement', prop)
     },
     clearSelection(context) {

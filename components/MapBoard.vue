@@ -3,8 +3,8 @@
         button(type="button" @click="addCircle") addCircle
         .board(ref="board" id="container")
             svg.graph(@mousemove="mousemoveOnBoard" @mousedown="mousedownOnBoard" @mouseup="mouseupOnBoard")
-                circle-element(v-for="(attr, index) in elements.circle" :key="index"
-                               :attr="attr" :id="index")
+                map-circle(v-for="(attr, index) in elements.circle" :key="index"
+                           :attr="attr" :id="index")
 </template>
 
 <style lang="scss">
@@ -15,11 +15,11 @@
 </style>
 
 <script>
-import CircleElement from '~/components/map_elements/CircleElement.vue'
+import MapCircle from '~/components/map_elements/MapCircle.vue'
 
 export default {
     components: {
-        CircleElement,
+        MapCircle,
     },
     data() {
         return {
@@ -53,7 +53,7 @@ export default {
             }
         },
         addCircle() {
-            this.$store.dispatch('board/addElement', { type: 'circle', attr: {x: 50, y: 50, r: 20}})
+            this.$store.dispatch('board/add', { type: 'circle', attr: {x: 50, y: 50, r: 20}})
         },
     },
     mounted() {
