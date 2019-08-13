@@ -2,7 +2,8 @@
     circle.pointer(
         v-bind="attr"
         :cx="attr.x" :cy="attr.y"
-        @mousedown.stop="select"
+        @dblclick.stop="select"
+        @mousedown.stop="grab"
         :style="{fill: color}"
     )
 </template>
@@ -15,7 +16,7 @@
 </style>
 
 <script>
-import BaseElement from './BaseElement.vue'
+import BaseTool from './BaseTool.vue'
 
 export default {
     data() {
@@ -28,6 +29,6 @@ export default {
             return this.isSelected() ? '#42b983' : '#000'
         }
     },
-    mixins: [BaseElement]
+    mixins: [BaseTool]
 }
 </script>

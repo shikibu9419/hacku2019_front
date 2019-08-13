@@ -3,8 +3,8 @@
         button(type="button" @click="addCircle") addCircle
         .board(ref="board" id="container")
             svg.graph(@mousemove="mousemoveOnBoard" @mousedown="mousedownOnBoard" @mouseup="mouseupOnBoard")
-                map-circle(v-for="(attr, index) in elements.circle" :key="index"
-                           :attr="attr" :id="index")
+                example(v-for="(attr, index) in elements.circle" :key="index"
+                        :attr="attr" :id="index")
 </template>
 
 <style lang="scss">
@@ -15,11 +15,11 @@
 </style>
 
 <script>
-import MapCircle from '~/components/map_elements/MapCircle.vue'
+import Example from '~/components/map_tools/Example.vue'
 
 export default {
     components: {
-        MapCircle,
+        Example,
     },
     data() {
         return {
