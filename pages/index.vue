@@ -1,14 +1,14 @@
 <template lang="pug">
   .container
-    map-board
+    map-layer
 </template>
 
 <script>
-import MapBoard from '~/components/MapBoard.vue'
+import MapLayer from '~/components/MapLayer.vue'
 
 export default {
   components: {
-    MapBoard
+    MapLayer
   }
 }
 </script>
