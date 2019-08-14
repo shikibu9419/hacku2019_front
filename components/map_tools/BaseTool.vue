@@ -29,6 +29,11 @@ export default {
         isSelected() {
             return this.$store.state.board.selected[this.id]
         }
+    },
+    computed: {
+        color() {
+            return this.isSelected() ? '#42b983' : '#000'
+        }
     }
 }
 </script>

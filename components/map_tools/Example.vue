@@ -18,11 +18,6 @@ export default {
             type: 'circle',
         }
     },
-    computed: {
-        color() {
-            return this.isSelected() ? '#42b983' : '#000'
-        }
-    },
     mixins: [BaseTool]
 }
 </script>
