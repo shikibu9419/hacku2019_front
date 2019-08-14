@@ -2,7 +2,7 @@
     .container
         button(type="button" @click="addCircle") addCircle
         .board(ref="board" id="container")
-            svg.graph(@mousemove="mousemoveOnBoard" @mousedown="mousedownOnBoard" @mouseup="mouseupOnBoard" @click.right="clickOnBoard")
+            svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" @click.right="onRightClick")
                 example(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                         :id="id" :attr="attr")
 </template>
@@ -30,22 +30,24 @@ export default {
         }
     },
     methods: {
-        mousemoveOnBoard(e) {
+        onMousemove(e) {
             const selectedNum = Object.keys(this.$store.state.board.selected).length
             if (this.$store.state.isGrabbing && selectedNum) {
-                const x = e.pageX - this.offset.x
-                const y = e.pageY - this.offset.y
-                this.$store.dispatch('board/setPosition', {x: x, y: y})
+                const prop = {
+                    x: e.pageX - this.offset.x,
+                    y: e.pageY - this.offset.y
+                }
+                this.$store.dispatch('board/setPosition', prop)
             }
         },
-        mousedownOnBoard() {
+        onMousedown() {
             this.$store.dispatch('toggleGrabbing')
             this.$store.dispatch('board/clearSelection', {user_id: 'hoge'})
         },
-        mouseupOnBoard() {
+        onMouseup() {
             this.$store.dispatch('toggleGrabbing')
         },
-        clickOnBoard() {
+        onRightClick() {
             this.$store.dispatch('board/clearSelection', {user_id: 'hoge'})
         },
         setOffset() {
