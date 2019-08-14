@@ -1,8 +1,8 @@
 <template lang="pug">
     .container
-        button(type="button" @click="addCircle") addCircle
+        tool-bar
         .board(ref="board" id="container")
-            svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" @click.right="onRightClick")
+            svg.graph(@mousemove="moveTools" @mousedown="clearSelection" @mouseup="unGrab")
                 example(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                         :id="id" :attr="attr")
 </template>
@@ -16,10 +16,12 @@
 
 <script>
 import Example from '~/components/map_tools/Example.vue'
+import ToolBar from '~/components/ToolBar'
 
 export default {
     components: {
         Example,
+        ToolBar
     },
     data() {
         return {
@@ -30,7 +32,7 @@ export default {
         }
     },
     methods: {
-        onMousemove(e) {
+        moveTools(e) {
             const selectedNum = Object.keys(this.$store.state.board.selected).length
             if (this.$store.state.isGrabbing && selectedNum) {
                 const prop = {
@@ -40,15 +42,13 @@ export default {
                 this.$store.dispatch('board/setPosition', prop)
             }
         },
-        onMousedown() {
+        clearSelection() {
             this.$store.dispatch('toggleGrabbing')
             this.$store.dispatch('board/clearSelection', {user_id: 'hoge'})
         },
-        onMouseup() {
-            this.$store.dispatch('toggleGrabbing')
-        },
-        onRightClick() {
-            this.$store.dispatch('board/clearSelection', {user_id: 'hoge'})
+        unGrab() {
+            if(this.$store.state.isGrabbing)
+                this.$store.dispatch('toggleGrabbing')
         },
         setOffset() {
             const rect = this.$refs.board.getBoundingClientRect()
@@ -57,9 +57,6 @@ export default {
                 x: window.pageXOffset + rect.left,
                 y: window.pageYOffset + rect.top
             }
-        },
-        addCircle() {
-            this.$store.dispatch('board/add', { type: 'circle', x: 50, y: 50, r: 20})
         },
     },
     mounted() {
