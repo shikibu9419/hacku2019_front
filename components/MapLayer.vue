@@ -2,9 +2,9 @@
     .container
         button(type="button" @click="addCircle") addCircle
         .board(ref="board" id="container")
-            svg.graph(@mousemove="mousemoveOnBoard" @mousedown="mousedownOnBoard" @mouseup="mouseupOnBoard")
-                example(v-for="(attr, index) in elements.circle" :key="index"
-                        :attr="attr" :id="index")
+            svg.graph(@mousemove="mousemoveOnBoard" @mousedown="mousedownOnBoard" @mouseup="mouseupOnBoard" @click.right="clickOnBoard")
+                example(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
+                        :id="id" :attr="attr")
 </template>
 
 <style lang="scss">
@@ -31,7 +31,8 @@ export default {
     },
     methods: {
         mousemoveOnBoard(e) {
-            if (this.$store.state.isGrabbing && this.$store.state.board.selected.length) {
+            const selectedNum = Object.keys(this.$store.state.board.selected).length
+            if (this.$store.state.isGrabbing && selectedNum) {
                 const x = e.pageX - this.offset.x
                 const y = e.pageY - this.offset.y
                 this.$store.dispatch('board/setPosition', {x: x, y: y})
@@ -39,10 +40,13 @@ export default {
         },
         mousedownOnBoard() {
             this.$store.dispatch('toggleGrabbing')
-            this.$store.dispatch('board/clearSelection')
+            this.$store.dispatch('board/clearSelection', {user_id: 'hoge'})
         },
         mouseupOnBoard() {
             this.$store.dispatch('toggleGrabbing')
+        },
+        clickOnBoard() {
+            this.$store.dispatch('board/clearSelection', {user_id: 'hoge'})
         },
         setOffset() {
             const rect = this.$refs.board.getBoundingClientRect()
@@ -53,7 +57,7 @@ export default {
             }
         },
         addCircle() {
-            this.$store.dispatch('board/add', { type: 'circle', attr: {x: 50, y: 50, r: 20}})
+            this.$store.dispatch('board/add', { type: 'circle', x: 50, y: 50, r: 20})
         },
     },
     mounted() {
@@ -62,8 +66,8 @@ export default {
         window.addEventListener('scroll', () => this.setOffset())
     },
     computed: {
-        elements() {
-            return this.$store.getters['board/elements']
+        tools() {
+            return this.$store.state.board.tools
         }
     },
 }

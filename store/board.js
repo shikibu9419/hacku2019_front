@@ -1,47 +1,60 @@
+const uuid = function() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = Math.random()*16|0
+      const v = c == 'x' ? r : (r&0x3|0x8);
+      return v.toString(16);
+  });
+};
+
 export const state = () => ({
-    elements: {circle: []},
-    selected: []
+    tools: {},
+    selected: {}
 })
 
+// map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
 export const mutations = {
-    addElement(state, prop) {
-        state.elements[prop.type].push(prop.attr)
+    addTool(state, attr) {
+        state.tools = { ...state.tools, [uuid()]: attr }
     },
     selectElement(state, prop) {
-        state.selected.push(prop)
+        state.selected = { ...state.selected, [prop.tool_id]: prop.user_id }
     },
-    clearSelection(state) {
-        state.selected = []
+    clearSelection(state, prop) {
+        state.selected = Object.entries(state.selected)                              // [key, value]のArrayを取得
+                               .filter(item => item[1] !== prop.user_id)             // 本人が選択していないものだけ抽出
+                               .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
     },
-    setPosition(state, pos) {
-        for(const prop of state.selected) {
-            var elem = state.elements[prop.type][prop.id]
-            elem.x = pos.x
-            elem.y = pos.y
-        }
+    setPosition(state, prop) {
+        for(const tool_id of Object.keys(state.selected))
+            state.tools[tool_id] = { ...state.tools[tool_id], x: prop.x, y: prop.y }
     }
 }
 
 export const actions = {
-    add(context, prop) {
-        context.commit('addElement', prop)
+    add(context, attr) {
+        context.commit('addTool', attr)
     },
     select(context, prop) {
         context.commit('selectElement', prop)
     },
-    clearSelection(context) {
-        context.commit('clearSelection')
+    clearSelection(context, prop) {
+        context.commit('clearSelection', prop)
     },
-    setPosition(context, pos) {
-        context.commit('setPosition', pos)
+    setPosition(context, prop) {
+        context.commit('setPosition', prop)
     }
 }
 
 export const getters = {
-    elements(state) {
-        return state.elements
+    tools(state) {
+        return state.tools
     },
     selected(state) {
         return state.selected
+    },
+    selecting(state) {
+        return Object.entries(state.selected)                              // [key, value]のArrayを取得
+                     .filter(item => item[1] === prop.user_id)             // 本人が選択しているものだけ抽出
+                     .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
     }
 }

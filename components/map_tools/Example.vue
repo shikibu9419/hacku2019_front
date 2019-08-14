@@ -1,19 +1,13 @@
 <template lang="pug">
-    circle.pointer(
+    circle.tool(
         v-bind="attr"
         :cx="attr.x" :cy="attr.y"
         @dblclick.stop="select"
         @mousedown.stop="grab"
-        :style="{fill: color}"
+        stroke-width="2"
+        :style="{stroke: color}"
     )
 </template>
-
-<style lang="scss">
-.pointer {
-    fill: #42b983;
-    cursor: pointer;
-}
-</style>
 
 <script>
 import BaseTool from './BaseTool.vue'
