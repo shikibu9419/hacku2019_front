@@ -3,8 +3,8 @@
         tool-bar
         .board(ref="board" id="container")
             svg.graph(@mousemove="moveTools" @mousedown="clearSelection" @mouseup="unGrab")
-                example(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
-                        :id="id" :attr="attr")
+                tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
+                     :id="id" :attr="attr")
 </template>
 
 <style lang="scss">
@@ -15,12 +15,12 @@
 </style>
 
 <script>
-import Example from '~/components/map_tools/Example.vue'
+import Tool from '~/components/Tool'
 import ToolBar from '~/components/ToolBar'
 
 export default {
     components: {
-        Example,
+        Tool,
         ToolBar
     },
     data() {
