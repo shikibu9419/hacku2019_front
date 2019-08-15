@@ -19,9 +19,12 @@ export const mutations = {
     addSelect(state, attr) {
         const tool_id = uuid()
         state.tools = { ...state.tools, [tool_id]: attr }
-        attr.new_tool_id = tool_id
+        mutations.selectTool(state, {tool_id: tool_id})
     },
-    selectElement(state, prop) {
+    plot(state, prop) {
+        state.tools[prop.tool_id].points.push({x: prop.x, y: prop.y})
+    },
+    selectTool(state, prop) {
         state.selected = { ...state.selected, [prop.tool_id]: 'hoge' }
     },
     clearSelection(state) {
@@ -30,7 +33,7 @@ export const mutations = {
     setPosition(state, prop) {
         for(const tool_id of Object.keys(state.selected))
             state.tools[tool_id] = { ...state.tools[tool_id], x: prop.x, y: prop.y }
-        state.prevMousePosition = {...state.prevMousePosition, x: prop.x, y: prop.y}
+        // state.prevMousePosition = {...state.prevMousePosition, x: prop.x, y: prop.y}
     }
 }
 
@@ -40,15 +43,14 @@ export const actions = {
     },
     addSelect(context, attr) {
         context.commit('addSelect', attr)
-        context.dispatch('select', {tool_id : attr.new_tool_id})
     },
-    plot(context, attr) {
-        context.commit('plot', attr)
+    plot(context, prop) {
+        context.commit('plot', prop)
     },
     select(context, prop) {
         if(!prop.multiple)
             context.commit('clearSelection')
-        context.commit('selectElement', prop)
+        context.commit('selectTool', prop)
     },
     clearSelection(context) {
         context.commit('clearSelection')

@@ -25,20 +25,19 @@ export default {
     },
     methods: {
         onMousemove(e) {
-            if (!this.$store.state.grabbing || !Object.keys(this.$store.getters['board/selecting']).length)
+            if (!this.$store.state.grabbing && !this.$store.state.plotting)
+                return
+            if (!Object.keys(this.$store.getters['board/selecting']).length)
                 return
 
             const prop = {
                 x: e.pageX - this.$store.state.offset.x,
                 y: e.pageY - this.$store.state.offset.y
             }
-            if (this.$store.state.plotting) {
-                this.$store.dispatch('board/setPosition', prop)
-            } else
-                this.$store.dispatch('board/setPosition', prop)
+            this.$store.dispatch('board/setPosition', prop)
         },
         onMousedown() {
-                this.$store.dispatch('board/clearSelection')
+            this.$store.dispatch('board/clearSelection')
         },
         onMouseup() {
             if(this.$store.state.grabbing)

@@ -1,7 +1,8 @@
 <style lang="scss">
 .tool {
-    fill: #fff;
+    fill: #none;
     cursor: pointer;
+    stroke-width: 2;
 }
 </style>
 

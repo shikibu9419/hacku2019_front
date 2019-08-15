@@ -13,8 +13,8 @@ export const mutations = {
         state.grabbing = !state.grabbing
     },
     setOffset(state, prop) {
-        state.setOffset = {...state.setOffset, x: prop.x, y: prop.y}
-    },
+        state.offset = {...state.offset, x: prop.x, y: prop.y}
+    }
 }
 
 export const actions = {
@@ -23,5 +23,8 @@ export const actions = {
     },
     toggleGrabbing(context) {
         context.commit('toggleGrabbing')
+    },
+    setOffset(context, prop) {
+        context.commit('setOffset', prop)
     }
 }

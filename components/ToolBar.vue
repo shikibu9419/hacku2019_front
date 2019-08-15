@@ -1,8 +1,9 @@
 <template lang="pug">
     .container
         button(type="button" @click="addExample") addExample
-        button(type="button" @click="addPolygon") addPolygon
         button(type="button" @click="addRect") addRect
+        button(type="button" @click="addPolygon") addPolygon
+        button(type="button" @click="addDirection") addDirection
 </template>
 
 <script>
@@ -12,7 +13,11 @@ export default {
             this.$store.dispatch('board/add', { type: 'building', points: [250, 50, 300, 100, 250, 100], color: 'black'})
         },
         addExample() {
-            this.$store.dispatch('board/add', { type: 'circle', x: 50, y: 50, r: 20})
+            this.$store.dispatch('board/add', { type: 'circle', x: 50, y: 50, r: 20 })
+        },
+        addDirection() {
+            this.$store.dispatch('board/addSelect', {type: 'direction', x: 1000, y: 1000, points: []})
+            this.$store.dispatch('togglePlotting')
         },
         addRect() {
             this.$store.dispatch('board/add', { type: 'building_basic', x: 50, y: 50, width: 100, height: 100})
