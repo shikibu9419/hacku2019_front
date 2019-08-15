@@ -1,6 +1,11 @@
 <style lang="scss">
 .tool {
-    fill: #none;
+    fill-opacity: 0;
+    cursor: pointer;
+    stroke-width: 2;
+}
+.plot {
+    fill: white;
     cursor: pointer;
     stroke-width: 2;
 }
@@ -32,6 +37,9 @@ export default {
         }
     },
     computed: {
+        selected() {
+            return this.isSelected()
+        },
         color() {
             return this.isSelected() ? '#42b983' : '#000'
         }

@@ -1,12 +1,12 @@
 <template lang="pug">
-    circle.tool(
+    circle.plot(
         v-bind="attr"
-        :cx="attr.x" :cy="attr.y" r="5"
+        :cx="attr.x" :cy="attr.y"
+        :stroke="stroke"
         @click.left="plot"
         @click.right="stopPlot"
         @mousedown.stop="nop"
-        stroke="red"
-        fill="white"
+        r="5"
     )
 </template>
 
@@ -14,13 +14,19 @@
 import BaseTool from './BaseTool.vue'
 
 export default {
+    props: {
+        stroke: {
+            type: String,
+            default: 'black'
+        }
+    },
     methods: {
         plot() {
             const prop = {...this.attr, tool_id: this.id}
             if(this.$store.state.plotting)
                 this.$store.dispatch('board/plot', prop)
 //             else
-//                 this.$store.dispatch('toggleGrabbing')
+//                 circleを動かす処理
         },
         stopPlot() {
             this.$store.dispatch('togglePlotting')

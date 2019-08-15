@@ -1,9 +1,9 @@
 <template lang="pug">
     g(@dblclick.stop="select")
-        path(:d="direction" stroke="red" fill="none" stroke-width="3" v-if="points.length > 1")
-        g(v-if="isSelected")
-            plot-circle(v-for="(point, index) in points" :key="index" :id="id" :attr="point")
-            plot-circle(v-if="nowPlotting" :id="id" :attr="attr")
+        path(:d="direction" stroke="red" fill="none" stroke-width="3" v-if="points.length")
+        g(v-if="selected")
+            plot-circle(v-for="(point, index) in points" :key="index" :id="id" :attr="point" :stroke="'red'")
+            plot-circle(v-if="nowPlotting" :id="id" :attr="attr" :stroke="'red'")
 </template>
 
 <script>
