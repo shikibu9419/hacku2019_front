@@ -1,11 +1,12 @@
 <template lang="pug">
     circle.plot(
         v-bind="attr"
-        :cx="attr.x" :cy="attr.y"
+        :cx="x" :cy="y"
         :stroke="stroke"
         @click.left="plot"
         @click.right="stopPlot"
-        @mousedown.stop="nop"
+        @mousedown.stop="grabCircle"
+        @mouseup.stop="releaseCircle"
         r="5"
     )
 </template>
@@ -14,24 +15,59 @@
 import BaseTool from './BaseTool.vue'
 
 export default {
+    data() {
+        return {
+            grabbed: false
+        }
+    },
     props: {
         stroke: {
             type: String,
             default: 'black'
+        },
+        index: {
+            type: Number
+        },
+        nowPlotted: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {
         plot() {
-            const prop = {...this.attr, tool_id: this.id}
-            if(this.$store.state.plotting)
-                this.$store.dispatch('board/plot', prop)
-//             else
-//                 circleを動かす処理
+            if (this.$store.state.plotting) {
+                this.$store.dispatch('board/plot', {
+                    ...this.$store.state.mousePosition,
+                    tool_id: this.id
+                })
+            }
         },
         stopPlot() {
-            this.$store.dispatch('togglePlotting')
+            if (this.$store.state.plotting)
+                this.$store.dispatch('togglePlotting')
         },
-        nop() {}
+        grabCircle() {
+            if (! this.$store.state.plotting)
+                this.grabbed = true
+        },
+        releaseCircle() {
+            if (! this.$store.state.plotting) {
+                this.$store.dispatch('board/replot', {
+                    ...this.$store.state.mousePosition,
+                    tool_id: this.id,
+                    index: this.index
+                })
+                this.grabbed = false
+            }
+        },
+    },
+    computed: {
+        x() {
+            return (this.grabbed || this.nowPlotted) ? this.$store.state.mousePosition.x : this.attr.x
+        },
+        y() {
+            return (this.grabbed || this.nowPlotted) ? this.$store.state.mousePosition.y : this.attr.y
+        }
     },
     mixins: [BaseTool]
 }

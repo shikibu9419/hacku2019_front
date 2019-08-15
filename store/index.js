@@ -1,7 +1,7 @@
 export const state = () => ({
     plotting: false,
     grabbing: false,
-    prevMousePosition: {x: 0, y: 0},
+    mousePosition: {x: 1000, y: 1000},
     offset: {x: 0, y: 0}
 })
 
@@ -14,6 +14,9 @@ export const mutations = {
     },
     setOffset(state, prop) {
         state.offset = {...state.offset, x: prop.x, y: prop.y}
+    },
+    setMousePosition(state, prop) {
+        state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
     }
 }
 
@@ -26,5 +29,8 @@ export const actions = {
     },
     setOffset(context, prop) {
         context.commit('setOffset', prop)
+    },
+    setMousePosition(context, prop) {
+        context.commit('setMousePosition', prop)
     }
 }

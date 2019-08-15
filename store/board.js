@@ -24,6 +24,9 @@ export const mutations = {
     plot(state, prop) {
         state.tools[prop.tool_id].points.push({x: prop.x, y: prop.y})
     },
+    replot(state, prop) {
+        state.tools[prop.tool_id].points.splice(prop.index, 1, {x: prop.x, y: prop.y})
+    },
     selectTool(state, prop) {
         state.selected = { ...state.selected, [prop.tool_id]: 'hoge' }
     },
@@ -33,7 +36,6 @@ export const mutations = {
     setPosition(state, prop) {
         for(const tool_id of Object.keys(state.selected))
             state.tools[tool_id] = { ...state.tools[tool_id], x: prop.x, y: prop.y }
-        // state.prevMousePosition = {...state.prevMousePosition, x: prop.x, y: prop.y}
     }
 }
 
@@ -46,6 +48,9 @@ export const actions = {
     },
     plot(context, prop) {
         context.commit('plot', prop)
+    },
+    replot(context, prop) {
+        context.commit('replot', prop)
     },
     select(context, prop) {
         if(!prop.multiple)

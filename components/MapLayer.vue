@@ -25,15 +25,17 @@ export default {
     },
     methods: {
         onMousemove(e) {
-            if (!this.$store.state.grabbing && !this.$store.state.plotting)
-                return
-            if (!Object.keys(this.$store.getters['board/selecting']).length)
-                return
-
             const prop = {
                 x: e.pageX - this.$store.state.offset.x,
                 y: e.pageY - this.$store.state.offset.y
             }
+
+            this.$store.dispatch('setMousePosition', prop)
+
+            if (!this.$store.state.grabbing && !this.$store.state.plotting)
+                return
+            if (!Object.keys(this.$store.getters['board/selecting']).length)
+                return
             this.$store.dispatch('board/setPosition', prop)
         },
         onMousedown() {
