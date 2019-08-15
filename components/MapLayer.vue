@@ -33,8 +33,8 @@ export default {
     },
     methods: {
         moveTools(e) {
-            const selectedNum = Object.keys(this.$store.state.board.selected).length
-            if (this.$store.state.isGrabbing && selectedNum) {
+            const selectedNum = Object.keys(this.$store.getters.board.selecting).length
+            if (this.$store.state.grabbing && selectedNum) {
                 const prop = {
                     x: e.pageX - this.offset.x,
                     y: e.pageY - this.offset.y
@@ -47,7 +47,7 @@ export default {
             this.$store.dispatch('board/clearSelection', {user_id: 'hoge'})
         },
         unGrab() {
-            if(this.$store.state.isGrabbing)
+            if(this.$store.state.grabbing)
                 this.$store.dispatch('toggleGrabbing')
         },
         setOffset() {

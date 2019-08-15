@@ -20,9 +20,7 @@ export const mutations = {
         state.selected = { ...state.selected, [prop.tool_id]: prop.user_id }
     },
     clearSelection(state, prop) {
-        state.selected = Object.entries(state.selected)                              // [key, value]のArrayを取得
-                               .filter(item => item[1] !== prop.user_id)             // 本人が選択していないものだけ抽出
-                               .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
+        state.selected = getters.othersSelecting
     },
     setPosition(state, prop) {
         for(const tool_id of Object.keys(state.selected))
@@ -46,15 +44,14 @@ export const actions = {
 }
 
 export const getters = {
-    tools(state) {
-        return state.tools
-    },
-    selected(state) {
-        return state.selected
-    },
     selecting(state) {
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
                      .filter(item => item[1] === prop.user_id)             // 本人が選択しているものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
-    }
+    },
+    othersSelecting(state) {
+        return Object.entries(state.selected)
+                     .filter(item => item[1] !== prop.user_id)
+                     .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
+    },
 }
