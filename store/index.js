@@ -1,14 +1,26 @@
 export const state = () => ({
-    isGrabbing: false
+    plotting: false,
+    grabbing: false,
+    prevMousePosition: {x: 0, y: 0},
+    offset: {x: 0, y: 0}
 })
 
 export const mutations = {
+    togglePlotting(state) {
+        state.plotting = !state.plotting
+    },
     toggleGrabbing(state) {
-        state.isGrabbing = !state.isGrabbing
-    }
+        state.grabbing = !state.grabbing
+    },
+    setOffset(state, prop) {
+        state.setOffset = {...state.setOffset, x: prop.x, y: prop.y}
+    },
 }
 
 export const actions = {
+    togglePlotting(context) {
+        context.commit('togglePlotting')
+    },
     toggleGrabbing(context) {
         context.commit('toggleGrabbing')
     }

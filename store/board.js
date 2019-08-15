@@ -16,15 +16,21 @@ export const mutations = {
     addTool(state, attr) {
         state.tools = { ...state.tools, [uuid()]: attr }
     },
-    selectElement(state, prop) {
-        state.selected = { ...state.selected, [prop.tool_id]: prop.user_id }
+    addSelect(state, attr) {
+        const tool_id = uuid()
+        state.tools = { ...state.tools, [tool_id]: attr }
+        attr.new_tool_id = tool_id
     },
-    clearSelection(state, prop) {
+    selectElement(state, prop) {
+        state.selected = { ...state.selected, [prop.tool_id]: 'hoge' }
+    },
+    clearSelection(state) {
         state.selected = getters.othersSelecting
     },
     setPosition(state, prop) {
         for(const tool_id of Object.keys(state.selected))
             state.tools[tool_id] = { ...state.tools[tool_id], x: prop.x, y: prop.y }
+        state.prevMousePosition = {...state.prevMousePosition, x: prop.x, y: prop.y}
     }
 }
 
@@ -32,11 +38,20 @@ export const actions = {
     add(context, attr) {
         context.commit('addTool', attr)
     },
+    addSelect(context, attr) {
+        context.commit('addSelect', attr)
+        context.dispatch('select', {tool_id : attr.new_tool_id})
+    },
+    plot(context, attr) {
+        context.commit('plot', attr)
+    },
     select(context, prop) {
+        if(!prop.multiple)
+            context.commit('clearSelection')
         context.commit('selectElement', prop)
     },
-    clearSelection(context, prop) {
-        context.commit('clearSelection', prop)
+    clearSelection(context) {
+        context.commit('clearSelection')
     },
     setPosition(context, prop) {
         context.commit('setPosition', prop)
@@ -46,12 +61,12 @@ export const actions = {
 export const getters = {
     selecting(state) {
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
-                     .filter(item => item[1] === prop.user_id)             // 本人が選択しているものだけ抽出
+                     .filter(item => item[1] === 'hoge')                   // 本人が選択しているものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
     },
     othersSelecting(state) {
         return Object.entries(state.selected)
-                     .filter(item => item[1] !== prop.user_id)
+                     .filter(item => item[1] !== 'hoge')                   // 本人が選択していないものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
     },
 }

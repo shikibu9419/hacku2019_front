@@ -20,7 +20,7 @@ export default {
     methods: {
         select() {
             if(!this.isSelected())
-                this.$store.dispatch('board/select', {tool_id: this.id, user_id: 'hoge'})
+                this.$store.dispatch('board/select', {tool_id: this.id})
         },
         grab() {
             if(this.isSelected())
