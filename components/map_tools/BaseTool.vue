@@ -28,6 +28,11 @@ export default {
             if(!this.isSelected())
                 this.$store.dispatch('board/select', {tool_id: this.id})
         },
+        multiSelect() {
+            // 今回は出番なし?
+            if(!this.isSelected())
+                this.$store.dispatch('board/select', {tool_id: this.id, multiple: true})
+        },
         grab() {
             if(this.isSelected())
                 this.$store.dispatch('toggleGrabbing')
