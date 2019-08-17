@@ -9,13 +9,13 @@
 export default {
     methods: {
         addPolygon() {
-            this.$store.dispatch('board/add', { type: 'polygon', points: [250, 50, 300, 100, 250, 100], color: 'black'})
+            this.$store.dispatch('board/add', { type: 'building', points: [250, 50, 300, 100, 250, 100], color: 'black'})
         },
         addExample() {
             this.$store.dispatch('board/add', { type: 'circle', x: 50, y: 50, r: 20})
         },
         addRect() {
-            this.$store.dispatch('board/add', { type: 'rect', x: 50, y: 50, width: 100, height: 100})
+            this.$store.dispatch('board/add', { type: 'building_basic', x: 50, y: 50, width: 100, height: 100})
         }
     }
 }

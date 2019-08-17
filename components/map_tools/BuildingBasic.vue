@@ -14,7 +14,7 @@ import BaseTool from './BaseTool.vue'
 export default {
     data() {
         return {
-            type: 'rect',
+            type: 'building_basic',
         }
     },
     mixins: [BaseTool]
