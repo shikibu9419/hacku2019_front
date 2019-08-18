@@ -4,6 +4,7 @@
         :cx="attr.x" :cy="attr.y"
         @dblclick.stop="select"
         @mousedown.stop="grab"
+        stroke-width="2"
         :style="{stroke: color}"
     )
 </template>
@@ -14,7 +15,7 @@
     export default {
         data() {
             return {
-                type: 'circle',
+                type: 'pin',
             }
         },
         mixins: [BaseTool]
