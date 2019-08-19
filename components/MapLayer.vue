@@ -2,7 +2,7 @@
     .container
         tool-bar
         .board(ref="board" id="container")
-            svg.graph(@mousemove="moveTools" @mousedown="clearSelection" @mouseup="unGrab")
+            svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup")
                 tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                      :id="id" :attr="attr")
 </template>
@@ -23,40 +23,35 @@ export default {
         Tool,
         ToolBar
     },
-    data() {
-        return {
-            offset: {
-                x: 0,
-                y: 0
-            }
-        }
-    },
     methods: {
-        moveTools(e) {
-            const selectedNum = Object.keys(this.$store.state.board.selected).length
-            if (this.$store.state.isGrabbing && selectedNum) {
-                const prop = {
-                    x: e.pageX - this.offset.x,
-                    y: e.pageY - this.offset.y
-                }
-                this.$store.dispatch('board/setPosition', prop)
+        onMousemove(e) {
+            const prop = {
+                x: e.pageX - this.$store.state.offset.x,
+                y: e.pageY - this.$store.state.offset.y
             }
+
+            this.$store.dispatch('setMousePosition', prop)
+
+            if (!this.$store.state.grabbing && !this.$store.state.plotting)
+                return
+            if (!Object.keys(this.$store.getters['board/selecting']).length)
+                return
+            this.$store.dispatch('board/setPosition', prop)
         },
-        clearSelection() {
-            this.$store.dispatch('toggleGrabbing')
-            this.$store.dispatch('board/clearSelection', {user_id: 'hoge'})
+        onMousedown() {
+            this.$store.dispatch('board/clearSelection')
         },
-        unGrab() {
-            if(this.$store.state.isGrabbing)
+        onMouseup() {
+            if(this.$store.state.grabbing)
                 this.$store.dispatch('toggleGrabbing')
         },
         setOffset() {
             const rect = this.$refs.board.getBoundingClientRect()
-
-            this.offset = {
+            const prop = {
                 x: window.pageXOffset + rect.left,
                 y: window.pageYOffset + rect.top
             }
+            this.$store.dispatch('setOffset', prop)
         },
     },
     mounted() {

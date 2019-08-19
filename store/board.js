@@ -16,13 +16,22 @@ export const mutations = {
     addTool(state, attr) {
         state.tools = { ...state.tools, [uuid()]: attr }
     },
-    selectElement(state, prop) {
-        state.selected = { ...state.selected, [prop.tool_id]: prop.user_id }
+    addSelect(state, attr) {
+        const tool_id = uuid()
+        state.tools = { ...state.tools, [tool_id]: attr }
+        mutations.selectTool(state, {tool_id: tool_id})
     },
-    clearSelection(state, prop) {
-        state.selected = Object.entries(state.selected)                              // [key, value]のArrayを取得
-                               .filter(item => item[1] !== prop.user_id)             // 本人が選択していないものだけ抽出
-                               .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
+    plot(state, prop) {
+        state.tools[prop.tool_id].points.push({x: prop.x, y: prop.y})
+    },
+    replot(state, prop) {
+        state.tools[prop.tool_id].points.splice(prop.index, 1, {x: prop.x, y: prop.y})
+    },
+    selectTool(state, prop) {
+        state.selected = { ...state.selected, [prop.tool_id]: 'hoge' }
+    },
+    clearSelection(state) {
+        state.selected = getters.othersSelecting
     },
     setPosition(state, prop) {
         for(const tool_id of Object.keys(state.selected))
@@ -34,11 +43,22 @@ export const actions = {
     add(context, attr) {
         context.commit('addTool', attr)
     },
-    select(context, prop) {
-        context.commit('selectElement', prop)
+    addSelect(context, attr) {
+        context.commit('addSelect', attr)
     },
-    clearSelection(context, prop) {
-        context.commit('clearSelection', prop)
+    plot(context, prop) {
+        context.commit('plot', prop)
+    },
+    replot(context, prop) {
+        context.commit('replot', prop)
+    },
+    select(context, prop) {
+        if(!prop.multiple)
+            context.commit('clearSelection')
+        context.commit('selectTool', prop)
+    },
+    clearSelection(context) {
+        context.commit('clearSelection')
     },
     setPosition(context, prop) {
         context.commit('setPosition', prop)
@@ -46,15 +66,14 @@ export const actions = {
 }
 
 export const getters = {
-    tools(state) {
-        return state.tools
-    },
-    selected(state) {
-        return state.selected
-    },
     selecting(state) {
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
-                     .filter(item => item[1] === prop.user_id)             // 本人が選択しているものだけ抽出
+                     .filter(item => item[1] === 'hoge')                   // 本人が選択しているものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
-    }
+    },
+    othersSelecting(state) {
+        return Object.entries(state.selected)
+                     .filter(item => item[1] !== 'hoge')                   // 本人が選択していないものだけ抽出
+                     .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
+    },
 }

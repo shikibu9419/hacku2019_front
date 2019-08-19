@@ -1,7 +1,13 @@
 <style lang="scss">
 .tool {
-    fill: #fff;
+    fill-opacity: 0;
     cursor: pointer;
+    stroke-width: 2;
+}
+.plot {
+    fill: white;
+    cursor: pointer;
+    stroke-width: 2;
 }
 </style>
 
@@ -20,7 +26,12 @@ export default {
     methods: {
         select() {
             if(!this.isSelected())
-                this.$store.dispatch('board/select', {tool_id: this.id, user_id: 'hoge'})
+                this.$store.dispatch('board/select', {tool_id: this.id})
+        },
+        multiSelect() {
+            // 今回は出番なし?
+            if(!this.isSelected())
+                this.$store.dispatch('board/select', {tool_id: this.id, multiple: true})
         },
         grab() {
             if(this.isSelected())
@@ -31,6 +42,9 @@ export default {
         }
     },
     computed: {
+        selected() {
+            return this.isSelected()
+        },
         color() {
             return this.isSelected() ? '#42b983' : '#000'
         }

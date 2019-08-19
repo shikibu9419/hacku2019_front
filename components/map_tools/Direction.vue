@@ -1,11 +1,11 @@
 <template lang="pug">
     g(@dblclick.stop="select")
-        polygon.tool(:points="points" stroke-width="3" stroke="red" v-if="attr.points.length")
+        path(:d="direction" stroke="red" fill="none" stroke-width="3" v-if="points.length")
         g(v-if="selected")
-            plot-circle(v-for="(point, index) in attr.points" :key="index"
+            plot-circle(v-for="(point, index) in points" :key="index"
                 :id="id" :attr="point" :stroke="'red'" :index="index")
             plot-circle(v-if="plotting"
-                :id="id" :attr="attr"  :stroke="'red'" :now-plotted="true")
+                :id="id" :attr="null"  :stroke="'red'" :now-plotted="true")
 </template>
 
 <script>
@@ -18,16 +18,19 @@ export default {
     },
     data() {
         return {
-            type: 'building',
+            type: 'direction',
         }
     },
     computed: {
+        points() {
+            return this.attr.points
+        },
         plotting() {
             return this.$store.state.plotting
         },
-        points() {
-            return this.attr.points.map((point) => point.x + ',' + point.y).join(' ')
-        },
+        direction() {
+            return 'M ' + this.attr.points.map((point) => point.x + ' ' + point.y).join(' L ')
+        }
     },
     mixins: [BaseTool]
 }
