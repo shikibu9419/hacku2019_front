@@ -15,8 +15,8 @@
 </style>
 
 <script>
-import Tool from '~/components/Tool'
-import ToolBar from '~/components/ToolBar'
+import Tool from './mapTools/Tool'
+import ToolBar from './ToolBar'
 
 export default {
     components: {
