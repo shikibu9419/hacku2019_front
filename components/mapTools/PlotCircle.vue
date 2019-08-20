@@ -38,7 +38,7 @@ export default {
             if (this.$store.state.mapEdit.plotting) {
                 this.$store.dispatch('mapEdit/plot', {
                     ...this.$store.state.mapEdit.mousePosition,
-                    tool_id: this.id
+                    toolId: this.id
                 })
             }
         },
@@ -54,7 +54,7 @@ export default {
             if (! this.$store.state.mapEdit.plotting) {
                 this.$store.dispatch('mapEdit/replot', {
                     ...this.$store.state.mapEdit.mousePosition,
-                    tool_id: this.id,
+                    toolId: this.id,
                     index: this.index
                 })
                 this.grabbed = false

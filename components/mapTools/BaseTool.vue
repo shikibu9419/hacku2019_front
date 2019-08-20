@@ -26,12 +26,12 @@ export default {
     methods: {
         select() {
             if(!this.isSelected())
-                this.$store.dispatch('mapEdit/select', {tool_id: this.id})
+                this.$store.dispatch('mapEdit/select', {toolId: this.id})
         },
         multiSelect() {
             // 今回は出番なし?
             if(!this.isSelected())
-                this.$store.dispatch('mapEdit/select', {tool_id: this.id, multiple: true})
+                this.$store.dispatch('mapEdit/select', {toolId: this.id, multiple: true})
         },
         grab() {
             if(this.isSelected())
