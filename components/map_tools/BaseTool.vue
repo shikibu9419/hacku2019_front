@@ -26,19 +26,19 @@ export default {
     methods: {
         select() {
             if(!this.isSelected())
-                this.$store.dispatch('board/select', {tool_id: this.id})
+                this.$store.dispatch('mapEdit/select', {tool_id: this.id})
         },
         multiSelect() {
             // 今回は出番なし?
             if(!this.isSelected())
-                this.$store.dispatch('board/select', {tool_id: this.id, multiple: true})
+                this.$store.dispatch('mapEdit/select', {tool_id: this.id, multiple: true})
         },
         grab() {
             if(this.isSelected())
-                this.$store.dispatch('toggleGrabbing')
+                this.$store.dispatch('mapEdit/toggleGrabbing')
         },
         isSelected() {
-            return this.$store.state.board.selected[this.id]
+            return this.$store.state.mapEdit.selected[this.id]
         }
     },
     computed: {

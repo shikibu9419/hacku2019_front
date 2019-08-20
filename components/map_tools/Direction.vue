@@ -26,7 +26,7 @@ export default {
             return this.attr.points
         },
         plotting() {
-            return this.$store.state.plotting
+            return this.$store.state.mapEdit.plotting
         },
         direction() {
             return 'M ' + this.attr.points.map((point) => point.x + ' ' + point.y).join(' L ')

@@ -35,25 +35,25 @@ export default {
     },
     methods: {
         plot() {
-            if (this.$store.state.plotting) {
-                this.$store.dispatch('board/plot', {
-                    ...this.$store.state.mousePosition,
+            if (this.$store.state.mapEdit.plotting) {
+                this.$store.dispatch('mapEdit/plot', {
+                    ...this.$store.state.mapEdit.mousePosition,
                     tool_id: this.id
                 })
             }
         },
         stopPlot() {
-            if (this.$store.state.plotting)
-                this.$store.dispatch('togglePlotting')
+            if (this.$store.state.mapEdit.plotting)
+                this.$store.dispatch('mapEdit/togglePlotting')
         },
         grabCircle() {
-            if (! this.$store.state.plotting)
+            if (! this.$store.state.mapEdit.plotting)
                 this.grabbed = true
         },
         releaseCircle() {
-            if (! this.$store.state.plotting) {
-                this.$store.dispatch('board/replot', {
-                    ...this.$store.state.mousePosition,
+            if (! this.$store.state.mapEdit.plotting) {
+                this.$store.dispatch('mapEdit/replot', {
+                    ...this.$store.state.mapEdit.mousePosition,
                     tool_id: this.id,
                     index: this.index
                 })
@@ -63,10 +63,10 @@ export default {
     },
     computed: {
         x() {
-            return (this.grabbed || this.nowPlotted) ? this.$store.state.mousePosition.x : this.attr.x
+            return (this.grabbed || this.nowPlotted) ? this.$store.state.mapEdit.mousePosition.x : this.attr.x
         },
         y() {
-            return (this.grabbed || this.nowPlotted) ? this.$store.state.mousePosition.y : this.attr.y
+            return (this.grabbed || this.nowPlotted) ? this.$store.state.mapEdit.mousePosition.y : this.attr.y
         }
     },
     mixins: [BaseTool]

@@ -23,7 +23,7 @@ export default {
     },
     computed: {
         plotting() {
-            return this.$store.state.plotting
+            return this.$store.state.mapEdit.plotting
         },
         points() {
             return this.attr.points.map((point) => point.x + ',' + point.y).join(' ')

@@ -1,7 +1,7 @@
 <template lang="pug">
     .container
         tool-bar
-        .board(ref="board" id="container")
+        .layer(ref="layer" id="container")
             svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup")
                 tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                      :id="id" :attr="attr")
@@ -26,32 +26,32 @@ export default {
     methods: {
         onMousemove(e) {
             const prop = {
-                x: e.pageX - this.$store.state.offset.x,
-                y: e.pageY - this.$store.state.offset.y
+                x: e.pageX - this.$store.state.mapEdit.offset.x,
+                y: e.pageY - this.$store.state.mapEdit.offset.y
             }
 
-            this.$store.dispatch('setMousePosition', prop)
+            this.$store.dispatch('mapEdit/setMousePosition', prop)
 
-            if (!this.$store.state.grabbing && !this.$store.state.plotting)
+            if (!this.$store.state.mapEdit.grabbing && !this.$store.state.mapEdit.plotting)
                 return
-            if (!Object.keys(this.$store.getters['board/selecting']).length)
+            if (!Object.keys(this.$store.getters['mapEdit/selecting']).length)
                 return
-            this.$store.dispatch('board/setPosition', prop)
+            this.$store.dispatch('mapEdit/setPosition', prop)
         },
         onMousedown() {
-            this.$store.dispatch('board/clearSelection')
+            this.$store.dispatch('mapEdit/clearSelection')
         },
         onMouseup() {
-            if(this.$store.state.grabbing)
-                this.$store.dispatch('toggleGrabbing')
+            if(this.$store.state.mapEdit.grabbing)
+                this.$store.dispatch('mapEdit/toggleGrabbing')
         },
         setOffset() {
-            const rect = this.$refs.board.getBoundingClientRect()
+            const rect = this.$refs.layer.getBoundingClientRect()
             const prop = {
                 x: window.pageXOffset + rect.left,
                 y: window.pageYOffset + rect.top
             }
-            this.$store.dispatch('setOffset', prop)
+            this.$store.dispatch('mapEdit/setOffset', prop)
         },
     },
     mounted() {
@@ -61,7 +61,7 @@ export default {
     },
     computed: {
         tools() {
-            return this.$store.state.board.tools
+            return this.$store.state.mapEdit.tools
         }
     },
 }
