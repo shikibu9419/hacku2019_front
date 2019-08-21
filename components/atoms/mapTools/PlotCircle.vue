@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         plot() {
-            if (this.$store.state.mapEdit.plotting) {
+            if (this.plotting) {
                 this.$store.dispatch('mapEdit/plot', {
                     ...this.$store.state.mapEdit.mousePosition,
                     toolId: this.id
@@ -43,15 +43,15 @@ export default {
             }
         },
         stopPlot() {
-            if (this.$store.state.mapEdit.plotting)
+            if (this.plotting)
                 this.$store.dispatch('mapEdit/togglePlotting')
         },
         grabCircle() {
-            if (! this.$store.state.mapEdit.plotting)
+            if (! this.plotting)
                 this.grabbed = true
         },
         releaseCircle() {
-            if (! this.$store.state.mapEdit.plotting) {
+            if (! this.plotting) {
                 this.$store.dispatch('mapEdit/replot', {
                     ...this.$store.state.mapEdit.mousePosition,
                     toolId: this.id,

@@ -4,7 +4,8 @@
         .layer(ref="layer" id="container")
             svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup")
                 tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
-                     :id="id" :attr="attr")
+                    :id="id" :attr="attr" :selected-tools="selectedTools"
+                    :grabbing="grabbing" :plotting="plotting")
 </template>
 
 <style lang="scss">
@@ -15,7 +16,7 @@
 </style>
 
 <script>
-import Tool from './mapTools/Tool'
+import Tool from '~/components/atoms/mapTools/Tool'
 import ToolBar from './ToolBar'
 
 export default {
@@ -62,7 +63,16 @@ export default {
     computed: {
         tools() {
             return this.$store.state.mapEdit.tools
+        },
+        selectedTools() {
+            return this.$store.state.mapEdit.selected
+        },
+        grabbing() {
+            return this.$store.state.mapEdit.grabbing
+        },
+        plotting() {
+            return this.$store.state.mapEdit.plotting
         }
-    },
+    }
 }
 </script>

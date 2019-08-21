@@ -21,7 +21,19 @@ export default {
         attr: {
             type: Object,
             required: true
-        }
+        },
+        selectedTools: {
+            type: Object,
+            required: true
+        },
+        grabbing: {
+            type: Boolean,
+            required: true
+        },
+        plotting: {
+            type: Boolean,
+            required: true
+        },
     },
     methods: {
         select() {
@@ -38,7 +50,7 @@ export default {
                 this.$store.dispatch('mapEdit/toggleGrabbing')
         },
         isSelected() {
-            return this.$store.state.mapEdit.selected[this.id]
+            return this.selectedTools[this.id]
         }
     },
     computed: {

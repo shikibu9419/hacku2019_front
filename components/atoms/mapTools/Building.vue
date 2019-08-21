@@ -2,19 +2,18 @@
     g(@dblclick.stop="select")
         polygon.tool(:points="points" stroke-width="3" stroke="red" v-if="attr.points.length")
         g(v-if="selected")
-            plot-circle(v-for="(point, index) in attr.points" :key="index"
-                :id="id" :attr="point" :stroke="'red'" :index="index")
-            plot-circle(v-if="plotting"
-                :id="id" :attr="attr"  :stroke="'red'" :now-plotted="true")
+            plot-circle(v-for="(point, index) in attr.points" :key="index" :stroke="'red'" :index="index"
+                :id="id" :attr="point" :grabbing="grabbing" :plotting="plotting" :selected-tools="selectedTools")
+            plot-circle(v-if="plotting" :stroke="'red'" :now-plotted="true"
+                :id="id" :attr="attr"  :grabbing="grabbing" :plotting="plotting" :selected-tools="selectedTools")
 </template>
 
 <script>
 import BaseTool from './BaseTool.vue'
-import PlotCircle from './PlotCircle.vue'
 
 export default {
     components: {
-        PlotCircle
+        PlotCircle: () => import('./PlotCircle')
     },
     data() {
         return {
@@ -22,9 +21,6 @@ export default {
         }
     },
     computed: {
-        plotting() {
-            return this.$store.state.mapEdit.plotting
-        },
         points() {
             return this.attr.points.map((point) => point.x + ',' + point.y).join(' ')
         },
