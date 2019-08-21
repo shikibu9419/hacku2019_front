@@ -11,10 +11,12 @@
 export default {
     methods: {
         addExample() {
-            this.$store.dispatch('board/add', { type: 'circle', x: 50, y: 50, r: 20 })
+            this.$store.dispatch('board/addSelect', { type: 'circle', x: 50, y: 50, r: 20 })
+            this.$store.dispatch('togglePlotting')
         },
         addBuildingBasic() {
-            this.$store.dispatch('board/add', { type: 'building_basic', x: 50, y: 50, width: 100, height: 100})
+            this.$store.dispatch('board/addSelect', { type: 'building_basic', x: 50, y: 50, width: 100, height: 100})
+            this.$store.dispatch('togglePlotting')
         },
         addBuilding() {
             this.$store.dispatch('board/addSelect', { type: 'building', x: 1000, y: 1000, points: []})
