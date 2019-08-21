@@ -2,7 +2,7 @@
     .container
         gmap-map.map-edit__map(:center="center" :zoom="zoom" :options="{styles: styles}" ref="gmap")
             gmap-marker(v-for="(m,id) in marker_items" :position="m.position" :icon="m.icon" :title="m.title" :clickable="true" :draggable="false" :key="id")
-        map-layer.map-edit__map(@hoge="hoge")
+        map-layer.map-edit__map(@scroll="mapScroll")
 </template>
 
 <script>
@@ -12,14 +12,7 @@ export default {
     },
     data() {
         return {
-            ymap: null,
             zoom: 14,
-            marker_items: [
-                {position: {lat: 35.71, lng: 139.72}, title: 'marker_1', icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-                {position: {lat: 35.72, lng: 139.73}, title: 'marker_2'},
-                {position: {lat: 35.70, lng: 139.71}, title: 'marker_3'},
-                {position: {lat: 35.71, lng: 139.70}, title: 'marker_4'},
-            ],
             styles: [
                 {
                     "featureType": "poi",
@@ -36,11 +29,12 @@ export default {
         },
     },
     methods: {
-        hoge() {
-            var hoge = Object.assign({}, this.$store.state.mapEdit.center)
-            hoge.lat = hoge.lat + 0.001
-            hoge.lng = hoge.lng + 0.001
-            this.$refs.gmap.panTo(hoge)
+        mapScroll() {
+            var newCenter = Object.assign({}, this.$store.state.mapEdit.center)
+            newCenter.lat = newCenter.lat + 0.001
+            newCenter.lng = newCenter.lng + 0.001
+            this.$refs.gmap.panTo(newCenter)
+            this.$store.dispatch('mapEdit/scrollMap', newCenter)
         }
     }
 }

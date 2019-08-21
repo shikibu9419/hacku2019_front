@@ -46,6 +46,7 @@ export default {
             if (!Object.keys(this.$store.getters['mapEdit/selecting']).length)
                 return
             this.$store.dispatch('mapEdit/setPosition', prop)
+            this.$emit('scroll')
         },
         onMousedown() {
             this.$store.dispatch('mapEdit/clearSelection')
