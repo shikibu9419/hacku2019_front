@@ -4,7 +4,7 @@
         .layer(ref="layer" id="container")
             svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup")
                 tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
-                    :id="id" :attr="attr" :selected-tools="selectedTools"
+                    :id="id" :attr="attr" :selected="selected(id)"
                     :grabbing="grabbing" :plotting="plotting")
 </template>
 
@@ -64,8 +64,10 @@ export default {
         tools() {
             return this.$store.state.mapEdit.tools
         },
-        selectedTools() {
-            return this.$store.state.mapEdit.selected
+        selected(id) {
+            return function (id) {
+                return id in this.$store.state.mapEdit.selected
+            };
         },
         grabbing() {
             return this.$store.state.mapEdit.grabbing

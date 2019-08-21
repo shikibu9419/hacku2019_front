@@ -22,8 +22,8 @@ export default {
             type: Object,
             required: true
         },
-        selectedTools: {
-            type: Object,
+        selected: {
+            type: Boolean,
             required: true
         },
         grabbing: {
@@ -37,28 +37,22 @@ export default {
     },
     methods: {
         select() {
-            if(!this.isSelected())
+            if(!this.selected)
                 this.$store.dispatch('mapEdit/select', {toolId: this.id})
         },
         multiSelect() {
             // 今回は出番なし?
-            if(!this.isSelected())
+            if(!this.selected)
                 this.$store.dispatch('mapEdit/select', {toolId: this.id, multiple: true})
         },
         grab() {
-            if(this.isSelected())
+            if(this.selected)
                 this.$store.dispatch('mapEdit/toggleGrabbing')
-        },
-        isSelected() {
-            return this.selectedTools[this.id]
         }
     },
     computed: {
-        selected() {
-            return this.isSelected()
-        },
         color() {
-            return this.isSelected() ? '#42b983' : '#000'
+            return this.selected ? '#42b983' : '#000'
         }
     }
 }

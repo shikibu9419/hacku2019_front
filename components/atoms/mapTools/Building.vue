@@ -3,9 +3,9 @@
         polygon.tool(:points="points" stroke-width="3" stroke="red" v-if="attr.points.length")
         g(v-if="selected")
             plot-circle(v-for="(point, index) in attr.points" :key="index" :stroke="'red'" :index="index"
-                :id="id" :attr="point" :grabbing="grabbing" :plotting="plotting" :selected-tools="selectedTools")
+                :id="id" :attr="point" :grabbing="grabbing" :plotting="plotting" :selected="selected")
             plot-circle(v-if="plotting" :stroke="'red'" :now-plotted="true"
-                :id="id" :attr="attr"  :grabbing="grabbing" :plotting="plotting" :selected-tools="selectedTools")
+                :id="id" :attr="attr"  :grabbing="grabbing" :plotting="plotting" :selected="selected")
 </template>
 
 <script>
