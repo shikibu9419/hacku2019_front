@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import BaseTool from './BaseTool.vue'
+import Shared from './Shared.vue'
 
 export default {
     data() {
@@ -17,6 +17,6 @@ export default {
             type: 'circle',
         }
     },
-    mixins: [BaseTool]
+    mixins: [Shared]
 }
 </script>

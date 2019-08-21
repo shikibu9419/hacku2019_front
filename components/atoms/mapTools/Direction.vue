@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import BaseTool from './BaseTool.vue'
+import Shared from './Shared.vue'
 
 export default {
     components: {
@@ -28,6 +28,6 @@ export default {
             return 'M ' + this.attr.points.map((point) => point.x + ' ' + point.y).join(' L ')
         }
     },
-    mixins: [BaseTool]
+    mixins: [Shared]
 }
 </script>

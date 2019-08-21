@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import BaseTool from './BaseTool'
+import Shared from './Shared'
 
 export default {
     components: {
@@ -16,6 +16,6 @@ export default {
         Building: () => import('./Building'),
         Direction: () => import('./Direction'),
     },
-    mixins: [BaseTool]
+    mixins: [Shared]
 }
 </script>
