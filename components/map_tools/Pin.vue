@@ -8,29 +8,29 @@
         :style="{stroke: color}"
         v-on:click="enable(true)"
     )
-        information-layer(
-            v-bind:enable.sync="informationLayerEnable"
+        popup-layer(
+            v-bind:enable.sync="popupLayerEnable"
         )
 </template>
 
 <script>
     import BaseTool from './BaseTool.vue'
-    import InformationLayer from './InformationLayer'
+    import PopupLayer from './PopupLayer'
 
     export default {
         data() {
             return {
                 type: 'pin',
-                informationLayerEnable: false
+                popupLayerEnable: false
             }
         },
         mixins: [BaseTool],
         components: {
-            InformationLayer
+            PopupLayer
         },
         methods: {
             enable(bool) {
-                this.informationLayerEnable = bool;
+                this.popupLayerEnable = bool;
             }
         }
     }
