@@ -9,16 +9,6 @@
         name: "PopupLayer.vue",
         props: {
             enable: Boolean
-        },
-        created() {
-            this.timeoutDisable()
-        },
-        methods: {
-            timeoutDisable() {
-                setTimeout(_ => {
-                    console.log(this.enable)
-                }, 5000)
-            }
         }
     }
 </script>
