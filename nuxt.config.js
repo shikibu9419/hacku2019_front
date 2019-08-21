@@ -14,7 +14,10 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+//     script: [
+//       { src: 'https://map.yahooapis.jp/js/V1/jsapi?appid=' + process.env.YAHOO_KEY }
+//     ],
   },
   /*
   ** Customize the progress-bar color

@@ -1,17 +1,25 @@
 <template lang="pug">
-    .container
+    .map-edit__map--container
         tool-bar
-        .layer(ref="layer" id="container")
-            svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup")
-                tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
-                    :id="id" :attr="attr" :selected="selected(id)"
-                    :grabbing="grabbing" :plotting="plotting")
+        svg.map-edit__layer(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer")
+            tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
+                :id="id" :attr="attr" :selected="selected(id)"
+                :grabbing="grabbing" :plotting="plotting")
 </template>
 
 <style lang="scss">
-.graph {
+.map-edit__map {
+    &--container {
+        position: absolute;
+        z-index: 10;
+        top: 0px;
+        left: 0px;
+    }
+}
+
+.map-edit__layer {
     width: 100%;
-    height: 500px;
+    height: 100%;
 }
 </style>
 

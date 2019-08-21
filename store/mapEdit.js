@@ -7,6 +7,7 @@ const uuid = function() {
 };
 
 export const state = () => ({
+    center: {lat: 35.71, lng: 139.72},
     plotting: false,
     grabbing: false,
     mousePosition: {x: 1000, y: 1000},
