@@ -10,6 +10,7 @@ export const state = () => ({
     center: {lat: 35.71, lng: 139.72},
     plotting: false,
     grabbing: false,
+    mapGrabbing: false,
     mousePosition: {x: 0, y: 0},
     offset: {x: 0, y: 0},
     tools: {},
@@ -23,6 +24,9 @@ export const mutations = {
     },
     toggleGrabbing(state) {
         state.grabbing = !state.grabbing
+    },
+    toggleMapGrabbing(state) {
+        state.mapGrabbing = !state.mapGrabbing
     },
     setOffset(state, prop) {
         state.offset = {...state.offset, x: prop.x, y: prop.y}
@@ -63,6 +67,9 @@ export const actions = {
     },
     toggleGrabbing(context) {
         context.commit('toggleGrabbing')
+    },
+    toggleMapGrabbing(context) {
+        context.commit('toggleMapGrabbing')
     },
     setOffset(context, prop) {
         context.commit('setOffset', prop)

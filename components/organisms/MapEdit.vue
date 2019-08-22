@@ -28,10 +28,13 @@ export default {
         },
     },
     methods: {
-        mapScroll() {
+        mapScroll(prop) {
+            const dx = prop.x - this.$store.state.mapEdit.mousePosition.x
+            const dy = prop.y - this.$store.state.mapEdit.mousePosition.y
+
             var newCenter = Object.assign({}, this.$store.state.mapEdit.center)
-            newCenter.lat = newCenter.lat + 0.001
-            newCenter.lng = newCenter.lng + 0.001
+            newCenter.lat = newCenter.lat + 0.0001 * dy
+            newCenter.lng = newCenter.lng - 0.0001 * dx
             this.$refs.gmap.panTo(newCenter)
             this.$store.dispatch('mapEdit/scrollMap', newCenter)
         }

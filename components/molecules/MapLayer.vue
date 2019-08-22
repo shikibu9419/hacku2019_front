@@ -1,7 +1,7 @@
 <template lang="pug">
     .container
         tool-bar
-        svg.map-edit__layer(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer")
+        svg.map-edit__layer(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                 :id="id" :attr="attr" :selected="selected(id)"
                 :grabbing="grabbing" :plotting="plotting")
@@ -23,21 +23,24 @@ export default {
                 y: e.pageY - this.$store.state.mapEdit.offset.y
             }
 
-            this.$store.dispatch('mapEdit/setMousePosition', prop)
+            if (this.$store.state.mapEdit.grabbing || this.$store.state.mapEdit.mapGrabbing || this.$store.state.mapEdit.plotting) {
+                if (this.$store.state.mapEdit.mapGrabbing)
+                    this.$emit('scroll', prop)
+                else
+                    this.$store.dispatch('mapEdit/setPosition', prop)
+            }
 
-            if (!this.$store.state.mapEdit.grabbing && !this.$store.state.mapEdit.plotting)
-                return
-            if (!Object.keys(this.$store.getters['mapEdit/selecting']).length)
-                return
-            this.$store.dispatch('mapEdit/setPosition', prop)
-            this.$emit('scroll')
+            this.$store.dispatch('mapEdit/setMousePosition', prop)
         },
         onMousedown() {
+            this.$store.dispatch('mapEdit/toggleMapGrabbing')
             this.$store.dispatch('mapEdit/clearSelection')
         },
         onMouseup() {
             if(this.$store.state.mapEdit.grabbing)
                 this.$store.dispatch('mapEdit/toggleGrabbing')
+            if(this.$store.state.mapEdit.mapGrabbing)
+                this.$store.dispatch('mapEdit/toggleMapGrabbing')
         },
         setOffset() {
             const rect = this.$refs.layer.getBoundingClientRect()
