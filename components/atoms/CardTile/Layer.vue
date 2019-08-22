@@ -7,7 +7,7 @@
 
 <script>
     export default {
-        name: "CardLayer",
+        name: "Layer",
         props: {
             layers: {
                 type: Array,

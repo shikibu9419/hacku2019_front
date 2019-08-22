@@ -1,12 +1,12 @@
 <template lang="pug">
     .container
-        img.icon(:src="src" width="30px" height="30px")
+        img.icon(:src="src")
         span.username {{ username }}
 </template>
 
 <script>
     export default {
-        name: "CardUsername",
+        name: "Username",
         props: {
             src: {
                 type: String,

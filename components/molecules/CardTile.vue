@@ -3,21 +3,21 @@
         img.card-img(:src="img_url")
         .contents
             h3.title {{ title }}
-            card-username(:username="username" :src="usericon_url")
-            card-layer(:layers="layers")
-            card-tag(:tags="tags")
-            card-comment(:comment_count="comments.length")
+            Username(:username="username" :src="usericon_url")
+            Layer(:layers="layers")
+            Tag(:tags="tags")
+            Comment(:comment_count="comments.length")
 </template>
 
 <script>
-    import CardUsername from '../atoms/CardUsername'
-    import CardLayer from '../atoms/CardLayer'
-    import CardTag from '../atoms/CardTag'
-    import CardComment from '../atoms/CardComment'
+    import Username from '../atoms/CardTile/Username'
+    import Layer from '../atoms/CardTile/Layer'
+    import Tag from '../atoms/CardTile/Tag'
+    import Comment from '../atoms/CardTile/Comment'
 
     export default {
         name: "CardTile",
-        components: {CardComment, CardTag, CardLayer, CardUsername},
+        components: {Comment, Tag, Layer, Username},
         props: {
             title: {
                 type: String,

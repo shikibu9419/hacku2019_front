@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: "CardComment",
+        name: "Comment",
         props: {
             comment_count: {
                 type: Number,

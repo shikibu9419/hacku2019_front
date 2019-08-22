@@ -7,7 +7,7 @@
 
 <script>
     export default {
-        name: "CardTag",
+        name: "Tag",
         props: {
             tags: {
                 type: Array,
