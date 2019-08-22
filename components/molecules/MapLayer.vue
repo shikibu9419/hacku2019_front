@@ -1,27 +1,11 @@
 <template lang="pug">
-    .map-edit__map--container
+    .container
         tool-bar
         svg.map-edit__layer(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                 :id="id" :attr="attr" :selected="selected(id)"
                 :grabbing="grabbing" :plotting="plotting")
 </template>
-
-<style lang="scss">
-.map-edit__map {
-    &--container {
-        position: absolute;
-        z-index: 10;
-        top: 0px;
-        left: 0px;
-    }
-}
-
-.map-edit__layer {
-    width: 100%;
-    height: 100%;
-}
-</style>
 
 <script>
 import Tool from '~/components/atoms/mapTools/Tool'

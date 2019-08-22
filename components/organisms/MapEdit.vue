@@ -1,8 +1,7 @@
 <template lang="pug">
-    .container
-        gmap-map.map-edit__map(:center="center" :zoom="zoom" :options="{styles: styles}" ref="gmap")
-            gmap-marker(v-for="(m,id) in marker_items" :position="m.position" :icon="m.icon" :title="m.title" :clickable="true" :draggable="false" :key="id")
-        map-layer.map-edit__map(@scroll="mapScroll")
+    .container.map-edit__map
+        gmap-map.map-edit__layer(:center="center" :zoom="zoom" :options="{styles: styles}" ref="gmap")
+        map-layer.map-edit__map--map-layer(@scroll="mapScroll")
 </template>
 
 <script>
@@ -44,5 +43,19 @@ export default {
 .map-edit__map {
     width: 100%;
     height: 700px;
+
+    &--map-layer {
+        position: absolute;
+        z-index: 10;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.map-edit__layer {
+    width: 100%;
+    height: 100%;
 }
 </style>
