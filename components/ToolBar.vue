@@ -4,6 +4,7 @@
         button(type="button" @click="addBuildingBasic") addBuildingBasic
         button(type="button" @click="addBuilding") addBuilding
         button(type="button" @click="addDirection") addDirection
+        button(type="button" @click="addPin") addPin
 </template>
 
 <script>
@@ -23,6 +24,9 @@ export default {
             this.$store.dispatch('board/addSelect', {type: 'direction', x: 1000, y: 1000, points: []})
             this.$store.dispatch('togglePlotting')
         },
+        addPin() {
+            this.$store.dispatch('board/add', { type: 'pin', x: 50, y: 50, r: 20})
+        }
     }
 }
 </script>
