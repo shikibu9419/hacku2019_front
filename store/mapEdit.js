@@ -33,10 +33,8 @@ export const mutations = {
     addTool(state, attr) {
         state.tools = {...state.tools, [uuid()]: attr}
     },
-    addSelect(state, attr) {
-        const toolId = uuid()
+    addSelect(state, {attr, toolId}) {
         state.tools = {...state.tools, [toolId]: attr}
-        mutations.selectTool(state, {toolId: toolId})
     },
     plot(state, prop) {
         state.tools[prop.toolId].points.push({x: prop.x, y: prop.y})
@@ -44,14 +42,14 @@ export const mutations = {
     replot(state, prop) {
         state.tools[prop.toolId].points.splice(prop.index, 1, {x: prop.x, y: prop.y})
     },
-    selectTool(state, prop) {
-        state.selected = {...state.selected, [prop.toolId]: prop.userId}
+    selectTool(state, {prop, getters}) {
+        state.selected = {...state.selected, [prop.toolId]: getters.getUserId}
     },
     clearSelection(state) {
         state.selected = getters.othersSelecting
     },
-    setPosition(state, prop) {
-        for(const toolId of Object.keys(state.selected))
+    setPosition(state, {prop, getters}) {
+        for(const toolId of Object.keys(getters.selecting))
             state.tools[toolId] = {...state.tools[toolId], x: prop.x, y: prop.y}
     },
     scrollMap(state, prop) {
@@ -76,7 +74,9 @@ export const actions = {
         context.commit('addTool', attr)
     },
     addSelect(context, attr) {
-        context.commit('addSelect', attr)
+        const toolId = uuid()
+        context.commit('addSelect', {attr, toolId})
+        context.dispatch('select', {toolId: toolId})
     },
     plot(context, prop) {
         context.commit('plot', prop)
@@ -84,18 +84,16 @@ export const actions = {
     replot(context, prop) {
         context.commit('replot', prop)
     },
-    select(context, prop) {
+    select({commit, getters}, prop) {
         if(!prop.multiple)
-            context.commit('clearSelection')
-
-        prop.userId = context.rootState.userId
-        context.commit('selectTool', prop)
+            commit('clearSelection')
+        commit('selectTool', {prop, getters})
     },
     clearSelection(context) {
         context.commit('clearSelection')
     },
-    setPosition(context, prop) {
-        context.commit('setPosition', prop)
+    setPosition({commit, getters}, prop) {
+        commit('setPosition', {prop, getters})
     },
     scrollMap(context, prop) {
         context.commit('scrollMap', prop)
@@ -113,4 +111,7 @@ export const getters = {
                      .filter(item => item[1] !== rootState.userId)         // 本人が選択していないものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
     },
+    getUserId(state, _, rootState) {
+        return rootState.userId
+    }
 }
