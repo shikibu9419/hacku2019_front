@@ -1,14 +1,12 @@
 <template lang="pug">
-  .container
-    map-layer
+    map-edit
 </template>
 
 <script>
-import MapLayer from '~/components/molecules/MapLayer.vue'
-
 export default {
-  components: {
-    MapLayer
-  }
+    layout: 'MapHeader',
+    components: {
+        MapEdit: () => import('~/components/organisms/MapEdit'),
+    }
 }
 </script>

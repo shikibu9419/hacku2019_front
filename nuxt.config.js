@@ -14,7 +14,11 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+    script: [
+      { src: 'https://maps.googleapis.com/maps/api/js?key=' + process.env.GOOGLE_MAPS_API_KEY },
+      { src: 'https://map.yahooapis.jp/js/V1/jsapi?appid=' + process.env.YOLP_APPID }
+    ],
   },
   /*
   ** Customize the progress-bar color
@@ -29,7 +33,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/vue2-google-maps.js' }
+//     { src: '~/plugins/vue2-google-maps.js' },
+    { src: '~/plugins/vue-jsonp.js' }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -48,7 +53,7 @@ export default {
   /*
   ** Nuxt.js vendor
   */
-  vendor: ['vue2-google-maps'],
+//   vendor: ['vue2-google-maps'],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
@@ -62,17 +67,17 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
-      config.externals = config.externals || [];
-      if (!ctx.isClient) {
-        config.externals.splice(0, 0, function(context, request, callback) {
-          if (/^vue2-google-maps($|\/)/.test(request)) {
-            callback(null, false);
-          } else {
-            callback();
-          }
-        });
-      }
-    }
+//     extend (config, ctx) {
+//       config.externals = config.externals || [];
+//       if (!ctx.isClient) {
+//         config.externals.splice(0, 0, function(context, request, callback) {
+//           if (/^vue2-google-maps($|\/)/.test(request)) {
+//             callback(null, false);
+//           } else {
+//             callback();
+//           }
+//         });
+//       }
+//     }
   }
 }

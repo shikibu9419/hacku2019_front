@@ -1,19 +1,11 @@
 <template lang="pug">
     .container
-        tool-bar
-        .layer(ref="layer" id="container")
-            svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup")
-                tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
-                    :id="id" :attr="attr" :selected="selected(id)"
-                    :grabbing="grabbing" :plotting="plotting")
+        svg.map__map--map-svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
+            tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
+                :id="id" :attr="attr" :selected="selected(id)"
+                :grabbing="grabbing" :plotting="plotting")
+        tool-bar.map__map--map-toolbar
 </template>
-
-<style lang="scss">
-.graph {
-    width: 100%;
-    height: 500px;
-}
-</style>
 
 <script>
 import Tool from '~/components/atoms/mapTools/Tool'
@@ -31,20 +23,24 @@ export default {
                 y: e.pageY - this.$store.state.mapEdit.offset.y
             }
 
-            this.$store.dispatch('mapEdit/setMousePosition', prop)
+            if (this.$store.state.mapEdit.grabbing || this.$store.state.mapEdit.mapGrabbing || this.$store.state.mapEdit.plotting) {
+                if (this.$store.state.mapEdit.mapGrabbing)
+                    this.$emit('scroll', prop)
+                else
+                    this.$store.dispatch('mapEdit/setPosition', prop)
+            }
 
-            if (!this.$store.state.mapEdit.grabbing && !this.$store.state.mapEdit.plotting)
-                return
-            if (!Object.keys(this.$store.getters['mapEdit/selecting']).length)
-                return
-            this.$store.dispatch('mapEdit/setPosition', prop)
+            this.$store.dispatch('mapEdit/setMousePosition', prop)
         },
         onMousedown() {
+            this.$store.dispatch('mapEdit/toggleMapGrabbing')
             this.$store.dispatch('mapEdit/clearSelection')
         },
         onMouseup() {
             if(this.$store.state.mapEdit.grabbing)
                 this.$store.dispatch('mapEdit/toggleGrabbing')
+            if(this.$store.state.mapEdit.mapGrabbing)
+                this.$store.dispatch('mapEdit/toggleMapGrabbing')
         },
         setOffset() {
             const rect = this.$refs.layer.getBoundingClientRect()
