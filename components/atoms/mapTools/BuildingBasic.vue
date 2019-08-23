@@ -18,5 +18,6 @@ export default {
         }
     },
     mixins: [Shared]
+    mixins: [BaseTool],
 }
 </script>
