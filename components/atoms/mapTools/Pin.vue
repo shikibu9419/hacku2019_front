@@ -14,8 +14,7 @@
 </template>
 
 <script>
-    import BaseTool from './BaseTool.vue'
-    import PopupLayer from './PopupLayer'
+    import BaseTool from './Shard.vue'
 
     export default {
         data() {
@@ -24,15 +23,15 @@
                 popupLayerEnable: false
             }
         },
-        mixins: [BaseTool],
-        components: {
-            PopupLayer
-        },
         methods: {
             enable(bool) {
                 this.popupLayerEnable = bool;
             }
-        }
+        },
+        components: {
+            PopupLayer: () => import('./PopupLayer')
+        },
+        mixins: [Shard],
     }
 </script>
 
