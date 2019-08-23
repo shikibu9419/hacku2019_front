@@ -15,6 +15,7 @@ export default {
     data() {
         return {
             type: 'circle',
+    import BaseTool from './BaseTool.vue'
         }
     },
     mixins: [Shared]
