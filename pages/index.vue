@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import MapLayer from '~/components/MapLayer.vue'
+import MapLayer from '~/components/molecules/MapLayer.vue'
 
 export default {
   components: {
