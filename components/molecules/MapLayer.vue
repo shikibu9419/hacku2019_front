@@ -2,8 +2,7 @@
     .map_edit__map__layer
         svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
-                :id="id" :attr="attr" :selected="selected(id)"
-                :grabbing="grabbing" :plotting="plotting")
+                :id="id" :attr="attr" :selected="selected(id)")
         toolbar
 </template>
 
@@ -76,12 +75,6 @@ export default {
             return function (id) {
                 return id in this.$store.state.mapEdit.selected
             };
-        },
-        grabbing() {
-            return this.$store.state.mapEdit.grabbing
-        },
-        plotting() {
-            return this.$store.state.mapEdit.plotting
         }
     }
 }

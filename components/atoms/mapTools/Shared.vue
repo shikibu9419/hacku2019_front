@@ -25,15 +25,7 @@ export default {
         selected: {
             type: Boolean,
             required: true
-        },
-        grabbing: {
-            type: Boolean,
-            required: true
-        },
-        plotting: {
-            type: Boolean,
-            required: true
-        },
+        }
     },
     methods: {
         select() {
@@ -53,6 +45,9 @@ export default {
     computed: {
         color() {
             return this.selected ? '#42b983' : '#000'
+        },
+        plotting () {
+            return this.$store.state.mapEdit.plotting
         }
     }
 }
