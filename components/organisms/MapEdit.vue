@@ -1,7 +1,8 @@
 <template lang="pug">
     .container.map-edit__map
         #map-canvas.map-edit__map--background
-        map-layer.map-edit__map--layer(@scroll="scrollMap")
+        map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
+        map-layer(v-bind="activeLayer" @scroll="scrollMap")
         sidebar.map-edit__map--sidebar
 </template>
 
@@ -19,7 +20,6 @@ export default {
             ymap: {},
             markerLatLngs: [],
             prevMarkers: [],
-            inactiveLayers: []
         }
     },
     watch: {
@@ -62,13 +62,19 @@ export default {
     },
     mounted () {
         this.markerLatLngs = this.$store.state.mapEdit.markerLatLngs
-        this.inactiveLayers = this.$store.getters['mapEdit/inactiveLayers']
-        this.activeLayer = this.$store.getters['mapEdit/activeLayer']
 
         this.ymap = new Y.Map("map-canvas");
         this.ymap.drawMap(new Y.LatLng(...Object.values(this.$store.state.mapEdit.center)),
                           this.zoom,
                           Y.LayerSetId.NORMAL);
+    },
+    computed: {
+        activeLayer () {
+            return this.$store.getters['mapEdit/activeLayer']
+        },
+        inactiveLayers () {
+            return this.$store.getters['mapEdit/inactiveLayers']
+        }
     }
 }
 </script>

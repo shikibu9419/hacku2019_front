@@ -16,6 +16,24 @@ export default {
         Tool,
         ToolBar
     },
+    props: {
+        id: {
+            type: Number,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        color: {
+            type: String,
+            required: true
+        },
+        tools: {
+            type: Object,
+            required: true
+        },
+    },
     methods: {
         onMousemove(e) {
             const prop = {
@@ -57,9 +75,6 @@ export default {
         window.addEventListener('scroll', () => this.setOffset())
     },
     computed: {
-        tools() {
-            return this.$store.getters['mapEdit/activeLayer'].tools
-        },
         selected(id) {
             return function (id) {
                 return id in this.$store.state.mapEdit.selected
