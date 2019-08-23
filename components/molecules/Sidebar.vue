@@ -1,5 +1,5 @@
 <template lang="pug">
-    .container
+    .map_edit__sidebar
         h2 this is sidebar
         ul
             li(v-for="[id, layer] in Object.entries(layers)" :key="id") {{ layer }}
@@ -25,3 +25,16 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+@import "~/assets/styles/variables.scss";
+
+.map_edit__sidebar {
+    background-color: #fff;
+    position: absolute;
+    z-index: 10;
+    top: 50px;
+    width: 15%;
+    height: 100%;
+}
+</style>

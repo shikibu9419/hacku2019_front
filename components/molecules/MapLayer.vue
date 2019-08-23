@@ -1,20 +1,17 @@
 <template lang="pug">
-    .container.map-edit__map--layer
-        svg.map-edit__map--svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
+    .map_edit__map__layer
+        svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                 :id="id" :attr="attr" :selected="selected(id)"
                 :grabbing="grabbing" :plotting="plotting")
-        tool-bar.map-edit__map--toolbar
+        toolbar
 </template>
 
 <script>
-import Tool from '~/components/atoms/mapTools/Tool'
-import ToolBar from './ToolBar'
-
 export default {
     components: {
-        Tool,
-        ToolBar
+        Tool: () => import('~/components/atoms/mapTools/Tool'),
+        Toolbar: () => import('./Toolbar')
     },
     props: {
         id: {
@@ -89,3 +86,18 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+.map_edit__map__layer {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    height: 700px;
+}
+
+.map_edit__map__svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+</style>

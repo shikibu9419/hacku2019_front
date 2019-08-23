@@ -1,9 +1,9 @@
 <template lang="pug">
-    .container.map-edit__map
-        #map-canvas.map-edit__map--background
+    .container.map_edit__map
+        #map-canvas.map_edit__map__background
         map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
         map-layer(v-bind="activeLayer" @scroll="scrollMap")
-        sidebar.map-edit__map--sidebar
+        sidebar
 </template>
 
 <script>
@@ -80,43 +80,13 @@ export default {
 </script>
 
 <style lang="scss">
-.map-edit__map {
+.map_edit__map {
     width: 100%;
     height: 700px;
 
-    &--background {
-        z-index: 10;
+    &__background {
         width: 100%;
         height: 100%;
-    }
-
-    &--layer {
-        position: absolute;
-        z-index: 10;
-        top: 50px;
-        width: 100%;
-        height: 100%;
-    }
-
-    &--toolbar {
-        position: absolute;
-        z-index: 10;
-    }
-
-    &--sidebar {
-        position: absolute;
-        z-index: 10;
-        top: 50px;
-        width: 15%;
-        height: 100%;
-        background-color: #fff;
-    }
-
-    &--svg {
-        position: absolute;
-        z-index: 10;
-        width: 100%;
-        height: 700px;
     }
 }
 </style>
