@@ -4,8 +4,9 @@
 
 <script>
 export default {
-  components: {
-    MapEdit: () => import('~/components/organisms/MapEdit'),
-  }
+    layout: 'MapHeader',
+    components: {
+        MapEdit: () => import('~/components/organisms/MapEdit'),
+    }
 }
 </script>

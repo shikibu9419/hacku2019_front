@@ -1,7 +1,7 @@
 <template lang="pug">
-    .container.map-edit__map
-        #map-canvas.map-edit__layer
-        map-layer.map-edit__map--map-layer(@scroll="scrollMap")
+    .container.map__map
+        #map-canvas.map__map--map-background
+        map-layer.map__map--map-layer(@scroll="scrollMap")
 </template>
 
 <script>
@@ -14,7 +14,22 @@ export default {
     data() {
         return {
             zoom: 18,
-            ymap: {}
+            ymap: {},
+            markerLatLngs: [],
+            prevMarkers: [],
+        }
+    },
+    watch: {
+        markerLatLngs () {
+            for (const marker of this.prevMarkers)
+                this.ymap.removeFeature(marker)
+            this.prevMarkers.length = 0
+
+            for (const latlng of this.markerLatLngs) {
+                const marker = new Y.Marker(new Y.LatLng(...latlng))
+                this.ymap.addFeature(marker)
+                this.prevMarkers.push(marker)
+            }
         }
     },
     methods: {
@@ -39,6 +54,7 @@ export default {
         }
     },
     mounted () {
+        this.markerLatLngs = this.$store.state.mapEdit.markerLatLngs
         this.ymap = new Y.Map("map-canvas");
         this.ymap.drawMap(new Y.LatLng(...Object.values(this.$store.state.mapEdit.center)),
                           this.zoom,
@@ -48,22 +64,35 @@ export default {
 </script>
 
 <style lang="scss">
-.map-edit__map {
+.map__map {
     width: 100%;
     height: 700px;
+
+    &--map-background {
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+    }
 
     &--map-layer {
         position: absolute;
         z-index: 10;
-        top: 0px;
+        top: 50px;
         left: 0px;
         width: 100%;
         height: 100%;
     }
-}
 
-.map-edit__layer {
-    width: 100%;
-    height: 100%;
+    &--map-toolbar {
+        position: absolute;
+        z-index: 10;
+    }
+
+    &--map-svg {
+        position: absolute;
+        z-index: 10;
+        width: 100%;
+        height: 700px;
+    }
 }
 </style>

@@ -8,7 +8,7 @@ const uuid = function() {
 
 export const state = () => ({
     center: {lat: 35.71, lng: 139.72},
-    markers: [],
+    markerLatLngs: [],
     plotting: false,
     grabbing: false,
     mapGrabbing: false,
@@ -60,6 +60,10 @@ export const mutations = {
     scrollMap(state, prop) {
         state.center = {...state.center, lat: prop.lat, lng: prop.lng}
     },
+    setMarkerLatLngs(state, latlng) {
+        state.markerLatLngs.length = 0
+        state.markerLatLngs.push(latlng)
+    }
 }
 
 export const actions = {
@@ -105,6 +109,9 @@ export const actions = {
     },
     scrollMap(context, prop) {
         context.commit('scrollMap', prop)
+    },
+    setMarkerLatLngs(context, latlng) {
+        context.commit('setMarkerLatLngs', latlng)
     },
 }
 

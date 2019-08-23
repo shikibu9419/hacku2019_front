@@ -1,10 +1,10 @@
 <template lang="pug">
     .container
-        tool-bar
-        svg.map-edit__layer(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
+        svg.map__map--map-svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                 :id="id" :attr="attr" :selected="selected(id)"
                 :grabbing="grabbing" :plotting="plotting")
+        tool-bar.map__map--map-toolbar
 </template>
 
 <script>
