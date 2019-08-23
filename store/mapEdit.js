@@ -8,6 +8,7 @@ const uuid = function() {
 
 export const state = () => ({
     center: {lat: 35.71, lng: 139.72},
+    markers: [],
     plotting: false,
     grabbing: false,
     mapGrabbing: false,
