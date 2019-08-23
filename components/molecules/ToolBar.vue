@@ -1,5 +1,5 @@
 <template lang="pug">
-    .container
+    .container(style="text-align: right; width: 100%;")
         button(type="button" @click="addBuildingBasic") addBuildingBasic
         button(type="button" @click="addBuilding") addBuilding
         button(type="button" @click="addDirection") addDirection

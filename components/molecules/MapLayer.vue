@@ -1,10 +1,10 @@
 <template lang="pug">
-    .container
-        svg.map__map--map-svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
+    .container.map-edit__map--layer
+        svg.map-edit__map--svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                 :id="id" :attr="attr" :selected="selected(id)"
                 :grabbing="grabbing" :plotting="plotting")
-        tool-bar.map__map--map-toolbar
+        tool-bar.map-edit__map--toolbar
 </template>
 
 <script>
@@ -15,6 +15,24 @@ export default {
     components: {
         Tool,
         ToolBar
+    },
+    props: {
+        id: {
+            type: Number,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        color: {
+            type: String,
+            required: true
+        },
+        tools: {
+            type: Object,
+            required: true
+        },
     },
     methods: {
         onMousemove(e) {
@@ -57,9 +75,6 @@ export default {
         window.addEventListener('scroll', () => this.setOffset())
     },
     computed: {
-        tools() {
-            return this.$store.state.mapEdit.tools
-        },
         selected(id) {
             return function (id) {
                 return id in this.$store.state.mapEdit.selected
