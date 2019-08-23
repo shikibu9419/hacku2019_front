@@ -1,7 +1,7 @@
 <template lang="pug">
     .container
         toolbar.toolbar
-        toolbar.toolbar.fake
+        toolbar.toolbar.real(v-bind:class="{'event-disable': eventEnable}")
         .board(ref="board" id="container")
         svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
@@ -18,9 +18,12 @@
         top: 16px;
         z-index: -1;
     }
-    .fake {
+    .real {
         opacity: 0;
         z-index: 1;
+    }
+    .event-disable {
+        pointer-events: none;
     }
 </style>
 
@@ -29,6 +32,11 @@ import Tool from "~/components/Tool";
 import Toolbar from "~/components/Toolbar";
 
 export default {
+    data() {
+        return {
+            eventEnable: true
+        }
+    },
     components: {
         Tool,
         Toolbar
@@ -48,9 +56,13 @@ export default {
     },
     onMousedown() {
         this.$store.dispatch("board/clearSelection");
+        if (!this.$store.state.grabbing) this.eventEnable = true
     },
     onMouseup() {
-        if (this.$store.state.grabbing) this.$store.dispatch("toggleGrabbing");
+        if (this.$store.state.grabbing) {
+            this.$store.dispatch("toggleGrabbing");
+            this.eventEnable = false
+        }
     },
     setOffset() {
             const rect = this.$refs.board.getBoundingClientRect();
