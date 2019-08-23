@@ -14,7 +14,9 @@ export const state = () => ({
     mapGrabbing: false,
     mousePosition: {x: 0, y: 0},
     offset: {x: 0, y: 0},
-    tools: {},
+    layers: [],
+    activeLayerId: 0,
+    activeLayer: {},
     selected: {}
 })
 
@@ -36,16 +38,16 @@ export const mutations = {
         state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
     },
     addTool(state, attr) {
-        state.tools = {...state.tools, [uuid()]: attr}
+        state.activeLayer.tools = {...state.activeLayer.tools, [uuid()]: attr}
     },
     addSelect(state, {attr, toolId}) {
-        state.tools = {...state.tools, [toolId]: attr}
+        state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
     },
     plot(state, prop) {
-        state.tools[prop.toolId].points.push({x: prop.x, y: prop.y})
+        state.activeLayer.tools[prop.toolId].points.push({x: prop.x, y: prop.y})
     },
     replot(state, prop) {
-        state.tools[prop.toolId].points.splice(prop.index, 1, {x: prop.x, y: prop.y})
+        state.activeLayer.tools[prop.toolId].points.splice(prop.index, 1, {x: prop.x, y: prop.y})
     },
     selectTool(state, {prop, getters}) {
         state.selected = {...state.selected, [prop.toolId]: getters.getUserId}
@@ -55,7 +57,7 @@ export const mutations = {
     },
     setPosition(state, {prop, getters}) {
         for(const toolId of Object.keys(getters.selecting))
-            state.tools[toolId] = {...state.tools[toolId], x: prop.x, y: prop.y}
+            state.activeLayer.tools[toolId] = {...state.activeLayer.tools[toolId], x: prop.x, y: prop.y}
     },
     setCenter(state, prop) {
         state.center = {...state.center, lat: prop.lat, lng: prop.lng}
@@ -63,6 +65,17 @@ export const mutations = {
     setMarkerLatLngs(state, latlng) {
         state.markerLatLngs.length = 0
         state.markerLatLngs.push(latlng)
+    },
+    initLayers(state) {
+        // 実際はAPIからデータをとりにきてlayersにセット
+        state.layers = [{id: 1, name: 'layer1', color: 'red', tools: {}}]
+    },
+    addLayer(state, prop) {
+        state.layers.push(prop)
+    },
+    setActiveLayer(state, layerId) {
+        state.activeLayerId = layerId
+        state.activeLayer = state.layers.find(layer => layer.id === layerId)
     }
 }
 
@@ -113,6 +126,21 @@ export const actions = {
     setMarkerLatLngs(context, latlng) {
         context.commit('setMarkerLatLngs', latlng)
     },
+    initLayers(context) {
+        context.commit('initLayers')
+    },
+    addLayer(context, prop) {
+        // 実際はlayer作成要求をして, レスポンスをlayerにセット
+        const id = Object.keys(context.state.layers).length + 1
+        prop.id = id
+        prop.tools = {}
+
+        context.commit('addLayer', prop)
+        context.dispatch('setActiveLayer', id)
+    },
+    setActiveLayer(context, layerId) {
+        context.commit('setActiveLayer', layerId)
+    },
 }
 
 export const getters = {
@@ -128,5 +156,11 @@ export const getters = {
     },
     getUserId(state, _, rootState) {
         return rootState.userId
+    },
+    activeLayer(state) {
+        return state.activeLayer
+    },
+    inactiveLayers (state) {
+        return state.layers.filter(layer => layer.id !== state.activeLayerId)
     }
 }

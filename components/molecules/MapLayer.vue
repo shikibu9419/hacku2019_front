@@ -1,5 +1,5 @@
 <template lang="pug">
-    .container
+    .container.map-edit__map--layer
         svg.map-edit__map--svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                 :id="id" :attr="attr" :selected="selected(id)"
@@ -58,7 +58,7 @@ export default {
     },
     computed: {
         tools() {
-            return this.$store.state.mapEdit.tools
+            return this.$store.getters['mapEdit/activeLayer'].tools
         },
         selected(id) {
             return function (id) {

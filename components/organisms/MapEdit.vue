@@ -2,6 +2,7 @@
     .container.map-edit__map
         #map-canvas.map-edit__map--background
         map-layer.map-edit__map--layer(@scroll="scrollMap")
+        sidebar.map-edit__map--sidebar
 </template>
 
 <script>
@@ -10,6 +11,7 @@ import axios from 'axios'
 export default {
     components: {
         MapLayer: () => import('~/components/molecules/MapLayer'),
+        Sidebar: () => import('~/components/molecules/Sidebar'),
     },
     data() {
         return {
@@ -17,6 +19,7 @@ export default {
             ymap: {},
             markerLatLngs: [],
             prevMarkers: [],
+            inactiveLayers: []
         }
     },
     watch: {
@@ -53,8 +56,15 @@ export default {
             )
         }
     },
+    beforeCreate() {
+        this.$store.dispatch('mapEdit/initLayers')
+        this.$store.dispatch('mapEdit/setActiveLayer', 1)
+    },
     mounted () {
         this.markerLatLngs = this.$store.state.mapEdit.markerLatLngs
+        this.inactiveLayers = this.$store.getters['mapEdit/inactiveLayers']
+        this.activeLayer = this.$store.getters['mapEdit/activeLayer']
+
         this.ymap = new Y.Map("map-canvas");
         this.ymap.drawMap(new Y.LatLng(...Object.values(this.$store.state.mapEdit.center)),
                           this.zoom,
@@ -85,6 +95,15 @@ export default {
     &--toolbar {
         position: absolute;
         z-index: 10;
+    }
+
+    &--sidebar {
+        position: absolute;
+        z-index: 10;
+        top: 50px;
+        width: 15%;
+        height: 100%;
+        background-color: #fff;
     }
 
     &--svg {
