@@ -2,7 +2,7 @@
     rect.tool(
         v-bind="attr"
         @dblclick.stop="select"
-        @mousedown.stop="grab"
+        @mousedown.stop="clearSelect"
         stroke-width="2"
         :style="{stroke: color}"
     )
@@ -17,6 +17,11 @@ export default {
             type: 'building_basic',
         }
     },
-    mixins: [BaseTool]
+    mixins: [BaseTool],
+    methods: {
+        clearSelect() {
+            this.$store.dispatch("board/clearSelection");
+        }
+    }
 }
 </script>
