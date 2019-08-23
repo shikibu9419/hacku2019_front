@@ -26,6 +26,7 @@
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
     "vue-jest": "^4.0.0-0",
+    "vue-jsonp": "^0.1.8",
     "vue2-google-maps": "^0.10.7"
   }
 }

@@ -9,14 +9,15 @@
 </template>
 
 <script>
-    import BaseTool from './BaseTool.vue'
+import Shared from './Shared.vue'
 
-    export default {
-        data() {
-            return {
-                type: 'circle',
-            }
-        },
-        mixins: [BaseTool]
-    }
+export default {
+    data() {
+        return {
+            type: 'circle',
+    import BaseTool from './BaseTool.vue'
+        }
+    },
+    mixins: [Shared]
+}
 </script>
