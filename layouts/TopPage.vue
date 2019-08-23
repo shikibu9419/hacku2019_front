@@ -23,6 +23,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~/assets/styles/variables.scss";
+
 .top_page {
   position: relative;
   width: 100vw;
@@ -44,7 +46,7 @@ export default {
   margin: auto;
   width: calc(100% - 60px);
   height: calc(100% - 60px);
-  border: 4px solid black;
+  border: 4px solid $theme-pink;
 }
 
 .top_page__inside {

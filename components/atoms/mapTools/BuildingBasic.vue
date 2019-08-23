@@ -17,7 +17,7 @@ export default {
             type: 'building_basic',
         }
     },
-    mixins: [Shared]
+    mixins: [Shared],
     mixins: [BaseTool],
 }
 </script>
