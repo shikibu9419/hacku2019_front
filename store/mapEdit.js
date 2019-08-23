@@ -57,7 +57,7 @@ export const mutations = {
         for(const toolId of Object.keys(getters.selecting))
             state.tools[toolId] = {...state.tools[toolId], x: prop.x, y: prop.y}
     },
-    scrollMap(state, prop) {
+    setCenter(state, prop) {
         state.center = {...state.center, lat: prop.lat, lng: prop.lng}
     },
     setMarkerLatLngs(state, latlng) {
@@ -107,8 +107,8 @@ export const actions = {
     setPosition({commit, getters}, prop) {
         commit('setPosition', {prop, getters})
     },
-    scrollMap(context, prop) {
-        context.commit('scrollMap', prop)
+    setCenter(context, prop) {
+        context.commit('setCenter', prop)
     },
     setMarkerLatLngs(context, latlng) {
         context.commit('setMarkerLatLngs', latlng)

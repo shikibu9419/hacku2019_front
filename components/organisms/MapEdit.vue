@@ -1,7 +1,7 @@
 <template lang="pug">
-    .container.map__map
-        #map-canvas.map__map--map-background
-        map-layer.map__map--map-layer(@scroll="scrollMap")
+    .container.map-edit__map
+        #map-canvas.map-edit__map--background
+        map-layer.map-edit__map--layer(@scroll="scrollMap")
 </template>
 
 <script>
@@ -45,7 +45,7 @@ export default {
             center.lng = center.lng - dlng
 
             this.ymap.panTo(new Y.LatLng(...Object.values(center)))
-            this.$store.dispatch('mapEdit/scrollMap', center)
+            this.$store.dispatch('mapEdit/setCenter', center)
         },
         pixelToLanLng(position) {
             return this.ymap.fromContainerPixelToLatLng(
@@ -64,31 +64,30 @@ export default {
 </script>
 
 <style lang="scss">
-.map__map {
+.map-edit__map {
     width: 100%;
     height: 700px;
 
-    &--map-background {
+    &--background {
         z-index: 10;
         width: 100%;
         height: 100%;
     }
 
-    &--map-layer {
+    &--layer {
         position: absolute;
         z-index: 10;
         top: 50px;
-        left: 0px;
         width: 100%;
         height: 100%;
     }
 
-    &--map-toolbar {
+    &--toolbar {
         position: absolute;
         z-index: 10;
     }
 
-    &--map-svg {
+    &--svg {
         position: absolute;
         z-index: 10;
         width: 100%;
