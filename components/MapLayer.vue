@@ -1,6 +1,7 @@
 <template lang="pug">
     .container
         toolbar.toolbar
+        toolbar.toolbar.fake
         .board(ref="board" id="container")
         svg.graph(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
@@ -14,7 +15,12 @@
     }
     .toolbar {
         position: absolute;
-        z-index: 10;
+        top: 16px;
+        z-index: -1;
+    }
+    .fake {
+        opacity: 0;
+        z-index: 1;
     }
 </style>
 
