@@ -1,13 +1,14 @@
 <template lang="pug">
     .map_edit__sidebar
         h2 this is sidebar
-        ul
-            li(v-for="[id, layer] in Object.entries(layers)" :key="id") {{ layer }}
-        button(@click="addLayer") レイヤー追加
+        layer-selector
 </template>
 
 <script>
 export default {
+    components: {
+        LayerSelector: () => import('~/components/molecules/LayerSelector')
+    },
     computed: {
         layers () {
             return this.$store.state.mapEdit.layers
