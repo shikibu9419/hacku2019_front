@@ -5,8 +5,8 @@
         @dblclick.stop="select"
         @mousedown.stop="grab"
         stroke-width="2"
-        :style="{stroke: color}"
-        v-on:click="enable(true)"
+        :stroke="color"
+        @click="enable(true)"
     )
         popup-layer(
             v-bind:enable.sync="popupLayerEnable"

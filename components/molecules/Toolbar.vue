@@ -1,5 +1,5 @@
 <template lang="pug">
-    .container(style="text-align: right; width: 100%;")
+    .map_edit__toolbar
         button(type="button" @click="addBuildingBasic") addBuildingBasic
         button(type="button" @click="addBuilding") addBuilding
         button(type="button" @click="addDirection") addDirection
@@ -22,3 +22,15 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+@import "~/assets/styles/variables.scss";
+
+.map_edit__toolbar {
+    background: $back-gray;
+    position: absolute;
+    z-index: 10;
+    text-align: right;
+    width: 100%;
+}
+</style>
