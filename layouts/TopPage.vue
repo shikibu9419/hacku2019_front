@@ -1,5 +1,6 @@
 <template lang="pug">
   .top_page
+    .top_background_image
     .top_page__border
       .top_page__border__square
       .top_page__border__circle(
@@ -25,6 +26,34 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+@import "~/assets/styles/normalize.scss";
+@import "~/assets/styles/variables.scss";
+@import "~/assets/styles/mixin.scss";
+html {
+  font-family: $noto-font;
+  font-size: 62.5%;
+  color: $text-main;
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  @include noto-font(1.5rem);
+}
+
+:focus{
+  outline: 3px auto rgba($theme-pink,.5);
+}
+button {
+  cursor: pointer;
+}
+</style>
+
 
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
@@ -41,12 +70,26 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
   height: 100vh;
   overflow: hidden;
 }
+.top_background_image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('~assets/imgs/googlemap_osaka.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: .08;
+  z-index: -1;
+}
 .top_page__border {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 .top_page__border__square {
   position: absolute;
@@ -98,5 +141,7 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
 
 .top_page__inside {
   padding: $border-margin + $border-width;
+  width: 100%;
+  height: 100%;
 }
 </style>

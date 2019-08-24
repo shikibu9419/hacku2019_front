@@ -1,0 +1,7 @@
+@mixin noto-font($size:1.6rem, $color:$text-main) {
+  font-family: $noto-font;
+  font-size: $size;
+  color: $color;
+  font-feature-settings: "pkna";
+  line-height: 1.6;
+}
