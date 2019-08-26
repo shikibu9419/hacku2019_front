@@ -12,7 +12,7 @@ import axios from 'axios'
 export default {
     components: {
         MapLayer: () => import('~/components/molecules/MapLayer'),
-        Sidebar: () => import('~/components/molecules/Sidebar'),
+        Sidebar: () => import('~/components/organisms/editMap/Sidebar'),
     },
     data() {
         return {
