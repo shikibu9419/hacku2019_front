@@ -3,7 +3,7 @@
         svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                 :id="id" :attr="attr" :selected="selected(id)")
-        toolbar
+        toolbar(v-if="isActive")
 </template>
 
 <script>
@@ -71,10 +71,13 @@ export default {
         window.addEventListener('scroll', () => this.setOffset())
     },
     computed: {
-        selected(id) {
+        selected() {
             return function (id) {
                 return id in this.$store.state.mapEdit.selected
             };
+        },
+        isActive() {
+            return this.id === this.$store.state.mapEdit.activeLayer.id
         }
     }
 }

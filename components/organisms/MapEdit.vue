@@ -58,7 +58,7 @@ export default {
     },
     beforeCreate() {
         this.$store.dispatch('mapEdit/initLayers')
-        this.$store.dispatch('mapEdit/setActiveLayer', 1)
+        this.$store.dispatch('mapEdit/selectLayer', 1)
     },
     mounted () {
         this.markerLatLngs = this.$store.state.mapEdit.markerLatLngs

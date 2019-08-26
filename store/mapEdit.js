@@ -15,7 +15,6 @@ export const state = () => ({
     mousePosition: {x: 0, y: 0},
     offset: {x: 0, y: 0},
     layers: [],
-    activeLayerId: 0,
     activeLayer: {},
     selected: {}
 })
@@ -73,8 +72,7 @@ export const mutations = {
     addLayer(state, prop) {
         state.layers.push(prop)
     },
-    setActiveLayer(state, layerId) {
-        state.activeLayerId = layerId
+    selectLayer(state, layerId) {
         state.activeLayer = state.layers.find(layer => layer.id === layerId)
     }
 }
@@ -136,11 +134,11 @@ export const actions = {
         prop.tools = {}
 
         context.commit('addLayer', prop)
-        context.dispatch('setActiveLayer', id)
+        context.dispatch('selectLayer', id)
     },
-    setActiveLayer(context, layerId) {
-        context.commit('setActiveLayer', layerId)
-    },
+    selectLayer(context, layerId) {
+        context.commit('selectLayer', layerId)
+    }
 }
 
 export const getters = {
@@ -161,6 +159,6 @@ export const getters = {
         return state.activeLayer
     },
     inactiveLayers (state) {
-        return state.layers.filter(layer => layer.id !== state.activeLayerId)
+        return state.layers.filter(layer => layer.id !== state.activeLayer.id)
     }
 }
