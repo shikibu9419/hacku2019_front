@@ -4,7 +4,7 @@
         .map_edit__sidebar__layer_selector_content
             layer-selector-item(v-for="layer in layers" :key="layer.id" v-bind="layer")
             .map_edit__sidebar__layer_selector_item(@click="addLayer")
-                font-awesome-icon(icon="fa-plus-circle")
+                font-awesome-icon(icon="plus-circle")
                 p レイヤーを追加
 </template>
 
