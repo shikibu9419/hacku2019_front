@@ -3,7 +3,7 @@
         #map-canvas.map_edit__map__background
         map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
         map-layer(v-bind="activeLayer" @scroll="scrollMap")
-        sidebar
+        Sidebar
         toolbar
 </template>
 
@@ -89,6 +89,7 @@ export default {
     width: 100%;
     height: 100%;
     background: $back-light-gray;
+    z-index: 0;
 
     &__background {
         width: 100%;
