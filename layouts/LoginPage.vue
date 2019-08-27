@@ -1,15 +1,15 @@
 <template lang="pug">
-  .top_page
-    .top_background_image
-    .top_page__border
-      .top_page__border__square
-      .top_page__border__circle(
+  .login_page
+    .login_background_image
+    .login_page__border
+      .login_page__border__square
+      .login_page__border__circle(
         v-for="(cor,cur_id) in corner"
-        :key="`top_page_cur_${cur_id}`"
-        :class="`top_page__border__circle__${cor}`"
+        :key="`login_page_cur_${cur_id}`"
+        :class="`login_page__border__circle__${cor}`"
         )
-      .top_page__border__square_white
-    nuxt.top_page__inside
+      .login_page__border__square_white
+    nuxt.login_page__inside
 </template>
 
 <script>
