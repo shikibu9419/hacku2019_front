@@ -1,10 +1,10 @@
 <template lang="pug">
     g
-        polygon.map_edit__map__building(:points="points" v-if="attr.points.length" @dblclick.stop="select")
+        polygon.map_edit__map__building(:points="points" v-if="attr.points.length" @dblclick.stop="select" :class="{active__layer_on: layerActive}")
         g(v-if="selected")
-            plot-circle(v-for="(point, index) in attr.points" :key="index" :index="index"
+            plot-point(v-for="(point, index) in attr.points" :key="index" :index="index"
                 :id="id" :attr="point" :selected="selected" :layer-active="layerActive")
-            plot-circle(v-if="plotting" :now-plotted="true"
+            plot-point(v-if="plotting" :now-plotted="true"
                 :id="id" :attr="attr"  :selected="selected" :layer-active="layerActive")
 </template>
 
@@ -13,7 +13,7 @@ import Shared from './Shared.vue'
 
 export default {
     components: {
-        PlotCircle: () => import('./PlotCircle')
+        PlotPoint: () => import('./PlotPoint')
     },
     data() {
         return {

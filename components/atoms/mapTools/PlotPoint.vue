@@ -5,6 +5,7 @@
         @click.left="plot"
         @mousedown.stop="grabPoint"
         @mouseup.stop="releasePoint"
+        :class="{active__layer_on: layerActive}"
     )
 </template>
 
