@@ -4,6 +4,7 @@
         map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
         map-layer(v-bind="activeLayer" @scroll="scrollMap")
         sidebar
+        toolbar
 </template>
 
 <script>
@@ -13,6 +14,7 @@ export default {
     components: {
         MapLayer: () => import('~/components/molecules/MapLayer'),
         Sidebar: () => import('~/components/molecules/Sidebar'),
+        Toolbar: () => import('~/components/molecules/Toolbar')
     },
     data() {
         return {
@@ -79,10 +81,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import "~/assets/styles/variables.scss";
+
 .map_edit__map {
+    position: relative;
     width: 100%;
-    height: 700px;
+    height: 100%;
+    background: $back-light-gray;
 
     &__background {
         width: 100%;
