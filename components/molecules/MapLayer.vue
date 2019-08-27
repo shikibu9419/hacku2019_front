@@ -1,6 +1,7 @@
 <template lang="pug">
     .map_edit__map__layer
         svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" @click.right="stopPlot" ref="layer" cursor="grab")
+            rect.map_edit__map__svg_filter(v-if="isActive")
             tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :selected="false")
             toolbar(v-if="isActive")
             tool(v-for="[id, attr] in selectingTools"   :key="attr.id" :id="id" :attr="attr" :selected="true")
@@ -103,5 +104,12 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
+
+    &_filter {
+        fill: white;
+        fill-opacity: 0.5;
+        width: 100%;
+        height: 100%;
+    }
 }
 </style>

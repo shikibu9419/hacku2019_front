@@ -141,6 +141,7 @@ export const actions = {
     },
     selectLayer(context, layerId) {
         context.commit('selectLayer', layerId)
+        context.dispatch('clearSelection')
     }
 }
 

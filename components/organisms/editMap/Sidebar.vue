@@ -31,7 +31,7 @@ export default {
 @import "~/assets/styles/variables.scss";
 
 .map_edit__sidebar {
-    background-color: #fff;
+    background-color: $back-gray;
     position: absolute;
     z-index: 10;
     top: 50px;

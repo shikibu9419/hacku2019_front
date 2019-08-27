@@ -1,6 +1,6 @@
 <template lang="pug">
-    .container
-        p.map_edit__sidebar__layer_selector_label レイヤーを選択
+    .map_edit__sidebar__layer_selector
+        p 4 Layers
         .map_edit__sidebar__layer_selector_content
             layer-selector-item(v-for="layer in layers" :key="layer.id" v-bind="layer")
             .map_edit__sidebar__layer_selector_item(@click="addLayer")
@@ -35,13 +35,6 @@ export default {
 @import "~/assets/styles/variables.scss";
 
 .map_edit__sidebar__layer_selector {
-    &_label {
-        border: 2px solid $gray;
-        border-style: solid solid none solid;
-    }
-
-    &_content {
-        border: 2px solid $gray;
-    }
+    background-color: $white;
 }
 </style>
