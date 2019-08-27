@@ -1,9 +1,9 @@
 <template lang="pug">
-    g.map_edit__toolbar( transform="translate(500,10)" width="500" height="500")
+    g.map_edit__toolbar(transform="translate(500,10)" width="500" height="500")
         rect.map_edit__toolbar__background(width="500" height="50" rx="10" ry="10")
         image.map_edit__toolbar__icon(x="0" @click="addBuilding" xlink:href="~assets/svgs/figure_tool.svg")
         image.map_edit__toolbar__icon(x="40" @click="addDirection" xlink:href="~assets/svgs/way_tool.svg")
-        image.map_edit__toolbar__icon(x="80" @click="addBuildingBasic" xlink:href="~assets/svgs/text_box.svg")
+        image.map_edit__toolbar__icon(x="80" @mousedown.stop="addBuildingBasic" xlink:href="~assets/svgs/text_box.svg")
 </template>
 
 <script>
