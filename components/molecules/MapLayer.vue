@@ -2,15 +2,15 @@
     .map_edit__map__layer
         svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" @click.right="stopPlot" ref="layer" cursor="grab")
             rect.map_edit__map__svg_filter(v-if="isActive")
-            tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :selected="false")
+            tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :selected="false" :layer-active="isActive")
             toolbar(v-if="isActive")
-            tool(v-for="[id, attr] in selectingTools"   :key="attr.id" :id="id" :attr="attr" :selected="true")
+            tool(v-for="[id, attr] in selectingTools"   :key="attr.id" :id="id" :attr="attr" :selected="true" :layer-active="isActive")
 </template>
 
 <script>
 export default {
     components: {
-        Tool: () => import('~/components/atoms/mapTools/Tool'),
+        Tool: () => import('~/components/atoms/mapTools/ToolWrapper'),
         Toolbar: () => import('./Toolbar')
     },
     props: {

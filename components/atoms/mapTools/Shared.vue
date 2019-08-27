@@ -1,16 +1,3 @@
-<style lang="scss">
-.tool {
-    fill-opacity: 0;
-    cursor: pointer;
-    stroke-width: 2;
-}
-.plot {
-    fill: white;
-    cursor: pointer;
-    stroke-width: 2;
-}
-</style>
-
 <script>
 export default {
     props: {
@@ -23,6 +10,10 @@ export default {
             required: true
         },
         selected: {
+            type: Boolean,
+            required: true
+        },
+        layerActive: {
             type: Boolean,
             required: true
         }
@@ -43,12 +34,9 @@ export default {
         }
     },
     computed: {
-        color() {
-            return this.selected ? '#42b983' : '#000'
-        },
         plotting () {
             return this.$store.state.mapEdit.plotting
         }
-    }
+    },
 }
 </script>

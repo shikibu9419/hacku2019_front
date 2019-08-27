@@ -1,12 +1,10 @@
 <template lang="pug">
-    circle.plot(
+    circle.map_edit__map__plotpoint(
         v-bind="attr"
         :cx="x" :cy="y"
-        :stroke="stroke"
         @click.left="plot"
-        @mousedown.stop="grabCircle"
-        @mouseup.stop="releaseCircle"
-        r="5"
+        @mousedown.stop="grabPoint"
+        @mouseup.stop="releasePoint"
     )
 </template>
 
@@ -20,10 +18,6 @@ export default {
         }
     },
     props: {
-        stroke: {
-            type: String,
-            default: 'black'
-        },
         index: {
             type: Number
         },
@@ -41,11 +35,11 @@ export default {
                 })
             }
         },
-        grabCircle() {
+        grabPoint() {
             if (! this.$store.state.mapEdit.plotting)
                 this.grabbed = true
         },
-        releaseCircle() {
+        releasePoint() {
             if (! this.$store.state.mapEdit.plotting) {
                 this.$store.dispatch('mapEdit/replot', {
                     ...this.$store.state.mapEdit.mousePosition,
@@ -67,3 +61,13 @@ export default {
     mixins: [Shared]
 }
 </script>
+
+<style lang="scss">
+.map_edit__map__plotpoint {
+    fill: white;
+    cursor: pointer;
+    stroke: red;
+    stroke-width: 2;
+    r: 5;
+}
+</style>
