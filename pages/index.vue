@@ -16,7 +16,7 @@ export default {
 
 .map_edit{
     width: 100%;
-    height: calc(100vh - $header-height);
+    height: calc(100vh - #{$header-height});
     overflow: hidden;
 }
 </style>
