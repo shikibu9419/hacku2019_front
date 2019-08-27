@@ -143,11 +143,13 @@ export const actions = {
 
 export const getters = {
     selecting(state, _, rootState) {
+        if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
                      .filter(item => item[1] === rootState.userId)         // 本人が選択しているものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
     },
     othersSelecting(state, _, rootState) {
+        if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)
                      .filter(item => item[1] !== rootState.userId)         // 本人が選択していないものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})

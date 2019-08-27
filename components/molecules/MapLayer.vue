@@ -1,9 +1,9 @@
 <template lang="pug">
     .map_edit__map__layer
         svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" @click.right="stopPlot" ref="layer" cursor="grab")
-            tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
-                :id="id" :attr="attr" :selected="selected(id)")
+            tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :selected="false")
             toolbar(v-if="isActive")
+            tool(v-for="[id, attr] in selectingTools"   :key="attr.id" :id="id" :attr="attr" :selected="true")
 </template>
 
 <script>
@@ -76,10 +76,13 @@ export default {
         window.addEventListener('scroll', () => this.setOffset())
     },
     computed: {
-        selected() {
-            return function (id) {
-                return id in this.$store.state.mapEdit.selected
-            };
+        unSelectingTools() {
+            const toolIds = Object.keys(this.$store.getters['mapEdit/selecting'])
+            return Object.entries(this.tools).filter(item => !toolIds.includes(item[0]))
+        },
+        selectingTools() {
+            const toolIds = Object.keys(this.$store.getters['mapEdit/selecting'])
+            return Object.entries(this.tools).filter(item => toolIds.includes(item[0]))
         },
         isActive() {
             return this.id === this.$store.state.mapEdit.activeLayer.id
