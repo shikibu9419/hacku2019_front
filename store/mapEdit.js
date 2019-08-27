@@ -7,17 +7,18 @@ const uuid = function() {
 };
 
 export const state = () => ({
+    // APIと通信して逐次変更する変数
+    layers: [],
+    activeLayer: {},
+    selected: {},
+    // 自己保持する変数
     center: {lat: 35.71, lng: 139.72},
+    mousePosition: {x: 0, y: 0},
+    offset: {x: 0, y: 0},
     markerLatLngs: [],
     plotting: false,
     grabbing: false,
     mapGrabbing: false,
-    mousePosition: {x: 0, y: 0},
-    offset: {x: 0, y: 0},
-    layers: [],
-    activeLayerId: 0,
-    activeLayer: {},
-    selected: {}
 })
 
 // map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
@@ -37,10 +38,8 @@ export const mutations = {
     setMousePosition(state, prop) {
         state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
     },
-    addTool(state, attr) {
-        state.activeLayer.tools = {...state.activeLayer.tools, [uuid()]: attr}
-    },
-    addSelect(state, {attr, toolId}) {
+    addTool(state, {attr, toolId}) {
+        attr = {...state.mousePosition, ...attr}
         state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
     },
     plot(state, prop) {
@@ -73,8 +72,7 @@ export const mutations = {
     addLayer(state, prop) {
         state.layers.push(prop)
     },
-    setActiveLayer(state, layerId) {
-        state.activeLayerId = layerId
+    selectLayer(state, layerId) {
         state.activeLayer = state.layers.find(layer => layer.id === layerId)
     }
 }
@@ -95,12 +93,9 @@ export const actions = {
     setMousePosition(context, prop) {
         context.commit('setMousePosition', prop)
     },
-    add(context, attr) {
-        context.commit('addTool', attr)
-    },
-    addSelect(context, attr) {
+    addTool(context, attr) {
         const toolId = uuid()
-        context.commit('addSelect', {attr, toolId})
+        context.commit('addTool', {attr, toolId})
         context.dispatch('select', {toolId: toolId})
     },
     plot(context, prop) {
@@ -136,20 +131,23 @@ export const actions = {
         prop.tools = {}
 
         context.commit('addLayer', prop)
-        context.dispatch('setActiveLayer', id)
+        context.dispatch('selectLayer', id)
     },
-    setActiveLayer(context, layerId) {
-        context.commit('setActiveLayer', layerId)
-    },
+    selectLayer(context, layerId) {
+        context.commit('selectLayer', layerId)
+        context.dispatch('clearSelection')
+    }
 }
 
 export const getters = {
     selecting(state, _, rootState) {
+        if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
                      .filter(item => item[1] === rootState.userId)         // 本人が選択しているものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
     },
     othersSelecting(state, _, rootState) {
+        if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)
                      .filter(item => item[1] !== rootState.userId)         // 本人が選択していないものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
@@ -161,6 +159,6 @@ export const getters = {
         return state.activeLayer
     },
     inactiveLayers (state) {
-        return state.layers.filter(layer => layer.id !== state.activeLayerId)
+        return state.layers.filter(layer => layer.id !== state.activeLayer.id)
     }
 }

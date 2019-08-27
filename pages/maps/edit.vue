@@ -1,5 +1,5 @@
 <template lang="pug">
-    .container.map_edit__map
+    .container.map_edit__map(ref="layer")
         #map-canvas.map_edit__map__background
         map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
         map-layer(v-bind="activeLayer" @scroll="scrollMap")
@@ -13,8 +13,7 @@ import axios from 'axios'
 export default {
     components: {
         MapLayer: () => import('~/components/molecules/MapLayer'),
-        Sidebar: () => import('~/components/molecules/Sidebar'),
-        Toolbar: () => import('~/components/molecules/Toolbar')
+        Sidebar: () => import('~/components/organisms/editMap/Sidebar'),
     },
     data() {
         return {
@@ -23,6 +22,22 @@ export default {
             markerLatLngs: [],
             prevMarkers: [],
         }
+    },
+    beforeCreate() {
+        this.$store.dispatch('mapEdit/initLayers')
+        this.$store.dispatch('mapEdit/selectLayer', 1)
+    },
+    mounted() {
+        this.markerLatLngs = this.$store.state.mapEdit.markerLatLngs
+
+        this.ymap = new Y.Map("map-canvas");
+        this.ymap.drawMap(new Y.LatLng(...Object.values(this.$store.state.mapEdit.center)),
+                          this.zoom,
+                          Y.LayerSetId.NORMAL);
+
+        this.setOffset()
+        window.addEventListener('resize', () => this.setOffset())
+        window.addEventListener('scroll', () => this.setOffset())
     },
     watch: {
         markerLatLngs () {
@@ -56,19 +71,15 @@ export default {
             return this.ymap.fromContainerPixelToLatLng(
                 new Y.Point(...Object.values(position))
             )
+        },
+        setOffset() {
+            const rect = this.$refs.layer.getBoundingClientRect()
+            const prop = {
+                x: window.pageXOffset + rect.left,
+                y: window.pageYOffset + rect.top
+            }
+            this.$store.dispatch('mapEdit/setOffset', prop)
         }
-    },
-    beforeCreate() {
-        this.$store.dispatch('mapEdit/initLayers')
-        this.$store.dispatch('mapEdit/setActiveLayer', 1)
-    },
-    mounted () {
-        this.markerLatLngs = this.$store.state.mapEdit.markerLatLngs
-
-        this.ymap = new Y.Map("map-canvas");
-        this.ymap.drawMap(new Y.LatLng(...Object.values(this.$store.state.mapEdit.center)),
-                          this.zoom,
-                          Y.LayerSetId.NORMAL);
     },
     computed: {
         activeLayer () {

@@ -1,14 +1,17 @@
 <template lang="pug">
     .map_edit__map__layer
-        svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
-            tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
-                :id="id" :attr="attr" :selected="selected(id)")
+        svg.map_edit__map__svg(@mousemove="move" @mousedown="grabMap" @mouseup="resetGrabbing" @click.right="resetEditting" cursor="grab")
+            rect.map_edit__map__svg_filter(v-if="isActive")
+            tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :selected="false" :layer-active="isActive")
+            toolbar(v-if="isActive")
+            tool(v-for="[id, attr] in selectingTools"   :key="attr.id" :id="id" :attr="attr" :selected="true" :layer-active="isActive")
 </template>
 
 <script>
 export default {
     components: {
-        Tool: () => import('~/components/atoms/mapTools/Tool')
+        Tool: () => import('~/components/atoms/mapTools/ToolWrapper'),
+        Toolbar: () => import('./Toolbar')
     },
     props: {
         id: {
@@ -29,7 +32,7 @@ export default {
         },
     },
     methods: {
-        onMousemove(e) {
+        move(e) {
             const prop = {
                 x: e.pageX - this.$store.state.mapEdit.offset.x,
                 y: e.pageY - this.$store.state.mapEdit.offset.y
@@ -44,35 +47,33 @@ export default {
 
             this.$store.dispatch('mapEdit/setMousePosition', prop)
         },
-        onMousedown() {
+        grabMap() {
             this.$store.dispatch('mapEdit/toggleMapGrabbing')
             this.$store.dispatch('mapEdit/clearSelection')
         },
-        onMouseup() {
+        resetGrabbing() {
             if(this.$store.state.mapEdit.grabbing)
                 this.$store.dispatch('mapEdit/toggleGrabbing')
             if(this.$store.state.mapEdit.mapGrabbing)
                 this.$store.dispatch('mapEdit/toggleMapGrabbing')
         },
-        setOffset() {
-            const rect = this.$refs.layer.getBoundingClientRect()
-            const prop = {
-                x: window.pageXOffset + rect.left,
-                y: window.pageYOffset + rect.top
-            }
-            this.$store.dispatch('mapEdit/setOffset', prop)
+        resetEditting() {
+            if (this.$store.state.mapEdit.plotting)
+                this.$store.dispatch('mapEdit/togglePlotting')
+            this.resetGrabbing()
         },
     },
-    mounted() {
-        this.setOffset()
-        window.addEventListener('resize', () => this.setOffset())
-        window.addEventListener('scroll', () => this.setOffset())
-    },
     computed: {
-        selected(id) {
-            return function (id) {
-                return id in this.$store.state.mapEdit.selected
-            };
+        unSelectingTools() {
+            const toolIds = Object.keys(this.$store.getters['mapEdit/selecting'])
+            return Object.entries(this.tools).filter(item => !toolIds.includes(item[0]))
+        },
+        selectingTools() {
+            const toolIds = Object.keys(this.$store.getters['mapEdit/selecting'])
+            return Object.entries(this.tools).filter(item => toolIds.includes(item[0]))
+        },
+        isActive() {
+            return this.id === this.$store.state.mapEdit.activeLayer.id
         }
     }
 }
@@ -92,5 +93,12 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
+
+    &_filter {
+        fill: white;
+        fill-opacity: 0.5;
+        width: 100%;
+        height: 100%;
+    }
 }
 </style>

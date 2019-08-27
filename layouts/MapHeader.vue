@@ -19,9 +19,9 @@ export default {
     },
     methods: {
         searchOnMap () {
-            const url = 'https://map.yahooapis.jp/geocode/cont/V1/contentsGeoCoder'
+            const baseUrl = 'https://map.yahooapis.jp/search/local/V1/localSearch'
 
-            this.$jsonp(url, {appid: process.env.YOLP_APPID, query: this.query, output: 'json'})
+            this.$jsonp(baseUrl, {appid: process.env.YOLP_APPID, query: this.query, output: 'json'})
                 .then(response => {
                     if (response.ResultInfo.Count === 0) return
                     for (const feature of response.Feature) {
