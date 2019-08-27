@@ -7,16 +7,18 @@ const uuid = function() {
 };
 
 export const state = () => ({
+    // APIと通信して逐次変更する変数
+    layers: [],
+    activeLayer: {},
+    selected: {},
+    // 自己保持する変数
     center: {lat: 35.71, lng: 139.72},
+    mousePosition: {x: 0, y: 0},
+    offset: {x: 0, y: 0},
     markerLatLngs: [],
     plotting: false,
     grabbing: false,
     mapGrabbing: false,
-    mousePosition: {x: 0, y: 0},
-    offset: {x: 0, y: 0},
-    layers: [],
-    activeLayer: {},
-    selected: {}
 })
 
 // map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
@@ -40,6 +42,7 @@ export const mutations = {
         state.activeLayer.tools = {...state.activeLayer.tools, [uuid()]: attr}
     },
     addSelect(state, {attr, toolId}) {
+        attr = {...state.mousePosition, ...attr}
         state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
     },
     plot(state, prop) {

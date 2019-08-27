@@ -10,15 +10,16 @@
 export default {
     methods: {
         addBuilding() {
-            this.$store.dispatch('mapEdit/addSelect', { type: 'building', x: 1000, y: 1000, points: []})
+            this.$store.dispatch('mapEdit/addSelect', { type: 'building', points: []})
             this.$store.dispatch('mapEdit/togglePlotting')
         },
         addDirection() {
-            this.$store.dispatch('mapEdit/addSelect', {type: 'direction', x: 1000, y: 1000, points: []})
+            this.$store.dispatch('mapEdit/addSelect', {type: 'direction', points: []})
             this.$store.dispatch('mapEdit/togglePlotting')
         },
         addBuildingBasic() {
-            this.$store.dispatch('mapEdit/addSelect', { type: 'building_basic', x: 50, y: 50, width: 100, height: 100})
+            this.$store.dispatch('mapEdit/addSelect', { type: 'building_basic', width: 100, height: 100})
+            this.$store.dispatch('mapEdit/toggleGrabbing')
         },
     },
     computed: {
