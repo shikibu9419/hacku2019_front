@@ -16,23 +16,24 @@ const ymapPanTo = function(position) {
     ymap.panTo(new Y.LatLng(...Object.values(position)))
 }
 
+
 export const state = () => ({
     center: {lat: 35.71, lng: 139.72},
     zoom: 18
 })
 
 export const mutations = {
-    setMarkers(state, features) {
-        for (const marker of markers)
-            ymap.removeFeature(marker)
-        markers.length = 0
-
-        markers = features.map(function(feature) {
-            const latlng = feature.Geometry.Coordinates.split(',').map(c => parseFloat(c)).reverse()
+    setMarkers(state, latlngs) {
+        markers = latlngs.map(function(latlng) {
             const marker = new Y.Marker(new Y.LatLng(...latlng))
             ymap.addFeature(marker)
             return marker
         })
+    },
+    resetMarkers(state) {
+        for (const marker of markers)
+            ymap.removeFeature(marker)
+        markers.length = 0
     },
     scroll(state, mousePosition) {
         const prev = pixelToLatLng(mousePosition.prev)
@@ -51,8 +52,12 @@ export const mutations = {
 }
 
 export const actions = {
-    setMarkers(context, features) {
-        context.commit('setMarkers', features)
+    setMarkers(context, latlngs) {
+        context.dispatch('resetMarkers')
+        context.commit('setMarkers', latlngs)
+    },
+    resetMarkers(context) {
+        context.commit('resetMarkers')
     },
     scroll(context, mousePosition) {
         context.commit('scroll', mousePosition)
