@@ -12,10 +12,8 @@ export const state = () => ({
     activeLayer: {},
     selected: {},
     // 自己保持する変数
-    center: {lat: 35.71, lng: 139.72},
     mousePosition: {x: 0, y: 0},
     offset: {x: 0, y: 0},
-    markerLatLngs: [],
     plotting: false,
     grabbing: false,
     mapGrabbing: false,
@@ -56,14 +54,7 @@ export const mutations = {
     },
     setPosition(state, {prop, getters}) {
         for(const toolId of Object.keys(getters.selecting))
-            state.activeLayer.tools[toolId] = {...state.activeLayer.tools[toolId], x: prop.x, y: prop.y}
-    },
-    setCenter(state, prop) {
-        state.center = {...state.center, lat: prop.lat, lng: prop.lng}
-    },
-    setMarkerLatLngs(state, latlng) {
-        state.markerLatLngs.length = 0
-        state.markerLatLngs.push(latlng)
+            state.activeLayer.tools[toolId] = {...state.activeLayer.tools[toolId], lat: prop.lat, lng: prop.lng}
     },
     initLayers(state) {
         // 実際はAPIからデータをとりにきてlayersにセット
@@ -114,12 +105,6 @@ export const actions = {
     },
     setPosition({commit, getters}, prop) {
         commit('setPosition', {prop, getters})
-    },
-    setCenter(context, prop) {
-        context.commit('setCenter', prop)
-    },
-    setMarkerLatLngs(context, latlng) {
-        context.commit('setMarkerLatLngs', latlng)
     },
     initLayers(context) {
         context.commit('initLayers')

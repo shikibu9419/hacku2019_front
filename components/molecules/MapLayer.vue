@@ -1,6 +1,6 @@
 <template lang="pug">
     .map_edit__map__layer
-        svg.map_edit__map__svg(@mousemove="move" @mousedown="grabMap" @mouseup="resetGrabbing" @click.right="resetEditting" cursor="grab")
+        svg.map_edit__map__svg(@mousemove="moveOrScroll" @mousedown="grabMap" @mouseup="resetGrabbing" @click.right="resetEditting" cursor="grab")
             rect.map_edit__map__svg_filter(v-if="isActive")
             tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :selected="false" :layer-active="isActive")
             toolbar(v-if="isActive")
@@ -32,20 +32,20 @@ export default {
         },
     },
     methods: {
-        move(e) {
-            const prop = {
+        moveOrScroll(e) {
+            const mousePosition = {
                 x: e.pageX - this.$store.state.mapEdit.offset.x,
                 y: e.pageY - this.$store.state.mapEdit.offset.y
             }
 
             if (this.$store.state.mapEdit.grabbing || this.$store.state.mapEdit.mapGrabbing || this.$store.state.mapEdit.plotting) {
                 if (this.$store.state.mapEdit.mapGrabbing)
-                    this.$emit('scroll', prop)
+                    this.$emit('scroll', mousePosition)
                 else
-                    this.$store.dispatch('mapEdit/setPosition', prop)
+                    this.$store.dispatch('mapEdit/setPosition', mousePosition)
             }
 
-            this.$store.dispatch('mapEdit/setMousePosition', prop)
+            this.$store.dispatch('mapEdit/setMousePosition', mousePosition)
         },
         grabMap() {
             this.$store.dispatch('mapEdit/toggleMapGrabbing')
