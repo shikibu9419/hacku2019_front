@@ -1,18 +1,18 @@
 <template lang="pug">
   .signup
-    .top_container
-      TopLogo
+    .login_container
+      LoginLogo
 </template>
 <script>
 //components
-import TopLogo from '~/components/atoms/top/topLogo.vue'
-import TopInput from '~/components/atoms/top/topInput.vue'
+import LoginLogo from '~/components/atoms/login/loginLogo.vue'
+import LoginInput from '~/components/atoms/login/loginInput.vue'
 
 export default {
-  layout: "TopPage",
+  layout: "LoginPage",
   components:{
-    TopLogo,
-    TopInput
+    LoginLogo,
+    LoginInput
   },
 }
 </script>
@@ -20,7 +20,7 @@ export default {
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";
 
-.top_container {
+.login_container {
   padding: 12px;
   margin: auto;
   width: 400px;
