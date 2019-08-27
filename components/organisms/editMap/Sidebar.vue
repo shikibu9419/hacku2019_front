@@ -33,9 +33,9 @@ export default {
 .map_edit__sidebar {
     background-color: $back-gray;
     position: absolute;
-    z-index: 10;
-    top: 50px;
-    width: 15%;
+    top: 0;
+    width: 200px;
     height: 100%;
+    z-index: 10;
 }
 </style>

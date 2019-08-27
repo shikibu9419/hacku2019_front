@@ -27,11 +27,11 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 
 .map_edit__toolbar {
-    width: 100%;
+    width: min-content;
     height: 30%;
 
     &__background {

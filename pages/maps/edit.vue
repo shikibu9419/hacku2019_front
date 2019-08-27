@@ -12,7 +12,6 @@ import axios from 'axios'
 export default {
     components: {
         MapLayer: () => import('~/components/molecules/MapLayer'),
-        Sidebar: () => import('~/components/organisms/editMap/Sidebar'),
     },
     data() {
         return {
@@ -91,10 +90,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import "~/assets/styles/variables.scss";
+
 .map_edit__map {
+    position: relative;
     width: 100%;
-    height: 700px;
+    height: 100%;
+    background: $back-light-gray;
 
     &__background {
         width: 100%;
