@@ -7,16 +7,22 @@
       nuxt-link(:to="returnLink")
         ReturnBtn.back_btn__image.back_btn__image--on
     .search
-      HeaderSearch(:placeholder="placeholder")
+      HeaderSearch(
+        :placeholder="placeholder"
+        :type="type"
+      )
 </template>
 <script>
 export default {
-  props:['placeholder','returnLink'],
+  props:['placeholder','type','returnLink'],
   components:{
     //svg
     ReturnBtn: () => import('~/assets/svgs/return.svg?inline'),
     //components
     HeaderSearch: () => import('~/components/atoms/headers/headerSearch.vue'),
+  },
+  methods:{
+
   }
 }
 </script>

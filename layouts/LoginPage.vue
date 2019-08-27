@@ -70,13 +70,13 @@ $border-width: 4px;
 $corner-rounded: 30px;
 $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
 
-.top_page {
+.login_page {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
 }
-.top_background_image {
+.login_background_image {
   position: absolute;
   top: 0;
   left: 0;
@@ -89,7 +89,7 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
   opacity: .08;
   z-index: -1;
 }
-.top_page__border {
+.login_page__border {
   position: absolute;
   top: 0;
   left: 0;
@@ -97,7 +97,7 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
   height: 100%;
   pointer-events: none;
 }
-.top_page__border__square {
+.login_page__border__square {
   position: absolute;
   top: 0;
   left: 0;
@@ -108,7 +108,7 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
   height: $square-width;
   border: $border-width solid $theme-pink;
 }
-.top_page__border__square_white {
+.login_page__border__square_white {
   position: absolute;
   top: 0;
   left: 0;
@@ -120,7 +120,7 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
   border: $border-margin solid $white;
 }
 
-.top_page__border__circle {
+.login_page__border__circle {
   position: absolute;
   width: $corner-rounded*2;
   height: $corner-rounded*2;
@@ -145,7 +145,7 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
   }
 }
 
-.top_page__inside {
+.login_page__inside {
   padding: $border-margin + $border-width;
   width: 100%;
   height: 100%;

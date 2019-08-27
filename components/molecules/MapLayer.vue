@@ -84,7 +84,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .map_edit__map__layer {
     position: absolute;
     top: 0;
