@@ -3,14 +3,12 @@
         svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                 :id="id" :attr="attr" :selected="selected(id)")
-        toolbar
 </template>
 
 <script>
 export default {
     components: {
-        Tool: () => import('~/components/atoms/mapTools/Tool'),
-        Toolbar: () => import('./Toolbar')
+        Tool: () => import('~/components/atoms/mapTools/Tool')
     },
     props: {
         id: {
@@ -83,9 +81,11 @@ export default {
 <style lang="scss">
 .map_edit__map__layer {
     position: absolute;
-    top: 50px;
+    top: 0;
+    left: 0;
+    margin: auto;
     width: 100%;
-    height: 700px;
+    height: 100%;
 }
 
 .map_edit__map__svg {

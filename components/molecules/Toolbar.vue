@@ -1,8 +1,8 @@
 <template lang="pug">
     .map_edit__toolbar
-        button(type="button" @click="addBuildingBasic") addBuildingBasic
-        button(type="button" @click="addBuilding") addBuilding
-        button(type="button" @click="addDirection") addDirection
+        button.toolbar_btn(type="button" @click="addBuildingBasic") addBuildingBasic
+        button.toolbar_btn(type="button" @click="addBuilding") addBuilding
+        button.toolbar_btn(type="button" @click="addDirection") addDirection
 </template>
 
 <script>
@@ -23,14 +23,24 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 
 .map_edit__toolbar {
     background: $back-gray;
     position: absolute;
+    display: flex;
+    top: 4px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: min-content;
     z-index: 10;
-    text-align: right;
-    width: 100%;
+    padding: 8px;
+    border-radius: 30px;
+    box-shadow: 0 2px 8px rgba($black,.3);
+}
+.toolbar_btn {
+    border-radius: 30px;
 }
 </style>

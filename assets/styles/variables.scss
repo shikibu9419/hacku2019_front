@@ -68,3 +68,7 @@
   $bezier-fast-ease-in-out: cubic-bezier(.77,0,.23,1);
 
   $bezier-ease-out: cubic-bezier(.06,.67,.02,1);
+
+//header-size
+$header-height: 60px;
+$main-height: calc(100% - 60px)

@@ -39,6 +39,12 @@ html {
   width: 100%;
   height: 100%;
 }
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+}
 body {
   margin: 0;
   width: 100%;
