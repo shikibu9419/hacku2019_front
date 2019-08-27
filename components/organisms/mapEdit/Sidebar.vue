@@ -1,4 +1,5 @@
 <template lang="pug">
+<<<<<<< HEAD:components/molecules/Sidebar.vue
     .map_edit__sidebar(:class="{'map_edit__sidebar--close':menu_close}")
         .map_edit__sidebar__wrapper
             .toggle_sidebar
@@ -8,14 +9,24 @@
             ul
                 li(v-for="[id, layer] in Object.entries(layers)" :key="id") {{ layer }}
             button(@click="addLayer") レイヤー追加
+=======
+    .map_edit__sidebar
+        h2 this is sidebar
+        layer-selector
+>>>>>>> master:components/organisms/mapEdit/Sidebar.vue
 </template>
 
 <script>
 export default {
+<<<<<<< HEAD:components/molecules/Sidebar.vue
     data(){
         return{
             menu_close:false
         }
+=======
+    components: {
+        LayerSelector: () => import('~/components/molecules/LayerSelector')
+>>>>>>> master:components/organisms/mapEdit/Sidebar.vue
     },
     computed: {
         layers () {

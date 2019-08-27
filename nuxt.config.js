@@ -34,9 +34,13 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+<<<<<<< HEAD
 //     { src: '~/plugins/vue2-google-maps.js' },
     { src: '~/plugins/vue-jsonp.js' },
     { src: '~plugins/font-awesome', ssr: false }
+=======
+    { src: '~/plugins/vue-jsonp.js' }
+>>>>>>> master
   ],
   /*
   ** Nuxt.js dev-modules
@@ -64,24 +68,17 @@ export default {
   */
   axios: {
   },
+  fontawesome: {
+    imports: [
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      },
+    ]
+  },
   /*
-  ** Build configuration
+   ** Build configuration
   */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-//     extend (config, ctx) {
-//       config.externals = config.externals || [];
-//       if (!ctx.isClient) {
-//         config.externals.splice(0, 0, function(context, request, callback) {
-//           if (/^vue2-google-maps($|\/)/.test(request)) {
-//             callback(null, false);
-//           } else {
-//             callback();
-//           }
-//         });
-//       }
-//     }
   }
 }
