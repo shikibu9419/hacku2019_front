@@ -1,9 +1,9 @@
 <template lang="pug">
     .map_edit__map__layer
-        svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" ref="layer" cursor="grab")
+        svg.map_edit__map__svg(@mousemove="onMousemove" @mousedown="onMousedown" @mouseup="onMouseup" @click.right="stopPlot" ref="layer" cursor="grab")
             tool(v-for="[id, attr] in Object.entries(tools)" :key="attr.id"
                 :id="id" :attr="attr" :selected="selected(id)")
-        toolbar(v-if="isActive")
+            toolbar(v-if="isActive")
 </template>
 
 <script>
@@ -64,6 +64,11 @@ export default {
             }
             this.$store.dispatch('mapEdit/setOffset', prop)
         },
+        stopPlot() {
+            if (this.$store.state.mapEdit.plotting)
+                this.$store.dispatch('mapEdit/togglePlotting')
+            this.onMouseup()
+        }
     },
     mounted() {
         this.setOffset()

@@ -4,7 +4,6 @@
         :cx="x" :cy="y"
         :stroke="stroke"
         @click.left="plot"
-        @click.right="stopPlot"
         @mousedown.stop="grabCircle"
         @mouseup.stop="releaseCircle"
         r="5"
@@ -41,10 +40,6 @@ export default {
                     toolId: this.id
                 })
             }
-        },
-        stopPlot() {
-            if (this.$store.state.mapEdit.plotting)
-                this.$store.dispatch('mapEdit/togglePlotting')
         },
         grabCircle() {
             if (! this.$store.state.mapEdit.plotting)
