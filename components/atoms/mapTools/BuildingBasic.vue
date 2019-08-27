@@ -18,6 +18,8 @@ export default {
     },
     computed: {
         attributes () {
+            this.$store.state.ymap.center // To observe changing of center
+
             const position = this.$store.getters['ymap/latLngToPixel'](this.attr)
             const attr = Object.assign({}, this.attr)
             delete attr.lat

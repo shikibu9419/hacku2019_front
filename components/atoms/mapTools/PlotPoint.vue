@@ -52,6 +52,8 @@ export default {
     },
     computed: {
         attributes () {
+            this.$store.state.ymap.center // To observe changing of center
+
             const position = (this.grabbed || this.nowPlotted) ?
                 this.$store.state.mapEdit.mousePosition : this.$store.getters['ymap/latLngToPixel'](this.attr)
             const attr = Object.assign({}, this.attr)

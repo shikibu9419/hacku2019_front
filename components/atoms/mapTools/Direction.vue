@@ -22,6 +22,8 @@ export default {
     },
     computed: {
         direction() {
+            this.$store.state.ymap.center // To observe changing of center
+
             self = this
             return 'M ' + this.attr.points.map(function(point) {
                 const p = self.$store.getters['ymap/latLngToPixel'](point)
