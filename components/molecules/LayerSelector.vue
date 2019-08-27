@@ -26,7 +26,7 @@ export default {
         }
     },
     components: {
-        LayerSelectorItem: () => import('~/components/atoms/editMap/LayerSelectorItem')
+        LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem')
     }
 }
 </script>

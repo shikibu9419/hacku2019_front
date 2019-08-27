@@ -9,6 +9,10 @@
 
 <script>
 export default {
+    components: {
+        Tool: () => import('~/components/atoms/mapTools/ToolWrapper'),
+        Toolbar: () => import('~/components/molecules/Toolbar')
+    },
     props: {
         id: {
             type: Number,
@@ -76,10 +80,6 @@ export default {
         isActive() {
             return this.id === this.$store.state.mapEdit.activeLayer.id
         }
-    },
-    components: {
-        Tool: () => import('~/components/atoms/mapTools/ToolWrapper'),
-        Toolbar: () => import('~/components/molecules/Toolbar')
     }
 }
 </script>

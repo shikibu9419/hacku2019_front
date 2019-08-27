@@ -34,7 +34,6 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-//     { src: '~/plugins/vue2-google-maps.js' },
     { src: '~/plugins/vue-jsonp.js' }
   ],
   /*

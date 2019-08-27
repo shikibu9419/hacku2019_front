@@ -12,8 +12,8 @@ import axios from 'axios'
 export default {
     layout: 'MapHeader',
     components: {
-        MapLayer: () => import('~/components/molecules/MapLayer'),
-        Sidebar: () => import('~/components/organisms/editMap/Sidebar'),
+        MapLayer: () => import('~/components/organisms/mapEdit/MapLayer'),
+        Sidebar: () => import('~/components/organisms/mapEdit/Sidebar'),
     },
     beforeCreate() {
         this.$store.dispatch('mapEdit/initLayers')
