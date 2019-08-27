@@ -2,15 +2,19 @@
     .container
         //- map__headerをorganisms化する
         .header.map__header
-            h2.map__header--molecules this is MapHeader.vue
-            input.map__header--molecules(v-model="query" placeholder="マップを検索する")
-            button.map__header--molecules(@click="searchOnMap") 検索
+            Header(
+                :returnLink="'/maplists/search'"
+                :placeholder="'マップ内を検索する'"
+                :type="'inmap'"
+                )
         nuxt.map__main
 </template>
 
 <script>
+import Header from "~/components/organisms/Header.vue"
 export default {
     components: {
+        Header
     },
     data () {
         return {
@@ -18,7 +22,7 @@ export default {
         }
     },
     methods: {
-        searchOnMap () {
+        searchOnMap () { //vueXに移してほしい。atoms/headers/headerSearch.vueから発火。
             const url = 'https://map.yahooapis.jp/geocode/cont/V1/contentsGeoCoder'
 
             this.$jsonp(url, {appid: process.env.YOLP_APPID, query: this.query, output: 'json'})

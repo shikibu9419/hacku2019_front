@@ -4,7 +4,7 @@
       button().search_button.button
         SearchBtn.search_button__icon
       input(v-model="search_txt" :placeholder="placeholder" @change="update()").header_search__input
-    .filter_wrapper
+    .filter_wrapper(v-if="type==='maplists'")
       button().filter_button.button
         FilterBtn.filter_button__icon
         .filter_button__text Filter 
@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-  props:["placeholder"],
+  props:["placeholder","type"],
   components:{
     //svg
     SearchBtn: () => import('~/assets/svgs/search.svg?inline'),
@@ -25,7 +25,14 @@ export default {
   },
   methods: {
     update(){
-      //親へデータを投げる or VueXに投げる
+      //VueXに投げて検索処理
+        if(this.type === "inmap"){
+          //map-editとmap-viewのとき
+        }
+        if(this.type === "maplists"){
+          //マップをさがす
+          //filter処理(tag,like-only,mymap-only,stock-only)
+        }
     }
   }
 }
