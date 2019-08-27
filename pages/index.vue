@@ -1,12 +1,42 @@
 <template lang="pug">
-    map-edit.map_edit
+    .home
+        Header(
+        :returnLink="'/maplists/search'"
+        :placeholder="'マップを検索する'"
+        )
+        .card-pages
+            card-tile(
+                v-for="(data, index) in array" :key="`card_test_${index}`"
+                :title="title"
+                :img_url="img_url"
+                :username="username"
+                :usericon_url="usericon_url"
+                :layers="layers"
+                :tags="tags"
+                :comments="comments"
+                :id="data"
+            )
 </template>
 
 <script>
 export default {
-    layout: 'MapHeader',
+    layout: "MapListsLayout",
+    name: "home",
     components: {
-        MapEdit: () => import('~/pages/maps/edit'),
+        Header: () => import("~/components/organisms/Header.vue"),
+        CardTile: () => import("~/components/molecules/CardTile")
+    },
+    data() {
+        return {
+            title: '俺的ラーメン屋まとめ',
+            img_url: 'https://picsum.photos/400/300',
+            username: 'username',
+            usericon_url: 'https://picsum.photos/200',
+            layers: ['豚骨', '塩', '醤油', '味噌'],
+            tags: ['ラーメン', '大阪', '激戦区'],
+            comments: [...Array(16).keys()],
+            array: [...Array(9).keys()] // とりあえず9個絵画
+        }
     }
 }
 </script>
@@ -14,9 +44,10 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 
-.map_edit{
-    width: 100%;
-    height: calc(100vh - #{$header-height});
-    overflow: hidden;
+.card-pages{
+    padding: 2.5% 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 </style>
