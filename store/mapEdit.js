@@ -38,10 +38,7 @@ export const mutations = {
     setMousePosition(state, prop) {
         state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
     },
-    addTool(state, attr) {
-        state.activeLayer.tools = {...state.activeLayer.tools, [uuid()]: attr}
-    },
-    addSelect(state, {attr, toolId}) {
+    addTool(state, {attr, toolId}) {
         attr = {...state.mousePosition, ...attr}
         state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
     },
@@ -96,12 +93,9 @@ export const actions = {
     setMousePosition(context, prop) {
         context.commit('setMousePosition', prop)
     },
-    add(context, attr) {
-        context.commit('addTool', attr)
-    },
-    addSelect(context, attr) {
+    addTool(context, attr) {
         const toolId = uuid()
-        context.commit('addSelect', {attr, toolId})
+        context.commit('addTool', {attr, toolId})
         context.dispatch('select', {toolId: toolId})
     },
     plot(context, prop) {

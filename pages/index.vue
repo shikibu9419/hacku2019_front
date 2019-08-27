@@ -6,7 +6,7 @@
 export default {
     layout: 'MapHeader',
     components: {
-        MapEdit: () => import('~/components/organisms/MapEdit'),
+        MapEdit: () => import('~/pages/maps/edit'),
     }
 }
 </script>
