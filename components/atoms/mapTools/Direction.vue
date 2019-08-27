@@ -1,6 +1,6 @@
 <template lang="pug">
     g(@dblclick.stop="select")
-        path.map_edit__map__direction(:d="direction" v-if="points.length" :class="{active__layer_on: layerActive}")
+        path.map_edit__map__direction(:d="direction" v-if="attr.points.length" :class="{active__layer_on: layerActive}")
         g(v-if="selected")
             plot-point(v-for="(point, index) in attr.points" :key="index" :index="index"
                 :id="id" :attr="point" :selected="selected" :layer-active="layerActive")
@@ -21,11 +21,12 @@ export default {
         }
     },
     computed: {
-        points() {
-            return this.attr.points
-        },
         direction() {
-            return 'M ' + this.attr.points.map((point) => point.x + ' ' + point.y).join(' L ')
+            self = this
+            return 'M ' + this.attr.points.map(function(point) {
+                const p = self.$store.getters['ymap/latLngToPixel'](point)
+                return p.x + ' ' + p.y
+            }).join(' L ')
         }
     },
     mixins: [Shared]

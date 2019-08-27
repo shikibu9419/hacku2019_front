@@ -33,19 +33,24 @@ export default {
     },
     methods: {
         moveOrScroll(e) {
-            const mousePosition = {
+            const prev = this.$store.state.mapEdit.mousePosition
+            const now = {
                 x: e.pageX - this.$store.state.mapEdit.offset.x,
                 y: e.pageY - this.$store.state.mapEdit.offset.y
+            }
+            const prop = {
+                prev: this.$store.getters['ymap/pixelToLatLng'](prev),
+                now: this.$store.getters['ymap/pixelToLatLng'](now)
             }
 
             if (this.$store.state.mapEdit.grabbing || this.$store.state.mapEdit.mapGrabbing || this.$store.state.mapEdit.plotting) {
                 if (this.$store.state.mapEdit.mapGrabbing)
-                    this.$emit('scroll', mousePosition)
+                    this.$store.dispatch('ymap/scroll', prop)
                 else
-                    this.$store.dispatch('mapEdit/setPosition', mousePosition)
+                    this.$store.dispatch('mapEdit/moveTools', prop)
             }
 
-            this.$store.dispatch('mapEdit/setMousePosition', mousePosition)
+            this.$store.dispatch('mapEdit/setMousePosition', now)
         },
         grabMap() {
             this.$store.dispatch('mapEdit/toggleMapGrabbing')
@@ -97,8 +102,8 @@ export default {
     &_filter {
         fill: white;
         fill-opacity: 0.5;
-        width: 100%;
-        height: 100%;
+        width: 10000px;
+        height: 10000px;
     }
 }
 </style>

@@ -2,18 +2,13 @@ var ymap = {}
 var markers = []
 
 const pixelToLatLng = function(position) {
-    const yLatLng = ymap.fromContainerPixelToLatLng(new Y.Point(...Object.values(position)))
+    const yLatLng = ymap.fromContainerPixelToLatLng(new Y.Point(position.x, position.y))
     return {lat: yLatLng.Lat, lng: yLatLng.Lon}
 }
 
 const latLngToPixel = function(position) {
-    return ymap.fromLatLngToContainerPixel(
-        new Y.LatLng(...Object.values(position))
-    )
-}
-
-const ymapPanTo = function(position) {
-    ymap.panTo(new Y.LatLng(...Object.values(position)))
+    const yPixel = ymap.fromLatLngToContainerPixel(new Y.LatLng(position.lat, position.lng))
+    return {x: yPixel.x, y: yPixel.y}
 }
 
 
@@ -36,11 +31,8 @@ export const mutations = {
         markers.length = 0
     },
     scroll(state, mousePosition) {
-        const prev = pixelToLatLng(mousePosition.prev)
-        const now  = pixelToLatLng(mousePosition.now)
-
-        const dlat = now.lat - prev.lat
-        const dlng = now.lng - prev.lng
+        const dlat = mousePosition.now.lat - mousePosition.prev.lat
+        const dlng = mousePosition.now.lng - mousePosition.prev.lng
 
         const center = Object.assign({}, state.center)
         center.lat = center.lat - dlat
@@ -71,4 +63,10 @@ export const actions = {
 }
 
 export const getters = {
+    pixelToLatLng() {
+        return pixelToLatLng
+    },
+    latLngToPixel() {
+        return latLngToPixel
+    }
 }

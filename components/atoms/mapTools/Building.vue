@@ -22,7 +22,11 @@ export default {
     },
     computed: {
         points() {
-            return this.attr.points.map((point) => point.x + ',' + point.y).join(' ')
+            self = this
+            return this.attr.points.map(function(point) {
+                const p = self.$store.getters['ymap/latLngToPixel'](point)
+                return p.x + ',' + p.y
+            }).join(' ')
         }
     },
     mixins: [Shared]

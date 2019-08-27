@@ -1,7 +1,6 @@
 <template lang="pug">
     circle.map_edit__map__plotpoint(
-        v-bind="attr"
-        :cx="x" :cy="y"
+        v-bind="attributes"
         @click.left="plot"
         @mousedown.stop="grabPoint"
         @mouseup.stop="releasePoint"
@@ -31,7 +30,7 @@ export default {
         plot() {
             if (this.$store.state.mapEdit.plotting) {
                 this.$store.dispatch('mapEdit/plot', {
-                    ...this.$store.state.mapEdit.mousePosition,
+                    ...this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition),
                     toolId: this.id
                 })
             }
@@ -43,7 +42,7 @@ export default {
         releasePoint() {
             if (! this.$store.state.mapEdit.plotting) {
                 this.$store.dispatch('mapEdit/replot', {
-                    ...this.$store.state.mapEdit.mousePosition,
+                    ...this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition),
                     toolId: this.id,
                     index: this.index
                 })
@@ -52,11 +51,13 @@ export default {
         },
     },
     computed: {
-        x() {
-            return (this.grabbed || this.nowPlotted) ? this.$store.state.mapEdit.mousePosition.x : this.attr.x
-        },
-        y() {
-            return (this.grabbed || this.nowPlotted) ? this.$store.state.mapEdit.mousePosition.y : this.attr.y
+        attributes () {
+            const position = (this.grabbed || this.nowPlotted) ?
+                this.$store.state.mapEdit.mousePosition : this.$store.getters['ymap/latLngToPixel'](this.attr)
+            const attr = Object.assign({}, this.attr)
+            delete attr.lat
+            delete attr.lng
+            return {...attr, cx: position.x, cy: position.y}
         }
     },
     mixins: [Shared]

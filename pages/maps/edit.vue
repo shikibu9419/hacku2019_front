@@ -2,7 +2,7 @@
     .container.map_edit__map(ref="layer")
         #map-canvas.map_edit__map__background
         map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
-        map-layer(v-bind="activeLayer" @scroll="scrollMap")
+        map-layer(v-bind="activeLayer")
         sidebar
 </template>
 
@@ -26,13 +26,6 @@ export default {
         window.addEventListener('scroll', () => this.setOffset())
     },
     methods: {
-        scrollMap(mousePosition) {
-            const prop = {
-                prev: this.$store.state.mapEdit.mousePosition,
-                now: mousePosition
-            }
-            this.$store.dispatch('ymap/scroll', prop)
-        },
         setOffset() {
             const rect = this.$refs.layer.getBoundingClientRect()
             const prop = {
