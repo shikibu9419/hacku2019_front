@@ -1,6 +1,6 @@
 <template lang="pug">
     rect.map_edit__tool__box(
-        v-bind="attr"
+        v-bind="attributes"
         @dblclick.stop="select"
         @mousedown.stop="grab"
         :class="{selected__tool_on: selected}"
@@ -14,6 +14,17 @@ export default {
     data() {
         return {
             type: 'building_basic',
+        }
+    },
+    computed: {
+        attributes () {
+            this.$store.state.ymap.center // To observe changing of center
+
+            const position = this.$store.getters['ymap/latLngToPixel'](this.attr)
+            const attr = Object.assign({}, this.attr)
+            delete attr.lat
+            delete attr.lng
+            return {...attr, ...position}
         }
     },
     mixins: [Shared]

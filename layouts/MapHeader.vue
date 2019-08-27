@@ -24,11 +24,11 @@ export default {
             this.$jsonp(baseUrl, {appid: process.env.YOLP_APPID, query: this.query, output: 'json'})
                 .then(response => {
                     if (response.ResultInfo.Count === 0) return
-                    for (const feature of response.Feature) {
-                        // get latlng
-                        const latlng = feature.Geometry.Coordinates.split(',').map(c => parseFloat(c)).reverse()
-                        this.$store.dispatch('mapEdit/setMarkerLatLngs', latlng)
-                    }
+
+                    const latlngs = response.Feature.map(feature =>
+                        feature.Geometry.Coordinates.split(',').map(c => parseFloat(c)).reverse()
+                    )
+                    this.$store.dispatch('ymap/setMarkers', latlngs)
                 })
 //             var geocoder = new google.maps.Geocoder();
 //             geocoder.geocode({'address': this.query}, function(results, status) {

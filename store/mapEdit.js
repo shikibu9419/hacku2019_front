@@ -12,10 +12,8 @@ export const state = () => ({
     activeLayer: {},
     selected: {},
     // 自己保持する変数
-    center: {lat: 35.71, lng: 139.72},
     mousePosition: {x: 0, y: 0},
     offset: {x: 0, y: 0},
-    markerLatLngs: [],
     plotting: false,
     grabbing: false,
     mapGrabbing: false,
@@ -39,14 +37,14 @@ export const mutations = {
         state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
     },
     addTool(state, {attr, toolId}) {
-        attr = {...state.mousePosition, ...attr}
+        attr = {...attr}
         state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
     },
     plot(state, prop) {
-        state.activeLayer.tools[prop.toolId].points.push({x: prop.x, y: prop.y})
+        state.activeLayer.tools[prop.toolId].points.push(prop)
     },
     replot(state, prop) {
-        state.activeLayer.tools[prop.toolId].points.splice(prop.index, 1, {x: prop.x, y: prop.y})
+        state.activeLayer.tools[prop.toolId].points.splice(prop.index, 1, {lat: prop.lat, lng: prop.lng})
     },
     selectTool(state, {prop, getters}) {
         state.selected = {...state.selected, [prop.toolId]: getters.getUserId}
@@ -54,16 +52,14 @@ export const mutations = {
     clearSelection(state) {
         state.selected = getters.othersSelecting
     },
-    setPosition(state, {prop, getters}) {
-        for(const toolId of Object.keys(getters.selecting))
-            state.activeLayer.tools[toolId] = {...state.activeLayer.tools[toolId], x: prop.x, y: prop.y}
-    },
-    setCenter(state, prop) {
-        state.center = {...state.center, lat: prop.lat, lng: prop.lng}
-    },
-    setMarkerLatLngs(state, latlng) {
-        state.markerLatLngs.length = 0
-        state.markerLatLngs.push(latlng)
+    moveTools(state, {prop, getters}) {
+        const dlat = prop.now.lat - prop.prev.lat
+        const dlng = prop.now.lng - prop.prev.lng
+
+        for(const toolId of Object.keys(getters.selecting)) {
+            const tool = state.activeLayer.tools[toolId]
+            state.activeLayer.tools[toolId] = {...tool, lat: tool.lat + dlat, lng: tool.lng + dlng}
+        }
     },
     initLayers(state) {
         // 実際はAPIからデータをとりにきてlayersにセット
@@ -112,14 +108,8 @@ export const actions = {
     clearSelection(context) {
         context.commit('clearSelection')
     },
-    setPosition({commit, getters}, prop) {
-        commit('setPosition', {prop, getters})
-    },
-    setCenter(context, prop) {
-        context.commit('setCenter', prop)
-    },
-    setMarkerLatLngs(context, latlng) {
-        context.commit('setMarkerLatLngs', latlng)
+    moveTools({commit, getters}, prop) {
+        commit('moveTools', {prop, getters})
     },
     initLayers(context) {
         context.commit('initLayers')
