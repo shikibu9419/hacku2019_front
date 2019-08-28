@@ -22,7 +22,6 @@ export default {
     HeaderSearch: () => import('~/components/atoms/headers/headerSearch.vue'),
   },
   methods:{
-
   }
 }
 </script>
