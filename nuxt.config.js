@@ -34,13 +34,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-<<<<<<< HEAD
-//     { src: '~/plugins/vue2-google-maps.js' },
     { src: '~/plugins/vue-jsonp.js' },
     { src: '~plugins/font-awesome', ssr: false }
-=======
-    { src: '~/plugins/vue-jsonp.js' }
->>>>>>> master
   ],
   /*
   ** Nuxt.js dev-modules
