@@ -35,8 +35,8 @@ export default {
         moveOrScroll(e) {
             const prev = this.$store.state.mapEdit.mousePosition
             const now = {
-                x: e.pageX - this.$store.state.mapEdit.offset.x,
-                y: e.pageY - this.$store.state.mapEdit.offset.y
+                x: e.clientX - this.$store.state.mapEdit.offset.x,
+                y: e.clientY - this.$store.state.mapEdit.offset.y - 80 // header-height
             }
             const prop = {
                 prev: this.$store.getters['ymap/pixelToLatLng'](prev),

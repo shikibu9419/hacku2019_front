@@ -3,36 +3,56 @@
     .search_input
       button().search_button.button
         SearchBtn.search_button__icon
-      input(v-model="search_txt" :placeholder="placeholder" @change="update()").header_search__input
+      input(v-model="query" :placeholder="placeholder" @change="update()").header_search__input
     .filter_wrapper(v-if="type==='maplists'")
       button().filter_button.button
         FilterBtn.filter_button__icon
-        .filter_button__text Filter 
+        .filter_button__text Filter
 
 </template>
 <script>
 export default {
-  props:["placeholder","type"],
-  components:{
+  props: ["placeholder", "type"],
+  components: {
     //svg
     SearchBtn: () => import('~/assets/svgs/search.svg?inline'),
     FilterBtn: () => import('~/assets/svgs/filter.svg?inline'),
   },
-  data(){
-    return{
-      search_txt:""
+  data() {
+    return {
+      query: ""
     }
   },
   methods: {
-    update(){
-      //VueXに投げて検索処理
-        if(this.type === "inmap"){
-          //map-editとmap-viewのとき
-        }
-        if(this.type === "maplists"){
+    update() {
+        if(this.type === "inmap")
+          this.searchYOLP()
+        if(this.type === "maplists") {
           //マップをさがす
           //filter処理(tag,like-only,mymap-only,stock-only)
+          // this.searchMap()
         }
+    },
+    searchYOLP() {
+      this.$store.dispatch('ymap/resetMarkers')
+
+      const baseUrl = 'https://map.yahooapis.jp/search/local/V1/localSearch'
+
+      this.$jsonp(baseUrl, {appid: process.env.YOLP_APPID, query: this.query, output: 'json'})
+        .then(response => {
+          if (response.ResultInfo.Count === 0) return
+
+          const latlngs = response.Feature.map(feature =>
+            feature.Geometry.Coordinates.split(',').map(c => parseFloat(c)).reverse()
+          )
+          this.$store.dispatch('ymap/setMarkers', latlngs)
+        })
+    },
+    searchMap() {
+      const baseUrl = 'API base url'
+
+      this.$axios(baseUrl, {})
+        .then(response => {})
     }
   }
 }
