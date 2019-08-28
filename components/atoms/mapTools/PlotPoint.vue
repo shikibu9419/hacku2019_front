@@ -4,7 +4,7 @@
     @click.left="plot"
     @mousedown.stop="grabPoint"
     @mouseup.stop="releasePoint"
-    :class="{active__layer_on: layerActive}"
+    :class="{active__layer_on: layerActive, grab__tool_on: grabbed}"
   )
 </template>
 
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     attributes () {
-      this.$store.state.ymap.center // To observe changing of center
+      this.$store.state.ymap.center // To observe map scrolling
 
       const position = (this.grabbed || this.nowPlotted) ?
         this.$store.state.mapEdit.mousePosition : this.$store.getters['ymap/latLngToPixel'](this.attr)
@@ -69,9 +69,13 @@ export default {
 <style lang="scss">
 .map_edit__map__plotpoint {
   fill: white;
-  cursor: pointer;
   stroke: red;
   stroke-width: 2;
   r: 5;
+  cursor: grab;
+
+  &.grab__tool_on {
+    cursor: grabbing;
+  }
 }
 </style>

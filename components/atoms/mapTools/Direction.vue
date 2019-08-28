@@ -77,7 +77,7 @@ export default {
 
 <style lang="scss">
 .map_edit__map__direction {
-  fill-opacity: 0;
+  fill: none;
   cursor: pointer;
   stroke-width: 3;
   stroke: red;

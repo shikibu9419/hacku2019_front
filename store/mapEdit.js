@@ -49,7 +49,6 @@ export const mutations = {
     replotAll(state, prop) {
         const dlat = prop.now.lat - prop.prev.lat
         const dlng = prop.now.lng - prop.prev.lng
-      console.log(dlat, dlng)
 
         state.activeLayer.tools[prop.toolId].points.forEach((point, index) => {
             state.activeLayer.tools[prop.toolId].points.splice(index, 1, {lat: point.lat + dlat, lng: point.lng + dlng})
