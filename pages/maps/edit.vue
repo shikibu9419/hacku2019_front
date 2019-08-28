@@ -28,19 +28,19 @@ export default {
   },
   mounted() {
     this.$store.dispatch('ymap/init')
-    this.setOffset()
-    window.addEventListener('resize', () => this.setOffset())
-    window.addEventListener('scroll', () => this.setOffset())
+//     this.setOffset()
+//     window.addEventListener('resize', () => this.setOffset())
+//     window.addEventListener('scroll', () => this.setOffset())
   },
   methods: {
-    setOffset() {
-      const rect = this.$refs.layer.getBoundingClientRect()
-      const prop = {
-        x: window.pageXOffset + rect.left,
-        y: window.pageYOffset + rect.top
-      }
-      this.$store.dispatch('mapEdit/setOffset', prop)
-    }
+//     setOffset() {
+//       const rect = this.$refs.layer.getBoundingClientRect()
+//       const prop = {
+//         x: window.pageXOffset + rect.left,
+//         y: window.pageYOffset + rect.top
+//       }
+//       this.$store.dispatch('mapEdit/setOffset', prop)
+//     }
   },
   computed: {
     activeLayer () {

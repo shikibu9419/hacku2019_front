@@ -7,34 +7,35 @@
     .filter_wrapper(v-if="type==='maplists'")
       button().filter_button.button
         FilterBtn.filter_button__icon
-        .filter_button__text Filter 
+        .filter_button__text Filter
 
 </template>
 <script>
 export default {
-  props:["placeholder","type"],
-  components:{
+  props: ["placeholder", "type"],
+  components: {
     //svg
     SearchBtn: () => import('~/assets/svgs/search.svg?inline'),
     FilterBtn: () => import('~/assets/svgs/filter.svg?inline'),
   },
-  data(){
+  data() {
     return {
       query: ""
     }
   },
   methods: {
-    update(){
-      //VueXに投げて検索処理
-        if(this.type === "inmap"){
-          this.searchInMap()
-        }
-        if(this.type === "maplists"){
+    update() {
+        if(this.type === "inmap")
+          this.searchYOLP()
+        if(this.type === "maplists") {
           //マップをさがす
           //filter処理(tag,like-only,mymap-only,stock-only)
+          // this.searchMap()
         }
     },
-    searchInMap() { // とりあえずそのまま移植
+    searchYOLP() {
+      this.$store.dispatch('ymap/resetMarkers')
+
       const baseUrl = 'https://map.yahooapis.jp/search/local/V1/localSearch'
 
       this.$jsonp(baseUrl, {appid: process.env.YOLP_APPID, query: this.query, output: 'json'})
@@ -46,6 +47,12 @@ export default {
           )
           this.$store.dispatch('ymap/setMarkers', latlngs)
         })
+    },
+    searchMap() {
+      const baseUrl = 'API base url'
+
+      this.$axios(baseUrl, {})
+        .then(response => {})
     }
   }
 }
