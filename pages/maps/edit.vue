@@ -4,7 +4,6 @@
         map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
         map-layer(v-bind="activeLayer")
         sidebar
-        toolbar
 </template>
 
 <script>
