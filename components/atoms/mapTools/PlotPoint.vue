@@ -1,5 +1,5 @@
 <template lang="pug">
-  circle.map_edit__map__plotpoint(
+  circle.map_edit__tools.plotpoint(
     v-bind="attributes"
     @click.left="plot"
     @mousedown.stop="grabPoint"
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style lang="scss">
-.map_edit__map__plotpoint {
+.map_edit__tools.plotpoint {
   fill: white;
   stroke: red;
   stroke-width: 2;

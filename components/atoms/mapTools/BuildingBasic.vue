@@ -1,9 +1,14 @@
 <template lang="pug">
-    rect.map_edit__tool__box(
+  g
+    rect.map_edit__tools.box(
         v-bind="attributes"
         @dblclick.stop="select"
         @mousedown.stop="grab"
         :class="{selected__tool_on: selected, grab__tool_on: grabbing}"
+    )
+    circle.map_edit__tools.box.resize(
+      :cx="attributes.x + attributes.width"
+      :cy="attributes.y + attributes.height"
     )
 </template>
 
@@ -17,7 +22,7 @@ export default {
     }
   },
   computed: {
-    attributes () {
+    attributes() {
       this.$store.state.ymap.center // To observe map scrolling
 
       const position = this.$store.getters['ymap/latLngToPixel'](this.attr)
@@ -32,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss">
-.map_edit__tool__box {
+.map_edit__tools.box {
   fill-opacity: 0;
   stroke-width: 2;
   stroke: #000;  // unselected color
@@ -44,6 +49,12 @@ export default {
 
   &.grab__tool_on {
     cursor: grabbing;
+  }
+
+  &.resize {
+    fill-opacity: 0;
+    r: 3;
+    cursor: nwse-resize;
   }
 }
 </style>
