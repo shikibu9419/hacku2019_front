@@ -1,13 +1,15 @@
 <template lang="pug">
 .topInput
-  input.input(v-model="value" :placeholder="placeholder" :type="type" @change="update()")
+  input.input(:placeholder="placeholder" :type="type" :name="name"
+                v-bind:value="value"
+                v-on:input="$emit('input', $event.target.value)")
 </template>
 <script>
 export default {
-  props:["value","placeholder","type"],
+  props:["value","placeholder","type","name"],
   methods: {
     update(){
-      //親へデータを投げる or VueXに投げる
+
     }
   }
 }
