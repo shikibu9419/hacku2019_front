@@ -3,7 +3,7 @@
     Header(
       :returnLink="null"
       :placeholder="'マイマップを検索する'"
-      :type="'maplists'"
+      :type="'maplists/mymap'"
       )
     main.main
       SideMenu

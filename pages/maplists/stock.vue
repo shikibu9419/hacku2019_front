@@ -3,7 +3,7 @@
     Header(
       :returnLink="null"
       :placeholder="'ストックを検索する'"
-      :type="'maplists'"
+      :type="'maplists/stock'"
       )
     main.main
       SideMenu
