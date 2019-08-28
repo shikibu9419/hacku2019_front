@@ -25,14 +25,15 @@ export default {
 @import "~/assets/styles/mixin.scss";
 
 .map_category__item_a {
+  position: relative;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   padding: 8px 28px;
   text-decoration: none;
-  transition: .2s $bezier-ease-out;
 }
-.map_category__item_a.nuxt-link-active {
+
+.map_category__item_a.nuxt-link-exact-active {
   background: $back-light-gray;
   background: linear-gradient(-90deg, $back-light-gray 10%, $white 100%);
   .map_category__item__text {
@@ -43,6 +44,7 @@ export default {
   padding-right: 8px;
 }
 .map_category__item__text {
+  transition: .5s $bezier-ease-out;
   @include noto-font(1.6rem,$text-main);
   text-decoration: none;
 }
