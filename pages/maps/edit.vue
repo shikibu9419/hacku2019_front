@@ -16,6 +16,7 @@
 import axios from 'axios'
 
 export default {
+  layout: 'MapHeaderLayout',
   components: {
     MapLayer: () => import('~/components/organisms/mapEdit/MapLayer'),
     Sidebar: () => import('~/components/organisms/mapEdit/Sidebar'),
