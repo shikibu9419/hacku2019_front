@@ -1,9 +1,9 @@
 <template lang="pug">
   .search.toppage
     Header(
-      :returnLink="'/maplists/search'"
+      :returnLink="null"
       :placeholder="'マップを検索する'"
-      :type="'maplists'"
+      :type="'maplists/search'"
       )
     main.main
       SideMenu
@@ -21,11 +21,6 @@ export default {
     Header,
     SideMenu,
     MapList
-  },
-  data(){
-    return {
-      placeholder:"マップを検索する",
-    }
   },
   computed:{
     searchData(){
