@@ -37,7 +37,7 @@ export default {
 
 <style lang="scss">
 .map_edit__map__direction {
-    fill: none;
+    fill-opacity: 0;
     cursor: pointer;
     stroke-width: 3;
     stroke: red;
