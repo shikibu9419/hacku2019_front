@@ -10,6 +10,8 @@
       map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
       map-layer(v-bind="activeLayer")
       sidebar
+    .map_edit__popup-modal
+      component(v-for="(modal, i) in modals" :is="modal.component", v-bind:params="modal.params")
 </template>
 
 <script>
@@ -48,6 +50,9 @@ export default {
     },
     inactiveLayers () {
       return this.$store.getters['mapEdit/inactiveLayers']
+    },
+    modals() {
+        return this.$store.getters['modal/modals']
     }
   }
 }
