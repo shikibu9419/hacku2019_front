@@ -21,37 +21,37 @@ import Vue from 'vue'
 
 export default {
   layout: "LoginPage",
-  components:{
+  components: {
     LoginLogo,
     LoginInput
   },
-  data(){
+  data() {
     return {
       email: "",
       password: ""
     }
   },
   methods:{
-    linkToSignUpPage(){
+    linkToSignUpPage() {
       this.$router.push('/signup')
     },
 
     async login() {
       const response = await this.$axios.post('/api/login',
-                                                     { email: this.email,
-                                                       user_password: this.password })
-        .then( response => {
+                                              { email: this.email,
+                                                user_password: this.password })
+        .then(response => {
           Vue.toasted.success('ログインに成功しました')
           this.$store.commit('setToken', response.data.key)
           this.$router.push('/')
         })
         .catch(err => {
           if(err.response.status == 400) {
-            Vue.toasted.error('正しいメールアドレを入力してください')
+            Vue.toasted.error('正しいメールアドレスを入力してください')
           } else if(err.response.status == 401) {
             Vue.toasted.error('メールアドレスまたはパスワードが違います')
           }
-        }) 
+        })
     }
   }
 }
