@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import mapEdit from '~/store/mapEdit'
 import modal from '~/store/modal'
 import ymap from '~/store/ymap'
+import user from '~/store/user'
 
 Vue.use(Vuex)
 
@@ -12,26 +13,9 @@ const store = () => {
             modal,
             mapEdit,
             ymap,
+            user,
         }
     })
 }
 
 export default store
-/*
-export const state = () => ({
-    userId: 'user_id',
-    apiToken: null
-})
-
-export const mutations = {
-    setToken(state, key) {
-      state.apiToken = key
-    },
-    removeToken(state) {
-      state.apiToken = null
-    }
-}
-
-export const actions = {
-}
-*/
