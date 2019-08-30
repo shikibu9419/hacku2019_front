@@ -1,3 +1,5 @@
+import toolList from '~/models/toolList.js'
+
 const uuid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       const r = Math.random()*16|0
@@ -37,7 +39,7 @@ const mutations = {
         state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
     },
     addTool(state, {attr, toolId}) {
-        attr = {...attr}
+        attr = Object.assign(toolList[attr.type], attr)
         state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
     },
     plot(state, prop) {
