@@ -3,6 +3,7 @@
         Header(
         :returnLink="'/maplists/search'"
         :placeholder="'マップを検索する'"
+        :type="'HOGE'"
         )
         .card-pages
             card-tile(
