@@ -1,39 +1,48 @@
 <template lang="pug">
     .popup-modal
-        .popup-modal__popup-content {{params.message}}
-        //.popup-modal__popup-content(v-bind:is="getComponentName(popupModalParams.type)" v-bind:params.async="params")
+        .popup-modal__popup-content
+            component(v-bind:is="params.component", v-bind:closeModal="closeModal", v-bind:params="params.property")
 </template>
 
 <script>
-    import ModalSvc from '~/services/ModalSvc'
+    import ModalService from '~/services/ModalSvc'
     export default {
         components: {
             BoxAndPinPopup: () => import('~/components/atoms/mapEdit/BoxAndPinPopup')
         },
         props: {
             params: {
-                message: String,
-                onOk: null
+                component: String,
+                property: Object,
+                onOk: () => {}
             }
         },
         methods: {
             closeModal() {
-                ModalSvc.close()
+                this.modalSvc.close()
             }
-        }
+        },
+        created() {
+            this.modalSvc = new ModalService(this.$store)
+        },
     }
 </script>
 
 <style lang="scss">
     .popup-modal {
+        z-index: 1145141919810;
         position: absolute;
         top: 0;
         height: 100%;
         width: 100%;
-        filter: brightness(0.8) blur(5px);
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &__popup-content {
-            height: 100px;
-            width: 100px;
+            background: white;
+            height: auto;
+            width: auto;
         }
     }
 </style>

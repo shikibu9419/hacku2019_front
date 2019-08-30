@@ -10,7 +10,6 @@
 </template>
 
 <script>
-    // import ModalSvc from '~/services/ModalSvc'
     import ModalService from '~/services/ModalSvc'
 export default {
     computed: {
@@ -28,7 +27,7 @@ export default {
             this.$store.dispatch('mapEdit/addLayer', prop)
         },
         popup() {
-            this.modalSvc.openPopup('message', null)
+            this.modalSvc.openPopup('BoxAndPinPopup', {}, null)
         }
     },
     components: {
@@ -37,11 +36,6 @@ export default {
     created() {
         this.modalSvc = new ModalService(this.$store)
     },
-    data() {
-        return {
-            modalSvc: ModalService
-        }
-    }
 }
 </script>
 

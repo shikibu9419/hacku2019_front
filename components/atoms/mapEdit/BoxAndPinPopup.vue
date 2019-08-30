@@ -1,15 +1,14 @@
 <template lang="pug">
-    .box-and-pin-popup hogehoge
+    .box-and-pin-popup
+        button.close(@click="closeModal")
 </template>
 
 <script>
     export default {
         name: "BoxAndPinPopup",
         props: {
-            params: {
-                name: String,
-                attr: Object
-            }
+            params: Object,
+            closeModal: () => {}
         }
     }
 </script>

@@ -5,11 +5,12 @@ export default class ModalService {
     constructor(store) {
         this.store = store
     }
-    openPopup(message, onOk) {
+    openPopup(component, property, onOk) {
         this.store.dispatch('modal/openModal', {
             component: 'PopupModal',
             params: {
-                message: message,
+                component: component,
+                property: property,
                 onOk: onOk
             }
         })
