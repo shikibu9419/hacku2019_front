@@ -1,5 +1,7 @@
 const state = () => ({
     userId: 'user_id',
+    name: 'username',
+    email: 'hoge@fuga.com',
     apiToken: null
 })
 
