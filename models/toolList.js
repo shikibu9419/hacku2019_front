@@ -22,33 +22,34 @@ const direction = {
   points: []
 }
 
-const pin = {
-  ...base,
-  type: 'pin',
-}
-
 const text = {
   ...base,
   type: 'text',
+  text: ''
 }
 
-const textBox = {
-  ...base,
-  type: 'text_box',
+// boxのみ画面固定
+const box = {
+  x: 0,
+  y: 0,
+  width: 100,
+  height: 100,
+  type: 'box',
+  contents: []
 }
 
-const comment = {
+const pin = {
   ...base,
-  type: 'comment',
-  message: ''
+  type: 'pin',
+  contents: []
 }
 
 export default {
-  'building': building,
-  'building_basic': buildingBasic,
-  'direction': direction,
-  'pin': pin,
-  'text': text,
-  'text_box': textBox,
-  'comment': comment,
+  building: building,
+  building_basic: buildingBasic,
+  direction: direction,
+  pin: pin,
+  text: text,
+  box: box,
+  pin: pin,
 }
