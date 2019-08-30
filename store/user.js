@@ -1,25 +1,32 @@
+import user from '~/models/user'
+
 const state = () => ({
-    userId: 'user_id',
-    name: 'username',
-    email: 'hoge@fuga.com',
-    apiToken: null
+  user: user,
+  apiToken: null
 })
 
 const mutations = {
-    setToken(state, key) {
-        state.apiToken = key
-    },
-    removeToken(state) {
-        state.apiToken = null
-    }
+  setToken(state, key) {
+    state.apiToken = key
+  },
+  removeToken(state) {
+    state.apiToken = null
+  }
 }
 
 const actions = {
 }
 
+const getters = {
+  getUserId(state) {
+    return state.user.id
+  }
+}
+
 export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions,
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+  getters
 }
