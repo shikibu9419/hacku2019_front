@@ -34,6 +34,9 @@
                                 fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up")
                                 fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down")
                                 fa-icon.box-and-pin-popup__close-icon(icon="times")
+                            .box-and-pin-popup__link-info-content
+                                AutosizeTextarea.box-and-pin-popup__link-info-input(v-bind:text.async="info.content.link" v-bind:maxSize="1" v-bind:XScrollable="true")
+                                .box-and-pin-popup__link-info-title hogehoge
         .box-and-pin-popup--right
             button.close(@click="closeModal")
 </template>
@@ -110,6 +113,9 @@
             background-color: $back-gray;
             padding: 16px;
         }
+        &__info {
+            margin-bottom: 8px;
+        }
         &__info-icons {
             height: 24px;
             width: 100%;
@@ -180,8 +186,23 @@
             background: $light-light-gray;
         }
         // Type: link
-
-
+        &__link-info-content {
+            height: auto;
+            border: solid 2px $gray;
+            background: $white;
+        }
+        &__link-info-input {
+            border: none;
+        }
+        &__link-info-title {
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+            height: 32px;
+            background: $light-light-gray;
+            border-top: solid 2px $gray;
+            overflow: hidden;
+        }
 
 
 

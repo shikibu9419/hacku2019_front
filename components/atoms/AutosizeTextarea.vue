@@ -1,5 +1,5 @@
 <template lang="pug">
-    textarea.autosize-textarea(v-model="text" :rows="rows")
+    textarea.autosize-textarea(v-model="text" :rows="rows" :class="{'x-scrollable': XScrollable}")
 </template>
 
 <script>
@@ -7,7 +7,8 @@
         name: "AutosizeTextarea.vue",
         props: {
             text: String,
-            maxSize: Number
+            maxSize: Number,
+            XScrollable: Boolean
         },
         computed: {
             rows() {
@@ -19,7 +20,13 @@
 
 <style lang="scss" scoped>
     .autosize-textarea {
+        height: 100%;
         width: 100%;
+        outline: none;
         resize: none;
+        color: #6D646A;
+    }
+    .x-scrollable {
+        white-space: nowrap;
     }
 </style>
