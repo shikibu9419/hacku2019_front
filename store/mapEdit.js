@@ -1,4 +1,6 @@
 import toolList from '~/models/toolList.js'
+import map from '~/models/map.js'
+import layer from '~/models/layer.js'
 
 const uuid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -10,7 +12,8 @@ const uuid = function() {
 
 const state = () => ({
     // APIと通信して逐次変更する変数
-    layers: [],
+    map: map,
+    layers: map.layers,
     activeLayer: {},
     selected: {},
     // 自己保持する変数
@@ -79,8 +82,8 @@ const mutations = {
         // 実際はAPIからデータをとりにきてlayersにセット
         state.layers = [{id: 1, name: 'layer1', color: 'red', tools: {}}]
     },
-    addLayer(state, prop) {
-        state.layers.push(prop)
+    addLayer(state, layer) {
+        state.layers.push(layer)
     },
     selectLayer(state, layerId) {
         state.activeLayer = state.layers.find(layer => layer.id === layerId)
@@ -134,13 +137,13 @@ const actions = {
     initLayers(context) {
         context.commit('initLayers')
     },
-    addLayer(context, prop) {
+    addLayer(context, layer) {
         // 実際はlayer作成要求をして, レスポンスをlayerにセット
         const id = Object.keys(context.state.layers).length + 1
-        prop.id = id
-        prop.tools = {}
+        layer.id = id
+        layer.tools = {}
 
-        context.commit('addLayer', prop)
+        context.commit('addLayer', layer)
         context.dispatch('selectLayer', id)
     },
     selectLayer(context, layerId) {
