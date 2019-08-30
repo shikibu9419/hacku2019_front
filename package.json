@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "build": "YOLP_APPID=$_YOLP_APPID GOOGLE_MAPS_API_KEY=$_GOOGLE_MAPS_API_KEY nuxt build",
+    "build": "YOLP_APPID=$YOLP_APPID GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "test": "jest"
