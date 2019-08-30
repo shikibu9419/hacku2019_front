@@ -41,7 +41,7 @@ export default {
       if (!this.selected || !this.pointGrabbed) return attr
 
       const mousePosition = this.$store.state.mapEdit.mousePosition
-      this.width = Math.max(mousePosition.x - attr.x, 0)
+      this.width  = Math.max(mousePosition.x - attr.x, 0)
       this.height = Math.max(mousePosition.y - attr.y, 0)
 
       return {...attr, width: this.width, height: this.height}
