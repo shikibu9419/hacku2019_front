@@ -21,6 +21,9 @@ export default {
     //components
     HeaderSearch: () => import('~/components/atoms/headers/headerSearch.vue'),
   },
+  mounted() {
+    this.type="like"
+  },
   methods:{
   }
 }
