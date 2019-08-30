@@ -66,6 +66,7 @@ $icon-size:      30px;
 .map_edit__toolbar {
   width: min-content;
   height: min-content;
+  cursor: pointer;
 
   &__background {
     fill: $back-gray;

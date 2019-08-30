@@ -46,6 +46,18 @@ const mutations = {
     replot(state, prop) {
         state.activeLayer.tools[prop.toolId].points.splice(prop.index, 1, {lat: prop.lat, lng: prop.lng})
     },
+    replotAll(state, prop) {
+        const dlat = prop.now.lat - prop.prev.lat
+        const dlng = prop.now.lng - prop.prev.lng
+
+        state.activeLayer.tools[prop.toolId].points.forEach((point, index) => {
+            state.activeLayer.tools[prop.toolId].points.splice(index, 1, {lat: point.lat + dlat, lng: point.lng + dlng})
+        })
+    },
+    resize(state, prop) {
+        var tool = state.activeLayer.tools[prop.toolId]
+        state.activeLayer.tools[prop.toolId] = {...tool, width: prop.width, height: prop.height}
+    },
     selectTool(state, {prop, getters}) {
         state.selected = {...state.selected, [prop.toolId]: getters.getUserId}
     },
@@ -99,6 +111,12 @@ const actions = {
     },
     replot(context, prop) {
         context.commit('replot', prop)
+    },
+    replotAll(context, prop) {
+        context.commit('replotAll', prop)
+    },
+    resize(context, prop) {
+        context.commit('resize', prop)
     },
     select({commit, getters}, prop) {
         if(!prop.multiple)
