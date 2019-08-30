@@ -10,6 +10,7 @@
       map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
       map-layer(v-bind="activeLayer")
       sidebar
+      commentbar
     .map_edit__popup-modal
       component(v-for="(modal, i) in modals" :is="modal.component" :key="`modals_${i}`" v-bind:params="modal.params")
 </template>
@@ -20,9 +21,10 @@ import axios from 'axios'
 export default {
   layout: 'MapHeaderLayout',
   components: {
+    Header: () => import('~/components/organisms/Header'),
     MapLayer: () => import('~/components/organisms/mapEdit/MapLayer'),
     Sidebar: () => import('~/components/organisms/mapEdit/Sidebar'),
-    Header: () => import('~/components/organisms/mapList/Header')
+    Commentbar: () => import('~/components/organisms/mapEdit/Commentbar')
   },
   beforeCreate() {
     this.$store.dispatch('mapEdit/initLayers')
