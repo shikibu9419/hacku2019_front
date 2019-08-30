@@ -40,7 +40,7 @@ export default {
         const response = await this.$axios.post('/api/users',
                                                      { email: this.email,
                                                        user_name: this.name,
-                                                       user_password: this.password })
+                                                       password: this.password })
         .then( response => {
           Vue.toasted.success('登録に成功しました')
           this.$router.push('/login')

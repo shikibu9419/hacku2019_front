@@ -22,7 +22,7 @@ export default {
   components: {
     MapLayer: () => import('~/components/organisms/mapEdit/MapLayer'),
     Sidebar: () => import('~/components/organisms/mapEdit/Sidebar'),
-    Header: () => import('~/components/organisms/Header')
+    Header: () => import('~/components/organisms/mapList/Header')
   },
   beforeCreate() {
     this.$store.dispatch('mapEdit/initLayers')

@@ -39,10 +39,10 @@ export default {
     async login() {
       const response = await this.$axios.post('/api/login',
                                               { email: this.email,
-                                                user_password: this.password })
+                                                password: this.password })
         .then(response => {
           Vue.toasted.success('ログインに成功しました')
-          this.$store.commit('setToken', response.data.key)
+          this.$store.commit('user/setToken', response.data.key)
           this.$router.push('/')
         })
         .catch(err => {
