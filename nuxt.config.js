@@ -1,6 +1,11 @@
 require('dotenv').config();
 
 export default {
+  env: {
+    YOLP_APPID: process.env.YOLP_APPID,
+    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
+  },
+
   mode: 'spa',
   /*
   ** Headers of the page
@@ -35,7 +40,7 @@ export default {
   */
   plugins: [
     { src: '~/plugins/vue-jsonp.js' },
-    { src: '~plugins/font-awesome', ssr: false },
+    { src: '~/plugins/font-awesome', ssr: false },
     { src: '~/plugins/axios.js', ssr: false }
   ],
   /*
@@ -49,7 +54,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    ['@nuxtjs/pwa', { icon: false} ],
+    ['@nuxtjs/pwa', {icon: false} ],
     '@nuxtjs/dotenv',
     '@nuxtjs/svg',
     '@nuxtjs/proxy',
@@ -68,9 +73,9 @@ export default {
     proxy: true,
     baseURL: 'https://api.mille-feuille.app'
   },
-  
+
   proxy: {
-    '/api': { target: 'https://api.mille-feuille.app', pathRewrite: {'^/api/': ''} }
+    '/api': { target: 'https://api.mille-feuille.app', pathRewrite: {'^/api': ''} }
   },
 
   toast: {
