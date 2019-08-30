@@ -1,5 +1,5 @@
 <template lang="pug">
-    textarea(v-model="text" :rows="rows")
+    textarea.autosize-textarea(v-model="text" :rows="rows")
 </template>
 
 <script>
@@ -11,13 +11,15 @@
         },
         computed: {
             rows() {
-                console.log(this.text)
                 return Math.min(this.text.split('\n').length, this.maxSize)
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .autosize-textarea {
+        width: 100%;
+        resize: none;
+    }
 </style>

@@ -6,15 +6,34 @@
                 .box-and-pin-popup__information
                     .box-and-pin-popup__info(v-for="info in testParams.information")
                         .box-and-pin-popup__text-info(v-if="info.type === 'text'")
-                            .box-and-pin-popup__info--icons
-                                img.box-and-pin-popup__info-icon(width="16px" height="16px" src="~/assets/svgs/text_box.svg")
-                            AutosizeTextarea(v-bind:text.async="info.content.text" v-bind:maxSize="10")
+                            .box-and-pin-popup__info-icons
+                                img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/text_box.svg")
+                                .box-and-pin-popup__info-type Text
+                                fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up")
+                                fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down")
+                                fa-icon.box-and-pin-popup__close-icon(icon="times")
+                            AutosizeTextarea.box-and-pin-popup__info-textarea(v-bind:text.async="info.content.text" v-bind:maxSize="6")
                         .box-and-pin-popup__image-info(v-if="info.type === 'image'")
-                            .box-and-pin-popup__info--icons
-                                img.box-and-pin-popup__info-icon(width="16px" height="16px" src="~/assets/svgs/image_box.svg")
+                            .box-and-pin-popup__info-icons
+                                img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/image_box.svg")
+                                .box-and-pin-popup__info-type Image
+                                fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up")
+                                fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down")
+                                fa-icon.box-and-pin-popup__close-icon(icon="times")
+                            .box-and-pin-popup__image-info-content
+                                .box-and-pin-popup__images-wrapper
+                                    .box-and-pin-popup__image(v-for="(imageUrl, i) in info.content.urls" :key="`image_${i}`")
+                                        img(height="80px" :src="imageUrl")
+                                        .box-and-pin-popup__image-close-icon-wrapper
+                                            fa-icon.box-and-pin-popup__image-close-icon(icon="times")
+                                .box-and-pin-popup__image-info-input 画像ファイルを選択
                         .box-and-pin-popup__link-info(v-if="info.type === 'link'")
-                            .box-and-pin-popup__info--icons
-                                img.box-and-pin-popup__info-icon(width="16px" height="16px" src="~/assets/svgs/link_box.svg")
+                            .box-and-pin-popup__info-icons
+                                img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/link_box.svg")
+                                .box-and-pin-popup__info-type Link
+                                fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up")
+                                fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down")
+                                fa-icon.box-and-pin-popup__close-icon(icon="times")
         .box-and-pin-popup--right
             button.close(@click="closeModal")
 </template>
@@ -46,6 +65,10 @@
                             content: {
                                 urls: [
                                     'https://i.imgur.com/0efnThJ.png',
+                                    'https://i.imgur.com/0efnThJ.png',
+                                    'https://i.imgur.com/0efnThJ.png',
+                                    'https://i.imgur.com/0efnThJ.png',
+                                    'https://i.imgur.com/0efnThJ.png',
                                     'https://i.imgur.com/0efnThJ.png'
                                 ]
                             }
@@ -75,7 +98,7 @@
             padding-right: 8px;
         }
         &__title {
-            border: solid 1px $black;
+            border: solid 2px $gray;
             width: 100%;
             height: 32px;
             font-size: 16px;
@@ -87,13 +110,89 @@
             background-color: $back-gray;
             padding: 16px;
         }
-        &--right {
-            width: 40%;
-        }
-
-        &__info--icons {
+        &__info-icons {
             height: 24px;
             width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        &__info-type {
+            font-size: 16px;
+            margin: 0 auto 0 4px;
+        }
+        &__sort-up-icon {
+            font-size: 24px;
+            margin: 0 4px 0;
+            transform: translateY(6px);
+        }
+        &__sort-down-icon {
+            font-size: 24px;
+            margin: 0 4px 0;
+            transform: translateY(-6px);
+        }
+        &__close-icon {
+            font-size: 20px;
+            margin: 0 8px 0 16px;
+        }
+        // Type: text
+        &__info-textarea {
+            border: solid 2px $gray;
+            color: $dark-gray;
+        }
+        // Type: image
+        &__image-info-content {
+            height: auto;
+            border: solid 2px $gray;
+            background: $white;
+        }
+        &__images-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+        &__image {
+            position: relative;
+            height: 80px;
+            margin: 4px 0 4px 4px;
+        }
+        &__image-close-icon-wrapper {
+            $size: 16px;
+            position: absolute;
+            height: $size;
+            width: $size;
+            top: 4px;
+            right: 4px;
+            font-size: calc(100% * 0.8);
+            background: $white;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        &__image-info-input {
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+            height: 32px;
+            background: $light-light-gray;
+        }
+        // Type: link
+
+
+
+
+
+
+
+
+
+
+
+        &--right {
+            width: 40%;
         }
     }
 </style>
