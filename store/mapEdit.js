@@ -6,7 +6,7 @@ const uuid = function() {
   });
 };
 
-export const state = () => ({
+const state = () => ({
     // APIと通信して逐次変更する変数
     layers: [],
     activeLayer: {},
@@ -20,7 +20,7 @@ export const state = () => ({
 })
 
 // map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
-export const mutations = {
+const mutations = {
     togglePlotting(state) {
         state.plotting = !state.plotting
     },
@@ -73,7 +73,7 @@ export const mutations = {
     }
 }
 
-export const actions = {
+const actions = {
     togglePlotting(context) {
         context.commit('togglePlotting')
     },
@@ -129,7 +129,7 @@ export const actions = {
     }
 }
 
-export const getters = {
+const getters = {
     selecting(state, _, rootState) {
         if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
@@ -151,4 +151,12 @@ export const getters = {
     inactiveLayers (state) {
         return state.layers.filter(layer => layer.id !== state.activeLayer.id)
     }
+}
+
+export default {
+    namespaced: true,
+    state,
+    mutations,
+    actions,
+    getters
 }

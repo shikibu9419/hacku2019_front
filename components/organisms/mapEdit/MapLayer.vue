@@ -11,7 +11,7 @@
 export default {
     components: {
         Tool: () => import('~/components/atoms/mapTools/ToolWrapper'),
-        Toolbar: () => import('~/components/molecules/Toolbar')
+        Toolbar: () => import('~/components/molecules/Toolbar'),
     },
     props: {
         id: {
