@@ -1,4 +1,5 @@
 const base = {
+  id: '',
   lat: 0,
   lng: 0
 }
@@ -30,6 +31,7 @@ const text = {
 
 // boxのみ画面固定
 const box = {
+  id: '',
   x: 0,
   y: 0,
   width: 100,
