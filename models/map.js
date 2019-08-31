@@ -3,10 +3,7 @@ export default {
   name: '',
   description: '',
   userId: '',
-  publishSetting: 0,
+  publish_setting: 0,
   layers: [],
-  tags: [],
-  commentNum: 0,
-  likedNum: 0,
-  stockedNum: 0,
+  tags: []
 }

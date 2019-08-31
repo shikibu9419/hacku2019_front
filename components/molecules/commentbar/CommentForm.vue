@@ -8,27 +8,24 @@
 </template>
 
 <script>
-import pin from '~/models/tools/pin'
-import comment from '~/models/contents/comment'
+import pinModel from '~/models/tools/pin'
+import commentModel from '~/models/contents/comment'
 
 export default {
   data() {
     return {
       message: '',
-      pinModel: pin,
-      commentModel: comment
     }
   },
   methods: {
     addComment() {
-      let pin = Object.assign({}, this.pinModel)
-      let comment = Object.assign({}, this.commentModel)
+      let pin = JSON.parse(JSON.stringify(pinModel))
+      let comment = JSON.parse(JSON.stringify(commentModel))
 
       comment.message = this.message
-      comment.user = Object.assign(comment, this.$store.getters['user/getUser'])
+      comment.user = this.$store.getters['user/getUser']
       pin.contents.push(comment)
       pin = {...pin, ...this.$store.state.ymap.now}
-//       pin = {...pin, ...$store.getters['ymap/pixelToLatLng']($store.state.mapEdit.mousePosition)}
 
       this.$store.dispatch('mapEdit/addTool', pin)
     }

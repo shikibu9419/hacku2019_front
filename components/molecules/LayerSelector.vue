@@ -19,7 +19,7 @@
 
 <script>
 import ModalService from '~/services/ModalSvc'
-import layer from '~/models/layer'
+import layerModel from '~/models/layer'
 
 export default {
   data() {
@@ -39,6 +39,8 @@ export default {
   methods: {
     // あとでmodalとかに移行
     addLayer() {
+      let layer = JSON.parse(JSON.stringify(layerModel))
+
       layer.name = 'layer'
       layer.color = 'red'
       this.$store.dispatch('mapEdit/addLayer', layer)

@@ -43,8 +43,8 @@ const mutations = {
         state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
     },
     addTool(state, {attr, toolId}) {
-        attr = Object.assign(toolList[attr.type], attr, {id: toolId})
-        state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
+        const attribute = Object.assign(toolList[attr.type], attr, {id: toolId})
+        state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attribute}
     },
     plot(state, prop) {
         state.activeLayer.tools[prop.toolId].points.push(prop)
