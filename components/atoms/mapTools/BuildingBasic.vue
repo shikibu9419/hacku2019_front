@@ -1,10 +1,10 @@
 <template lang="pug">
   g
     rect.map_edit__tools.box(
-        v-bind="attributes"
-        @dblclick.stop="select"
-        @mousedown.stop="grab"
-        :class="{selected__tool_on: selected, grab__tool_on: grabbing}"
+      v-bind="attributes"
+      @dblclick.stop="select"
+      @mousedown.stop="grab"
+      :class="{selected__tool_on: selected, grab__tool_on: grabbing}"
     )
     circle.map_edit__tools.box.resizepoint(
       v-if="selected"

@@ -6,11 +6,12 @@
             .map_edit__sidebar__layer_selector_item(@click="addLayer")
                 font-awesome-icon(icon="plus-circle")
                 p レイヤーを追加
-        // button(@click="popup") hogehoge
+        button(@click="popup") hogehoge
 </template>
 
 <script>
-    import ModalService from '~/services/ModalSvc'
+import ModalService from '~/services/ModalSvc'
+
 export default {
     computed: {
         layers () {

@@ -42,7 +42,7 @@ const mutations = {
         state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
     },
     addTool(state, {attr, toolId}) {
-        attr = Object.assign(toolList[attr.type], attr)
+        attr = Object.assign(toolList[attr.type], attr, {id: toolId})
         state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
     },
     plot(state, prop) {
@@ -66,8 +66,8 @@ const mutations = {
     selectTool(state, {prop, getters}) {
         state.selected = {...state.selected, [prop.toolId]: getters.getUserId}
     },
-    clearSelection(state) {
-        state.selected = getters.othersSelecting
+    clearSelection(state, othersSelecting) {
+        state.selected = othersSelecting
     },
     moveTools(state, {prop, getters}) {
         const dlat = prop.now.lat - prop.prev.lat
@@ -109,7 +109,7 @@ const actions = {
     addTool(context, attr) {
         const toolId = uuid()
         context.commit('addTool', {attr, toolId})
-        context.dispatch('select', {toolId: toolId})
+        context.dispatch('selectTool', {toolId: toolId})
     },
     plot(context, prop) {
         context.commit('plot', prop)
@@ -123,13 +123,13 @@ const actions = {
     resize(context, prop) {
         context.commit('resize', prop)
     },
-    select({commit, getters}, prop) {
+    selectTool({commit, getters}, prop) {
         if(!prop.multiple)
             commit('clearSelection')
         commit('selectTool', {prop, getters})
     },
     clearSelection(context) {
-        context.commit('clearSelection')
+        context.commit('clearSelection', context.getters.othersSelecting)
     },
     moveTools({commit, getters}, prop) {
         commit('moveTools', {prop, getters})
@@ -154,13 +154,13 @@ const actions = {
 
 const getters = {
     selecting(state, getters, rootState, rootGetters) {
-        if (!Object.keys(state.selected).length) return getters.getUserId
+        if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
                      .filter(item => item[1] === getters.getUserId)        // 本人が選択しているものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
     },
     othersSelecting(state, getters, rootState, rootGetters) {
-        if (!Object.keys(state.selected).length) return getters.getUserId
+        if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)
                      .filter(item => item[1] !== getters.getUserId)         // 本人が選択していないものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
