@@ -34,7 +34,7 @@ export default {
       username: 'username',
       usericon_url: 'https://picsum.photos/200',
       layers: ['豚骨', '塩', '醤油', '味噌'],
-      tags: [{name: 'ラーメン'}, {name: '大阪'}, {name: '激戦区'}],
+      tags: [{id: 1, name: 'ラーメン'}, {id: 2, name: '大阪'}, {id: 3, name: '激戦区'}],
       comments: [...Array(16).keys()],
       array: [...Array(9).keys()] // とりあえず9個絵画
     }

@@ -12,14 +12,15 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 
-$space: 5px;
+$margin: 2px;
+$padding: 5px;
 
 .tag_list__item {
   display: inline;
-  margin-left: $space;
-  margin-right: $space;
-  padding-left: $space;
-  padding-right: $space;
+  margin-left: $margin;
+  margin-right: $margin;
+  padding-left: $padding;
+  padding-right: $padding;
   background: $white;
   border: none;
   border-radius: 4px;

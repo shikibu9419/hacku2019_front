@@ -3,7 +3,7 @@
     img.sidebar__title_icon(src="~assets/svgs/tag.svg")
     p.sidebar__title {{ tags.length }} Tags
     .sidebar__map_tags__tags
-      tag(v-for="tag in tags" v-bind="tag")
+      tag(v-for="tag in tags" v-bind="tag" :key="`map_edit_tags_${tag.id}`")
 </template>
 
 <script>
@@ -12,8 +12,8 @@ import layer from '~/models/layer'
 
 export default {
   computed: {
-    tags () {
-      return [{name: 'tag1'}, {name: 'tag2'}, {name: 'tag3'}]
+    tags() {
+      return [{id: 1, name: 'tag1'}, {id: 2, name: 'tag2'}, {id: 3, name: 'tag3'}]
     }
   },
   methods: {

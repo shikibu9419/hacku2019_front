@@ -6,7 +6,7 @@
       Username(:username="username" :src="usericon_url")
       Layer(:layers="layers")
       font-awesome-icon.maplist__card_icon(icon="tag")
-      Tag(v-for="tag in tags" v-bind="tag")
+      tag(v-for="tag in tags" v-bind="tag" :key="`maplist_tag_${tag.id}`")
       Comment(:comment_count="comments.length")
 </template>
 
