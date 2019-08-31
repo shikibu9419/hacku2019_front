@@ -42,6 +42,10 @@ const mutations = {
     state.now = now
     ymap.panTo(new Y.LatLng(...Object.values(now)))
   },
+  panTo(state, latlng) {
+    ymap.panTo(new Y.LatLng(...Object.values(latlng)))
+    state.now = latlng
+  },
   setCenter(state, latlng) {
     state.center = latlng
   },
@@ -64,10 +68,10 @@ const actions = {
     context.commit('scroll', mousePosition)
   },
   panTo(context, latlng) {
-    ymap.panTo(new Y.LatLng(...Object.values(latlng)))
+    context.commit('panTo', latlng)
   },
   setCenter(context, latlng) {
-    context.commit('setCenter')
+    context.commit('setCenter', latlng)
   },
   init(context, prop) {
     context.commit('init')

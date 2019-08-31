@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     attributes() {
-      this.$store.state.ymap.center // To observe map scrolling
+      this.$store.state.ymap.now // To observe map scrolling
 
       const attr = Object.assign({}, this.attr, this.$store.getters['ymap/latLngToPixel'](this.attr))
       delete attr.lat

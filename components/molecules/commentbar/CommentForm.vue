@@ -3,7 +3,7 @@
     textarea.map_edit__commentbar__form_textarea(v-model="message")
     .map_edit__commentbar__form_wrapper
       img(src="~/assets/svgs/comment_pin.svg" @click="addComment").map_edit__commentbar__form_pin
-      p.map_edit__commentbar__form_pin_label ドラッグして位置を追加
+      p.map_edit__commentbar__form_pin_label 地図の中心にピンを刺す
       button.map_edit__commentbar__form_btn コメントする
 </template>
 
@@ -27,7 +27,7 @@ export default {
       comment.message = this.message
       comment.user = Object.assign(comment, this.$store.getters['user/getUser'])
       pin.contents.push(comment)
-      pin = {...pin, ...this.$store.state.ymap.center}
+      pin = {...pin, ...this.$store.state.ymap.now}
 //       pin = {...pin, ...$store.getters['ymap/pixelToLatLng']($store.state.mapEdit.mousePosition)}
 
       this.$store.dispatch('mapEdit/addTool', pin)
