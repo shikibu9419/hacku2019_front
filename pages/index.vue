@@ -24,6 +24,7 @@ export default {
   data() {
     return {
       mapCards: {
+        map_id: 'maps',
         title: '俺的ラーメン屋まとめ',
         author: '',
         editors: null,

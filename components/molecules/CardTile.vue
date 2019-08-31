@@ -1,5 +1,5 @@
 <template lang="pug">
-  .maplist__card
+  nuxt-link(:to="`/${mapCard.map_id}/view`").maplist__card
     img.maplist__card__img(:src="mapCard.img_url")
     .maplist__card__content
       .map_title {{ mapCard.title }}
@@ -42,6 +42,12 @@ $card-height : $card-width / 3;
   width: $card-width;
   margin: 18px 6px;
   background: $white;
+  text-decoration: none;
+  transition: .5s $bezier-ease-out;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 12px rgba($black,.3);
+  }
 }
 .maplist__card__img {
   display: block;
