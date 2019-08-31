@@ -8,11 +8,21 @@
       button(@click="toggleFilterMenu()").filter_button.button
         FilterBtn.filter_button__icon
         .filter_button__text Filter
-      .filter_menu(v-if="!filterMenu_close")
-        input(v-model="filter.tag" type="text")
-        input(v-model="filter.mymap" type="checkbox")
-        input(v-model="filter.stock" type="checkbox")
-        input(v-model="filter.like" type="checkbox")
+      .filter_menu(:class="{'filter_menu--open':!filterMenu_close}")
+        input(v-model="filter.tag" type="text" placeholder="タグを検索")
+        .filter_menu__types
+          .filter_menu__type
+            .filter_menu__type__text マイマップ：
+            .filter_menu__type__input
+              input(v-model="filter.mymap" type="checkbox")
+          .filter_menu__type
+            .filter_menu__type__text ストック：
+            .filter_menu__type__input
+              input(v-model="filter.stock" type="checkbox")
+          .filter_menu__type
+            .filter_menu__type__text いいね：
+            .filter_menu__type__input
+              input(v-model="filter.like" type="checkbox")
 
 
 </template>
@@ -138,6 +148,7 @@ button {
   width: min-content;
   height: auto;
   padding: 0 10px;
+  z-index: 0;
 }
 .filter_button {
   background: transparent;
@@ -156,7 +167,24 @@ button {
 
 .filter_menu {
   position: absolute;
-  top: 24px;
+  top: 0;
   left: 0;
+  background: $white;
+  padding: 8px 28px;
+  border-radius: 0 0 8px 8px;
+  z-index: -1;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: .3s $bezier-ease-out;
+  &--open {
+    transform: translateY(30px);
+    opacity: 1;
+  }
 }
+.filter_menu__type {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
 </style>
