@@ -140,7 +140,7 @@
 </script>
 
 <style lang="scss">
-    @import "~/assets/styles/variables.scss";
+    @import "../../../assets/styles/variables";
     .box-and-pin-popup {
         height: auto;
         width: 800px;
