@@ -22,7 +22,7 @@ import axios from 'axios'
 export default {
   layout: 'MapHeaderLayout',
   components: {
-    Header: () => import('~/components/organisms/Header'),
+    Header: () => import('~/components/organisms/mapList/Header'),
     MapLayer: () => import('~/components/organisms/mapEdit/MapLayer'),
     Sidebar: () => import('~/components/organisms/mapEdit/Sidebar'),
     Commentbar: () => import('~/components/organisms/mapEdit/Commentbar')
