@@ -52,7 +52,7 @@ export default {
         .catch(err => {
           if(err.response.status == 400) {
             Vue.toasted.error('正しいメールアドレスを入力してください')
-          } else if(err.response.status == 401) {
+          } else if(err.response.status == 403) {
             Vue.toasted.error('メールアドレスまたはパスワードが違います')
           }
         })

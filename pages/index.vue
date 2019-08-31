@@ -22,6 +22,7 @@
 export default {
   layout: "MapListsLayout",
   name: "home",
+  middleware: 'authenticated',
   components: {
     Header: () => import("~/components/organisms/Header.vue"),
     CardTile: () => import("~/components/molecules/CardTile")

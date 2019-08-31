@@ -18,6 +18,7 @@ import MapList from "~/components/organisms/topPage/MapList.vue"
 
 export default {
   layout: "MapListsLayout",
+  middleware: 'authenticated',
   components:{
     Header,
     SideMenu,
