@@ -23,7 +23,10 @@
     fill:$theme-pink;
   }
   .stock_cls-1,.like_cls-2 {
-    fill: none;
+    fill: $white;
+  }
+  &:hover {
+    background: rgba($theme-pink,.1);
   }
   &--on {
     color: $white;
