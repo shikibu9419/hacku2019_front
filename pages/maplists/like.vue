@@ -3,7 +3,7 @@
     Header(
       :returnLink="null"
       :placeholder="'いいねしたマップを検索する'"
-      :type="'maplists'"
+      :type="'maplists/like'"
       )
     main.main
       SideMenu

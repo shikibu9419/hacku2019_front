@@ -4,10 +4,16 @@
       button().search_button.button
         SearchBtn.search_button__icon
       input(v-model="query" :placeholder="placeholder" @change="update()").header_search__input
-    .filter_wrapper(v-if="type==='maplists'")
-      button().filter_button.button
+    .filter_wrapper(v-if="type.split('/')[0]==='maplists'")
+      button(@click="toggleFilterMenu()").filter_button.button
         FilterBtn.filter_button__icon
         .filter_button__text Filter
+      .filter_menu(v-if="!filterMenu_close")
+        input(v-model="filter.tag" type="text")
+        input(v-model="filter.mymap" type="checkbox")
+        input(v-model="filter.stock" type="checkbox")
+        input(v-model="filter.like" type="checkbox")
+
 
 </template>
 <script>
@@ -20,14 +26,34 @@ export default {
   },
   data() {
     return {
-      query: ""
+      filter:{
+        tag: "",
+        like: false,
+        mymap: false,
+        stock: false
+      },
+      query: "",
+      filterMenu_close:true
+    }
+  },
+  mounted(){
+    //ページ遷移でfilterの設定を変更
+    if(this.type.split('/')[1] === "like"){
+      this.filter.like = true
+    }
+    if(this.type.split('/')[1] === "mymap"){
+      this.filter.mymap = true
+    }
+    if(this.type.split('/')[1] === "stock"){
+      this.filter.stock = true
     }
   },
   methods: {
     update() {
         if(this.type === "inmap")
           this.searchYOLP()
-        if(this.type === "maplists") {
+        if(this.type.split('/')[0] === "maplists") {
+          
           //マップをさがす
           //filter処理(tag,like-only,mymap-only,stock-only)
           // this.searchMap()
@@ -53,6 +79,9 @@ export default {
 
       this.$axios(baseUrl, {})
         .then(response => {})
+    },
+    toggleFilterMenu(){
+      this.filterMenu_close = (this.filterMenu_close ? false:true)
     }
   }
 }
@@ -123,5 +152,11 @@ button {
 }
 .filter_button__text {
   padding-left: 2px;
+}
+
+.filter_menu {
+  position: absolute;
+  top: 24px;
+  left: 0;
 }
 </style>

@@ -3,7 +3,7 @@
     Header(
       :returnLink="null"
       :placeholder="'マップを検索する'"
-      :type="'maplists'"
+      :type="'maplists/search'"
       )
     main.main
       SideMenu
