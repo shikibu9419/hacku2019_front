@@ -1,45 +1,33 @@
 <template lang="pug">
-  .header_comment_button__main
-    button(@click="pushComment()").header_comment_button
-      .header_comment_button__icon
-        img(src="~/assets/svgs/comment_box.svg").header_comment_button__icon__svg
+  .header_cir_button__main
+    button.header_cir_button(
+        @click="pushComment()"
+        :class="{'header_cir_button--on':mapCommentsAreaOn}"
+      )
+      .header_cir_button__icon
+        commentBtn.header_cir_button__icon__svg
 </template>
 
 <script>
 export default {
+  components:{
+    commentBtn: () => import('~/assets/svgs/comment_box.svg?inline'),
+  },
   methods:{
     pushComment(){
       //処理
     }
   },
+  computed:{
+    mapCommentsAreaOn(){
+      //VueXから取ってくる
+      return false
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";
-
-$padding: 28px;
-
-.header_comment_button__main{
-  padding: 10px $padding;
-}
-
-.header_comment_button__icon__svg {
-  height: 30px;
-  padding: 4px 10px 4px;
-}
-
-.header_comment_button{
-  width: 100px;
-  padding: 10px;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  background: #ffffff;
-}
-
-.header_comment_button__icon {
-  padding: 0 8px;
-}
-
+@import "~/assets/styles/atoms/headerButtons.scss";
 </style>

@@ -72,6 +72,6 @@ export default {
   bottom: 0;
   margin: auto;
   width: auto;
-  height: 100%;
+  height: min-content;
 }
 </style>

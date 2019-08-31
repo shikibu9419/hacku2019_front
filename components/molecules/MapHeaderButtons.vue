@@ -1,9 +1,11 @@
 <template lang="pug">
   .map_header_buttons
-    headerShare
-    headerComment
-    headerLike
-    headerStock
+    .map_header_buttons--cir
+      headerShare
+      headerComment
+    .map_header_buttons--sq
+      headerLike
+      headerStock
 </template>
 <script>
 export default {
@@ -20,6 +22,11 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    padding: 0 12px;
+    &--cir, &--sq {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      padding-right: 12px;
+    }
   }
 </style>

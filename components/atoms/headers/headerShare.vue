@@ -1,45 +1,33 @@
 <template lang="pug">
-  .header_share_button__main
-    button(@click="pushShare()").header_share_button
-      .header_comment_button__icon
-        img(src="~/assets/svgs/share.svg").header_share_button__icon__svg
+  .header_cir_button__main
+    button.header_cir_button(
+        @click="pushShare()"
+        :class="{'header_cir_button--on':mapStockdOn}"
+      )
+      .header_cir_button__icon
+        shareBtn.header_cir_button__icon__svg.header_cir_button__icon__svg--share
 </template>
 
 <script>
 export default {
+  components:{
+    shareBtn: () => import('~/assets/svgs/share.svg?inline'),
+  },
   methods:{
     pushShare(){
       //処理
     }
   },
+  computed:{
+    mapShareOn(){
+      //VueXから取ってくる
+      return false
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";
-
-$padding: 28px;
-
-.header_share_button__main{
-  padding: 10px $padding;
-}
-
-.header_share_button__icon__svg {
-  height: 30px;
-  padding: 4px 10px 4px;
-}
-
-.header_share_button{
-  width: 100px;
-  padding: 10px;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  background: #ffffff;
-}
-
-.header_share_button__icon {
-  padding: 0 8px;
-}
-
+@import "~/assets/styles/atoms/headerButtons.scss";
 </style>
