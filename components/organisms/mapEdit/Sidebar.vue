@@ -4,6 +4,8 @@
       .toggle_sidebar
         button(@click="toggleBar()").toggle_sidebar__button
           fa-icon(icon="angle-left").toggle_sidebar__button_icon
+    .sidebar_edit__header
+    map-info
     layer-selector
 </template>
 
@@ -17,6 +19,7 @@ export default {
     }
   },
   components: {
+    MapInfo: () => import('~/components/molecules/MapInfo'),
     LayerSelector: () => import('~/components/molecules/LayerSelector')
   },
   computed: {
