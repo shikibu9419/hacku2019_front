@@ -9,7 +9,7 @@
         FilterBtn.filter_button__icon
         .filter_button__text Filter
       .filter_menu(:class="{'filter_menu--open':!filterMenu_close}")
-        input(v-model="filter.tag" type="text" placeholder="タグを検索")
+        input(v-model="filter.tag" type="text" placeholder="タグを検索").filter_menu__input_text
         .filter_menu__types
           .filter_menu__type
             .filter_menu__type__text マイマップ：
@@ -170,7 +170,7 @@ button {
   top: 0;
   left: 0;
   background: $white;
-  padding: 8px 28px;
+  padding: 16px 20px;
   border-radius: 0 0 8px 8px;
   z-index: -1;
   transform: translateY(-20px);
@@ -180,6 +180,10 @@ button {
     transform: translateY(30px);
     opacity: 1;
   }
+}
+.filter_menu__input_text {
+  padding: 4px 8px;
+  margin: 4px 0;
 }
 .filter_menu__type {
   display: flex;
