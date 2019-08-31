@@ -8,7 +8,7 @@
       button(@click="toggleFilterMenu()").filter_button.button
         FilterBtn.filter_button__icon
         .filter_button__text Filter
-      .filter_menu(v-if="filterMenu_close")
+      .filter_menu(v-if="!filterMenu_close")
         input(v-model="filter.tag" type="text")
         input(v-model="filter.mymap" type="checkbox")
         input(v-model="filter.stock" type="checkbox")
