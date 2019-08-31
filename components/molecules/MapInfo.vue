@@ -2,7 +2,10 @@
   .sidebar_edit__map_info
     h2.sidebar_edit__map_info__mapname hoge
     .sidebar_edit__map_info__user
-      user-info
+      UserInfo(
+        :username="'username'"
+        :mulch_user="null"
+      )
     .sidebar_edit__map_info__others
       .sidebar_edit__map_info__others_wrapper
         img.sidebar_edit__map_info__others_icon(src="~/assets/svgs/comment_mini.svg")

@@ -8,13 +8,8 @@
     )
     .card-pages
       card-tile(
-          v-for="(data, index) in array" :key="`card_test_${index}`"
-          :title="title"
-          :img_url="img_url"
-          :layers="layers"
-          :tags="tags"
-          :comments="comments"
-          :id="data"
+          v-for="(mapCard, index) in 10" :key="`card_test_${index}`"
+          :mapCard="mapCards"
       )
 </template>
 
@@ -28,12 +23,16 @@ export default {
   },
   data() {
     return {
-      title: '俺的ラーメン屋まとめ',
-      img_url: 'https://picsum.photos/400/300',
-      layers: [{id: 1, name: '豚骨'}, {id: 2, name: '塩'}, {id: 3, name: '醤油'}, {id: 4, name: '味噌'}],
-      tags: [{id: 1, name: 'ラーメン'}, {id: 2, name: '大阪'}, {id: 3, name: '激戦区'}],
-      comments: [...Array(16).keys()],
-      array: [...Array(9).keys()] // とりあえず9個絵画
+      mapCards: {
+        title: '俺的ラーメン屋まとめ',
+        author: '',
+        editors: null,
+        img_url: 'https://picsum.photos/400/300',
+        layers: [{id: 1, name: '豚骨'}, {id: 2, name: '塩'}, {id: 3, name: '醤油'}, {id: 4, name: '味噌'}],
+        tags: [{id: 1, name: 'ラーメン'}, {id: 2, name: '大阪'}, {id: 3, name: '激戦区'}],
+        comments: [...Array(16).keys()],
+        array: [...Array(9).keys()] // とりあえず9個絵画
+      }
     }
   }
 }
@@ -47,5 +46,6 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  background: $back-light-gray;
 }
 </style>
