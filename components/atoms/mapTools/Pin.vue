@@ -4,16 +4,33 @@
       v-bind="attributes"
       xlink:href="~/assets/svgs/comment_pin.svg"
     )
-    pin-popup(:attr="popupAttr" v-if="selected")
+    pin-popup(:attr="popupAttr" v-if="selected && !grabbing")
 </template>
 
 <script>
+import ModalService from '~/services/ModalSvc'
 import Shared from './Shared'
 
 export default {
   data() {
     return {
+      init: true
     }
+  },
+  watch: {
+    grabbing() {
+      if(!this.init) return
+
+      this.popup()
+    }
+  },
+  methods: {
+    popup() {
+      this.modalSvc.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
+    }
+  },
+  created() {
+    this.modalSvc = new ModalService(this.$store)
   },
   computed: {
     attributes() {

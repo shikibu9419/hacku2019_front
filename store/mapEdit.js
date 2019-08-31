@@ -46,6 +46,15 @@ const mutations = {
     attr = Object.assign(toolList[attr.type], attr, {id: toolId})
     state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
   },
+  updateTool(state, attr) {
+    const tool = Object.assign(state.activeLayer.tools[attr.id], attr)
+    state.activeLayer.tools = {...state.activeLayer.tools, [attr.id]: tool}
+  },
+  deleteTool(state, toolId) {
+    let obj = {...state.activeLayer.tools}
+    delete(obj[toolId])
+    state.activeLayer.tools = obj
+  },
   plot(state, prop) {
     state.activeLayer.tools[prop.toolId].points.push(prop)
   },
@@ -115,6 +124,12 @@ const actions = {
     const toolId = uuid()
     context.commit('addTool', {attr, toolId})
     context.dispatch('selectTool', {toolId: toolId})
+  },
+  updateTool(context, attr) {
+    context.commit('updateTool', attr)
+  },
+  deleteTool(context, toolId) {
+    context.commit('deleteTool', toolId)
   },
   plot(context, prop) {
     context.commit('plot', prop)
