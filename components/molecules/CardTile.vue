@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import UserInfo from '../atoms/UserInfo'
-import TagItem from '../atoms/TagItem'
-import Comment from '../atoms/CardTile/Comment'
-
 export default {
   name: "CardTile",
-  components: {UserInfo, TagItem, Comment},
+  components: {
+    UserInfo: () => import('~/components/atoms/UserInfo'),
+    TagItem: () => import('~/components/atoms/TagItem'),
+    Comment: () => import('~/components/atoms/CardTile/Comment')
+  },
   props: {
     title: {
       type: String,
