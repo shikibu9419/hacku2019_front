@@ -16,10 +16,15 @@
 </template>
 
 <script>
-import axios from 'axios'
+import Map from "~/models/Map"
+import Layer from "~/models/Layer"
 
 export default {
   layout: 'MapHeaderLayout',
+  data() {
+    return {
+    }
+  },
   components: {
     Header: () => import('~/components/organisms/Header'),
     MapLayer: () => import('~/components/organisms/mapEdit/MapLayer'),
@@ -27,7 +32,22 @@ export default {
     Commentbar: () => import('~/components/organisms/mapEdit/Commentbar')
   },
   beforeCreate() {
-    this.$store.dispatch('mapEdit/initLayers')
+    const initLayer = {
+      id: 1,
+      name: 'layer1',
+      color: 'red',
+      visible: true,
+      tools: {},
+      map: initMap
+    }
+    const initMap = {
+      id: 1,
+      name: '俺の地図',
+      layers: [initLayer]
+    }
+
+    this.$store.dispatch('entities/maps/create', {data: initMap})
+
     this.$store.dispatch('mapEdit/selectLayer', 1)
   },
   mounted() {

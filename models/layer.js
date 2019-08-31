@@ -12,6 +12,7 @@ export default class Layer extends Model {
       default_visible: this.boolean(true),
       origin: this.belongsTo(Layer, 'layer_id'),
       map: this.belongsTo(Map, 'map_id'),
+      map_id: this.string(''),
 //       tools: this.hasMany(Tool, 'layer_id'),
     }
   }

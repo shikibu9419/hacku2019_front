@@ -1,6 +1,4 @@
 import toolList from '~/models/toolList.js'
-import map from '~/models/map.js'
-import layer from '~/models/layer.js'
 
 const uuid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
