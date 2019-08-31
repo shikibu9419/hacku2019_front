@@ -64,7 +64,7 @@ const mutations = {
         state.activeLayer.tools[prop.toolId] = {...tool, width: prop.width, height: prop.height}
     },
     selectTool(state, {prop, getters}) {
-        state.selected = {...state.selected, [prop.toolId]: getters.getUserId}
+        state.selected = {...state.selected, [prop.toolId]: getters.getUser.id}
     },
     clearSelection(state, othersSelecting) {
         state.selected = othersSelecting
@@ -156,23 +156,27 @@ const getters = {
     selecting(state, getters, rootState, rootGetters) {
         if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
-                     .filter(item => item[1] === getters.getUserId)        // 本人が選択しているものだけ抽出
+                     .filter(item => item[1] === getters.getUser.id)        // 本人が選択しているものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
     },
     othersSelecting(state, getters, rootState, rootGetters) {
         if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)
-                     .filter(item => item[1] !== getters.getUserId)         // 本人が選択していないものだけ抽出
+                     .filter(item => item[1] !== getters.getUser.id)         // 本人が選択していないものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
     },
-    getUserId(state, _, rootState, rootGetters) {
-      return rootGetters['user/getUserId']
+    getUser(state, _, rootState, rootGetters) {
+      return rootGetters['user/getUser']
     },
     activeLayer(state) {
         return state.activeLayer
     },
     inactiveLayers (state) {
         return state.layers.filter(layer => layer.id !== state.activeLayer.id)
+    },
+    comments(state, _, rootState) {
+        const dummyComment = {...rootState.ymap.center, id: 'hoge', message: 'ここやで', user: getters.getUser}
+        return [dummyComment]
     }
 }
 

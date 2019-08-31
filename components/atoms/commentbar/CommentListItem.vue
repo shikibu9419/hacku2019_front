@@ -1,24 +1,26 @@
 <template lang="pug">
-  .commentbar_item(@click="focusComment")
-    .commentbar_item__label(:class="{comment_focus_on: focused}" @click="focusComment") 中央北口
-    .commentbar_item__content(@click="focusComment")
+  .commentbar_item(@click.stop="focusComment()")
+    .commentbar_item__label(:class="{comment_focus_on: focused}") 中央北口
+    .commentbar_item__content
       .commentbar_item__user_info
+        // アイコン絶対これじゃない
         img.commentbar_item__user_icon(src="~/assets/svgs/layer.svg")
-        p.commentbar_item__user_name {{ 'username' }}
-      p.commentbar_item__comment {{ 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }}
+        p.commentbar_item__user_name {{ user.name }}
+      p.commentbar_item__comment {{ message }}
 </template>
 
 <script>
 export default {
-  props: ['comment', 'name', 'color'],
-  computed: {
-    focused() {
-      return false
+  props: ['id', 'message', 'user', 'lat', 'lng'],
+  data() {
+    return {
+      focused: false
     }
   },
   methods: {
-    focusComment(id) {
+    focusComment() {
       this.focused = true
+      this.$store.dispatch('ymap/panTo', {lat: this.lat, lng: this.lng})
     }
   }
 }
@@ -29,12 +31,12 @@ export default {
 
 .commentbar_item {
 
-  &.comment_focus_on {
-    border: 2px solid $gray;
-  }
-
   &__label {
     background: $light-gray;
+
+    &.comment_focus_on {
+      border: 2px solid $gray;
+    }
   }
 
   &__content {

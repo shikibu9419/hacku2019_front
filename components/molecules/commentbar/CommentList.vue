@@ -2,14 +2,14 @@
   .commentbar__comment_list
     img.commentbar__comment_list__label_icon(src="~/assets/svgs/comment_mini.svg")
     p.commentbar__comment_list__label {{ comments.length }} Comments
-    comment-list-item(v-for="comment in comments" :key="`comment_list_${comment}`")
+    comment-list-item(v-for="comment in comments" :key="`comment_list_${comment}`" v-bind="comment")
 </template>
 
 <script>
 export default {
   computed: {
     comments () {
-      return [1, 2, 3]
+      return this.$store.getters['mapEdit/comments']
     }
   },
   methods: {
