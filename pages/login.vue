@@ -37,7 +37,7 @@ export default {
     },
 
     async login() {
-      const response = await this.$axios.post('/api/login',
+      const response = await this.$axios.post('https://api.mille-feuille.app/login',
                                               { email: this.email,
                                                 password: this.password })
         .then(response => {

@@ -71,14 +71,14 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    proxy: true,
+//    proxy: true,
     baseURL: 'https://api.mille-feuille.app'
   },
-
+/*
   proxy: {
     '/api': { target: 'https://api.mille-feuille.app', pathRewrite: {'^/api': ''} }
   },
-
+*/
   toast: {
     position: 'top-center',
     duration: 2500

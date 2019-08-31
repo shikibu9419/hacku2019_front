@@ -37,7 +37,7 @@ export default {
   methods: {
     async signup() {
       if(this.password == this.passwordconfirm) {
-        const response = await this.$axios.post('/api/users',
+        const response = await this.$axios.post('https://api.mille-feuille.app/users',
                                                      { email: this.email,
                                                        user_name: this.name,
                                                        password: this.password })
