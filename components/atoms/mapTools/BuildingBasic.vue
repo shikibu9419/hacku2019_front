@@ -20,7 +20,6 @@ import Shared from './Shared.vue'
 export default {
   data() {
     return {
-      type: 'building_basic',
       pointGrabbed: false,
       width: 0,
       height: 0

@@ -18,7 +18,6 @@ export default {
   },
   data() {
     return {
-      type: 'direction',
       prev: {},
       diff: {}
     }
