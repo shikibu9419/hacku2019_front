@@ -4,6 +4,7 @@
       :returnLink="null"
       :placeholder="'いいねしたマップを検索する'"
       :type="'maplists/like'"
+      :buttons="false"
       )
     main.main
       SideMenu

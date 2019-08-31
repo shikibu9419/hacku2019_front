@@ -1,50 +1,42 @@
 <template lang="pug">
-  .header_like_button__main
-    button(@click="pushLike()").header_like_button
-      .header_like_button__icon
-        img(src="~/assets/svgs/like.svg").header_like_button__icon__svg
-      .header_like_button__text いいね
+  .header_sq_button__main
+    button.header_sq_button(
+        @click="pushLike()"
+        :class="{'header_sq_button--on':mapLikedOn}"
+      )
+      .header_sq_button__icon
+        likeBtn.header_sq_button__icon__svg
+      .header_sq_button__text(v-if="!mapLikedOn") いいね
+      .header_sq_button__text(v-else) いいね中
 </template>
 
 <script>
 export default {
+  components:{
+    likeBtn: () => import('~/assets/svgs/like.svg?inline'),
+  },
   methods:{
     pushLike(){
-      //処理
+      //VueXから拾ってきて条件分岐
+      let like_on // = this.$store.hoge
+      if(like_on){
+        //外す処理
+      }else{
+        //つける処理
+      }
     }
   },
+  computed:{
+    mapLikedOn(){
+      //マップがすでにいいねされていたらtrueを返す
+      //VueXにlike:true/falseを用意して、そこから直接拾ってくる
+      return false
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";
-
-$padding: 28px;
-
-.header_like_button__main{
-  padding: 10px $padding;
-}
-
-.header_like_button__icon__svg {
-  height: $header-height - 35px;
-  padding: 4px 10px 4px;
-}
-
-.header_like_button{
-  width: 150px;
-  padding: 10px;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  background: #ffffff;
-  color: #EC78B4;
-  border-color: $theme-pink;
-  border-radius: 4px;
-}
-
-.header_like_button__icon {
-  padding: 0 8px;
-  color: $theme-pink;
-}
-
+@import "~/assets/styles/atoms/headerButtons.scss";
 </style>

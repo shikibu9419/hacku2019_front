@@ -1,0 +1,81 @@
+//squareタイプのボタン
+
+.header_sq_button__main{
+  padding: 0 8px;
+}
+.header_sq_button__icon__svg {
+  display: block;
+  width: 28px;
+}
+.header_sq_button{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 40px;
+  padding: 6px 18px;
+  background: $white;
+  @include noto-font(1.6rem,$theme-pink);
+  border: 1px solid $theme-pink;
+  border-radius: 4px;
+  transition: .3s $bezier-ease-out;
+  .stock_cls-2,.like_cls-3 {
+    fill:$theme-pink;
+  }
+  .stock_cls-1,.like_cls-2 {
+    fill: $white;
+  }
+  &:hover {
+    background: rgba($theme-pink,.1);
+  }
+  &--on {
+    color: $white;
+    background: $theme-pink;
+    .stock_cls-2,.like_cls-3 {
+      fill: $white;
+    }
+    .stock_cls-1,.like_cls-2 {
+      fill: $theme-pink;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+.header_sq_button__text {
+  margin-left: 8px;
+}
+
+//circleタイプのボタン
+
+.header_cir_button__main{
+  margin: 0 6px;
+  width: 44px;
+  height: 44px;
+}
+.header_cir_button__icon__svg {
+  display: block;
+  width: 100%;
+  &--share {
+    margin-left: -2px;
+  }
+}
+.header_cir_button{
+  width: 100%;
+  height: 100%;
+  padding: 3px;
+  border: none;
+  border-radius: 22px;
+  transition: .3s $bezier-ease-out;
+  &:hover{
+    background: $back-light-gray;
+  }
+
+  &--on {
+    background: $back-gray;
+  }
+  &:focus {
+    outline: none;
+  }
+}

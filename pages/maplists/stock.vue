@@ -4,6 +4,7 @@
       :returnLink="null"
       :placeholder="'ストックを検索する'"
       :type="'maplists/stock'"
+      :buttons="false"
       )
     main.main
       SideMenu
