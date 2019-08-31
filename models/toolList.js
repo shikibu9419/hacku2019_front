@@ -1,8 +1,15 @@
+import building from './tools/building'
+import building_basic from './tools/building_basic'
+import direction from './tools/direction'
+import text from './tools/text'
+import pin from './tools/pin'
+import box from './tools/box'
+
 export default {
-  building: () => import('./tools/building'),
-  building_basic: () => import('./tools/building_basic'),
-  direction: () => import('./tools/direction'),
-  text: () => import('./tools/text'),
-  box: () => import('./tools/box'),
-  pin: () => import('./tools/pin'),
+  building: building,
+  building_basic: building_basic,
+  direction: direction,
+  text: text,
+  box: box,
+  pin: pin,
 }

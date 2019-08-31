@@ -33,7 +33,8 @@ export default {
       this.$store.dispatch('mapEdit/togglePlotting')
     },
     addPin() {
-      alert('Pin is not implemented yet!')
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'pin'})
+      this.$store.dispatch('mapEdit/toggleGrabbing')
     },
     addText() {
       alert('Text is not implemented yet!')
