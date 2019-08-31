@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 
-$padding: 20px;
+$padding: 15px;
 
 .map_edit__commentbar {
   background-color: $back-gray;
