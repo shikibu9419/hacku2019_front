@@ -60,250 +60,250 @@
 </template>
 
 <script>
-    import AutosizeTextarea from '~/components/atoms/AutosizeTextarea'
-    import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
-    export default {
-        name: "BoxAndPinPopup",
-        components: {
-            AutosizeTextarea,
-            DeleteAndCloseButton
-        },
-        props: {
-            params: Object,
-            closeModal: () => {}
-        },
-        data() {
-            return {
-                testParams: {
-                    title: '中央北口',
-                    information: [
-                        {
-                            type: 'text',
-                            content: {
-                                text: '大阪駅3F\n\n\nhogehoge'
-                            }
-                        },
-                        {
-                            type: 'image',
-                            content: {
-                                urls: [
-                                    'https://i.imgur.com/0efnThJ.png',
-                                    'https://i.imgur.com/0efnThJ.png',
-                                    'https://i.imgur.com/0efnThJ.png',
-                                    'https://i.imgur.com/0efnThJ.png',
-                                    'https://i.imgur.com/0efnThJ.png',
-                                    'https://i.imgur.com/0efnThJ.png'
-                                ]
-                            }
-                        },
-                        {
-                            type: 'link',
-                            content: {
-                                link: 'http://www.yahoo.co.jp',
-                                title: ''
-                            }
-                        }
-                    ],
-                    comments: [
-                        {
-                            name: 'John',
-                            comment: 'ホームから登りのエレベータに乗る方がわかりやすい'
-                        },
-                        {
-                            name: 'John',
-                            comment: '色々と厳しい。あんまり参加できてなかったけど。'
-                        },
-                    ]
-                },
-                comment: ''
+import AutosizeTextarea from '~/components/atoms/AutosizeTextarea'
+import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
+export default {
+  name: "BoxAndPinPopup",
+  components: {
+    AutosizeTextarea,
+    DeleteAndCloseButton
+  },
+  props: {
+    params: Object,
+    closeModal: () => {}
+  },
+  data() {
+    return {
+      testParams: {
+        title: '中央北口',
+        information: [
+          {
+            type: 'text',
+            content: {
+              text: '大阪駅3F\n\n\nhogehoge'
             }
-        },
-        methods: {
-            getLinkTitle(linkContent) {
-                new Promise(resolve => {
-                    const xhr = new XMLHttpRequest()
-                    xhr.onreadystatechange = () => {
-                        if(xhr.readyState === 4 && xhr.status === 200){
-                            console.log(xhr.response)
-                            resolve(xhr.response || 'no title')
-                        }
-                    }
-                    xhr.open('GET', linkContent.link, true)
-                    xhr.responseType = 'document'
-                    xhr.send('')
-                }).then(value => {
-                    linkContent.title = value
-                })
-            },
-        }
+          },
+          {
+            type: 'image',
+            content: {
+              urls: [
+                'https://i.imgur.com/0efnThJ.png',
+                'https://i.imgur.com/0efnThJ.png',
+                'https://i.imgur.com/0efnThJ.png',
+                'https://i.imgur.com/0efnThJ.png',
+                'https://i.imgur.com/0efnThJ.png',
+                'https://i.imgur.com/0efnThJ.png'
+              ]
+            }
+          },
+          {
+            type: 'link',
+            content: {
+              link: 'http://www.yahoo.co.jp',
+              title: ''
+            }
+          }
+        ],
+        comments: [
+          {
+            name: 'John',
+            comment: 'ホームから登りのエレベータに乗る方がわかりやすい'
+          },
+          {
+            name: 'John',
+            comment: '色々と厳しい。あんまり参加できてなかったけど。'
+          },
+        ]
+      },
+      comment: ''
     }
+  },
+  methods: {
+    getLinkTitle(linkContent) {
+      new Promise(resolve => {
+        const xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = () => {
+          if(xhr.readyState === 4 && xhr.status === 200){
+            console.log(xhr.response)
+            resolve(xhr.response || 'no title')
+          }
+        }
+        xhr.open('GET', linkContent.link, true)
+        xhr.responseType = 'document'
+        xhr.send('')
+      }).then(value => {
+        linkContent.title = value
+      })
+    },
+  }
+}
 </script>
 
 <style lang="scss">
-    @import "../../../assets/styles/variables";
-    .box-and-pin-popup {
-        height: auto;
-        width: 800px;
-        display: flex;
-        flex-direction: column;
-        &__title-wrapper {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            margin: 8px 0;
-        }
-        &__title {
-            border: solid 2px $gray;
-            width: 60%;
-            height: 32px;
-            font-size: 16px;
-            margin-right: 8px;
-            padding-left: 8px;
-        }
-        &__content {
-            display: flex;
-            flex-direction: row;
-        }
-        &--left {
-            width: 60%;
-            padding-right: 4px;
-        }
-        &__information {
-            border-radius: 8px;
-            background-color: $back-gray;
-            padding: 16px;
-        }
-        &__info {
-            margin-bottom: 8px;
-        }
-        &__info-icons {
-            height: 24px;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-        &__info-type {
-            font-size: 16px;
-            margin: 0 auto 0 4px;
-        }
-        &__sort-up-icon {
-            font-size: 24px;
-            margin: 0 4px 0;
-            transform: translateY(6px);
-        }
-        &__sort-down-icon {
-            font-size: 24px;
-            margin: 0 4px 0;
-            transform: translateY(-6px);
-        }
-        &__close-icon {
-            font-size: 20px;
-            margin: 0 8px 0 16px;
-        }
-        // Type: text
-        &__info-textarea {
-            border: solid 2px $gray;
-            color: $dark-gray;
-        }
-        // Type: image
-        &__image-info-content {
-            height: auto;
-            border: solid 2px $gray;
-            background: $white;
-        }
-        &__images-wrapper {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            overflow-x: scroll;
-            overflow-y: hidden;
-        }
-        &__image {
-            position: relative;
-            height: 80px;
-            margin: 4px 0 4px 4px;
-        }
-        &__image-close-icon-wrapper {
-            $size: 16px;
-            position: absolute;
-            height: $size;
-            width: $size;
-            top: 4px;
-            right: 4px;
-            font-size: calc(100% * 0.8);
-            background: $white;
-            border-radius: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        &__image-info-input {
-            display: flex;
-            align-items: center;
-            padding-left: 8px;
-            height: 32px;
-            background: $light-light-gray;
-        }
-        // Type: link
-        &__link-info-content {
-            height: auto;
-            border: solid 2px $gray;
-            background: $white;
-        }
-        &__link-info-input {
-            border: none;
-        }
-        &__link-info-title {
-            display: flex;
-            align-items: center;
-            padding-left: 8px;
-            height: 32px;
-            background: $light-light-gray;
-            border-top: solid 2px $gray;
-            overflow: hidden;
-        }
-        // add content
-        &__add-content-wrapper {
-            display: flex;
-            justify-content: center;
-            background: $dark-gray;
-            border-radius: 24px;
-            width: fit-content;
-            padding: 2px 8px;
-        }
-        &__info-icon--plus {
-            margin-right: 16px;
-        }
-        // right
-        &--right {
-            width: 40%;
-            display: flex;
-            flex-direction: column;
-        }
-        &__set-layer {
-            display: flex;
-            flex-direction: row;
-            border-radius: 8px;
-            background-color: $back-gray;
-            padding: 8px;
-            margin-bottom: 4px;
-        }
-        &__set-tool {
-            display: flex;
-            flex-direction: row;
-            border-radius: 8px;
-            background-color: $back-gray;
-            padding: 8px;
-            margin-bottom: 4px;
-        }
-        &__comment-wrapper {
-            display: flex;
-            flex-direction: column;
-            border-radius: 8px;
-            background-color: $back-gray;
-            padding: 8px;
-            margin-bottom: 4px;
-        }
-    }
+@import "../../../assets/styles/variables";
+.box-and-pin-popup {
+  height: auto;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  &__title-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 8px 0;
+  }
+  &__title {
+    border: solid 2px $gray;
+    width: 60%;
+    height: 32px;
+    font-size: 16px;
+    margin-right: 8px;
+    padding-left: 8px;
+  }
+  &__content {
+    display: flex;
+    flex-direction: row;
+  }
+  &--left {
+    width: 60%;
+    padding-right: 4px;
+  }
+  &__information {
+    border-radius: 8px;
+    background-color: $back-gray;
+    padding: 16px;
+  }
+  &__info {
+    margin-bottom: 8px;
+  }
+  &__info-icons {
+    height: 24px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &__info-type {
+    font-size: 16px;
+    margin: 0 auto 0 4px;
+  }
+  &__sort-up-icon {
+    font-size: 24px;
+    margin: 0 4px 0;
+    transform: translateY(6px);
+  }
+  &__sort-down-icon {
+    font-size: 24px;
+    margin: 0 4px 0;
+    transform: translateY(-6px);
+  }
+  &__close-icon {
+    font-size: 20px;
+    margin: 0 8px 0 16px;
+  }
+  // Type: text
+  &__info-textarea {
+    border: solid 2px $gray;
+    color: $dark-gray;
+  }
+  // Type: image
+  &__image-info-content {
+    height: auto;
+    border: solid 2px $gray;
+    background: $white;
+  }
+  &__images-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+  &__image {
+    position: relative;
+    height: 80px;
+    margin: 4px 0 4px 4px;
+  }
+  &__image-close-icon-wrapper {
+    $size: 16px;
+    position: absolute;
+    height: $size;
+    width: $size;
+    top: 4px;
+    right: 4px;
+    font-size: calc(100% * 0.8);
+    background: $white;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__image-info-input {
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    height: 32px;
+    background: $light-light-gray;
+  }
+  // Type: link
+  &__link-info-content {
+    height: auto;
+    border: solid 2px $gray;
+    background: $white;
+  }
+  &__link-info-input {
+    border: none;
+  }
+  &__link-info-title {
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    height: 32px;
+    background: $light-light-gray;
+    border-top: solid 2px $gray;
+    overflow: hidden;
+  }
+  // add content
+  &__add-content-wrapper {
+    display: flex;
+    justify-content: center;
+    background: $dark-gray;
+    border-radius: 24px;
+    width: fit-content;
+    padding: 2px 8px;
+  }
+  &__info-icon--plus {
+    margin-right: 16px;
+  }
+  // right
+  &--right {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+  }
+  &__set-layer {
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    background-color: $back-gray;
+    padding: 8px;
+    margin-bottom: 4px;
+  }
+  &__set-tool {
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    background-color: $back-gray;
+    padding: 8px;
+    margin-bottom: 4px;
+  }
+  &__comment-wrapper {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    background-color: $back-gray;
+    padding: 8px;
+    margin-bottom: 4px;
+  }
+}
 </style>
