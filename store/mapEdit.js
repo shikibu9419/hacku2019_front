@@ -22,6 +22,7 @@ const state = () => ({
     plotting: false,
     grabbing: false,
     mapGrabbing: false,
+    backgroundFocused: false
 })
 
 // map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
@@ -80,13 +81,17 @@ const mutations = {
     },
     initLayers(state) {
         // 実際はAPIからデータをとりにきてlayersにセット
-        state.layers = [{id: 1, name: 'layer1', color: 'red', tools: {}}]
+        state.layers = [{id: 1, name: 'layer1', color: 'red', visible: true, tools: {}}]
     },
     addLayer(state, layer) {
         state.layers.push(layer)
     },
     selectLayer(state, layerId) {
         state.activeLayer = state.layers.find(layer => layer.id === layerId)
+        state.backgroundFocused = false
+    },
+    focusBackground(state) {
+        state.backgroundFocused = true
     }
 }
 
@@ -148,6 +153,10 @@ const actions = {
     },
     selectLayer(context, layerId) {
         context.commit('selectLayer', layerId)
+        context.dispatch('clearSelection')
+    },
+    focusBackground(context) {
+        context.commit('focusBackground')
         context.dispatch('clearSelection')
     }
 }

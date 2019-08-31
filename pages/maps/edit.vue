@@ -6,11 +6,11 @@
         :type="'inmap'"
         )
     .map_edit__map
-      #map-canvas.map_edit__map__background(ref="layer")
+      #map-canvas.map_edit__map__background(ref="layer" :class="{background__focus_on: backgroundFocused}")
       map-layer(v-for="layer in inactiveLayers" :key="layer.id" v-bind="layer")
       map-layer(v-bind="activeLayer")
-      sidebar
-      commentbar
+      sidebar.map_edit__bar
+      commentbar.map_edit__bar
     .map_edit__popup-modal
       component(v-for="(modal, i) in modals" :is="modal.component" :key="`modals_${i}`" v-bind:params="modal.params")
 </template>
@@ -54,7 +54,10 @@ export default {
       return this.$store.getters['mapEdit/inactiveLayers']
     },
     modals() {
-        return this.$store.getters['modal/modals']
+      return this.$store.getters['modal/modals']
+    },
+    backgroundFocused() {
+      return this.$store.state.mapEdit.backgroundFocused
     }
   }
 }
@@ -78,6 +81,14 @@ export default {
   &__background {
     width: 100%;
     height: 100%;
+
+    &.background__focus_on {
+      z-index: 9;
+    }
   }
+}
+
+.map_edit__bar {
+  z-index: 10;
 }
 </style>
