@@ -8,11 +8,12 @@
         props: {
             text: String,
             maxSize: Number,
+            defaultSize: Number,
             XScrollable: Boolean
         },
         computed: {
             rows() {
-                return Math.min(this.text.split('\n').length, this.maxSize)
+                return Math.max(Math.min(this.text.split('\n').length, this.maxSize), this.defaultSize)
             }
         }
     }
