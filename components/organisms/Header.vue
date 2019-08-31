@@ -13,6 +13,7 @@
       )
     .header_buttons(v-if="buttons")
       MapHeaderButtons()
+    HeaderLogout()
 </template>
 <script>
 export default {
@@ -23,6 +24,7 @@ export default {
     //components
     HeaderSearch: () => import('~/components/atoms/headers/headerSearch.vue'),
     MapHeaderButtons: () => import('~/components/molecules/MapHeaderButtons.vue'),
+    HeaderLogout: () => import('~/components/atoms/headers/headerLogout.vue'),
   },
   methods:{
   }
