@@ -19,3 +19,18 @@
 // }
 //
 // export default store
+
+import VuexORM from '@vuex-orm/core'
+import { Database } from '@vuex-orm/core'
+import User from '@/models/User'
+import Map from '@/models/Map'
+import Layer from '@/models/Layer'
+
+const database = new Database()
+database.register(User)
+database.register(Map)
+database.register(Layer)
+
+export const plugins = [
+  VuexORM.install(database)
+]
