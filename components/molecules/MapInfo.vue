@@ -1,6 +1,6 @@
 <template lang="pug">
   .sidebar_edit__map_info
-    h2 hoge
+    h2.sidebar_edit__map_info__mapname hoge
     .sidebar_edit__map_info__user
       user-info
     .sidebar_edit__map_info__others

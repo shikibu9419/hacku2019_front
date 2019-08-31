@@ -7,6 +7,7 @@
     .sidebar_edit__header
     map-info
     .sidebar_edit__content
+      map-tags
       layer-selector
 </template>
 
@@ -21,6 +22,7 @@ export default {
   },
   components: {
     MapInfo: () => import('~/components/molecules/MapInfo'),
+    MapTags: () => import('~/components/molecules/MapTags'),
     LayerSelector: () => import('~/components/molecules/LayerSelector')
   },
   computed: {
@@ -61,6 +63,11 @@ $padding: 20px;
 
 .sidebar_edit__wrapper{
   position: relative;
+}
+
+.sidebar_edit__header {
+  background: $theme-yellow;
+  height: 10%;
 }
 
 .sidebar_edit__content {
