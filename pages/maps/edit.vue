@@ -21,6 +21,7 @@ import axios from 'axios'
 
 export default {
   layout: 'MapHeaderLayout',
+  middleware: 'authenticated',
   components: {
     Header: () => import('~/components/organisms/mapList/Header'),
     MapLayer: () => import('~/components/organisms/mapEdit/MapLayer'),
