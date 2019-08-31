@@ -23,6 +23,9 @@ const getters = {
   },
   getUserId(state) {
     return state.user.id
+  },
+  getToken(state) {
+    return state.apiToken
   }
 }
 

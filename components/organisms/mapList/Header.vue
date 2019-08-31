@@ -19,6 +19,8 @@
       HeaderLike()
     .stock
       HeaderStock()
+    .logout
+      HeaderLogout()
 
 </template>
 <script>
@@ -33,6 +35,7 @@ export default {
     HeaderComment: () => import('~/components/atoms/headers/headerComment.vue'),
     HeaderLike: () => import('~/components/atoms/headers/headerLike.vue'),
     HeaderStock: () => import('~/components/atoms/headers/headerStock.vue'),
+    HeaderLogout: () => import('~/components/atoms/headers/headerLogout.vue'),
   },
   mounted() {
     this.type="like"
