@@ -15,19 +15,22 @@ export default {
   data() {
     return {
       message: '',
-      pin: pin,
-      comment: comment
+      pinModel: pin,
+      commentModel: comment
     }
   },
   methods: {
     addComment() {
-      this.comment.message = this.message
-      this.comment.user = Object.assign(this.comment, this.$store.getters['user/getUser'])
-      this.pin.contents.push(this.comment)
-//       pin = {...pin, ...this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition)}
-      this.pin = {...this.pin, ...this.$store.state.ymap.center}
+      let pin = Object.assign({}, this.pinModel)
+      let comment = Object.assign({}, this.commentModel)
 
-      this.$store.dispatch('mapEdit/addTool', this.pin)
+      comment.message = this.message
+      comment.user = Object.assign(comment, this.$store.getters['user/getUser'])
+      pin.contents.push(comment)
+      pin = {...pin, ...this.$store.state.ymap.center}
+//       pin = {...pin, ...$store.getters['ymap/pixelToLatLng']($store.state.mapEdit.mousePosition)}
+
+      this.$store.dispatch('mapEdit/addTool', pin)
     }
   }
 }
