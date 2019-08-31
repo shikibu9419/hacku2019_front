@@ -37,6 +37,7 @@ $padding: 28px;
   border: none;
   border-radius: 4px;
 }
+
 .sidemenu_button__icon {
   padding: 0 8px;
   color: $white;

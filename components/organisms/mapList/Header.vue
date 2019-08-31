@@ -11,6 +11,15 @@
         :placeholder="placeholder"
         :type="type"
       )
+    .share
+      HeaderShare()
+    .comment
+      HeaderComment()
+    .like
+      HeaderLike()
+    .stock
+      HeaderStock()
+
 </template>
 <script>
 export default {
@@ -20,6 +29,10 @@ export default {
     ReturnBtn: () => import('~/assets/svgs/return.svg?inline'),
     //components
     HeaderSearch: () => import('~/components/atoms/headers/headerSearch.vue'),
+    HeaderShare: () => import('~/components/atoms/headers/headerShare.vue'),
+    HeaderComment: () => import('~/components/atoms/headers/headerComment.vue'),
+    HeaderLike: () => import('~/components/atoms/headers/headerLike.vue'),
+    HeaderStock: () => import('~/components/atoms/headers/headerStock.vue'),
   },
   mounted() {
     this.type="like"

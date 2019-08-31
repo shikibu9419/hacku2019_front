@@ -1,6 +1,6 @@
 <template lang="pug">
     .map_edit__map__layer
-        svg.map_edit__map__svg(@mousemove="moveOrScroll" @mousedown="grabMap" @mouseup="resetGrabbing" @click.right="resetEditting" cursor="grab")
+        svg.map_edit__map__svg(@mousemove="moveOrScroll" @mousedown="grabMap" @mouseup="resetGrabbing" @click.right="resetEditting")
             rect.map_edit__map__svg_filter(v-if="isActive")
             tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :selected="false" :layer-active="isActive")
             toolbar(v-if="isActive")
@@ -11,7 +11,7 @@
 export default {
     components: {
         Tool: () => import('~/components/atoms/mapTools/ToolWrapper'),
-        Toolbar: () => import('~/components/molecules/Toolbar')
+        Toolbar: () => import('~/components/molecules/Toolbar'),
     },
     props: {
         id: {
@@ -98,6 +98,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
+    cursor: move;
 
     &_filter {
         fill: white;

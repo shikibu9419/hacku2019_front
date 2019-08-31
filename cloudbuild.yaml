@@ -1,0 +1,21 @@
+secrets:
+  - kmsKeyName: projects/mille-feuille/locations/global/keyRings/mille-feuille-firebase/cryptoKeys/firebase
+    secretEnv:
+      FIREBASE_TOKEN: CiQAzWbmiJvzU+LchSgB5rBNNvQgi49P4nnHnm8Tx7jAqgndLy0SVgAznOvkn5z9+ssFJgTYdGPeuk4+hsIejpGh4UNj58Va5SodW3tFOTpx54j/rSt/LFvMEdQxqa0+rdQYq00ngiMKW1L8qoPue3FrefpYwOsfm9dVkV17
+  - kmsKeyName: projects/mille-feuille/locations/global/keyRings/mille-feuille/cryptoKeys/map
+    secretEnv:
+      GOOGLE_MAPS_API_KEY: CiQAr+nDhuO9BTkvy7wqAUsaO6SRV24xRVReVcMR2TmdxoYHtw0SUABnEklwb+4jrofs6cYIbw7/naejicWfjHKKmbgu2DJk1WJSPcHoxPsc/fj1lc18+PLtTV4eRvlkZ8cdytuR5m9Kz2e6Gf8usZRlwJ6ZZUJ+
+      YOLP_APPID: CiQAr+nDhmtQ72UKOKpkgW/+Fc2CNq3ssL0eP8Ywm+dKn2nMmb8SYQBnEklwHqUJNBdQX4+yomfqFlytNIJHWSUujoI4Z5H363bk7YIpj4ByKN43hbm0b0ldCEgFPrzH+EeG9xXYBn68P09SUTXfJ7n/WNBbWauFgHlUbK69hV+z5kNM31QeZUY=
+steps:
+- name: 'gcr.io/cloud-builders/yarn'
+  args: ['install']
+- name: 'gcr.io/cloud-builders/yarn'
+  args: ['build']
+  secretEnv: [
+    'GOOGLE_MAPS_API_KEY',
+    'YOLP_APPID'
+]
+  
+- name: 'gcr.io/mille-feuille/firebase'
+  args: ['deploy']
+  secretEnv: ['FIREBASE_TOKEN']

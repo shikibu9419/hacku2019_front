@@ -12,12 +12,12 @@ const latLngToPixel = function(position) {
 }
 
 
-export const state = () => ({
+const state = () => ({
     center: {lat: 35.71, lng: 139.72},
     zoom: 18
 })
 
-export const mutations = {
+const mutations = {
     setMarkers(state, latlngs) {
         markers = latlngs.map(function(latlng) {
             const marker = new Y.Marker(new Y.LatLng(...latlng))
@@ -43,7 +43,7 @@ export const mutations = {
     }
 }
 
-export const actions = {
+const actions = {
     setMarkers(context, latlngs) {
         context.dispatch('resetMarkers')
         context.commit('setMarkers', latlngs)
@@ -62,11 +62,19 @@ export const actions = {
     }
 }
 
-export const getters = {
+const getters = {
     pixelToLatLng() {
         return pixelToLatLng
     },
     latLngToPixel() {
         return latLngToPixel
     }
+}
+
+export default {
+    namespaced: true,
+    state,
+    mutations,
+    actions,
+    getters
 }

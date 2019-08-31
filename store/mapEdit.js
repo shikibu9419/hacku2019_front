@@ -6,7 +6,7 @@ const uuid = function() {
   });
 };
 
-export const state = () => ({
+const state = () => ({
     // APIと通信して逐次変更する変数
     layers: [],
     activeLayer: {},
@@ -20,7 +20,7 @@ export const state = () => ({
 })
 
 // map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
-export const mutations = {
+const mutations = {
     togglePlotting(state) {
         state.plotting = !state.plotting
     },
@@ -45,6 +45,18 @@ export const mutations = {
     },
     replot(state, prop) {
         state.activeLayer.tools[prop.toolId].points.splice(prop.index, 1, {lat: prop.lat, lng: prop.lng})
+    },
+    replotAll(state, prop) {
+        const dlat = prop.now.lat - prop.prev.lat
+        const dlng = prop.now.lng - prop.prev.lng
+
+        state.activeLayer.tools[prop.toolId].points.forEach((point, index) => {
+            state.activeLayer.tools[prop.toolId].points.splice(index, 1, {lat: point.lat + dlat, lng: point.lng + dlng})
+        })
+    },
+    resize(state, prop) {
+        var tool = state.activeLayer.tools[prop.toolId]
+        state.activeLayer.tools[prop.toolId] = {...tool, width: prop.width, height: prop.height}
     },
     selectTool(state, {prop, getters}) {
         state.selected = {...state.selected, [prop.toolId]: getters.getUserId}
@@ -73,7 +85,7 @@ export const mutations = {
     }
 }
 
-export const actions = {
+const actions = {
     togglePlotting(context) {
         context.commit('togglePlotting')
     },
@@ -99,6 +111,12 @@ export const actions = {
     },
     replot(context, prop) {
         context.commit('replot', prop)
+    },
+    replotAll(context, prop) {
+        context.commit('replotAll', prop)
+    },
+    resize(context, prop) {
+        context.commit('resize', prop)
     },
     select({commit, getters}, prop) {
         if(!prop.multiple)
@@ -129,7 +147,7 @@ export const actions = {
     }
 }
 
-export const getters = {
+const getters = {
     selecting(state, _, rootState) {
         if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
@@ -151,4 +169,12 @@ export const getters = {
     inactiveLayers (state) {
         return state.layers.filter(layer => layer.id !== state.activeLayer.id)
     }
+}
+
+export default {
+    namespaced: true,
+    state,
+    mutations,
+    actions,
+    getters
 }

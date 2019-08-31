@@ -4,12 +4,12 @@
       LoginLogo
       .login_form
         .login_input__box
-          LoginInput(:value="login.mail" :placeholder="'E-mail'" :type="'mail'")
+          LoginInput(v-model="email" :placeholder="'E-mail'" :type="'email'" :name="'email'")
         .login_input__box
-          LoginInput(:value="login.password" :placeholder="'Password'" :type="'password'")
+          LoginInput(v-model="password" :placeholder="'Password'" :type="'password'" :name="'password'")
       .login_button__wrapper
         .login_button__box
-          button.login_button.login_button--login() ログイン
+          button.login_button.login_button--login(@click="login()") ログイン
         .login_button__box
           button.login_button.login_button--signup(@click="linkToSignUpPage()") アカウント作成
 </template>
@@ -17,27 +17,45 @@
 //components
 import LoginLogo from '~/components/atoms/login/loginLogo.vue'
 import LoginInput from '~/components/atoms/login/loginInput.vue'
+import Vue from 'vue'
 
 export default {
   layout: "LoginPage",
-  components:{
+  components: {
     LoginLogo,
     LoginInput
   },
-  data(){
-    return{
-      login:{
-        mail: "",
-        password: ""
-      }
+  data() {
+    return {
+      email: "",
+      password: ""
     }
   },
   methods:{
-    linkToSignUpPage(){
+    linkToSignUpPage() {
       this.$router.push('/signup')
+    },
+
+    async login() {
+      const response = await this.$axios.post('/api/login',
+                                              { email: this.email,
+                                                password: this.password })
+        .then(response => {
+          Vue.toasted.success('ログインに成功しました')
+          this.$store.commit('user/setToken', response.data.key)
+          this.$router.push('/')
+        })
+        .catch(err => {
+          if(err.response.status == 400) {
+            Vue.toasted.error('正しいメールアドレスを入力してください')
+          } else if(err.response.status == 401) {
+            Vue.toasted.error('メールアドレスまたはパスワードが違います')
+          }
+        })
     }
   }
 }
+
 </script>
 
 <style lang="scss" scoped>
