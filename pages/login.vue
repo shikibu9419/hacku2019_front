@@ -41,9 +41,13 @@ export default {
                                               { email: this.email,
                                                 password: this.password })
         .then(response => {
-          Vue.toasted.success('ログインに成功しました')
-          this.$store.commit('user/setToken', response.data.key)
-          this.$router.push('/')
+          if(response.data.key) {
+            Vue.toasted.success('ログインに成功しました')
+            this.$store.commit('user/setToken', response.data.key)
+            this.$router.push('/')
+          } else {
+            Vue.toasted.error('ログインに失敗しました')
+          }
         })
         .catch(err => {
           if(err.response.status == 400) {
