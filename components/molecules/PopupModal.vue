@@ -1,14 +1,17 @@
 <template lang="pug">
     .popup-modal
-        .popup-modal__popup-content
+        .popup-modal__popup-content(v-bind:class="{ 'for-box-and-pin-popup': params.component === 'BoxAndPinPopup' }")
             component(v-bind:is="params.component", v-bind:closeModal="closeModal", v-bind:params="params.property")
 </template>
 
 <script>
     import ModalService from '~/services/ModalSvc'
+    import BoxAndPinPopup from '~/components/organisms/mapEdit/BoxAndPinPopup'
+    import LayerSettingPopup from '~/components/organisms/mapEdit/LayerSettingPopup'
     export default {
         components: {
-            BoxAndPinPopup: () => import('~/components/atoms/mapEdit/BoxAndPinPopup')
+            BoxAndPinPopup,
+            LayerSettingPopup
         },
         props: {
             params: {
@@ -41,14 +44,17 @@
         align-items: center;
         justify-content: center;
         &__popup-content {
-            background: $white;
+            background: $back-gray;
             height: auto;
             max-height: calc(100vh - (20px * 2));
             width: auto;
-            padding: 8px;
             -webkit-border-radius: 8px;
             -moz-border-radius: 8px;
             border-radius: 8px;
+        }
+        .for-box-and-pin-popup {
+            background: $white;
+            padding: 8px;
         }
     }
 </style>
