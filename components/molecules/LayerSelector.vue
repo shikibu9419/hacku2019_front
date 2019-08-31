@@ -19,13 +19,14 @@
 
 <script>
 import ModalService from '~/services/ModalSvc'
+import layer from '~/models/layer'
 
 export default {
   data() {
     return {
       backgroundAttr: {
         id: 'background',
-        name: 'Google Map',
+        name: 'Yah◯o!地図',
         color: 'gray'
       }
     }
@@ -38,11 +39,9 @@ export default {
   methods: {
     // あとでmodalとかに移行
     addLayer() {
-      const prop = {
-        name: "layer",
-        color: "red",
-      }
-      this.$store.dispatch('mapEdit/addLayer', prop)
+      layer.name = 'layer'
+      layer.color = 'red'
+      this.$store.dispatch('mapEdit/addLayer', layer)
     },
     popup() {
       this.modalSvc.openPopup('BoxAndPinPopup', {}, null)

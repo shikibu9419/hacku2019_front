@@ -4,5 +4,6 @@ export default {
   description: '',
   origin: 0,
   color: '',
+  visible: true,
   tools: []
 }

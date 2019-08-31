@@ -29,13 +29,6 @@ export default {
     }
   },
   methods: {
-    // あとでmodalとかに移行
-    addLayer() {
-      layer.name = 'layer'
-      layer.color = 'red'
-
-      this.$store.dispatch('mapEdit/addLayer', prop)
-    },
     toggleBar(){
       this.menuClose = (this.menuClose ? false:true)
     }
