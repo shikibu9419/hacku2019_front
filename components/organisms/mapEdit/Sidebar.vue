@@ -6,7 +6,8 @@
           fa-icon(icon="angle-left").toggle_sidebar__button_icon
     .sidebar_edit__header
     map-info
-    layer-selector
+    .sidebar_edit__content
+      layer-selector
 </template>
 
 <script>
@@ -44,6 +45,8 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 
+$padding: 20px;
+
 .sidebar_edit {
   background-color: $back-gray;
   position: absolute;
@@ -54,6 +57,7 @@ export default {
   z-index: 10;
   transform: translateX(0);
   transition: .2s $bezier-ease-out;
+
   &--close{
     transform: translateX(-$sidemenu-width);
     .toggle_sidebar__button_icon{
@@ -61,8 +65,14 @@ export default {
     }
   }
 }
+
 .sidebar_edit__wrapper{
   position: relative;
+}
+
+.sidebar_edit__content {
+  padding-left: $padding;
+  padding-right: $padding;
 }
 
 .toggle_sidebar {

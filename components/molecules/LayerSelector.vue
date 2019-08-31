@@ -1,11 +1,19 @@
 <template lang="pug">
-  .map_edit__sidebar__layer_selector
-    p 4 Layers
-    .map_edit__sidebar__layer_selector_content
+  .sidebar__layer_selector
+    img.sidebar__title_icon(src="~assets/svgs/layers.svg")
+    p.sidebar__title {{ layers.length }} Layers
+
+    .sidebar__layer_selector__content
       layer-selector-item(v-for="layer in layers" :key="layer.id" v-bind="layer")
-      .map_edit__sidebar__layer_selector_item(@click="addLayer")
-        font-awesome-icon(icon="plus-circle")
-        p レイヤーを追加
+    .sidebar__layer_selector__add(@click="addLayer")
+      font-awesome-icon.sidebar__layer_selector__add_icon(icon="plus-circle")
+      p.sidebar__layer_selector__add_label レイヤーを追加
+
+    img.sidebar__title_icon(src="~assets/svgs/layers.svg")
+    p.sidebar__title Background
+    .sidebar__background__content
+      layer-selector-item(v-bind="backgroundAttr")
+
     button(@click="popup") hogehoge
 </template>
 
@@ -13,6 +21,15 @@
 import ModalService from '~/services/ModalSvc'
 
 export default {
+  data() {
+    return {
+      backgroundAttr: {
+        id: 'background',
+        name: 'Google Map',
+        color: 'gray'
+      }
+    }
+  },
   computed: {
     layers () {
       return this.$store.state.mapEdit.layers
@@ -43,7 +60,32 @@ export default {
 <style lang="scss">
 @import "~/assets/styles/variables.scss";
 
-.map_edit__sidebar__layer_selector {
+.sidebar__layer_selector {
+  &__content {
+    background-color: $white;
+  }
+
+  &__add_icon {
+    display: inline-box;
+    height: 20px;
+  }
+
+  &__add_label {
+    display: inline;
+  }
+}
+
+.sidebar__background__content {
   background-color: $white;
+}
+
+.sidebar__title_icon {
+  display: inline-block;
+  height: 20px;
+}
+
+.sidebar__title {
+  display: inline;
+  font-weight: bold;
 }
 </style>
