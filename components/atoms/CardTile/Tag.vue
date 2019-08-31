@@ -1,22 +1,27 @@
 <template lang="pug">
-    .container
-        font-awesome-icon.icon(icon="tag" style="margin-right: 10px;")
-        span {{ tags.join('  ')}}
-        span(style="text-align: right") {{ tags.length }} Tags
+  p.tag_list__item {{ name }}
 </template>
 
 <script>
-    export default {
-        name: "Tag",
-        props: {
-            tags: {
-                type: Array,
-                require: true
-            },
-        },
-    }
+export default {
+  name: 'Tag',
+  props: ['name']
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "~/assets/styles/variables.scss";
 
+$space: 5px;
+
+.tag_list__item {
+  display: inline;
+  margin-left: $space;
+  margin-right: $space;
+  padding-left: $space;
+  padding-right: $space;
+  background: $white;
+  border: none;
+  border-radius: 4px;
+}
 </style>
