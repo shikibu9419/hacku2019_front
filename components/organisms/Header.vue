@@ -13,7 +13,8 @@
       )
     .header_buttons(v-if="buttons")
       MapHeaderButtons()
-    HeaderLogout()
+    .logout
+      HeaderLogout()
 </template>
 <script>
 export default {
@@ -75,5 +76,9 @@ export default {
   margin: auto;
   width: auto;
   height: min-content;
+}
+.logout {
+  display: block;
+  margin: 0 0 0 auto;
 }
 </style>

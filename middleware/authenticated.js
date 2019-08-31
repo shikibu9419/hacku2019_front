@@ -1,6 +1,6 @@
 export default function ({ store, redirect }) {
-  // ユーザーが認証されていないとき
-  if (!store.state.user.apiToken) {
+  // 開発環境以外でユーザーが認証されていないとき
+  if (process.env.NODE_ENV !== 'development' && !store.state.user.apiToken) {
     return redirect('/login')
   }
 }

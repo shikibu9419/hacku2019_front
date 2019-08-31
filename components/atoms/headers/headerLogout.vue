@@ -1,9 +1,8 @@
 <template lang="pug">
   .header_logout_button__main
-    button(@click="pushLogout()").header_logout_button
-      .header_logout_button__text ログアウト
+    button(@click="pushLogout()").header_logout_button ログアウト
 </template>
- 
+
 <script>
 import Vue from 'vue'
 
@@ -35,11 +34,11 @@ export default {
 
 $padding: 28px;
 
-.header_logout_button__main{
+.header_logout_button__main {
   padding: 10px $padding;
 }
 
-.header_logout_button{
+.header_logout_button {
   width: 150px;
   padding: 10px;
   display: flex;
