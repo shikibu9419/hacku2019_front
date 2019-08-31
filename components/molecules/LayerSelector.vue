@@ -15,11 +15,13 @@
       layer-selector-item(v-bind="backgroundAttr")
 
     button(@click="popup") hogehoge
+    Selector(v-bind:items.async="items")
 </template>
 
 <script>
 import ModalService from '~/services/ModalSvc'
 import layerModel from '~/models/layer'
+import Selector from '~/components/atoms/Selector'
 
 export default {
   data() {
@@ -28,7 +30,14 @@ export default {
         id: 'background',
         name: 'Yah◯o!地図',
         color: 'gray'
-      }
+      },
+      items: [
+        { text: 'hoge', value: 0, selected: false },
+        { text: 'piyo', value: 1, selected: false },
+        { text: 'fuga', value: 2, selected: false },
+        { text: 'nyan', value: 2, selected: false },
+        { text: 'unchi', value: 2, selected: true },
+      ],
     }
   },
   computed: {
@@ -50,7 +59,8 @@ export default {
     }
   },
   components: {
-    LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem')
+    LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem'),
+    Selector
   },
   created() {
     this.modalSvc = new ModalService(this.$store)
