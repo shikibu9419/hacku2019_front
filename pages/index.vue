@@ -4,6 +4,7 @@
     :returnLink="'/maplists/search'"
     :placeholder="'マップを検索する'"
     :type="'maplists/search'"
+    :buttons="false"
     )
     .card-pages
       card-tile(

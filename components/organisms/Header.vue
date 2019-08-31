@@ -11,15 +11,18 @@
         :placeholder="placeholder"
         :type="type"
       )
+    .header_buttons(v-if="buttons")
+      MapHeaderButtons()
 </template>
 <script>
 export default {
-  props:['placeholder','type','returnLink'],
+  props:['placeholder','type','returnLink','buttons'],
   components:{
     //svg
     ReturnBtn: () => import('~/assets/svgs/return.svg?inline'),
     //components
     HeaderSearch: () => import('~/components/atoms/headers/headerSearch.vue'),
+    MapHeaderButtons: () => import('~/components/molecules/MapHeaderButtons.vue'),
   },
   methods:{
   }
@@ -61,5 +64,14 @@ export default {
 }
 .search {
   padding-left: 20px;
+}
+.header_buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: auto;
+  height: 100%;
 }
 </style>

@@ -1,50 +1,41 @@
 <template lang="pug">
-  .header_stock_button__main
-    button(@click="pushStock()").header_stock_button
-      .header_like_button__icon
-        img(src="~/assets/svgs/stock.svg").header_stock_button__icon__svg
-      .header_stock_button__text ストックに追加
+  .header_sq_button__main
+    button.header_sq_button(
+        @click="pushStock()"
+        :class="{'header_sq_button--on':mapStockdOn}"
+      )
+      .header_sq_button__icon
+        stockBtn.header_sq_button__icon__svg
+      .header_sq_button__text(v-if="!mapStockdOn") ストックに追加
+      .header_sq_button__text(v-else) ストックから外す
 </template>
 
 <script>
 export default {
+  components:{
+    stockBtn: () => import('~/assets/svgs/stock.svg?inline'),
+  },
   methods:{
     pushStock(){
-      //処理
+      //VueXから拾ってきて条件分岐
+      let stockd_on // = this.$store.like
+      if(stockd_on){
+        //外す処理
+      }else{
+        //つける処理
+      }
     }
   },
+  computed:{
+    mapStockdOn(){
+      //VueXから、マップがすでにストックされていたらtrueを返す
+      return false
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";
-
-$padding: 28px;
-
-.header_stock_button__main{
-  padding: 10px $padding;
-}
-
-.header_stock_button__icon__svg {
-  height: $header-height - 35px;
-  padding: 4px 10px 4px;
-}
-
-.header_stock_button{
-  width: 150px;
-  padding: 10px;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  background: #ffffff;
-  color: #EC78B4;
-  border-color: $theme-pink;
-  border-radius: 4px;
-}
-
-.header_stock_button__icon {
-  padding: 0 8px;
-  color: $theme-pink;
-}
-
+@import "~/assets/styles/atoms/headerButtons.scss";
 </style>

@@ -4,6 +4,7 @@
       :returnLink="null"
       :placeholder="'マイマップを検索する'"
       :type="'maplists/mymap'"
+      :buttons="false"
       )
     main.main
       SideMenu

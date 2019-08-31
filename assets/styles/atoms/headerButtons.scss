@@ -1,0 +1,46 @@
+//squareタイプのボタン
+
+.header_sq_button__main{
+  padding: 0 8px;
+}
+.header_sq_button__icon__svg {
+  display: block;
+  width: 28px;
+}
+.header_sq_button{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 40px;
+  padding: 6px 18px;
+  background: $white;
+  @include noto-font(1.6rem,$theme-pink);
+  border: 1px solid $theme-pink;
+  border-radius: 4px;
+  transition: .3s $bezier-ease-out;
+  .stock_cls-2,.like_cls-3 {
+    fill:$theme-pink;
+  }
+  .stock_cls-1,.like_cls-2 {
+    fill: none;
+  }
+  &--on {
+    color: $white;
+    background: $theme-pink;
+    .stock_cls-2,.like_cls-3 {
+      fill: $white;
+    }
+    .stock_cls-1,.like_cls-2 {
+      fill: $theme-pink;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+.header_sq_button__text {
+  margin-left: 8px;
+}
+

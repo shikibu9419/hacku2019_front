@@ -4,6 +4,7 @@
         :returnLink="'/maplists/search'"
         :placeholder="'マップ内を検索する'"
         :type="'inmap'"
+        :buttons="true"
         )
     .map_edit__map
       #map-canvas.map_edit__map__background(ref="layer" :class="{background__focus_on: backgroundFocused}")
