@@ -21,15 +21,15 @@ export default {
   },
   methods: {
     addBuilding() {
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building', points: []})
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building'})
       this.$store.dispatch('mapEdit/togglePlotting')
     },
     addBuildingBasic() {
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building_basic', width: 100, height: 100})
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building_basic'})
       this.$store.dispatch('mapEdit/toggleGrabbing')
     },
     addDirection() {
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'direction', points: []})
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'direction'})
       this.$store.dispatch('mapEdit/togglePlotting')
     },
     addPin() {

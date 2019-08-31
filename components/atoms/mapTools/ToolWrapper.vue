@@ -5,6 +5,8 @@
       :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
   direction(v-else-if="attr.type === 'direction'"
       :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
+  pin(v-else-if="attr.type === 'pin'"
+      :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
 </template>
 
 <script>
@@ -15,6 +17,7 @@ export default {
     BuildingBasic: () => import('./BuildingBasic'),
     Building: () => import('./Building'),
     Direction: () => import('./Direction'),
+    Pin: () => import('./Pin'),
   },
   mixins: [Shared]
 }

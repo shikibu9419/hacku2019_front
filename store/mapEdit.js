@@ -1,3 +1,7 @@
+import toolList from '~/models/toolList.js'
+import map from '~/models/map.js'
+import layer from '~/models/layer.js'
+
 const uuid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       const r = Math.random()*16|0
@@ -8,7 +12,8 @@ const uuid = function() {
 
 const state = () => ({
     // APIと通信して逐次変更する変数
-    layers: [],
+    map: map,
+    layers: map.layers,
     activeLayer: {},
     selected: {},
     // 自己保持する変数
@@ -37,7 +42,7 @@ const mutations = {
         state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
     },
     addTool(state, {attr, toolId}) {
-        attr = {...attr}
+        attr = Object.assign(toolList[attr.type], attr, {id: toolId})
         state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
     },
     plot(state, prop) {
@@ -59,10 +64,10 @@ const mutations = {
         state.activeLayer.tools[prop.toolId] = {...tool, width: prop.width, height: prop.height}
     },
     selectTool(state, {prop, getters}) {
-        state.selected = {...state.selected, [prop.toolId]: getters.getUserId}
+        state.selected = {...state.selected, [prop.toolId]: getters.getUser.id}
     },
-    clearSelection(state) {
-        state.selected = getters.othersSelecting
+    clearSelection(state, othersSelecting) {
+        state.selected = othersSelecting
     },
     moveTools(state, {prop, getters}) {
         const dlat = prop.now.lat - prop.prev.lat
@@ -77,8 +82,8 @@ const mutations = {
         // 実際はAPIからデータをとりにきてlayersにセット
         state.layers = [{id: 1, name: 'layer1', color: 'red', tools: {}}]
     },
-    addLayer(state, prop) {
-        state.layers.push(prop)
+    addLayer(state, layer) {
+        state.layers.push(layer)
     },
     selectLayer(state, layerId) {
         state.activeLayer = state.layers.find(layer => layer.id === layerId)
@@ -104,7 +109,7 @@ const actions = {
     addTool(context, attr) {
         const toolId = uuid()
         context.commit('addTool', {attr, toolId})
-        context.dispatch('select', {toolId: toolId})
+        context.dispatch('selectTool', {toolId: toolId})
     },
     plot(context, prop) {
         context.commit('plot', prop)
@@ -118,13 +123,13 @@ const actions = {
     resize(context, prop) {
         context.commit('resize', prop)
     },
-    select({commit, getters}, prop) {
+    selectTool({commit, getters}, prop) {
         if(!prop.multiple)
             commit('clearSelection')
         commit('selectTool', {prop, getters})
     },
     clearSelection(context) {
-        context.commit('clearSelection')
+        context.commit('clearSelection', context.getters.othersSelecting)
     },
     moveTools({commit, getters}, prop) {
         commit('moveTools', {prop, getters})
@@ -132,13 +137,13 @@ const actions = {
     initLayers(context) {
         context.commit('initLayers')
     },
-    addLayer(context, prop) {
+    addLayer(context, layer) {
         // 実際はlayer作成要求をして, レスポンスをlayerにセット
         const id = Object.keys(context.state.layers).length + 1
-        prop.id = id
-        prop.tools = {}
+        layer.id = id
+        layer.tools = {}
 
-        context.commit('addLayer', prop)
+        context.commit('addLayer', layer)
         context.dispatch('selectLayer', id)
     },
     selectLayer(context, layerId) {
@@ -148,26 +153,30 @@ const actions = {
 }
 
 const getters = {
-    selecting(state, _, rootState) {
+    selecting(state, getters, rootState, rootGetters) {
         if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)                              // [key, value]のArrayを取得
-                     .filter(item => item[1] === rootState.userId)         // 本人が選択しているものだけ抽出
+                     .filter(item => item[1] === getters.getUser.id)        // 本人が選択しているものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
     },
-    othersSelecting(state, _, rootState) {
+    othersSelecting(state, getters, rootState, rootGetters) {
         if (!Object.keys(state.selected).length) return state.selected
         return Object.entries(state.selected)
-                     .filter(item => item[1] !== rootState.userId)         // 本人が選択していないものだけ抽出
+                     .filter(item => item[1] !== getters.getUser.id)         // 本人が選択していないものだけ抽出
                      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
     },
-    getUserId(state, _, rootState) {
-        return rootState.userId
+    getUser(state, _, rootState, rootGetters) {
+      return rootGetters['user/getUser']
     },
     activeLayer(state) {
         return state.activeLayer
     },
     inactiveLayers (state) {
         return state.layers.filter(layer => layer.id !== state.activeLayer.id)
+    },
+    comments(state, _, rootState) {
+        const dummyComment = {...rootState.ymap.center, id: 'hoge', message: 'ここやで', user: getters.getUser}
+        return [dummyComment]
     }
 }
 

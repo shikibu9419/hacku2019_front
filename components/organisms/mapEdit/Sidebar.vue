@@ -8,10 +8,12 @@
 </template>
 
 <script>
+import layer from '~/models/layer'
+
 export default {
     data(){
         return{
-            menu_close:false
+          menu_close: false,
         }
     },
     components: {
@@ -25,10 +27,9 @@ export default {
     methods: {
         // あとでmodalとかに移行
         addLayer() {
-            const prop = {
-                name: "layer",
-                color: "red",
-            }
+            layer.name = 'layer'
+            layer.color = 'red'
+
             this.$store.dispatch('mapEdit/addLayer', prop)
         },
         toggleBar(){

@@ -18,7 +18,6 @@ export default {
   },
   data() {
     return {
-      type: 'building',
       prev: {},
       diff: {}
     }
@@ -29,7 +28,7 @@ export default {
   },
   computed: {
     points() {
-      this.$store.state.ymap.center // To observe map scrolling
+      this.$store.state.ymap.now // To observe map scrolling
 
       // 選択してなかったらpointsをxy座標に変換して返す
       if (!this.selected)

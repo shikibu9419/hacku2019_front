@@ -1,10 +1,10 @@
 <template lang="pug">
   g
     rect.map_edit__tools.box(
-        v-bind="attributes"
-        @dblclick.stop="select"
-        @mousedown.stop="grab"
-        :class="{selected__tool_on: selected, grab__tool_on: grabbing}"
+      v-bind="attributes"
+      @dblclick.stop="select"
+      @mousedown.stop="grab"
+      :class="{selected__tool_on: selected, grab__tool_on: grabbing}"
     )
     circle.map_edit__tools.box.resizepoint(
       v-if="selected"
@@ -20,7 +20,6 @@ import Shared from './Shared.vue'
 export default {
   data() {
     return {
-      type: 'building_basic',
       pointGrabbed: false,
       width: 0,
       height: 0
@@ -32,7 +31,7 @@ export default {
   },
   computed: {
     attributes() {
-      this.$store.state.ymap.center // To observe map scrolling
+      this.$store.state.ymap.now // To observe map scrolling
 
       const attr = Object.assign({}, this.attr, this.$store.getters['ymap/latLngToPixel'](this.attr))
       delete attr.lat

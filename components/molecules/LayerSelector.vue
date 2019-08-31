@@ -10,7 +10,8 @@
 </template>
 
 <script>
-    import ModalService from '~/services/ModalSvc'
+import ModalService from '~/services/ModalSvc'
+
 export default {
     computed: {
         layers () {
