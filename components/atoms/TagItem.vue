@@ -1,10 +1,10 @@
 <template lang="pug">
-  p.tag_list__item {{ name }}
+  p.tag_item {{ name }}
 </template>
 
 <script>
 export default {
-  name: 'Tag',
+  name: 'TagItem',
   props: ['name']
 }
 </script>
@@ -15,7 +15,7 @@ export default {
 $margin: 2px;
 $padding: 5px;
 
-.tag_list__item {
+.tag_item {
   display: inline;
   margin-left: $margin;
   margin-right: $margin;
