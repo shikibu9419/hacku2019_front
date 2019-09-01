@@ -23,7 +23,7 @@ export default {
   layout: 'MapHeaderLayout',
   middleware: 'authenticated',
   components: {
-    Header: () => import('~/components/organisms/mapList/Header'),
+    Header: () => import('~/components/organisms/Header'),
     MapLayer: () => import('~/components/organisms/mapEdit/MapLayer'),
     Sidebar: () => import('~/components/organisms/mapEdit/Sidebar'),
     Commentbar: () => import('~/components/organisms/mapEdit/Commentbar')

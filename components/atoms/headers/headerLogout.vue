@@ -32,21 +32,29 @@ export default {
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";
 
-$padding: 28px;
-
 .header_logout_button__main {
-  padding: 10px $padding;
+  height: auto;
+  padding-right: 24px;
 }
 
 .header_logout_button {
-  width: 150px;
-  padding: 10px;
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  background: #ffffff;
-  color: $black;
-  border-color: $black;
+  align-items: center;
+  padding: 6px 18px;
+  background: $white;
+  min-height: 40px;
+  @include noto-font(1.6rem,$black);
+  line-height: 28px;
+  border: 1px solid $black;
   border-radius: 4px;
+  transition: .3s $bezier-ease-out;
+  :focus{
+    outline: none;
+  }
+  &:hover {
+    background: $back-light-gray;
+  }
 }
 </style>
