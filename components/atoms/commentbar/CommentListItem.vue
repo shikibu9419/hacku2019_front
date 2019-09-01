@@ -2,14 +2,17 @@
   .commentbar_item(@click.stop="focusComment()")
     .commentbar_item__label(:class="{comment_focus_on: focused}") 中央北口
     .commentbar_item__content
-      user-info
+      UserInfo(
+        :username="'username'"
+        :mulch_user="null"
+      )
       p.commentbar_item__comment {{ message }}
 </template>
 
 <script>
 export default {
   components: {
-    UserInfo: () => import('~/components/atoms/UserInfo')
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
   },
   props: ['id', 'message', 'user', 'lat', 'lng'],
   data() {

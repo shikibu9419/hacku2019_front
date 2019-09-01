@@ -1,72 +1,73 @@
 <template lang="pug">
-  .maplist__card
-    img.maplist__card__img(:src="img_url")
+  nuxt-link(:to="`/${mapCard.map_id}/view`").maplist__card
+    img.maplist__card__img(:src="mapCard.img_url")
     .maplist__card__content
-      h3.title {{ title }}
-      UserInfo
-      .maplist__card__layers
-        font-awesome-icon.maplist__card__icon(icon="layer-group")
-        tag-item(v-for="layer in layers" v-bind="layer" :key="`maplist_layer_${layer.id}`")
-      .maplist__card__tags
-        font-awesome-icon.maplist__card__icon(icon="tag")
-        tag-item(v-for="tag in tags" v-bind="tag" :key="`maplist_tag_${tag.id}`")
-      .maplist__card__comments
-        Comment(:comment_count="comments.length")
+      .map_title {{ mapCard.title }}
+      .maplist__card__blocks
+        UserInfo(
+          :author="mapCard.author"
+          :editors="mapCard.editors"
+        )
+      .maplist__card__blocks
+        tagInfo(
+          :tags="mapCard.tags"
+        )
+      .maplist__card__blocks
+        LayerInfo(
+          :layers="mapCard.layers"
+        )
+      .maplist__card__blocks
+        NumberInfo(
+          :comments="mapCard.comments"
+          :like="mapCard.like"
+          :stock="mapCard.stock"
+          )
 </template>
 
 <script>
-import UserInfo from '../atoms/UserInfo'
-import TagItem from '../atoms/TagItem'
-import Comment from '../atoms/CardTile/Comment'
 
 export default {
   name: "CardTile",
-  components: {UserInfo, TagItem, Comment},
-  props: {
-    title: {
-      type: String,
-      require: true
-    },
-    img_url: {
-      type: String,
-      require: true
-    },
-    layers: {
-      type: Array,
-      require: true
-    },
-    tags: {
-      type: Array,
-      require: true
-    },
-    comments: {
-      type: Array,
-      require: true
-    }
-  }
+  components: {
+    //components
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo'),
+    TagInfo: () => import('~/components/atoms/mapInfo/TagInfo'),
+    LayerInfo: () => import('~/components/atoms/mapInfo/LayerInfo'),
+    NumberInfo: () => import('~/components/atoms/mapInfo/NumberInfo')
+  },
+  props: ["mapCard"]
 }
 </script>
 
-<style scoped>
-.card {
-  margin: 30px auto;
-  width: 350px;
-  background: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px #ccc;
+<style lang="scss" scoped>
+@import "~/assets/styles/variables.scss";
+@import "~/assets/styles/mixin.scss";
+
+$card-width : $sidemenu-width * 1.4;
+$card-height : $card-width / 3;
+
+.maplist__card {
+  width: $card-width;
+  margin: 18px 6px;
+  background: $white;
+  text-decoration: none;
+  transition: .5s $bezier-ease-out;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 12px rgba($black,.3);
+  }
 }
 .maplist__card__img {
-  border-radius: 5px 5px 0 0;
-  max-width: 100%;
-  height: auto;
+  display: block;
+  width: $card-width;
+  height: $card-height;
+  object-fit: cover;
 }
-.title {
-  margin: 5px;
+.maplist__card__content {
+  padding: 4px 18px 18px;
 }
-.contents {
-  margin: 10px;
-}
-.parent >>> .icon {
-  margin-right: 10px;
+.map_title {
+  @include noto-font(1.8rem,$text-black);
+  padding: 6px 0;
 }
 </style>

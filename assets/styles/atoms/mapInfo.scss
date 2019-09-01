@@ -1,0 +1,49 @@
+.info_data {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 2px 0;
+}
+.info_data__icon {
+  width: 22px;
+  height: 22px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.info_data__main {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-left: 8px;
+  width: 100%;
+  flex-grow: auto;
+}
+.info_data__right {
+  flex-grow: 0;
+  flex-shrink: 0;
+  @include noto-font(1.6rem);
+  &--strong {
+    font-weight: bold;
+  }
+}
+
+.info_data__main__name {
+  @include noto-font(1.6rem);
+  margin-right: 8px;
+}
+
+.number_info {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.number_info__one {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-right: 12px;
+  align-items: center;
+}
+.number_info__one__count {
+  @include noto-font(1.7rem);
+  padding-left: 4px;
+  padding-right: 8px;
+}
