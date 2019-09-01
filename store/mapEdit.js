@@ -55,6 +55,12 @@ const mutations = {
     delete(obj[toolId])
     state.activeLayer.tools = obj
   },
+  addComment(state, {prop, getters}) {
+    if (!['pin', 'box'].includes(state.activeLayer.tools[prop.toolId].type)) return
+
+    const comment = {comment: prop.commentText, user: getters.getUser}
+    state.activeLayer.tools[prop.toolId].comments.push(comment)
+  },
   plot(state, prop) {
     state.activeLayer.tools[prop.toolId].points.push(prop)
   },
@@ -131,6 +137,9 @@ const actions = {
   deleteTool(context, toolId) {
     context.commit('deleteTool', toolId)
   },
+  addComment({commit, getters}, prop) {
+    commit('addComment', {prop, getters})
+  },
   plot(context, prop) {
     context.commit('plot', prop)
   },
@@ -195,11 +204,16 @@ const getters = {
   activeLayer(state) {
     return state.activeLayer
   },
-  inactiveLayers (state) {
+  inactiveLayers(state) {
     return state.layers.filter(layer => layer.id !== state.activeLayer.id)
   },
+  getTool(state) {
+    return function(toolId) {
+      return state.activeLayer.tools[toolId]
+    }
+  },
   comments(state, _, rootState) {
-    const dummyComment = {...rootState.ymap.center, id: 'hoge', message: 'ここやで', user: getters.getUser}
+    const dummyComment = {...rootState.ymap.center, id: 'hoge', title: 'kitasenju', comment: 'ここやで', user: getters.getUser}
     return [dummyComment]
   }
 }

@@ -1,6 +1,6 @@
 <template lang="pug">
   .comment_box(@click.stop="focusComment()")
-    .comment_box__label(:class="{comment_focus_on: focused}") 中央北口
+    .comment_box__label(v-if="!onBox" :class="{comment_focus_on: focused}") {{ title }}
     .comment_box__content
       user-info
       p.comment_box__comment {{ comment }}
@@ -11,7 +11,7 @@ export default {
   components: {
     UserInfo: () => import('~/components/atoms/mapEdit/UserInfo')
   },
-  props: ['id', 'comment', 'user', 'lat', 'lng', 'onBox'],
+  props: ['title', 'comment', 'user', 'lat', 'lng', 'onBox'],
   data() {
     return {
       focused: false
@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     focusComment() {
-      if (!this.onBox) return
+      if (this.onBox) return
       this.focused = true
       this.$store.dispatch('ymap/panTo', {lat: this.lat, lng: this.lng})
     }

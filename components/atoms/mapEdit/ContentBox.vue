@@ -1,6 +1,6 @@
 <template lang="pug">
   .content_box(@click.stop="focusComment()")
-    .content_box__label(v-if="! onBox && title.length") {{ title }}
+    .content_box__label(v-if="! onBox") {{ title }}
     .content_box__content(v-if="content.type === 'text'")
       p.content_box__text {{ content.text }}
     .content_box__content(v-else-if="content.type === 'link'")

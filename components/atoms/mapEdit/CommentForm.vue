@@ -21,7 +21,7 @@ export default {
   methods: {
     addComment() {
       if (this.id) {
-        this.$store.dispatch('mapEdit/addComment', this.id)
+        this.$store.dispatch('mapEdit/addComment', {toolId: this.id, commentText: this.comment})
         return
       }
 
@@ -45,11 +45,9 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 
-.map_edit__comment_form {
+.map_edit__comment_form_main {
   position: relative;
-
-  &__textarea {
-  }
+}
 
 //   &_pin {
 //     display: inline-block;
@@ -61,12 +59,11 @@ export default {
 //     font-size: 10px;
 //   }
 
-  &__btn {
+.map_edit__comment_form__btn {
     display: inline;
     background: $dark-gray;
     color: $white;
     border: none;
     border-radius: 4px;
-  }
 }
 </style>

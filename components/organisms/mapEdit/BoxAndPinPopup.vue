@@ -53,22 +53,23 @@
                     .box-and-pin-popup__info-icons
                         img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/text_box.svg")
                         .box-and-pin-popup__info-type Comments
-                    CommentForm(:id="params.attr.id")
-                    .box-and-pin-popup__commented-button TODO: comment list
-                    .box-and-pin-popup__comments
-                        .box-and-pin-popup__comment(v-for="(comment, i) in tool.comments" :key="`comment_${i}`")
+                    comment-form(:id="params.attr.id")
+                    comment-list(:tool-id="params.attr.id")
 </template>
 
 <script>
 import AutosizeTextarea from '~/components/atoms/AutosizeTextarea'
 import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
 import CommentForm from '~/components/atoms/mapEdit/CommentForm'
+import CommentList from '~/components/molecules/commentbar/CommentList'
 
 export default {
   name: "BoxAndPinPopup",
   components: {
     AutosizeTextarea,
-    DeleteAndCloseButton
+    DeleteAndCloseButton,
+    CommentForm,
+    CommentList
   },
   props: {
     params: Object,
@@ -79,15 +80,14 @@ export default {
       tool: {
         title: '',
         contents: [
-        ],
-        comments: [
         ]
       }
     }
   },
   mounted() {
     const attr = JSON.parse(JSON.stringify(this.params.attr))
-    this.tool = {...this.tool, title: attr.title, contents: attr.contents, comments: attr.comments}
+    delete attr.comments
+    this.tool = attr
   },
   methods: {
     getLinkTitle(linkContent) {
