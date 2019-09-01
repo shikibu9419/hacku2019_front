@@ -48,10 +48,10 @@ const mutations = {
     let tools = state.layers.find(layer => layer.id === layerId).tools
     state.layers.find(layer => layer.id === layerId).tools = {...tools, [tool.id]: tool}
   },
-  updateTool(state, {attr, layerId}) {
+  updateTool(state, {tool, layerId}) {
     const layerTools = state.layers.find(layer => layer.id === layerId).tools
-    const tool = Object.assign(layerTools[attr.id], attr)
-    state.activeLayer.tools = {...layerTools, [attr.id]: tool}
+    const newTool = Object.assign(layerTools[tool.id], tool)
+    state.activeLayer.tools = {...layerTools, [tool.id]: newTool}
   },
   deleteTool(state, toolId) {
     let obj = {...state.activeLayer.tools}
@@ -85,7 +85,6 @@ const mutations = {
   },
 
   selectTool(state, {toolId, userId}) {
-    if (state.selected[toolId]) return
     state.selected = {...state.selected, [toolId]: userId}
   },
   clearSelection(state, othersSelecting) {
@@ -95,7 +94,7 @@ const mutations = {
     const dlat = prop.now.lat - prop.prev.lat
     const dlng = prop.now.lng - prop.prev.lng
 
-    for(const toolId of Object.keys(getters.selecting)) {
+    for(const toolId of Object.keys(getters.selecting())) {
       const tool = state.activeLayer.tools[toolId]
       state.activeLayer.tools[toolId] = {...tool, lat: tool.lat + dlat, lng: tool.lng + dlng}
     }
@@ -103,6 +102,13 @@ const mutations = {
 
   addLayer(state, layer) {
     state.layers.push(layer)
+  },
+  updateLayer(state, layer) {
+    const index = state.layers.findIndex(lyr => lyr.id === layer.id)
+    if (index >= 0)
+      state.layers[index] = Object.assign(state.layers[index], layer)
+    else
+      state.layers.push(layer)
   },
   selectLayer(state, layerId) {
     state.activeLayer = state.layers.find(layer => layer.id === layerId)
@@ -117,7 +123,6 @@ const mutations = {
 
   updateMap(state, map) {
     state.map = Object.assign(state.map, map)
-    console.log(state.map)
   }
 }
 
@@ -139,11 +144,19 @@ const actions = {
     context.commit('addTool', {tool, layerId})
     context.dispatch('selectTool', {toolId: toolId})
 
-//     socket.emit('tool/add', {tool: tool, layerId: layerId})
+    socket.emit('tool/add', {tool: tool, layerId: layerId})
   },
-  updateTool(context, attr) {
+  updateTool(context, tool) {
     const layerId = context.state.activeLayer.id
-    context.commit('updateTool', {attr, layerId})
+    context.commit('updateTool', {tool, layerId})
+  },
+  updateToolPosition(context) {
+    const layerId = context.state.activeLayer.id
+    const toolIds = Object.keys(context.getters.selecting())
+    toolIds.forEach(toolId => {
+      const tool = context.state.activeLayer.tools[toolId]
+      socket.emit('tool/update', {tool: tool, layerId: layerId})
+    })
   },
   deleteTool(context, toolId) {
     context.commit('deleteTool', toolId)
@@ -164,13 +177,15 @@ const actions = {
     context.commit('resize', prop)
   },
   selectTool(context, prop) {
+    if (context.state.selected[prop.toolId]) return
+    if (!prop.multiple)
+      context.dispatch('clearSelection')
+
     const userId = context.getters.getUser.id
     const toolId = prop.toolId
-//     if(!prop.multiple)
-//       context.commit('clearSelection')
     context.commit('selectTool', {toolId, userId})
   },
-  clearSelection(context, prop) {
+  clearSelection(context) {
     context.commit('clearSelection', context.getters.othersSelecting())
   },
   moveTools({commit, getters}, prop) {
@@ -188,31 +203,25 @@ const actions = {
     context.commit('addLayer', layer)
     context.dispatch('selectLayer', id)
 
-//     socket.emit('layer/add', layer)
+    socket.emit('layer/add', layer)
   },
   selectLayer(context, layerId) {
     context.commit('selectLayer', layerId)
-    context.dispatch('clearSelection', context.getters.othersSelecting())
+    context.dispatch('clearSelection')
   },
   focusBackground(context) {
     context.commit('focusBackground')
-    context.dispatch('clearSelection', context.getters.othersSelecting())
+    context.dispatch('clearSelection')
   },
   updateTags(context, tags) {
     context.commit('updateTags', tags)
   },
 
 
-  mapSocket(context, prop) {
-    switch (prop.method) {
-      case 'add':
-        break;
-      case 'update':
-        context.commit('updateMap', prop.map)
-        break;
-      case 'delete':
-        break;
-    }
+  initSocket(context, map) {
+    console.log(map)
+    context.commit('updateMap', map)
+    map.layers.forEach(layer => context.commit('updateLayer', layer))
   },
   layerSocket(context, prop) {
     switch (prop.method) {
@@ -234,6 +243,7 @@ const actions = {
         context.commit('addTool', {tool, layerId})
         break;
       case 'update':
+        console.log('updated')
         context.commit('updateTool', {tool, layerId})
         break;
       case 'delete':
@@ -261,10 +271,14 @@ const actions = {
 
 const getters = {
   selecting(state, getters, rootState, rootGetters) {
-    if (!Object.keys(state.selected).length) return state.selected
-    return Object.entries(state.selected)                              // [key, value]のArrayを取得
-      .filter(item => item[1] === getters.getUser.id)        // 本人が選択しているものだけ抽出
-      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
+    return (userId) => {
+      if (!Object.keys(state.selected).length) return state.selected
+      if (!userId) userId = getters.getUser.id
+
+      return Object.entries(state.selected)                              // [key, value]のArrayを取得
+        .filter(item => item[1] === getters.getUser.id)        // 本人が選択しているものだけ抽出
+        .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
+    }
   },
   othersSelecting(state, getters, rootState, rootGetters) {
     return (userId) => {

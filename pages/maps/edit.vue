@@ -65,8 +65,9 @@ export default {
 //       this.$store.dispatch('mapEdit/setOffset', prop)
 //     }
     setupSockets() {
-      socket.on('map/update', map => {
-        this.$store.dispatch('mapEdit/mapSocket', {map: map, method: 'update'})
+      socket.on('init', map => {
+        console.log(map)
+        this.$store.dispatch('mapEdit/initSocket', map)
       })
       socket.on('layer/add', layer => {
         this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'add'})

@@ -50,6 +50,7 @@ export default {
         this.$store.dispatch('mapEdit/toggle', 'grabbing')
       if(this.$store.state.mapEdit.mapGrabbing)
         this.$store.dispatch('mapEdit/toggle', 'mapGrabbing')
+      this.$store.dispatch('mapEdit/updateToolPosition')
     },
     resetEditting() {
       if (this.$store.state.mapEdit.plotting)
