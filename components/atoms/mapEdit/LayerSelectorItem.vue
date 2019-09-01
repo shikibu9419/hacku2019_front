@@ -27,6 +27,7 @@ export default {
         this.$store.dispatch('mapEdit/selectLayer', this.id)
       else
         this.$store.dispatch('mapEdit/focusBackground')
+      this.$store.commit('ymap/updateNow')
     }
   }
 }

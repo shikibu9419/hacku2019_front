@@ -49,6 +49,10 @@ const mutations = {
   setCenter(state, latlng) {
     state.center = latlng
   },
+  updateNow(state) {
+    const yLatLng = ymap.center
+    state.now = {lat: yLatLng.Lat, lng: yLatLng.Lon}
+  },
   init(state, prop) {
     state.now = Object.assign({}, state.center)
     ymap = new Y.Map('map-canvas')
