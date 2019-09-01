@@ -23,6 +23,7 @@ export default {
 
 <style lang="scss">
 @import "~/assets/styles/variables.scss";
+@import "~/assets/styles/atoms/vueTagsInput.scss";
 
 .sidebar__map_tags {
 }
