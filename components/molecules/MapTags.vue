@@ -1,23 +1,22 @@
 <template lang="pug">
   .sidebar__map_tags
     img.sidebar__title_icon(src="~assets/svgs/tag.svg")
-    p.sidebar__title {{ tags.length }} Tags
+    p.sidebar__title {{ existingTags.length }} Tags
     .sidebar__map_tags__tags
-      .sidebar__map_tags__tag(v-for="tag in tags" v-bind="tag" :key="`map_edit_tags_${tag.id}`")
-        .sidebar__map_tags__tag__text {{tag}}
+      vue-tags-input(:existing-tags="existingTags")
 </template>
 
 <script>
 import ModalService from '~/services/ModalSvc'
 import layer from '~/models/layer'
+import VueTagsInput from '~/components/atoms/VueTagsInput'
 
 export default {
-  computed: {
-    tags() {
-      return [{id: 1, name: 'tag1'}, {id: 2, name: 'tag2'}, {id: 3, name: 'tag3'}]
+    components: {VueTagsInput},
+    computed: {
+    existingTags() {
+      return [{key: 1, value: 'tag1'}, {key: 2, value: 'tag2'}, {key: 3, value: 'tag3'}]
     }
-  },
-  methods: {
   },
 }
 </script>

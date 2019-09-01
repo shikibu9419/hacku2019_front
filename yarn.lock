@@ -1582,6 +1582,13 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.12.tgz#45dd1d0638e8c8f153e87d296907659296873916"
   integrity sha512-SOhuU4wNBxhhTHxYaiG5NY4HBhDIDnJF60GU+2LqHAdKKer86//e4yg69aENCtQ04n0ovz+tq2YPME5t5yp4pw==
 
+"@voerro/vue-tagsinput@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@voerro/vue-tagsinput/-/vue-tagsinput-2.0.2.tgz#be9e6b5cbe2b05f8e3c0c230e2a20ec57bc3c471"
+  integrity sha512-QECBTMDmZk66JUP4Oi1F+J5Dq/MO/bFPvTT4hv708rbiNybH0hG0uqBslAHBuaCSF4U3/XeHOcYDh+SzPIswPw==
+  dependencies:
+    vue "^2.5.0"
+
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.0.0.tgz#048fe579958da408fb7a8b2a3ec050b50a661040"
@@ -9884,7 +9891,7 @@ vue2-google-maps@^0.10.7:
     babel-runtime "^6.26.0"
     marker-clusterer-plus "^2.1.4"
 
-vue@^2.5.13, vue@^2.6.10:
+vue@^2.5.0, vue@^2.5.13, vue@^2.6.10:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
