@@ -6,12 +6,14 @@
 
 <script>
     import ModalService from '~/services/ModalSvc'
-    import BoxAndPinPopup from '~/components/organisms/mapEdit/BoxAndPinPopup'
-    import LayerSettingPopup from '~/components/organisms/mapEdit/LayerSettingPopup'
+    import BoxAndPinPopup from '~/components/organisms/Popup/BoxAndPinPopup'
+    import LayerSettingPopup from '~/components/organisms/Popup/LayerSettingPopup'
+    import ShareSettingPopup from '~/components/organisms/Popup/ShareSettingPopup'
     export default {
         components: {
             BoxAndPinPopup,
-            LayerSettingPopup
+            LayerSettingPopup,
+            ShareSettingPopup
         },
         props: {
             params: {
