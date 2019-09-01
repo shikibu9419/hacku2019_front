@@ -8,7 +8,7 @@
       )
     main.main
       SideMenu
-      MapList(lists="searchData")
+      MapList
 </template>
 <script>
 //components
