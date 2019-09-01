@@ -29,6 +29,8 @@ export default {
   computed: {
     points() {
       this.$store.state.ymap.now // To observe map scrolling
+      const prev = Object.assign({}, this.prev)
+      this.prev = this.$store.state.mapEdit.mousePosition
 
       // 選択してなかったらpointsをxy座標に変換して返す
       if (!this.selected)
@@ -38,13 +40,12 @@ export default {
         }).join(' ')
 
       // 掴んでないときはdiffをリセット
-      if (!this.$store.state.mapEdit.grabbing)
+      if (!this.grabbing)
         this.diff = {x: 0, y: 0}
 
       // diff = now - prev + diff
-      const dx = this.$store.state.mapEdit.mousePosition.x - this.prev.x + this.diff.x
-      const dy = this.$store.state.mapEdit.mousePosition.y - this.prev.y + this.diff.y
-      this.prev = this.$store.state.mapEdit.mousePosition
+      const dx = this.$store.state.mapEdit.mousePosition.x - prev.x + this.diff.x
+      const dy = this.$store.state.mapEdit.mousePosition.y - prev.y + this.diff.y
       this.diff = {x: dx, y: dy}
 
       self = this

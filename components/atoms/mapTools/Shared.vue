@@ -29,8 +29,8 @@ export default {
         this.$store.dispatch('mapEdit/selectTool', {toolId: this.id, multiple: true})
     },
     grab() {
-      if(this.selected)
-        this.$store.dispatch('mapEdit/toggleGrabbing')
+      this.select()
+      this.$store.dispatch('mapEdit/toggleGrabbing')
     }
   },
   computed: {

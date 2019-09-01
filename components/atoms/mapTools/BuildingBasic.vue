@@ -2,12 +2,10 @@
   g
     rect.map_edit__tools.box(
       v-bind="attributes"
-      @dblclick.stop="select"
       @mousedown.stop="grab"
       :class="{selected__tool_on: selected, grab__tool_on: grabbing}"
     )
     circle.map_edit__tools.box.resizepoint(
-      v-if="selected"
       v-bind="pointPosition"
       @mousedown.stop="grabPoint"
       @mouseup.stop="releasePoint"
@@ -37,7 +35,7 @@ export default {
       delete attr.lat
       delete attr.lng
 
-      if (!this.selected || !this.pointGrabbed) return attr
+      if (!this.pointGrabbed) return attr
 
       const mousePosition = this.$store.state.mapEdit.mousePosition
       this.width  = Math.max(mousePosition.x - attr.x, 0)
@@ -54,6 +52,7 @@ export default {
   },
   methods: {
     grabPoint() {
+      this.select()
       this.pointGrabbed = true
     },
     releasePoint() {
