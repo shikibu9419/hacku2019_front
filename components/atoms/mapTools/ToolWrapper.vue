@@ -7,6 +7,8 @@
       :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
   pin(v-else-if="attr.type === 'pin'"
       :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
+  box(v-else-if="attr.type === 'box'"
+      :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
 </template>
 
 <script>
@@ -18,6 +20,7 @@ export default {
     Building: () => import('./Building'),
     Direction: () => import('./Direction'),
     Pin: () => import('./Pin'),
+    Box: () => import('./Box'),
   },
   mixins: [Shared]
 }

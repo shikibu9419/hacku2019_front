@@ -6,7 +6,7 @@
     image.map_edit__toolbar__icon(:x="iconX(2)" @click="addDirection" xlink:href="~assets/svgs/way_tool.svg")
     image.map_edit__toolbar__icon(:x="iconX(3)" @mousedown.stop="addPin" xlink:href="~assets/svgs/pin.svg")
     image.map_edit__toolbar__icon(:x="iconX(4)" @mousedown.stop="addText" xlink:href="~assets/svgs/text_tool.svg")
-    image.map_edit__toolbar__icon(:x="iconX(5)" @mousedown.stop="addTextBox" xlink:href="~assets/svgs/text_box.svg")
+    image.map_edit__toolbar__icon(:x="iconX(5)" @mousedown.stop="addBox" xlink:href="~assets/svgs/text_box.svg")
 </template>
 
 <script>
@@ -39,8 +39,9 @@ export default {
     addText() {
       alert('Text is not implemented yet!')
     },
-    addTextBox() {
-      alert('TextBox is not implemented yet!')
+    addBox() {
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'box'})
+      this.$store.dispatch('mapEdit/toggleGrabbing')
     },
     getLatLng() {
       return this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition)

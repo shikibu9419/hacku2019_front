@@ -25,7 +25,7 @@
       v-bind="attributes"
       xlink:href="~/assets/svgs/pin.svg"
     )
-    pin-popup(v-if="selected && !grabbing" @popup="popup()" v-bind="popupAttr")
+    pin-popup(v-if="selected && !grabbing" @popup="popup()" v-bind="pinPopupAttr")
 </template>
 
 <script>
@@ -71,7 +71,7 @@ export default {
         return contentTypes.includes(type)
       }
     },
-    popupAttr() {
+    pinPopupAttr() {
       const position = this.attributes
 
       var content = {}
