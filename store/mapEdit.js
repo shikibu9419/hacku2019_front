@@ -1,6 +1,6 @@
+import socket from '~/plugins/socket.io.js'
 import selectToolModel from '~/models/selectToolModel.js'
-import map from '~/models/map.js'
-import layer from '~/models/layer.js'
+import mapModel from '~/models/map.js'
 
 const uuid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -12,8 +12,8 @@ const uuid = function() {
 
 const state = () => ({
   // APIと通信して逐次変更する変数
-  map: JSON.parse(JSON.stringify(map)),
-  layers: JSON.parse(JSON.stringify(map.layers)),
+  map: JSON.parse(JSON.stringify(mapModel)),
+  layers: [],
   activeLayer: {},
   selected: {},
   // 自己保持する変数
@@ -26,8 +26,11 @@ const state = () => ({
   commentbarOpen: false
 })
 
-// map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
 const mutations = {
+  init(state) {
+    // 実際はAPIからデータをとりにきてlayersにセット
+    state.layers = [{id: 1, name: 'layer1', color: 'red', visible: true, tools: {}}]
+  },
   toggle(state, key) {
     state[key] = !state[key]
   },
@@ -37,9 +40,13 @@ const mutations = {
   setMousePosition(state, prop) {
     state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
   },
-  addTool(state, {attr, toolId}) {
-    attr = Object.assign(selectToolModel(attr.type), attr, {id: toolId})
-    state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
+
+  addTool(state, {tool, layerId}) {
+    // ツールの初期化と代入を同時に行う高等テクニック
+    tool = Object.assign(selectToolModel(tool.type), tool)
+
+    let tools = state.layers.find(layer => layer.id === layerId).tools
+    state.layers.find(layer => layer.id === layerId).tools = {...tools, [tool.id]: tool}
   },
   updateTool(state, attr) {
     const tool = Object.assign(state.activeLayer.tools[attr.id], attr)
@@ -56,6 +63,7 @@ const mutations = {
     const comment = {comment: prop.commentText, user: getters.getUser}
     state.activeLayer.tools[prop.toolId].comments.push(comment)
   },
+
   plot(state, prop) {
     state.activeLayer.tools[prop.toolId].points.push(prop)
   },
@@ -74,6 +82,7 @@ const mutations = {
     var tool = state.activeLayer.tools[prop.toolId]
     state.activeLayer.tools[prop.toolId] = {...tool, width: prop.width, height: prop.height}
   },
+
   selectTool(state, {prop, getters}) {
     state.selected = {...state.selected, [prop.toolId]: getters.getUser.id}
   },
@@ -89,10 +98,7 @@ const mutations = {
       state.activeLayer.tools[toolId] = {...tool, lat: tool.lat + dlat, lng: tool.lng + dlng}
     }
   },
-  initLayers(state) {
-    // 実際はAPIからデータをとりにきてlayersにセット
-    state.layers = [{id: 1, name: 'layer1', color: 'red', visible: true, tools: {}}]
-  },
+
   addLayer(state, layer) {
     state.layers.push(layer)
   },
@@ -105,6 +111,11 @@ const mutations = {
   },
   updateTags(state, tags) {
     state.map = {...map, tags: tags}
+  },
+
+  updateMap(state, map) {
+    state.map = Object.assign(state.map, map)
+    console.log(state.map)
   }
 }
 
@@ -118,10 +129,15 @@ const actions = {
   setMousePosition(context, prop) {
     context.commit('setMousePosition', prop)
   },
-  addTool(context, attr) {
+  addTool(context, tool) {
+    const layerId = context.state.activeLayer.id
     const toolId = uuid()
-    context.commit('addTool', {attr, toolId})
+    tool = {...tool, id: toolId}
+
+    context.commit('addTool', {tool, layerId})
     context.dispatch('selectTool', {toolId: toolId})
+
+    socket.emit('tool/add', {tool: tool, layerId: layerId})
   },
   updateTool(context, attr) {
     context.commit('updateTool', attr)
@@ -155,8 +171,8 @@ const actions = {
   moveTools({commit, getters}, prop) {
     commit('moveTools', {prop, getters})
   },
-  initLayers(context) {
-    context.commit('initLayers')
+  init(context) {
+    context.commit('init')
   },
   addLayer(context, layer) {
     // 実際はlayer作成要求をして, レスポンスをlayerにセット
@@ -166,6 +182,8 @@ const actions = {
 
     context.commit('addLayer', layer)
     context.dispatch('selectLayer', id)
+
+    socket.emit('layer/add', layer)
   },
   selectLayer(context, layerId) {
     context.commit('selectLayer', layerId)
@@ -177,6 +195,48 @@ const actions = {
   },
   updateTags(context, tags) {
     context.commit('updateTags', tags)
+  },
+
+
+  mapSocket(context, prop.map) {
+    switch (prop.method) {
+      case 'add':
+        break;
+      case 'update':
+        context.commit('updateMap', prop.map)
+        break;
+      case 'delete':
+        break;
+    }
+  },
+  layerSocket(context, prop) {
+    switch (prop.method) {
+      case 'add':
+        context.commit('addLayer', prop.layer)
+        break;
+      case 'update':
+        break;
+      case 'delete':
+        break;
+    }
+  },
+  toolSocket(context, prop) {
+    const tool = prop.tool
+    const layerId = prop.layerId
+
+    switch (prop.method) {
+      case 'add':
+        context.commit('addTool', {tool, layerId})
+        break;
+      case 'update':
+        break;
+      case 'delete':
+        break;
+      case 'comments':
+        break;
+      case 'contents':
+        break;
+    }
   }
 }
 

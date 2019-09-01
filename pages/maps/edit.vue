@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import socket from '~/plugins/socket.io.js'
 import axios from 'axios'
 
 export default {
@@ -29,24 +30,16 @@ export default {
     Commentbar: () => import('~/components/organisms/mapEdit/Commentbar')
   },
   beforeCreate() {
-    this.$store.dispatch('mapEdit/initLayers')
+    this.$store.dispatch('mapEdit/init')
     this.$store.dispatch('mapEdit/selectLayer', 1)
   },
   mounted() {
     this.$store.dispatch('ymap/init')
+    this.setupSockets()
+
 //     this.setOffset()
 //     window.addEventListener('resize', () => this.setOffset())
 //     window.addEventListener('scroll', () => this.setOffset())
-  },
-  methods: {
-//     setOffset() {
-//       const rect = this.$refs.layer.getBoundingClientRect()
-//       const prop = {
-//         x: window.pageXOffset + rect.left,
-//         y: window.pageYOffset + rect.top
-//       }
-//       this.$store.dispatch('mapEdit/setOffset', prop)
-//     }
   },
   computed: {
     activeLayer () {
@@ -61,7 +54,46 @@ export default {
     backgroundFocused() {
       return this.$store.state.mapEdit.backgroundFocused
     }
-  }
+  },
+  methods: {
+//     setOffset() {
+//       const rect = this.$refs.layer.getBoundingClientRect()
+//       const prop = {
+//         x: window.pageXOffset + rect.left,
+//         y: window.pageYOffset + rect.top
+//       }
+//       this.$store.dispatch('mapEdit/setOffset', prop)
+//     }
+    setupSockets() {
+      socket.on('map/update', map => {
+        this.$store.dispatch('mapEdit/mapSocket', {map: map, method: 'update'})
+      })
+      socket.on('layer/add', layer => {
+        this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'add'})
+      })
+      socket.on('layer/update', layer => {
+        this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'update'})
+      })
+      socket.on('tool/delete', prop => {
+        this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'delete'})
+      })
+      socket.on('tool/add', prop => {
+        this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'add'})
+      })
+      socket.on('tool/update', prop => {
+        this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'update'})
+      })
+      socket.on('tool/delete', prop => {
+        this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'delete'})
+      })
+      socket.on('tool/update_contents', prop => {
+        this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'contents'})
+      })
+      socket.on('tool/update_comments', prop => {
+        this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'comments'})
+      })
+    }
+  },
 }
 </script>
 

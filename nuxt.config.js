@@ -45,7 +45,6 @@ export default {
     { src: '~/plugins/global-component' },
     { src: '~/plugins/vue-tagsinput.js'},
     { src: '~/plugins/socket.io' }
->>>>>>> Install socket.io-client
   ],
   /*
   ** Nuxt.js dev-modules
