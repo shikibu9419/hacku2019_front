@@ -1,6 +1,5 @@
 <template lang="pug">
   g.map_edit__toolbar(:transform="`translate(${this.center.x - 340 / 2},10)`")
-    rect.map_edit__toolbar__background
     image.map_edit__toolbar__icon(:x="iconX(0)" @click="addBuilding" xlink:href="~assets/svgs/pen_tool.svg")
     image.map_edit__toolbar__icon(:x="iconX(1)" @mousedown.stop="addBuildingBasic" xlink:href="~assets/svgs/figure_tool.svg")
     image.map_edit__toolbar__icon(:x="iconX(2)" @click="addDirection" xlink:href="~assets/svgs/way_tool.svg")
@@ -21,27 +20,31 @@ export default {
   },
   methods: {
     addBuilding() {
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building'})
       this.$store.dispatch('mapEdit/togglePlotting')
+      if (!this.$store.state.mapEdit.plotting) return
+
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building'})
     },
     addBuildingBasic() {
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building_basic'})
       this.$store.dispatch('mapEdit/toggleGrabbing')
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building_basic'})
     },
     addDirection() {
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'direction'})
       this.$store.dispatch('mapEdit/togglePlotting')
+      if (!this.$store.state.mapEdit.plotting) return
+
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'direction'})
     },
     addPin() {
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'pin'})
       this.$store.dispatch('mapEdit/toggleGrabbing')
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'pin'})
     },
     addText() {
       alert('Text is not implemented yet!')
     },
     addBox() {
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'box'})
       this.$store.dispatch('mapEdit/toggleGrabbing')
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'box'})
     },
     getLatLng() {
       return this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition)
@@ -61,27 +64,15 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 
-$toolbar-height: 50px;
-$toolbar-width:  340px;
-$icon-size:      30px;
-
 .map_edit__toolbar {
   width: min-content;
   height: min-content;
   cursor: pointer;
 
-  &__background {
-    fill: $back-gray;
-    height: $toolbar-height;
-    width: $toolbar-width;
-    rx: 10px;
-    ry: 10px;
-  }
-
   &__icon {
-    y: calc(calc(#{$toolbar-height} - #{$icon-size}) / 2);
-    width: $icon-size;
-    height: $icon-size;
+    y: calc(calc(#{$toolbar-height} - #{$toolbar-icon-size}) / 2);
+    width: $toolbar-icon-size;
+    height: $toolbar-icon-size;
   }
 }
 </style>
