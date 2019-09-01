@@ -31,15 +31,6 @@ const mutations = {
   toggle(state, key) {
     state[key] = !state[key]
   },
-  togglePlotting(state) {
-    state.plotting = !state.plotting
-  },
-  toggleGrabbing(state) {
-    state.grabbing = !state.grabbing
-  },
-  toggleMapGrabbing(state) {
-    state.mapGrabbing = !state.mapGrabbing
-  },
   setOffset(state, prop) {
     state.offset = {...state.offset, x: prop.x, y: prop.y}
   },
@@ -117,15 +108,6 @@ const mutations = {
 const actions = {
   toggle(context, key) {
     context.commit('toggle', key)
-  },
-  togglePlotting(context) {
-    context.commit('togglePlotting')
-  },
-  toggleGrabbing(context) {
-    context.commit('toggleGrabbing')
-  },
-  toggleMapGrabbing(context) {
-    context.commit('toggleMapGrabbing')
   },
   setOffset(context, prop) {
     context.commit('setOffset', prop)

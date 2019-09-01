@@ -30,7 +30,7 @@ export default {
     },
     grab() {
       this.select()
-      this.$store.dispatch('mapEdit/toggleGrabbing')
+      this.$store.dispatch('mapEdit/toggle', 'grabbing')
     }
   },
   computed: {

@@ -24,19 +24,6 @@ export default {
     commentbarClose() {
       return !this.$store.state.mapEdit.commentbarOpen
     }
-  },
-  methods: {
-    // あとでmodalとかに移行
-    addLayer() {
-      const prop = {
-        name: "layer",
-        color: "red",
-      }
-      this.$store.dispatch('mapEdit/addLayer', prop)
-    },
-    toggleBar() {
-      this.menu_close = (this.menu_close ? false:true)
-    }
   }
 }
 </script>
