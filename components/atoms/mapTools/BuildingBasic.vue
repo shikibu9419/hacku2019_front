@@ -46,10 +46,9 @@ export default {
       return {...attr, width: this.width, height: this.height}
     },
     pointPosition() {
-      const position = this.$store.getters['ymap/latLngToPixel'](this.attr)
       return {
-        cx: position.x + this.width,
-        cy: position.y + this.height
+        cx: this.attributes.x + this.width,
+        cy: this.attributes.y + this.height
       }
     },
   },

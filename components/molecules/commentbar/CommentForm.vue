@@ -8,9 +8,6 @@
 </template>
 
 <script>
-import pinModel from '~/models/tools/pin'
-import commentModel from '~/models/contents/comment'
-
 export default {
   data() {
     return {
@@ -35,29 +32,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
-
-.map_edit__commentbar__form {
-  position: relative;
-
-  &_textarea {
-  }
-
-  &_pin {
-    display: inline-block;
-    height: 25px;
-  }
-
-  &_pin_label {
-    display: inline;
-    font-size: 10px;
-  }
-
-  &_btn {
-    display: inline;
-    background: $dark-gray;
-    color: $white;
-    border: none;
-    border-radius: 4px;
-  }
-}
 </style>

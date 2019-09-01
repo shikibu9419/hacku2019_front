@@ -4,7 +4,7 @@
       button().search_button.button
         SearchBtn.search_button__icon
       input(v-model="query" :placeholder="placeholder" @change="update()").header_search__input
-    .filter_wrapper(v-if="type.split('/')[0]==='maplists'")
+    .filter_wrapper(v-if="type.split('/')[0] === 'maplists'")
       button(@click="toggleFilterMenu()").filter_button.button
         FilterBtn.filter_button__icon
         .filter_button__text Filter

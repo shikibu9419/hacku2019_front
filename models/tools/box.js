@@ -5,5 +5,7 @@ export default {
   y: 0,
   width: 100,
   height: 100,
-  contents: []
+  title: '',
+  contents: [],
+  comments: []
 }

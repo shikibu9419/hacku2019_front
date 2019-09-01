@@ -1,19 +1,58 @@
 <template lang="pug">
   g.map_edit_tools__pin(@dblclick.stop="select" @mousedown.stop="grab" :class="{selected__tool_on: selected, grab__tool_on: grabbing}")
     image.map_edit_tools__pin_icon(
+      v-if="typeIs('image')"
+      v-bind="attributes"
+      xlink:href="~/assets/svgs/image_pin.svg"
+    )
+    image.map_edit_tools__pin_icon(
+      v-else-if="typeIs('text')"
+      v-bind="attributes"
+      xlink:href="~/assets/svgs/text_pin.svg"
+    )
+    image.map_edit_tools__pin_icon(
+      v-else-if="typeIs('comment')"
       v-bind="attributes"
       xlink:href="~/assets/svgs/comment_pin.svg"
     )
-    pin-popup(:attr="popupAttr" v-if="selected")
+    image.map_edit_tools__pin_icon(
+      v-else-if="typeIs('link')"
+      v-bind="attributes"
+      xlink:href="~/assets/svgs/link_pin.svg"
+    )
+    image.map_edit_tools__pin_icon(
+      v-else
+      v-bind="attributes"
+      xlink:href="~/assets/svgs/pin.svg"
+    )
+    pin-popup(v-if="selected && !grabbing" @popup="popup()" v-bind="pinPopupAttr")
 </template>
 
 <script>
+import ModalService from '~/services/ModalSvc'
 import Shared from './Shared'
 
 export default {
   data() {
     return {
+      init: true
     }
+  },
+  watch: {
+    grabbing() {
+      if(!this.init) return
+      this.popup()
+      this.init = false
+    }
+  },
+  methods: {
+    popup() {
+      if(!this.selected || this.grabbing) return
+      this.modalSvc.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
+    }
+  },
+  created() {
+    this.modalSvc = new ModalService(this.$store)
   },
   computed: {
     attributes() {
@@ -25,18 +64,41 @@ export default {
 
       return attr
     },
-    popupAttr() {
-      return {
-        x: this.attributes.x - 50, y: this.attributes.y - 120
+    typeIs() {
+      return function(type) {
+        if (type === 'comment') return this.attr.comments.length
+        const contentTypes = this.attr.contents.map(content => content.type)
+        return contentTypes.includes(type)
       }
     },
-    pinIcon() {
-      const dir = '~/assets/svgs/'
-      return dir + 'comment_pin.svg'
+    pinPopupAttr() {
+      const position = this.attributes
+
+      var content = {}
+      content = this.attr.contents.filter(content => content.type === 'link')[0]  || content
+      content = this.attr.contents.filter(content => content.type === 'text')[0]  || content
+      content = this.attr.contents.filter(content => content.type === 'image')[0] || content
+
+      return {
+        id: this.id,
+        position: {
+          x: position.x - 50,
+          y: position.y - 120
+        },
+        title: this.attr.title,
+        content: content,
+        comments: this.attr.comments
+      }
     }
   },
   components: {
-    PinPopup: () => import('./PinPopup')
+    PinPopup: () => import('./PinPopup'),
+    // 使ってない
+    NormalPin: () => import('~/assets/svgs/pin.svg?inline'),
+    ImagePin: () => import('~/assets/svgs/image_pin.svg?inline'),
+    TextPin: () => import('~/assets/svgs/text_pin.svg?inline'),
+    CommentPin: () => import('~/assets/svgs/comment_pin.svg?inline'),
+    LinkPin: () => import('~/assets/svgs/link_pin.svg?inline'),
   },
   mixins: [Shared],
 }

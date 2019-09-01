@@ -4,9 +4,9 @@
     image.map_edit__toolbar__icon(:x="iconX(0)" @click="addBuilding" xlink:href="~assets/svgs/pen_tool.svg")
     image.map_edit__toolbar__icon(:x="iconX(1)" @mousedown.stop="addBuildingBasic" xlink:href="~assets/svgs/figure_tool.svg")
     image.map_edit__toolbar__icon(:x="iconX(2)" @click="addDirection" xlink:href="~assets/svgs/way_tool.svg")
-    image.map_edit__toolbar__icon(:x="iconX(3)" @click="addPin" xlink:href="~assets/svgs/pin.svg")
-    image.map_edit__toolbar__icon(:x="iconX(4)" @click="addText" xlink:href="~assets/svgs/text_tool.svg")
-    image.map_edit__toolbar__icon(:x="iconX(5)" @click="addTextBox" xlink:href="~assets/svgs/text_box.svg")
+    image.map_edit__toolbar__icon(:x="iconX(3)" @mousedown.stop="addPin" xlink:href="~assets/svgs/pin.svg")
+    image.map_edit__toolbar__icon(:x="iconX(4)" @mousedown.stop="addText" xlink:href="~assets/svgs/text_tool.svg")
+    image.map_edit__toolbar__icon(:x="iconX(5)" @mousedown.stop="addBox" xlink:href="~assets/svgs/text_box.svg")
 </template>
 
 <script>
@@ -33,13 +33,15 @@ export default {
       this.$store.dispatch('mapEdit/togglePlotting')
     },
     addPin() {
-      alert('Pin is not implemented yet!')
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'pin'})
+      this.$store.dispatch('mapEdit/toggleGrabbing')
     },
     addText() {
       alert('Text is not implemented yet!')
     },
-    addTextBox() {
-      alert('TextBox is not implemented yet!')
+    addBox() {
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'box'})
+      this.$store.dispatch('mapEdit/toggleGrabbing')
     },
     getLatLng() {
       return this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition)
