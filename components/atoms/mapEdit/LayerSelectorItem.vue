@@ -1,7 +1,7 @@
 <template lang="pug">
   .sidebar__layer_selector__item(:class="{active__layer_on: isActive}" @click="selectLayer")
-    layer-icon.sidebar__layer_selector__item_icon(src="~/assets/svgs/layer.svg" :style="{fill: color}")
-    p.sidebar__layer_selector__item_name {{ name }}
+    LayerIcon.sidebar__layer_selector__item_icon(src="~/assets/svgs/layer.svg" :style="{fill: color}")
+    .sidebar__layer_selector__item_name {{ name }}
 </template>
 
 <script>
@@ -32,29 +32,37 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
+@import "~/assets/styles/mixin.scss";
 
 .sidebar__layer_selector__item {
-  height: 40px;
+  height: 44px;
   // align elements vartically
   display: -webkit-flex;
   display: flex;
   -webkit-align-items: center;
   align-items: center;
   overflow: hidden;
+  background-color: $white;
+  padding: 2px 4px;
 
   &.active__layer_on {
     border: 2px solid $gray;
   }
 
   &_icon {
-    display: inline-block;
+    display: block;
     height: 30px;
   }
 
   &_name {
-    display: inline;
+    display: block;
+    @include noto-font(1.6rem);
   }
+}
+
+.layer_cls-1 {
+  
 }
 </style>
