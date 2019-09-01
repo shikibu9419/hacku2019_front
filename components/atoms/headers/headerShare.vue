@@ -2,7 +2,7 @@
   .header_cir_button__main
     button.header_cir_button(
         @click="pushShare()"
-        :class="{'header_cir_button--on':mapStockdOn}"
+        :class="{'header_cir_button--on':mapShareOn}"
       )
       .header_cir_button__icon
         shareBtn.header_cir_button__icon__svg.header_cir_button__icon__svg--share
