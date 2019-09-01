@@ -107,6 +107,17 @@ const mutations = {
   },
   focusBackground(state) {
     state.backgroundFocused = true
+  },
+  addTag(state, tag) {
+    state.map.tags.push(tag)
+  },
+  removeTag(state, tag) {
+    // keyがあればkeyで削除
+    if (tag.key) {
+      state.map = {...map, tags: state.map.tags.filter( (elem) => elem.key !== tag.key)}
+    } else {
+      state.map = {...map, tags: state.map.tags.filter( (elem) => elem.value !== tag.value)}
+    }
   }
 }
 
@@ -182,6 +193,12 @@ const actions = {
   focusBackground(context) {
     context.commit('focusBackground')
     context.dispatch('clearSelection')
+  },
+  addTag(context, tag) {
+    context.commit('addTag', tag)
+  },
+  removeTag(context, tag) {
+    context.commit('removeTag', tag)
   }
 }
 
@@ -215,6 +232,9 @@ const getters = {
   comments(state, _, rootState) {
     const dummyComment = {...rootState.ymap.center, id: 'hoge', title: 'kitasenju', comment: 'ここやで', user: getters.getUser}
     return [dummyComment]
+  },
+  getTags(state) {
+    return state.map.tags
   }
 }
 

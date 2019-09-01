@@ -1,23 +1,39 @@
 <template lang="pug">
   .sidebar__map_tags
     img.sidebar__title_icon(src="~assets/svgs/tag.svg")
-    p.sidebar__title {{ existingTags.length }} Tags
+    p.sidebar__title {{ selectedTags.length }} Tags
     .sidebar__map_tags__tags
-      vue-tags-input(:existing-tags="existingTags")
+        tags-input(
+            element-id="tags"
+            v-model="selectedTags"
+            :existing-tags="existingTags"
+            :typeahead="true"
+            @tag-added="onTagAdded"
+            @tag-removed="onTagRemoved"
+        )
 </template>
 
 <script>
-import ModalService from '~/services/ModalSvc'
-import layer from '~/models/layer'
-import VueTagsInput from '~/components/atoms/VueTagsInput'
 
 export default {
-    components: {VueTagsInput},
+    data() {
+        return {
+            selectedTags: this.$store.getters['mapEdit/getTags']
+        }
+    },
+    methods: {
+        onTagAdded(tag) {
+            this.$store.dispatch('mapEdit/addTag', {key: tag.key, value: tag.value})
+        },
+        onTagRemoved(tag) {
+            this.$store.dispatch('mapEdit/removeTag', {key: tag.key, value: tag.value})
+        }
+    },
     computed: {
-    existingTags() {
-      return [{key: 1, value: 'tag1'}, {key: 2, value: 'tag2'}, {key: 3, value: 'tag3'}]
-    }
-  },
+        existingTags() {
+            return [{key: 1, value: 'tag1'}, {key: 2, value: 'tag2'}, {key: 3, value: 'tag3'}]
+        },
+    },
 }
 </script>
 
