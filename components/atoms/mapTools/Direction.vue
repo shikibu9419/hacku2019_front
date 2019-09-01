@@ -1,7 +1,7 @@
 <template lang="pug">
   g
     path.map_edit__tools.direction(:d="direction" v-if="attr.points.length" :class="{active__layer_on: layerActive, grab__tool_on: grabbing}"
-        @mousedown.stop="grab" @mouseup="replotAll" @dblclick.stop="select")
+        @mousedown.stop="grab" @mouseup="replotAll")
     g(v-if="selected && !grabbing")
       plot-point(v-for="(point, index) in attr.points" :key="index" :index="index"
         :id="id" :attr="point" :selected="selected" :layer-active="layerActive")
@@ -29,6 +29,7 @@ export default {
   computed: {
     direction() {
       this.$store.state.ymap.now // To observe map scrolling
+
       const prev = Object.assign({}, this.prev)
       this.prev = this.$store.state.mapEdit.mousePosition
 

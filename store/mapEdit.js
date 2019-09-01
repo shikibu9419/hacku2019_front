@@ -1,4 +1,4 @@
-import toolList from '~/models/toolList.js'
+import selectToolModel from '~/models/selectToolModel.js'
 import map from '~/models/map.js'
 import layer from '~/models/layer.js'
 
@@ -43,7 +43,7 @@ const mutations = {
     state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
   },
   addTool(state, {attr, toolId}) {
-    attr = Object.assign(toolList[attr.type], attr, {id: toolId})
+    attr = Object.assign(selectToolModel(attr.type), attr, {id: toolId})
     state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
   },
   updateTool(state, attr) {
@@ -128,6 +128,7 @@ const actions = {
   },
   addTool(context, attr) {
     const toolId = uuid()
+    console.log(toolId, attr)
     context.commit('addTool', {attr, toolId})
     context.dispatch('selectTool', {toolId: toolId})
   },
