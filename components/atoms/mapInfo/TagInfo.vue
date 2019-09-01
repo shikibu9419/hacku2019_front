@@ -17,7 +17,7 @@
     components:{
       tagIcon: () => import('~/assets/svgs/tag.svg?inline'),
     },
-    props: ["tags"]
+    props: ["tags",""]
   }
 </script>
 <style lang="scss" scoped>

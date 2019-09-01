@@ -11,6 +11,7 @@
         span.info_data__right--strong {{editors.length}}
         span  Editors
       .user_info__editors_list(
+        v-if="editors!==null"
         :style="{width: `${ 22 + (10 * editors.length)}px`}"
       )
         .user_info__editors_icon(
