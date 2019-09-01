@@ -42,7 +42,7 @@ export default {
   },
   components: {
     LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem'),
-    UserInfo: () => import('~/components/atoms/UserInfo')
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
   },
   created() {
     this.modalSvc = new ModalService(this.$store)

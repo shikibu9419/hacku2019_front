@@ -12,7 +12,7 @@
 <script>
 export default {
   components: {
-    UserInfo: () => import('~/components/atoms/UserInfo')
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
   },
   props: ['id', 'message', 'user', 'lat', 'lng'],
   data() {

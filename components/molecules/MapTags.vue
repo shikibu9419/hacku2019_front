@@ -3,7 +3,8 @@
     img.sidebar__title_icon(src="~assets/svgs/tag.svg")
     p.sidebar__title {{ tags.length }} Tags
     .sidebar__map_tags__tags
-      tag-item(v-for="tag in tags" v-bind="tag" :key="`map_edit_tags_${tag.id}`")
+      .sidebar__map_tags__tag(v-for="tag in tags" v-bind="tag" :key="`map_edit_tags_${tag.id}`")
+        .sidebar__map_tags__tag__text {{tag}}
 </template>
 
 <script>
@@ -17,9 +18,6 @@ export default {
     }
   },
   methods: {
-  },
-  components: {
-    TagItem: () => import('~/components/atoms/TagItem')
   },
 }
 </script>

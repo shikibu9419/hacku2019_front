@@ -23,11 +23,13 @@ export default {
   },
   data() {
     return {
+      //VueXから取得する
+      //Likeはlikeしたuserの配列でもいいかも。その辺は任せた！
       mapCards: {
         map_id: 'maps',
         title: '俺的ラーメン屋まとめ',
-        author: ['tanakataro','tanakajiro','tanakasaburo','tanakasiro'],
-        editors: null,
+        author: 'tanakataro',
+        editors: ['tanakajiro','tanakasaburo','tanakasiro'],
         img_url: 'https://picsum.photos/400/300',
         layers: [{id: 1, name: '豚骨'}, {id: 2, name: '塩'}, {id: 3, name: '醤油'}, {id: 4, name: '味噌'}],
         tags: [{id: 1, name: 'ラーメン'}, {id: 2, name: '大阪'}, {id: 3, name: '激戦区'}],

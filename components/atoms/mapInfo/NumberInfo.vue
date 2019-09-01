@@ -1,13 +1,13 @@
 <template lang="pug">
   .number_info
     .number_info__one
-      commentIcon.number_info__one__svg
+      commentIcon.info_data__icon
       .number_info__one__count {{ comments.length }}
     .number_info__one
-      likeIcon.number_info__one__svg
+      likeIcon.info_data__icon
       .number_info__one__count {{ like }}
     .number_info__one
-      StockIcon.number_info__one__svg
+      StockIcon.info_data__icon
       .number_info__one__count {{ stock }}
 </template>
 
@@ -19,10 +19,7 @@
       likeIcon: () => import('~/assets/svgs/like.svg?inline'),
       StockIcon: () => import('~/assets/svgs/stock.svg?inline'),
     },
-    props: ["comments","like","stock"],
-    mounted(){
-      console.log(this.comments)
-    }
+    props: ["comments","like","stock"]
   }
 </script>
 

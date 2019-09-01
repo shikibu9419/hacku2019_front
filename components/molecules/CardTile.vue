@@ -5,16 +5,17 @@
       .map_title {{ mapCard.title }}
       .maplist__card__blocks
         UserInfo(
-          :username="mapCard.author"
-          :mulch_user="mapCard.editors"
+          :author="mapCard.author"
+          :editors="mapCard.editors"
         )
       .maplist__card__blocks
-      .maplist__card__layers
-        font-awesome-icon.maplist__card__icon(icon="layer-group")
-        tag-item(v-for="layer in mapCard.layers" v-bind="layer" :key="`maplist_layer_${layer.id}`")
-      .maplist__card__tags
-        font-awesome-icon.maplist__card__icon(icon="tag")
-        tag-item(v-for="tag in mapCard.tags" v-bind="tag" :key="`maplist_tag_${tag.id}`")
+        tagInfo(
+          :tags="mapCard.tags"
+        )
+      .maplist__card__blocks
+        LayerInfo(
+          :layers="mapCard.layers"
+        )
       .maplist__card__blocks
         NumberInfo(
           :comments="mapCard.comments"
@@ -29,9 +30,10 @@ export default {
   name: "CardTile",
   components: {
     //components
-    UserInfo: () => import('~/components/atoms/UserInfo'),
-    TagItem: () => import('~/components/atoms/TagItem'),
-    NumberInfo: () => import('~/components/atoms/CardTile/NumberInfo')
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo'),
+    TagInfo: () => import('~/components/atoms/mapInfo/TagInfo'),
+    LayerInfo: () => import('~/components/atoms/mapInfo/LayerInfo'),
+    NumberInfo: () => import('~/components/atoms/mapInfo/NumberInfo')
   },
   props: ["mapCard"]
 }
@@ -62,7 +64,7 @@ $card-height : $card-width / 3;
   object-fit: cover;
 }
 .maplist__card__content {
-  padding: 4px 18px 12px;
+  padding: 4px 18px 18px;
 }
 .map_title {
   @include noto-font(1.8rem,$text-black);
