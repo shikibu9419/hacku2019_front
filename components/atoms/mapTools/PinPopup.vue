@@ -1,22 +1,21 @@
 <template lang="pug">
   foreignObject.map_edit_tools__pin_popup(v-bind="position" @mousedown.stop="popup")
-    content-box(:title="title" :content="content")
+    comment-box(v-if="comments.length && !Object.keys(content).length" :title="title" :comment="comments[0].comment")
+    content-box(v-else :title="title" :content="content")
 </template>
 
 <script>
 export default {
   name: "PinPopup.vue",
-  props: ['position', 'title', 'content'],
+  props: ['position', 'title', 'content', 'comments'],
   methods: {
     popup() {
       this.$emit('popup')
     }
   },
   components: {
-    ContentBox: () => import('~/components/atoms/mapEdit/ContentBox')
-  },
-  mounted() {
-    console.log('hoge', this.title, this.content)
+    ContentBox: () => import('~/components/atoms/mapEdit/ContentBox'),
+    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox')
   }
 }
 </script>

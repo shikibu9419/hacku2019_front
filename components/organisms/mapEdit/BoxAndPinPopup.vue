@@ -53,7 +53,7 @@
                     .box-and-pin-popup__info-icons
                         img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/text_box.svg")
                         .box-and-pin-popup__info-type Comments
-                    AutosizeTextarea.box-and-pin-popup__info-textarea(v-bind:text.sync="comment" v-bind:maxSize="6" v-bind:defaultSize="3")
+                    CommentForm(:id="params.attr.id")
                     .box-and-pin-popup__commented-button TODO: comment list
                     .box-and-pin-popup__comments
                         .box-and-pin-popup__comment(v-for="(comment, i) in tool.comments" :key="`comment_${i}`")
@@ -62,6 +62,8 @@
 <script>
 import AutosizeTextarea from '~/components/atoms/AutosizeTextarea'
 import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
+import CommentForm from '~/components/atoms/mapEdit/CommentForm'
+
 export default {
   name: "BoxAndPinPopup",
   components: {
@@ -80,8 +82,7 @@ export default {
         ],
         comments: [
         ]
-      },
-      comment: ''
+      }
     }
   },
   mounted() {

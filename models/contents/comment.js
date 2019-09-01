@@ -1,5 +1,5 @@
 export default {
   user: {},
-  message: '',
+  comment: '',
   replies: []
 }

@@ -14,7 +14,7 @@ export default {
     }
   },
   components: {
-    CommentForm: () => import('~/components/molecules/commentbar/CommentForm'),
+    CommentForm: () => import('~/components/atoms/mapEdit/CommentForm'),
     CommentList: () => import('~/components/molecules/commentbar/CommentList'),
   },
   computed: {

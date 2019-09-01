@@ -1,20 +1,17 @@
 <template lang="pug">
-  .commentbar_item(@click.stop="focusComment()")
-    .commentbar_item__label(:class="{comment_focus_on: focused}") 中央北口
-    .commentbar_item__content
-      UserInfo(
-        :author="'username'"
-        :editors="null"
-      )
-      p.commentbar_item__comment {{ message }}
+  .comment_box(@click.stop="focusComment()")
+    .comment_box__label(:class="{comment_focus_on: focused}") 中央北口
+    .comment_box__content
+      user-info
+      p.comment_box__comment {{ comment }}
 </template>
 
 <script>
 export default {
   components: {
-    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
+    UserInfo: () => import('~/components/atoms/mapEdit/UserInfo')
   },
-  props: ['id', 'message', 'user', 'lat', 'lng'],
+  props: ['id', 'comment', 'user', 'lat', 'lng', 'onBox'],
   data() {
     return {
       focused: false
@@ -22,6 +19,7 @@ export default {
   },
   methods: {
     focusComment() {
+      if (!this.onBox) return
       this.focused = true
       this.$store.dispatch('ymap/panTo', {lat: this.lat, lng: this.lng})
     }
@@ -32,7 +30,7 @@ export default {
 <style lang="scss">
 @import "~/assets/styles/variables.scss";
 
-.commentbar_item {
+.comment_box {
 
   &__label {
     background: $light-gray;

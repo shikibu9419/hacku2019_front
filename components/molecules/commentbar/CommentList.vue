@@ -2,11 +2,12 @@
   .commentbar__comment_list
     img.commentbar__comment_list__label_icon(src="~/assets/svgs/comment_mini.svg")
     p.commentbar__comment_list__label {{ comments.length }} Comments
-    comment-list-item(v-for="comment in comments" :key="`comment_list_${comment}`" v-bind="comment")
+    comment-box(v-for="comment in comments" :key="`comment_list_${comment}`" v-bind="comment" :on-box="onBox")
 </template>
 
 <script>
 export default {
+  props: ['onBox'],
   computed: {
     comments () {
       return this.$store.getters['mapEdit/comments']
@@ -26,7 +27,7 @@ export default {
     }
   },
   components: {
-    CommentListItem: () => import('~/components/atoms/commentbar/CommentListItem')
+    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox')
   },
 }
 </script>

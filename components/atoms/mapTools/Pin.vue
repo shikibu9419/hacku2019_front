@@ -66,6 +66,7 @@ export default {
     },
     typeIs() {
       return function(type) {
+        if (type === 'comment') return this.attr.comments.length
         const contentTypes = this.attr.contents.map(content => content.type)
         return contentTypes.includes(type)
       }
@@ -78,15 +79,15 @@ export default {
       content = this.attr.contents.filter(content => content.type === 'text')[0]  || content
       content = this.attr.contents.filter(content => content.type === 'image')[0] || content
 
-      console.log(this.attr)
-
       return {
+        id: this.id,
         position: {
           x: position.x - 50,
           y: position.y - 120
         },
         title: this.attr.title,
-        content: content
+        content: content,
+        comments: this.attr.comments
       }
     }
   },
