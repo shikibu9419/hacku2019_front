@@ -11,7 +11,7 @@ export default {
   components: {
     UserInfo: () => import('~/components/atoms/mapEdit/UserInfo')
   },
-  props: ['title', 'comment', 'user', 'lat', 'lng', 'onBox'],
+  props: ['toolId', 'title', 'comment', 'user', 'lat', 'lng', 'onBox'],
   data() {
     return {
       focused: false
@@ -22,6 +22,7 @@ export default {
       if (this.onBox) return
       this.focused = true
       this.$store.dispatch('ymap/panTo', {lat: this.lat, lng: this.lng})
+      this.$store.dispatch('mapEdit/selectTool', {toolId: this.toolId})
     }
   }
 }

@@ -39,6 +39,9 @@ export default {
     },
     grabbing() {
       return this.$store.state.mapEdit.grabbing
+    },
+    selected() {
+      return Object.keys(this.$store.getters['mapEdit/selecting']).includes(this.id)
     }
   },
 }

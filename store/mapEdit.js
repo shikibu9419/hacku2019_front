@@ -128,7 +128,6 @@ const actions = {
   },
   addTool(context, attr) {
     const toolId = uuid()
-    console.log(toolId, attr)
     context.commit('addTool', {attr, toolId})
     context.dispatch('selectTool', {toolId: toolId})
   },
@@ -214,8 +213,17 @@ const getters = {
     }
   },
   comments(state, _, rootState) {
-    const dummyComment = {...rootState.ymap.center, id: 'hoge', title: 'kitasenju', comment: 'ここやで', user: getters.getUser}
-    return [dummyComment]
+    const toolsWithComments = state.layers.map(layer => {
+      return Object.values(layer.tools).filter(tool => ['pin', 'box'].includes(tool.type))
+    }).flat(5).filter(tool => tool.comments.length)
+
+    const comments = toolsWithComments.map(tool => {
+      return tool.comments.map(comment => {
+        return {...tool, ...comment, toolId: tool.id}
+      })
+    }).flat()
+
+    return comments
   }
 }
 
