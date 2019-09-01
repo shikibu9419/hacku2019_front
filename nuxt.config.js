@@ -39,11 +39,13 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/vue-jsonp.js' },
+//     { src: '~/plugins/vue-jsonp.js' },
     { src: '~/plugins/font-awesome', ssr: false },
     { src: '~/plugins/axios.js', ssr: false },
     { src: '~/plugins/global-component' },
-    { src: '~/plugins/vue-tagsinput.js'}
+    { src: '~/plugins/vue-tagsinput.js'},
+    { src: '~/plugins/socket.io' }
+>>>>>>> Install socket.io-client
   ],
   /*
   ** Nuxt.js dev-modules
@@ -66,7 +68,7 @@ export default {
   /*
   ** Nuxt.js vendor
   */
-//   vendor: ['vue2-google-maps'],
+  vendor: ['socket.io-client'],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

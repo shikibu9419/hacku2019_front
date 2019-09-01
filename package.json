@@ -28,6 +28,7 @@
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
+    "socket.io-client": "^2.2.0",
     "vue-jest": "^4.0.0-0",
     "vue-jsonp": "^0.1.8",
     "vue-toasted": "^1.1.27",
