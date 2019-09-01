@@ -148,7 +148,7 @@ button {
   width: min-content;
   height: auto;
   padding: 0 10px;
-  z-index: 0;
+  z-index: 1;
 }
 .filter_button {
   background: transparent;
@@ -176,9 +176,11 @@ button {
   transform: translateY(-20px);
   opacity: 0;
   transition: .3s $bezier-ease-out;
+  pointer-events: none;
   &--open {
     transform: translateY(30px);
-    opacity: 1;
+    opacity: 2;
+    pointer-events: auto;
   }
 }
 .filter_menu__input_text {
