@@ -25,7 +25,7 @@
       v-bind="attributes"
       xlink:href="~/assets/svgs/pin.svg"
     )
-    pin-popup(:position="pinPopupPosition" contents="attr.contents" v-if="selected && !grabbing" @popup="popup()")
+    pin-popup(v-if="selected && !grabbing" @popup="popup()" v-bind="popupAttr")
 </template>
 
 <script>
@@ -64,23 +64,35 @@ export default {
 
       return attr
     },
-    pinPopupPosition() {
-      const position = this.$store.getters['ymap/latLngToPixel'](this.attr)
-      return {
-        x: position.x - 50,
-        y: position.y - 120,
-      }
-    },
     typeIs() {
       return function(type) {
         const contentTypes = this.attr.contents.map(content => content.type)
         return contentTypes.includes(type)
       }
+    },
+    popupAttr() {
+      const position = this.attributes
+
+      var content = {}
+      content = this.attr.contents.filter(content => content.type === 'link')[0]  || content
+      content = this.attr.contents.filter(content => content.type === 'text')[0]  || content
+      content = this.attr.contents.filter(content => content.type === 'image')[0] || content
+
+      console.log(this.attr)
+
+      return {
+        position: {
+          x: position.x - 50,
+          y: position.y - 120
+        },
+        title: this.attr.title,
+        content: content
+      }
     }
   },
   components: {
-    // 使ってない
     PinPopup: () => import('./PinPopup'),
+    // 使ってない
     NormalPin: () => import('~/assets/svgs/pin.svg?inline'),
     ImagePin: () => import('~/assets/svgs/image_pin.svg?inline'),
     TextPin: () => import('~/assets/svgs/text_pin.svg?inline'),

@@ -1,17 +1,22 @@
 <template lang="pug">
   foreignObject.map_edit_tools__pin_popup(v-bind="position" @mousedown.stop="popup")
+    content-box(:title="title" :content="content")
 </template>
 
 <script>
 export default {
   name: "PinPopup.vue",
-  props: ['position'],
+  props: ['position', 'title', 'content'],
   methods: {
     popup() {
       this.$emit('popup')
     }
   },
-  computed: {
+  components: {
+    ContentBox: () => import('~/components/atoms/mapEdit/ContentBox')
+  },
+  mounted() {
+    console.log('hoge', this.title, this.content)
   }
 }
 </script>
@@ -22,6 +27,5 @@ export default {
 .map_edit_tools__pin_popup {
   height: 100px;
   width: 100px;
-  background-color: black;
 }
 </style>

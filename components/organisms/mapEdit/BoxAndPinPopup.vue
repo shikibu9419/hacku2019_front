@@ -86,7 +86,6 @@ export default {
   },
   mounted() {
     const attr = JSON.parse(JSON.stringify(this.params.attr))
-    console.log(attr)
     this.tool = {...this.tool, title: attr.title, contents: attr.contents, comments: attr.comments}
   },
   methods: {
