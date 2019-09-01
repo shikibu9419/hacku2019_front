@@ -20,15 +20,18 @@ export default {
   },
   methods: {
     addComment() {
+      const commentText = this.comment
+      this.comment = ""
+
       if (this.id) {
-        this.$store.dispatch('mapEdit/addComment', {toolId: this.id, commentText: this.comment})
+        this.$store.dispatch('mapEdit/addComment', {toolId: this.id, commentText: commentText})
         return
       }
 
       let pin = JSON.parse(JSON.stringify(pinModel))
       let comment = JSON.parse(JSON.stringify(commentModel))
 
-      comment.comment = this.comment
+      comment.comment = commentText
       comment.user = this.$store.getters['user/getUser']
       pin.comments.push(comment)
       pin = {...pin, ...this.$store.state.ymap.now}

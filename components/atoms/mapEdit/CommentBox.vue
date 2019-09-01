@@ -20,7 +20,7 @@ export default {
   methods: {
     focusComment() {
       if (this.onBox) return
-      this.focused = true
+//       this.focused = true
       this.$store.dispatch('ymap/panTo', {lat: this.lat, lng: this.lng})
       this.$store.dispatch('mapEdit/selectTool', {toolId: this.toolId})
     }
