@@ -3,8 +3,8 @@
     h2.sidebar_edit__map_info__mapname hoge
     .sidebar_edit__map_info__user
       UserInfo(
-        :username="'username'"
-        :mulch_user="null"
+        :author="'username'"
+        :editors="null"
       )
     .sidebar_edit__map_info__others
       .sidebar_edit__map_info__others_wrapper
