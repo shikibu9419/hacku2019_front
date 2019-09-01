@@ -5,7 +5,7 @@
       .sidebar__edit_category__text
         span.sidebar__edit_category__text--strong {{comments.length}}
         span  Comments
-    comment-box(v-for="comment in comments" :key="`comment_list_${comment}`" v-bind="comment" :on-box="toolId")
+    comment-box(v-for="comment in comments" :key="`comment_list_${comment.comment}`" v-bind="comment" :on-box="toolId")
 </template>
 
 <script>

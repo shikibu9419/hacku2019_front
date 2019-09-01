@@ -24,6 +24,9 @@ export default {
   watch: {
     localText(value) {
       this.$emit('update:text', value);
+    },
+    text(value) {
+      this.localText = this.text
     }
   }
 }

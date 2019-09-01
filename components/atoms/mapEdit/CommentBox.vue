@@ -14,11 +14,12 @@ export default {
   components: {
     UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
   },
-  props: ['title', 'comment', 'user', 'lat', 'lng', 'onBox'],
+  props: ['toolId', 'title', 'comment', 'user', 'lat', 'lng', 'onBox'],
   methods: {
     focusComment() {
       if (this.onBox) return
       this.$store.dispatch('ymap/panTo', {lat: this.lat, lng: this.lng})
+      this.$store.dispatch('mapEdit/selectTool', {toolId: this.toolId})
     }
   }
 }
