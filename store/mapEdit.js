@@ -48,9 +48,10 @@ const mutations = {
     let tools = state.layers.find(layer => layer.id === layerId).tools
     state.layers.find(layer => layer.id === layerId).tools = {...tools, [tool.id]: tool}
   },
-  updateTool(state, attr) {
-    const tool = Object.assign(state.activeLayer.tools[attr.id], attr)
-    state.activeLayer.tools = {...state.activeLayer.tools, [attr.id]: tool}
+  updateTool(state, {attr, layerId}) {
+    const layerTools = state.layers.find(layer => layer.id === layerId).tools
+    const tool = Object.assign(layerTools[attr.id], attr)
+    state.activeLayer.tools = {...layerTools, [attr.id]: tool}
   },
   deleteTool(state, toolId) {
     let obj = {...state.activeLayer.tools}
@@ -83,8 +84,9 @@ const mutations = {
     state.activeLayer.tools[prop.toolId] = {...tool, width: prop.width, height: prop.height}
   },
 
-  selectTool(state, {prop, getters}) {
-    state.selected = {...state.selected, [prop.toolId]: getters.getUser.id}
+  selectTool(state, {toolId, userId}) {
+    if (state.selected[toolId]) return
+    state.selected = {...state.selected, [toolId]: userId}
   },
   clearSelection(state, othersSelecting) {
     state.selected = othersSelecting
@@ -137,10 +139,11 @@ const actions = {
     context.commit('addTool', {tool, layerId})
     context.dispatch('selectTool', {toolId: toolId})
 
-    socket.emit('tool/add', {tool: tool, layerId: layerId})
+//     socket.emit('tool/add', {tool: tool, layerId: layerId})
   },
   updateTool(context, attr) {
-    context.commit('updateTool', attr)
+    const layerId = context.state.activeLayer.id
+    context.commit('updateTool', {attr, layerId})
   },
   deleteTool(context, toolId) {
     context.commit('deleteTool', toolId)
@@ -160,13 +163,15 @@ const actions = {
   resize(context, prop) {
     context.commit('resize', prop)
   },
-  selectTool({commit, getters}, prop) {
-    if(!prop.multiple)
-      commit('clearSelection')
-    commit('selectTool', {prop, getters})
+  selectTool(context, prop) {
+    const userId = context.getters.getUser.id
+    const toolId = prop.toolId
+//     if(!prop.multiple)
+//       context.commit('clearSelection')
+    context.commit('selectTool', {toolId, userId})
   },
-  clearSelection(context) {
-    context.commit('clearSelection', context.getters.othersSelecting)
+  clearSelection(context, prop) {
+    context.commit('clearSelection', context.getters.othersSelecting())
   },
   moveTools({commit, getters}, prop) {
     commit('moveTools', {prop, getters})
@@ -183,22 +188,22 @@ const actions = {
     context.commit('addLayer', layer)
     context.dispatch('selectLayer', id)
 
-    socket.emit('layer/add', layer)
+//     socket.emit('layer/add', layer)
   },
   selectLayer(context, layerId) {
     context.commit('selectLayer', layerId)
-    context.dispatch('clearSelection')
+    context.dispatch('clearSelection', context.getters.othersSelecting())
   },
   focusBackground(context) {
     context.commit('focusBackground')
-    context.dispatch('clearSelection')
+    context.dispatch('clearSelection', context.getters.othersSelecting())
   },
   updateTags(context, tags) {
     context.commit('updateTags', tags)
   },
 
 
-  mapSocket(context, prop.map) {
+  mapSocket(context, prop) {
     switch (prop.method) {
       case 'add':
         break;
@@ -229,12 +234,26 @@ const actions = {
         context.commit('addTool', {tool, layerId})
         break;
       case 'update':
+        context.commit('updateTool', {tool, layerId})
         break;
       case 'delete':
         break;
       case 'comments':
         break;
       case 'contents':
+        break;
+    }
+  },
+  selectSocket(context, prop) {
+    const userId = prop.userId
+    const toolId = prop.toolId
+
+    switch (prop.method) {
+      case 'add':
+        context.dispatch('selectTool', {toolId, userId})
+        break;
+      case 'clear':
+        context.dispatch('clearSelection', context.getters.othersSelecting(userId))
         break;
     }
   }
@@ -248,10 +267,14 @@ const getters = {
       .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
   },
   othersSelecting(state, getters, rootState, rootGetters) {
-    if (!Object.keys(state.selected).length) return state.selected
-    return Object.entries(state.selected)
-      .filter(item => item[1] !== getters.getUser.id)         // 本人が選択していないものだけ抽出
-      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
+    return (userId) => {
+      if (!Object.keys(state.selected).length) return state.selected
+      if (!userId) userId = getters.getUser.id
+
+      return Object.entries(state.selected)
+        .filter(item => item[1] !== userId)         // 本人が選択していないものだけ抽出
+        .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
+    }
   },
   getUser(state, _, rootState, rootGetters) {
     return rootGetters['user/getUser']

@@ -74,7 +74,7 @@ export default {
       socket.on('layer/update', layer => {
         this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'update'})
       })
-      socket.on('tool/delete', prop => {
+      socket.on('layer/delete', layer => {
         this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'delete'})
       })
       socket.on('tool/add', prop => {
@@ -91,6 +91,12 @@ export default {
       })
       socket.on('tool/update_comments', prop => {
         this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'comments'})
+      })
+      socket.on('select/add', prop => {
+        this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'add'})
+      })
+      socket.on('select/clear', prop => {
+        this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'clear'})
       })
     }
   },
