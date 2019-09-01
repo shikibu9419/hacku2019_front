@@ -1,7 +1,7 @@
 <template lang="pug">
   .header
     .header_logo
-      nuxt-link(to="/maplists/search").header_logo__a
+      nuxt-link(to="/").header_logo__a
         img(src="~/assets/svgs/logo_mini.svg").header_logo__img
     .return_btn(v-if="returnLink!==null")
       nuxt-link(:to="returnLink")
@@ -11,10 +11,10 @@
         :placeholder="placeholder"
         :type="type"
       )
-    .header_buttons(v-if="buttons")
-      MapHeaderButtons()
-    .logout
+    .header_buttons
+      MapHeaderButtons(v-if="buttons")
       HeaderLogout()
+      
 </template>
 <script>
 export default {
@@ -76,9 +76,8 @@ export default {
   margin: auto;
   width: auto;
   height: min-content;
-}
-.logout {
-  display: block;
-  margin: 0 0 0 auto;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 </style>

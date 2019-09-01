@@ -1,6 +1,6 @@
 <template lang="pug">
   .header
-    .header_logo
+    .header_logom
       nuxt-link(to="/maplists/search").header_logo__a
         img(src="~/assets/svgs/logo_mini.svg").header_logo__img
     .return_btn(v-if="returnLink!==null")
