@@ -15,11 +15,13 @@
       layer-selector-item(v-bind="backgroundAttr")
 
     button(@click="popup") hogehoge
+    Selector(v-bind:component="'selectColorItem'" v-bind:items.async="items")
 </template>
 
 <script>
 import ModalService from '~/services/ModalSvc'
 import layerModel from '~/models/layer'
+import Selector from '~/components/atoms/selector/Selector'
 
 export default {
   data() {
@@ -28,7 +30,12 @@ export default {
         id: 'background',
         name: 'Yah◯o!地図',
         color: 'gray'
-      }
+      },
+      items: [
+        { param: {}, value: 'red', selected: true },
+        { param: {}, value: 'pink', selected: true },
+        { param: {}, value: 'orange', selected: true },
+      ],
     }
   },
   computed: {
@@ -46,11 +53,12 @@ export default {
       this.$store.dispatch('mapEdit/addLayer', layer)
     },
     popup() {
-      this.modalSvc.openPopup('BoxAndPinPopup', {}, null)
+      this.modalSvc.openPopup('ShareSettingPopup', {}, null)
     }
   },
   components: {
-    LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem')
+    LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem'),
+    Selector
   },
   created() {
     this.modalSvc = new ModalService(this.$store)
