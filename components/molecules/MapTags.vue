@@ -14,8 +14,8 @@
     .sidebar__map_tags__tags(
       @click="editTags()"
     )
-      .sidebar__map_tags__tag(v-for="tag in tags" v-bind="tag" :key="`map_edit_tags_${tag.id}`")
-        .sidebar__map_tags__tag__text {{tag.name}}
+      .sidebar__map_tags__tag(v-for="(tag, index) in tags" v-bind="tag" :key="`map_edit_tags_${tag.key}_${index}`")
+        .sidebar__map_tags__tag__text {{tag.value}}
 </template>
 
 <script>

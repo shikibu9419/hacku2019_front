@@ -102,17 +102,6 @@ const mutations = {
   focusBackground(state) {
     state.backgroundFocused = true
   },
-  addTag(state, tag) {
-    state.map.tags.push(tag)
-  },
-  removeTag(state, tag) {
-    // keyがあればkeyで削除
-    if (tag.key) {
-      state.map = {...map, tags: state.map.tags.filter( (elem) => elem.key !== tag.key)}
-    } else {
-      state.map = {...map, tags: state.map.tags.filter( (elem) => elem.value !== tag.value)}
-    }
-  },
   updateTags(state, tags) {
     state.map = {...map, tags: tags}
   }
@@ -184,12 +173,6 @@ const actions = {
   focusBackground(context) {
     context.commit('focusBackground')
     context.dispatch('clearSelection')
-  },
-  addTag(context, tag) {
-    context.commit('addTag', tag)
-  },
-  removeTag(context, tag) {
-    context.commit('removeTag', tag)
   },
   updateTags(context, tags) {
     context.commit('updateTags', tags)

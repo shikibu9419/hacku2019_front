@@ -2,12 +2,12 @@
     div
         tags-input(
             element-id="tags"
-            v-model="selectedTags"
+            v-model="choosingTags"
             :existing-tags="existingTags"
             :typeahead="true"
-            @Initialized="onInitialized"
+            @initialized="onInitialized"
         )
-        button.buttons(v-on:click="updateTags()")
+        button.buttons(v-on:click="updateTags()") Save
 </template>
 
 <script>
@@ -16,21 +16,20 @@
         props: { selectedTags: Array, existingTags: Array },
         data() {
             return {
-                selectedTags: []
+                choosingTags: []
             }
         },
         methods: {
             updateTags() {
-                this.$store.dispatch('mapEdit/updateTags', this.selectedTags)
+                this.$store.dispatch('mapEdit/updateTags', this.choosingTags)
                 this.$emit('edit-tags-finish')
             },
             onInitialized() {
-                this.data.selectedTags = this.props.selectedTags
+                this.choosingTags = this.selectedTags
             }
         },
     }
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/atoms/vueTagsInput.scss";
 </style>
