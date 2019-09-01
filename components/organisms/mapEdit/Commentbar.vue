@@ -1,5 +1,6 @@
 <template lang="pug">
-    .map_edit__commentbar(v-if="enable" :class="{'map_edit__commentbar--close':menu_close}")
+  .map_edit__commentbar(:class="{'map_edit__commentbar--close':commentOpen}")
+    .map_commentbar__wrapper
       comment-form
       comment-list
 </template>
@@ -10,7 +11,6 @@ export default {
     return {
       menu_close:false,
       message: '',
-      enable: true
     }
   },
   components: {
@@ -20,6 +20,9 @@ export default {
   computed: {
     layers() {
       return this.$store.state.mapEdit.layers
+    },
+    commentOpen() {
+      return !true
     }
   },
   methods: {
@@ -41,7 +44,7 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 
-$padding: 15px;
+$padding: 16px;
 
 .map_edit__commentbar {
   background-color: $back-gray;
@@ -50,41 +53,13 @@ $padding: 15px;
   right: 0;
   width: $sidemenu-width;
   height: 100%;
-  padding-left: $padding;
-  padding-right: $padding;
+  padding: $padding;
   z-index: 10;
+  overflow-y: auto;
   transform: translateX(0);
   transition: .2s $bezier-ease-out;
   &--close{
-    transform: translateX(-$sidemenu-width);
-    .toggle_commentbar__button_icon{
-      transform: scale(-1,1);
-    }
+    transform: translateX($sidemenu-width);
   }
-}
-
-.toggle_commentbar {
-  position: absolute;
-  top:12px;
-  left: $sidemenu-width;
-}
-.toggle_commentbar__button {
-  background: $white;
-  border: 2px solid $dark-gray;
-  border-radius: 0 8px 8px 0;
-  border-left: none;
-  color: $dark-gray;
-  padding: 4px 8px;
-  padding-left: 4px;
-  &:focus{
-    outline: none;
-    border-color: $theme-pink;
-    color: $theme-pink;
-  }
-}
-.toggle_commentbar__button_icon{
-  transition: .2s $bezier-ease-out;
-  font-size: 1.8rem;
-  transform: scale(1);
 }
 </style>

@@ -1,26 +1,23 @@
 <template lang="pug">
-  .comment_box(@click.stop="focusComment()")
-    .comment_box__label(v-if="!onBox" :class="{comment_focus_on: focused}") {{ title }}
+  .comment_box
+    button.comment_box__button(@click.stop="focusComment()" v-if="!onBox") {{ title }}
     .comment_box__content
-      user-info
+      UserInfo(
+          :author="'tanakataro'"
+          :editors="null"
+        )
       p.comment_box__comment {{ comment }}
 </template>
 
 <script>
 export default {
   components: {
-    UserInfo: () => import('~/components/atoms/mapEdit/UserInfo')
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
   },
   props: ['title', 'comment', 'user', 'lat', 'lng', 'onBox'],
-  data() {
-    return {
-      focused: false
-    }
-  },
   methods: {
     focusComment() {
       if (this.onBox) return
-      this.focused = true
       this.$store.dispatch('ymap/panTo', {lat: this.lat, lng: this.lng})
     }
   }
@@ -32,10 +29,15 @@ export default {
 
 .comment_box {
 
-  &__label {
-    background: $light-gray;
-
-    &.comment_focus_on {
+  &__button {
+    width: 100%;
+    padding: 6px 8px;
+    background: $back-light-gray;
+    border: 2px solid transparent;
+    text-align: left;
+    color: $text-main;
+    &:focus {
+      outline: none;
       border: 2px solid $gray;
     }
   }
@@ -43,6 +45,8 @@ export default {
   &__content {
     background: $white;
     margin-bottom: 10px;
+    padding: 8px;
+    padding-top: 4px;
   }
 }
 </style>
