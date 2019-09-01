@@ -1,18 +1,27 @@
 <template lang="pug">
   .sidebar__layer_selector
-    img.sidebar__title_icon(src="~assets/svgs/layers.svg")
-    p.sidebar__title {{ layers.length }} Layers
-
+    .sidebar__edit_category
+      img.sidebar__edit_category__icon(src="~assets/svgs/layers.svg")
+      .sidebar__edit_category__text
+        span.sidebar__edit_category__text--strong {{layers.length}}
+        span  Layers
     .sidebar__layer_selector__content
-      layer-selector-item(v-for="layer in layers" :key="layer.id" v-bind="layer")
-    .sidebar__layer_selector__add(@click="addLayer")
-      font-awesome-icon.sidebar__layer_selector__add_icon(icon="plus-circle")
+      .sidebar__layer_selector__content__item(v-for="layer in layers")
+        layer-selector-item(:key="layer.id" v-bind="layer")
+    .sidebar__layer_selector__add(
+        @click="addLayer()"
+        v-if="CanIEdit"
+      )
+      fa-icon(icon="plus-circle").sidebar__layer_selector__add_icon
       p.sidebar__layer_selector__add_label レイヤーを追加
 
-    img.sidebar__title_icon(src="~assets/svgs/layers.svg")
-    p.sidebar__title Background
+    .sidebar__edit_category
+      img.sidebar__edit_category__icon(src="~assets/svgs/layers.svg")
+      .sidebar__edit_category__text
+        //span.sidebar__edit_category__text--strong {{layers.length}}
+        span Background
     .sidebar__background__content
-      layer-selector-item(v-bind="backgroundAttr")
+        layer-selector-item(v-bind="backgroundAttr")
 
     button(@click="popup") hogehoge
 </template>
@@ -34,6 +43,13 @@ export default {
   computed: {
     layers () {
       return this.$store.state.mapEdit.layers
+    },
+    CanIEdit(){
+      if(this.$route.path === "/maps/edit"){
+        return true
+      }else{
+        return false
+      }
     }
   },
   methods: {
@@ -58,28 +74,36 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
+@import "~/assets/styles/mixin.scss";
+@import "~/assets/styles/atoms/Sidebar.scss";
 
 .sidebar__layer_selector {
-  &__content {
-    background-color: $white;
-  }
-
-  &__add_icon {
-    display: inline-box;
-    height: 20px;
-  }
-
-  &__add_label {
-    display: inline;
+  &__add {
+    margin: 2px 0;
+    padding: 4px 8px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    &_icon {
+      display: block;
+      font-size: 18px;
+    }
+    &_label {
+      padding-left: 2px;
+    }
+    &:hover {
+      background: $back-light-gray;
+    }
   }
 }
 
-.sidebar__background__content {
-  background-color: $white;
+.sidebar__layer_selector__content__item {
+  margin-bottom: 1px;
 }
-
 .sidebar__title_icon {
   display: inline-block;
   height: 20px;

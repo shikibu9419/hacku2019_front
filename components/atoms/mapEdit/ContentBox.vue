@@ -18,6 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
+@import "~/assets/styles/mixin.scss";
 
 $label-min-height: 20px;
 

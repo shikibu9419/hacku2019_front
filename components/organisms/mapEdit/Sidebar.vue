@@ -1,14 +1,19 @@
 <template lang="pug">
   .sidebar_edit(:class="{'sidebar_edit--close': menuClose}")
     .sidebar_edit__wrapper
+      .sidebar_edit__scroll
+        .sidebar_edit__scroll__wrapper
+          .sidebar_edit__header
+            img.sidebar_edit__header__img(src="")
+            MapInfo
+          .sidebar_edit__content
+            MapTags
+            LayerSelector
+        .sidebar_edit__view_button
+          EditViewButton
       .toggle_sidebar
         button(@click="toggleBar()").toggle_sidebar__button
           fa-icon(icon="angle-left").toggle_sidebar__button_icon
-    .sidebar_edit__header
-    map-info
-    .sidebar_edit__content
-      map-tags
-      layer-selector
 </template>
 
 <script>
@@ -23,7 +28,8 @@ export default {
   components: {
     MapInfo: () => import('~/components/molecules/MapInfo'),
     MapTags: () => import('~/components/molecules/MapTags'),
-    LayerSelector: () => import('~/components/molecules/LayerSelector')
+    LayerSelector: () => import('~/components/molecules/LayerSelector'),
+    EditViewButton: () => import('~/components/atoms/mapEdit/EditViewButton')
   },
   computed: {
     layers () {
@@ -39,8 +45,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
+@import "~/assets/styles/mixin.scss";
 
-$padding: 20px;
+$padding: 16px;
+
+$card-width : $sidemenu-width;
+$card-height : $card-width / 3;
 
 .sidebar_edit {
   background-color: $back-gray;
@@ -52,7 +62,6 @@ $padding: 20px;
   z-index: 10;
   transform: translateX(0);
   transition: .2s $bezier-ease-out;
-
   &--close{
     transform: translateX(-$sidemenu-width);
     .toggle_sidebar__button_icon{
@@ -63,11 +72,25 @@ $padding: 20px;
 
 .sidebar_edit__wrapper{
   position: relative;
+  height: 100%;
+}
+
+.sidebar_edit__scroll {
+  position: relative;
+  overflow-y: auto;
+  height: calc(100% - 70px);
+  padding-bottom: 20px;
 }
 
 .sidebar_edit__header {
-  background: $theme-yellow;
-  height: 10%;
+
+  &__img {
+    display: block;
+    width: $card-width;
+    height: $card-height;
+    object-fit: cover;
+    background: $theme-yellow;
+  }
 }
 
 .sidebar_edit__content {
@@ -98,5 +121,14 @@ $padding: 20px;
   transition: .2s $bezier-ease-out;
   font-size: 1.8rem;
   transform: scale(1);
+}
+
+.sidebar_edit__view_button {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: $white;
+  padding: 16px 28px;
 }
 </style>
