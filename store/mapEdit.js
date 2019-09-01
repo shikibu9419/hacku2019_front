@@ -1,4 +1,3 @@
-import toolList from '~/models/toolList.js'
 import map from '~/models/map.js'
 import layer from '~/models/layer.js'
 
@@ -113,6 +112,9 @@ const mutations = {
     } else {
       state.map = {...map, tags: state.map.tags.filter( (elem) => elem.value !== tag.value)}
     }
+  },
+  updateTags(state, tags) {
+    state.map = {...map, tags: tags}
   }
 }
 
@@ -188,6 +190,9 @@ const actions = {
   },
   removeTag(context, tag) {
     context.commit('removeTag', tag)
+  },
+  updateTags(context, tags) {
+    context.commit('updateTags', tags)
   }
 }
 
