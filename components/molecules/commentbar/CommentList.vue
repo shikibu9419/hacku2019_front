@@ -2,7 +2,7 @@
   .commentbar__comment_list
     img.commentbar__comment_list__label_icon(src="~/assets/svgs/comment_mini.svg")
     p.commentbar__comment_list__label {{ comments.length }} Comments
-    comment-box(v-for="comment in comments" :key="`comment_list_${comment}`" v-bind="comment" :on-box="toolId")
+    comment-box(v-for="comment in comments" :key="`comment_list_${comment.comment}`" v-bind="comment" :on-box="toolId")
 </template>
 
 <script>

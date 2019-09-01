@@ -1,7 +1,7 @@
 <template lang="pug">
   g
     path.map_edit__tools.direction(:d="direction" v-if="attr.points.length" :class="{active__layer_on: layerActive, grab__tool_on: grabbing}"
-        @mousedown.stop="grab" @mouseup="replotAll" @dblclick.stop="select")
+        @mousedown.stop="grab" @mouseup="replotAll")
     g(v-if="selected && !grabbing")
       plot-point(v-for="(point, index) in attr.points" :key="index" :index="index"
         :id="id" :attr="point" :selected="selected" :layer-active="layerActive")
@@ -30,6 +30,9 @@ export default {
     direction() {
       this.$store.state.ymap.now // To observe map scrolling
 
+      const prev = Object.assign({}, this.prev)
+      this.prev = this.$store.state.mapEdit.mousePosition
+
       // 選択してなかったらpointsをxy座標に変換して返す
       if (!this.selected)
         return 'M ' + this.attr.points.map(point => {
@@ -42,9 +45,8 @@ export default {
         this.diff = {x: 0, y: 0}
 
       // diff = now - prev + diff
-      const dx = this.$store.state.mapEdit.mousePosition.x - this.prev.x + this.diff.x
-      const dy = this.$store.state.mapEdit.mousePosition.y - this.prev.y + this.diff.y
-      this.prev = this.$store.state.mapEdit.mousePosition
+      const dx = this.$store.state.mapEdit.mousePosition.x - prev.x + this.diff.x
+      const dy = this.$store.state.mapEdit.mousePosition.y - prev.y + this.diff.y
       this.diff = {x: dx, y: dy}
 
       self = this

@@ -1,4 +1,4 @@
-import toolList from '~/models/toolList.js'
+import selectToolModel from '~/models/selectToolModel.js'
 import map from '~/models/map.js'
 import layer from '~/models/layer.js'
 
@@ -43,7 +43,7 @@ const mutations = {
     state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
   },
   addTool(state, {attr, toolId}) {
-    attr = Object.assign(toolList[attr.type], attr, {id: toolId})
+    attr = Object.assign(selectToolModel(attr.type), attr, {id: toolId})
     state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
   },
   updateTool(state, attr) {
@@ -213,8 +213,17 @@ const getters = {
     }
   },
   comments(state, _, rootState) {
-    const dummyComment = {...rootState.ymap.center, id: 'hoge', title: 'kitasenju', comment: 'ここやで', user: getters.getUser}
-    return [dummyComment]
+    const toolsWithComments = state.layers.map(layer => {
+      return Object.values(layer.tools).filter(tool => ['pin', 'box'].includes(tool.type))
+    }).flat(5).filter(tool => tool.comments.length)
+
+    const comments = toolsWithComments.map(tool => {
+      return tool.comments.map(comment => {
+        return {...tool, ...comment, toolId: tool.id}
+      })
+    }).flat()
+
+    return comments
   }
 }
 
