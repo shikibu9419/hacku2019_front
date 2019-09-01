@@ -1,5 +1,5 @@
 <template lang="pug">
-  .map_edit__commentbar(:class="{'map_edit__commentbar--close':commentOpen}")
+  .map_edit__commentbar(:class="{'map_edit__commentbar--close': commentbarClose}")
     .map_commentbar__wrapper
       comment-form
       comment-list
@@ -21,8 +21,8 @@ export default {
     layers() {
       return this.$store.state.mapEdit.layers
     },
-    commentOpen() {
-      return !true
+    commentbarClose() {
+      return !this.$store.state.mapEdit.commentbarOpen
     }
   },
   methods: {

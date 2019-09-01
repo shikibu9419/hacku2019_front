@@ -14,8 +14,8 @@
     .header_buttons
       MapHeaderButtons(v-if="buttons")
       HeaderLogout()
-      
 </template>
+
 <script>
 export default {
   props:['placeholder','type','returnLink','buttons'],
@@ -31,6 +31,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";

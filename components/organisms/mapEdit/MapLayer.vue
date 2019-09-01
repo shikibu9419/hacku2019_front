@@ -17,7 +17,7 @@ export default {
   props: ['id', 'name', 'color', 'visible', 'tools'],
   data() {
     return {
-      center: this.$store.getters['ymap/latLngToPixel'](this.$store.state.ymap.center)
+      center: this.$store.getters['ymap/latLngToPixel'](this.$store.state.ymap.now)
     }
   },
   methods: {

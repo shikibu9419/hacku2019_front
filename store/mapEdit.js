@@ -22,11 +22,15 @@ const state = () => ({
   plotting: false,
   grabbing: false,
   mapGrabbing: false,
-  backgroundFocused: false
+  backgroundFocused: false,
+  commentbarOpen: false
 })
 
 // map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
 const mutations = {
+  toggle(state, key) {
+    state[key] = !state[key]
+  },
   togglePlotting(state) {
     state.plotting = !state.plotting
   },
@@ -111,6 +115,9 @@ const mutations = {
 }
 
 const actions = {
+  toggle(context, key) {
+    context.commit('toggle', key)
+  },
   togglePlotting(context) {
     context.commit('togglePlotting')
   },
