@@ -32,4 +32,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
+
+.map_edit__commentbar__form_textarea {
+  border: none;
+  
+}
 </style>
