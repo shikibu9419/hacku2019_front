@@ -1,13 +1,18 @@
 <template lang="pug">
-  rect.map_edit_tools__pin_popup(
-    v-bind="attr"
-  )
+  foreignObject.map_edit_tools__pin_popup(v-bind="position" @mousedown.stop="popup")
 </template>
 
 <script>
 export default {
-    name: "PinPopup.vue",
-    props: ['attr']
+  name: "PinPopup.vue",
+  props: ['position'],
+  methods: {
+    popup() {
+      this.$emit('popup')
+    }
+  },
+  computed: {
+  }
 }
 </script>
 

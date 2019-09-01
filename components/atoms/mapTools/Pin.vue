@@ -1,10 +1,31 @@
 <template lang="pug">
   g.map_edit_tools__pin(@dblclick.stop="select" @mousedown.stop="grab" :class="{selected__tool_on: selected, grab__tool_on: grabbing}")
     image.map_edit_tools__pin_icon(
+      v-if="typeIs('image')"
+      v-bind="attributes"
+      xlink:href="~/assets/svgs/image_pin.svg"
+    )
+    image.map_edit_tools__pin_icon(
+      v-else-if="typeIs('text')"
+      v-bind="attributes"
+      xlink:href="~/assets/svgs/text_pin.svg"
+    )
+    image.map_edit_tools__pin_icon(
+      v-else-if="typeIs('comment')"
       v-bind="attributes"
       xlink:href="~/assets/svgs/comment_pin.svg"
     )
-    pin-popup(:attr="popupAttr" v-if="selected && !grabbing")
+    image.map_edit_tools__pin_icon(
+      v-else-if="typeIs('link')"
+      v-bind="attributes"
+      xlink:href="~/assets/svgs/link_pin.svg"
+    )
+    image.map_edit_tools__pin_icon(
+      v-else
+      v-bind="attributes"
+      xlink:href="~/assets/svgs/pin.svg"
+    )
+    pin-popup(:position="pinPopupPosition" contents="attr.contents" v-if="selected && !grabbing" @popup="popup()")
 </template>
 
 <script>
@@ -20,12 +41,13 @@ export default {
   watch: {
     grabbing() {
       if(!this.init) return
-
       this.popup()
+      this.init = false
     }
   },
   methods: {
     popup() {
+      if(!this.selected || this.grabbing) return
       this.modalSvc.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
     }
   },
@@ -42,18 +64,28 @@ export default {
 
       return attr
     },
-    popupAttr() {
+    pinPopupPosition() {
+      const position = this.$store.getters['ymap/latLngToPixel'](this.attr)
       return {
-        x: this.attributes.x - 50, y: this.attributes.y - 120
+        x: position.x - 50,
+        y: position.y - 120,
       }
     },
-    pinIcon() {
-      const dir = '~/assets/svgs/'
-      return dir + 'comment_pin.svg'
+    typeIs() {
+      return function(type) {
+        const contentTypes = this.attr.contents.map(content => content.type)
+        return contentTypes.includes(type)
+      }
     }
   },
   components: {
-    PinPopup: () => import('./PinPopup')
+    // 使ってない
+    PinPopup: () => import('./PinPopup'),
+    NormalPin: () => import('~/assets/svgs/pin.svg?inline'),
+    ImagePin: () => import('~/assets/svgs/image_pin.svg?inline'),
+    TextPin: () => import('~/assets/svgs/text_pin.svg?inline'),
+    CommentPin: () => import('~/assets/svgs/comment_pin.svg?inline'),
+    LinkPin: () => import('~/assets/svgs/link_pin.svg?inline'),
   },
   mixins: [Shared],
 }

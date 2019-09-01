@@ -1,49 +1,49 @@
 <template lang="pug">
     .box-and-pin-popup
         .box-and-pin-popup__title-wrapper
-            input.box-and-pin-popup__title(v-model="tool.title")
-            DeleteAndCloseButton(:deleteHandler="deletePin" :closeHandler="closeModal")
+            input.box-and-pin-popup__title(v-model="tool.title" placeholder="タイトル")
+            DeleteAndCloseButton(:deleteHandler="deletePin" :closeHandler="close")
         .box-and-pin-popup__content
             .box-and-pin-popup--left
                 .box-and-pin-popup__information
-                    .box-and-pin-popup__info(v-for="(info, i) in tool.contents" :key="`info_${i}`")
-                        .box-and-pin-popup__text-info(v-if="info.type === 'text'")
+                    .box-and-pin-popup__info(v-for="(content, i) in tool.contents" :key="`content_${i}`")
+                        .box-and-pin-popup__text-info(v-if="content.type === 'text'")
                             .box-and-pin-popup__info-icons
                                 img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/text_box.svg")
                                 .box-and-pin-popup__info-type Text
-                                fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up" @click="sortUp(i, info)")
-                                fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down" @click="sortDown(i, info)")
-                                fa-icon.box-and-pin-popup__close-icon(icon="times" @click="deleteInfo(i)")
-                            AutosizeTextarea.box-and-pin-popup__info-textarea(v-bind:text.async="info.text" v-bind:maxSize="6" v-bind:defaultSize="3")
-                        .box-and-pin-popup__image-info(v-if="info.type === 'image'")
+                                fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up" @click="sortUp(i, content)")
+                                fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down" @click="sortDown(i, content)")
+                                fa-icon.box-and-pin-popup__close-icon(icon="times" @click="deleteContent(i)")
+                            AutosizeTextarea.box-and-pin-popup__info-textarea(v-bind:text.sync="content.text" v-bind:maxSize="6" v-bind:defaultSize="3")
+                        .box-and-pin-popup__image-info(v-if="content.type === 'image'")
                             .box-and-pin-popup__info-icons
                                 img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/image_box.svg")
                                 .box-and-pin-popup__info-type Image
-                                fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up" @click="sortUp(i, info)")
-                                fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down" @click="sortDown(i, info)")
-                                fa-icon.box-and-pin-popup__close-icon(icon="times" @click="deleteInfo(i)")
+                                fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up" @click="sortUp(i, content)")
+                                fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down" @click="sortDown(i, content)")
+                                fa-icon.box-and-pin-popup__close-icon(icon="times" @click="deleteContent(i)")
                             .box-and-pin-popup__image-info-content
                                 .box-and-pin-popup__images-wrapper
-                                    .box-and-pin-popup__image(v-for="(imageUrl, i) in info.urls" :key="`image_${i}`")
+                                    .box-and-pin-popup__image(v-for="(imageUrl, i) in content.urls" :key="`image_${i}`")
                                         img(height="80px" :src="imageUrl")
                                         .box-and-pin-popup__image-close-icon-wrapper
                                             fa-icon.box-and-pin-popup__image-close-icon(icon="times")
                                 .box-and-pin-popup__image-info-input 画像ファイルを選択
-                        .box-and-pin-popup__link-info(v-if="info.type === 'link'")
+                        .box-and-pin-popup__link-info(v-if="content.type === 'link'")
                             .box-and-pin-popup__info-icons
                                 img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/link_box.svg")
                                 .box-and-pin-popup__info-type Link
-                                fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up" @click="sortUp(i, info)")
-                                fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down" @click="sortDown(i, info)")
-                                fa-icon.box-and-pin-popup__close-icon(icon="times" @click="deleteInfo(i)")
+                                fa-icon.box-and-pin-popup__sort-up-icon(icon="sort-up" @click="sortUp(i, content)")
+                                fa-icon.box-and-pin-popup__sort-down-icon(icon="sort-down" @click="sortDown(i, content)")
+                                fa-icon.box-and-pin-popup__close-icon(icon="times" @click="deleteContent(i)")
                             .box-and-pin-popup__link-info-content
-                                AutosizeTextarea.box-and-pin-popup__link-info-input(v-bind:text.async="info.link" v-bind:maxSize="1" v-bind:defaultSize="1" v-bind:XScrollable="true")
+                                AutosizeTextarea.box-and-pin-popup__link-info-input(v-bind:text.sync="content.link" v-bind:maxSize="1" v-bind:defaultSize="1" v-bind:XScrollable="true")
                                 .box-and-pin-popup__link-info-title now loading...
                     .box-and-pin-popup__add-content-wrapper
                         img.box-and-pin-popup__info-icon--plus(width="16px" src="~/assets/svgs/plus.svg")
-                        img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/image_box.svg" @click="addInfo('image')")
-                        img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/text_box.svg" @click="addInfo('text')")
-                        img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/link_box.svg" @click="addInfo('link')")
+                        img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/image_box.svg" @click="addContent('image')")
+                        img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/text_box.svg" @click="addContent('text')")
+                        img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/link_box.svg" @click="addContent('link')")
             .box-and-pin-popup--right
                 .box-and-pin-popup__set-layer 属するレイヤー
                     .box-and-pin-popup__selector
@@ -53,7 +53,7 @@
                     .box-and-pin-popup__info-icons
                         img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/text_box.svg")
                         .box-and-pin-popup__info-type Comments
-                    AutosizeTextarea.box-and-pin-popup__info-textarea(v-bind:text.async="comment" v-bind:maxSize="6" v-bind:defaultSize="3")
+                    AutosizeTextarea.box-and-pin-popup__info-textarea(v-bind:text.sync="comment" v-bind:maxSize="6" v-bind:defaultSize="3")
                     .box-and-pin-popup__commented-button TODO: comment list
                     .box-and-pin-popup__comments
                         .box-and-pin-popup__comment(v-for="(comment, i) in tool.comments" :key="`comment_${i}`")
@@ -75,31 +75,19 @@ export default {
   data() {
     return {
       tool: {
-        title: '中央北口',
+        title: '',
         contents: [
         ],
         comments: [
-          {
-            name: 'John',
-            comment: 'ホームから登りのエレベータに乗る方がわかりやすい'
-          },
-          {
-            name: 'John',
-            comment: '色々と厳しい。あんまり参加できてなかったけど。'
-          },
         ]
       },
       comment: ''
     }
   },
-  watch: {
-    tool: {
-      handler: function (val, oldVal) {
-        const attr = Object.assign(JSON.parse(JSON.stringify(this.params.attr)), JSON.parse(JSON.stringify(this.tool)))
-        this.$store.dispatch('mapEdit/updateTool', attr)
-      },
-      deep: true
-    }
+  mounted() {
+    const attr = JSON.parse(JSON.stringify(this.params.attr))
+    console.log(attr)
+    this.tool = {...this.tool, title: attr.title, contents: attr.contents, comments: attr.comments}
   },
   methods: {
     getLinkTitle(linkContent) {
@@ -118,7 +106,7 @@ export default {
         linkContent.title = value
       })
     },
-    addInfo(type) {
+    addContent(type) {
       var content = {type: type}
       if (type === 'text')
         content.text = ''
@@ -129,22 +117,27 @@ export default {
 
       this.tool.contents.push(content)
     },
+    deleteContent(i) {
+      this.tool.contents.splice(i, 1)
+    },
+    sortUp(i, content) {
+      if (i === 0) return
+      this.tool.contents.splice(i, 1)
+      this.tool.contents.splice(i - 1, 0, content)
+    },
+    sortDown(i, content) {
+      if (i === this.tool.contents.length - 1) return
+      this.tool.contents.splice(i, 1)
+      this.tool.contents.splice(i + 1, 0, content)
+    },
     deletePin() {
       this.$store.dispatch('mapEdit/deleteTool', this.params.attr.id)
       this.closeModal()
     },
-    deleteInfo(i) {
-      this.tool.contents.splice(i, 1)
-    },
-    sortUp(i, info) {
-      if (i === 0) return
-      this.tool.contents.splice(i, 1)
-      this.tool.contents.splice(i - 1, 0, info)
-    },
-    sortDown(i, info) {
-      if (i === this.tool.contents.length - 1) return
-      this.tool.contents.splice(i, 1)
-      this.tool.contents.splice(i + 1, 0, info)
+    close() {
+      const attr = Object.assign(JSON.parse(JSON.stringify(this.params.attr)), JSON.parse(JSON.stringify(this.tool)))
+      this.$store.dispatch('mapEdit/updateTool', attr)
+      this.closeModal()
     }
   }
 }
