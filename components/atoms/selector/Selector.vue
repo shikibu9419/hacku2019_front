@@ -10,20 +10,26 @@
                 v-bind:class="{ selected: item.selected }"
                 ) {{ item.text }}
         .selector--with-component(v-if="component")
-            component.selector__selected(v-bind:is="component" @click="selectorEnable(!isShowing)")
-                img.selector__select-icon(width="16px" src="~/assets/svgs/select.svg")
+            .selector__selected(v-on:click="selectorEnable(!isShowing)")
+                component(v-bind:is="component" v-bind:item.async="getSelected")
+                    img.selector__select-icon(width="16px" src="~/assets/svgs/select.svg")
             .selector__selecting-wrapper(v-if="isShowing")
                 component.selector__selecting(
                 v-bind:is="component"
                 v-for="(item, i) in items" :key="`item_${i}`"
+                v-bind:item.async="item"
                 @click="selectingAndClose(i)"
                 v-bind:class="{ selected: item.selected }"
                 ) {{ item.text }}
 </template>
 
 <script>
+    import selectColorItem from './selectColorItem'
     export default {
         name: "Selector.vue",
+        components: {
+            selectColorItem
+        },
         data() {
             return {
                 isShowing: false,
@@ -35,13 +41,13 @@
             // text only
             // {
             //  text: string,
-            //  value: number,
+            //  value: any,
             //  selected: boolean
             // }
             // with component
             // {
             //  param: Object
-            //  value: number,
+            //  value: any,
             //  selected: boolean
             // }
             width: String
@@ -65,6 +71,7 @@
             },
             selectorEnable(bool) {
                 this.isShowing = bool
+                console.log(this.isShowing)
             },
             nowSelectedText() {
                 return this.getSelected()[0].text
@@ -90,7 +97,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "~/assets/styles/variables.scss";
+    @import "../../../assets/styles/variables";
     .selector {
         margin: 8px;
         &__selected {

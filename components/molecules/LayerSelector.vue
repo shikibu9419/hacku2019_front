@@ -15,13 +15,13 @@
       layer-selector-item(v-bind="backgroundAttr")
 
     button(@click="popup") hogehoge
-    Selector(v-bind:items.async="items")
+    Selector(v-bind:component="'selectColorItem'" v-bind:items.async="items")
 </template>
 
 <script>
 import ModalService from '~/services/ModalSvc'
 import layerModel from '~/models/layer'
-import Selector from '~/components/atoms/Selector'
+import Selector from '~/components/atoms/selector/Selector'
 
 export default {
   data() {
@@ -32,11 +32,9 @@ export default {
         color: 'gray'
       },
       items: [
-        { text: 'hoge', value: 0, selected: false },
-        { text: 'piyo', value: 1, selected: false },
-        { text: 'fuga', value: 2, selected: false },
-        { text: 'nyan', value: 2, selected: false },
-        { text: 'unchi', value: 2, selected: true },
+        { param: {}, value: 'red', selected: true },
+        { param: {}, value: 'pink', selected: true },
+        { param: {}, value: 'orange', selected: true },
       ],
     }
   },
