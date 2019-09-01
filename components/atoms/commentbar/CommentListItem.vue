@@ -3,8 +3,8 @@
     .commentbar_item__label(:class="{comment_focus_on: focused}") 中央北口
     .commentbar_item__content
       UserInfo(
-        :username="'username'"
-        :mulch_user="null"
+        :author="'username'"
+        :editors="null"
       )
       p.commentbar_item__comment {{ message }}
 </template>

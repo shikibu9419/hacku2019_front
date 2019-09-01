@@ -11,11 +11,13 @@
   flex-shrink: 0;
 }
 .info_data__main {
-  display: flex;
-  flex-wrap: nowrap;
-  padding-left: 8px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
   width: 100%;
   flex-grow: auto;
+  padding-left: 8px;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 .info_data__right {
   flex-grow: 0;
@@ -27,8 +29,11 @@
 }
 
 .info_data__main__name {
+  display: inline;
   @include noto-font(1.6rem);
   margin-right: 8px;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .number_info {
