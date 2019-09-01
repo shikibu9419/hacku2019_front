@@ -20,30 +20,30 @@ export default {
   },
   methods: {
     addBuilding() {
-      this.$store.dispatch('mapEdit/togglePlotting')
+      this.$store.dispatch('mapEdit/toggle', 'plotting')
       if (!this.$store.state.mapEdit.plotting) return
 
       this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building'})
     },
     addBuildingBasic() {
-      this.$store.dispatch('mapEdit/toggleGrabbing')
+      this.$store.dispatch('mapEdit/toggle', 'grabbing')
       this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building_basic'})
     },
     addDirection() {
-      this.$store.dispatch('mapEdit/togglePlotting')
+      this.$store.dispatch('mapEdit/toggle', 'plotting')
       if (!this.$store.state.mapEdit.plotting) return
 
       this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'direction'})
     },
     addPin() {
-      this.$store.dispatch('mapEdit/toggleGrabbing')
+      this.$store.dispatch('mapEdit/toggle', 'grabbing')
       this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'pin'})
     },
     addText() {
       alert('Text is not implemented yet!')
     },
     addBox() {
-      this.$store.dispatch('mapEdit/toggleGrabbing')
+      this.$store.dispatch('mapEdit/toggle', 'grabbing')
       this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'box'})
     },
     getLatLng() {

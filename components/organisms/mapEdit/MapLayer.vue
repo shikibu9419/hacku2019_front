@@ -17,7 +17,7 @@ export default {
   props: ['id', 'name', 'color', 'visible', 'tools'],
   data() {
     return {
-      center: this.$store.getters['ymap/latLngToPixel'](this.$store.state.ymap.center)
+      center: this.$store.getters['ymap/latLngToPixel'](this.$store.state.ymap.now)
     }
   },
   methods: {
@@ -42,18 +42,18 @@ export default {
       this.$store.dispatch('mapEdit/setMousePosition', now)
     },
     grabMap() {
-      this.$store.dispatch('mapEdit/toggleMapGrabbing')
+      this.$store.dispatch('mapEdit/toggle', 'mapGrabbing')
       this.$store.dispatch('mapEdit/clearSelection')
     },
     resetGrabbing() {
       if(this.$store.state.mapEdit.grabbing)
-        this.$store.dispatch('mapEdit/toggleGrabbing')
+        this.$store.dispatch('mapEdit/toggle', 'grabbing')
       if(this.$store.state.mapEdit.mapGrabbing)
-        this.$store.dispatch('mapEdit/toggleMapGrabbing')
+        this.$store.dispatch('mapEdit/toggle', 'mapGrabbing')
     },
     resetEditting() {
       if (this.$store.state.mapEdit.plotting)
-        this.$store.dispatch('mapEdit/togglePlotting')
+        this.$store.dispatch('mapEdit/toggle', 'plotting')
       this.resetGrabbing()
     },
   },

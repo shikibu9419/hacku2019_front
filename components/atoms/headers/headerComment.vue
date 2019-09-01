@@ -1,7 +1,7 @@
 <template lang="pug">
   .header_cir_button__main
     button.header_cir_button(
-        @click="pushComment()"
+        @click="toggleCommentbar()"
         :class="{'header_cir_button--on':mapCommentsAreaOn}"
       )
       .header_cir_button__icon
@@ -14,8 +14,8 @@ export default {
     commentBtn: () => import('~/assets/svgs/comment_box.svg?inline'),
   },
   methods:{
-    pushComment(){
-      //処理
+    toggleCommentbar() {
+      this.$store.dispatch('mapEdit/toggle', 'commentbarOpen')
     }
   },
   computed:{

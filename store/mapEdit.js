@@ -22,19 +22,14 @@ const state = () => ({
   plotting: false,
   grabbing: false,
   mapGrabbing: false,
-  backgroundFocused: false
+  backgroundFocused: false,
+  commentbarOpen: false
 })
 
 // map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
 const mutations = {
-  togglePlotting(state) {
-    state.plotting = !state.plotting
-  },
-  toggleGrabbing(state) {
-    state.grabbing = !state.grabbing
-  },
-  toggleMapGrabbing(state) {
-    state.mapGrabbing = !state.mapGrabbing
+  toggle(state, key) {
+    state[key] = !state[key]
   },
   setOffset(state, prop) {
     state.offset = {...state.offset, x: prop.x, y: prop.y}
@@ -111,14 +106,8 @@ const mutations = {
 }
 
 const actions = {
-  togglePlotting(context) {
-    context.commit('togglePlotting')
-  },
-  toggleGrabbing(context) {
-    context.commit('toggleGrabbing')
-  },
-  toggleMapGrabbing(context) {
-    context.commit('toggleMapGrabbing')
+  toggle(context, key) {
+    context.commit('toggle', key)
   },
   setOffset(context, prop) {
     context.commit('setOffset', prop)
