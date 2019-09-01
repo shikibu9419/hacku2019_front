@@ -148,7 +148,7 @@ button {
   width: min-content;
   height: auto;
   padding: 0 10px;
-  z-index: 0;
+  z-index: 1;
 }
 .filter_button {
   background: transparent;
