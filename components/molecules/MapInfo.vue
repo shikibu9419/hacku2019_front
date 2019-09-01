@@ -7,15 +7,11 @@
         :editors="null"
       )
     .sidebar_edit__map_info__others
-      .sidebar_edit__map_info__others_wrapper
-        img.sidebar_edit__map_info__others_icon(src="~/assets/svgs/comment_mini.svg")
-        p.sidebar_edit__map_info__others_label {{ 16 }}
-      .sidebar_edit__map_info__others_wrapper
-        img.sidebar_edit__map_info__others_icon(src="~/assets/svgs/like.svg")
-        p.sidebar_edit__map_info__others_label {{ 47 }}
-      .sidebar_edit__map_info__others_wrapper
-        img.sidebar_edit__map_info__others_icon(src="~/assets/svgs/stock.svg")
-        p.sidebar_edit__map_info__others_label {{ 8 }}
+      NumberInfo(
+        :comments="'5'"
+        :like="'8'"
+        :stock="'3'"
+      )
 </template>
 
 <script>
@@ -42,7 +38,8 @@ export default {
   },
   components: {
     LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem'),
-    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo'),
+    NumberInfo: () => import('~/components/atoms/mapInfo/NumberInfo')
   },
   created() {
     this.modalSvc = new ModalService(this.$store)
