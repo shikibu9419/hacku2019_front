@@ -44,6 +44,7 @@ export default {
           if(response.data.key) {
             Vue.toasted.success('ログインに成功しました')
             this.$store.commit('user/setToken', response.data.key)
+            this.$store.dispatch("user/setUserInfo", response.data)
             this.$router.push('/')
           } else {
             Vue.toasted.error('ログインに失敗しました')
