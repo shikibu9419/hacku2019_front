@@ -1,7 +1,7 @@
 <template lang="pug">
   .map_edit
     Header(
-        :returnLink="'/maplists/search'"
+        :returnLink="'/'"
         :placeholder="'マップ内を検索する'"
         :type="'inmap'"
         :buttons="true"

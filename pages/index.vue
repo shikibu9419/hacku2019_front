@@ -1,10 +1,10 @@
 <template lang="pug">
   .home.toppage
     Header(
-    :returnLink="'/maplists/search'"
-    :placeholder="'マップを検索する'"
-    :type="'maplists/search'"
-    :buttons="false"
+      :returnLink="null"
+      :placeholder="'マップを検索する'"
+      :type="'maplists/search'"
+      :buttons="false"
     )
     main.main
       SideMenu
