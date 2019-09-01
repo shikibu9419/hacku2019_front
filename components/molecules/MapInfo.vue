@@ -11,7 +11,7 @@
         :comments="'5'"
         :like="'8'"
         :stock="'3'"
-      )
+      ).number_info__sidebar
 </template>
 
 <script>
@@ -70,5 +70,9 @@ $padding: 10px;
     display: inline;
     font-weight: bold;
   }
+}
+
+.number_info__sidebar {
+  margin: 0;
 }
 </style>
