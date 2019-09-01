@@ -1,6 +1,6 @@
 <template lang="pug">
   .sidebar_edit__map_info
-    h2.sidebar_edit__map_info__mapname hoge
+    .sidebar_edit__map_info__mapname hoge
     .sidebar_edit__map_info__user
       UserInfo(
         :author="'username'"
@@ -49,11 +49,22 @@ export default {
 
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
+@import "~/assets/styles/mixin.scss";
 
 $padding: 10px;
 
 .sidebar_edit__map_info {
   background-color: $white;
+  padding: 16px;
+  padding-top: 4px;
+  padding-bottom: 8px;
+
+  &__mapname {
+    @include noto-font(2.4rem);
+  }
+  &__user {
+    margin-top: 4px;
+  }
 
   &__others_wrapper {
     display: inline-block;
@@ -73,6 +84,6 @@ $padding: 10px;
 }
 
 .number_info__sidebar {
-  margin: 0;
+  margin-top: 2px !important;
 }
 </style>

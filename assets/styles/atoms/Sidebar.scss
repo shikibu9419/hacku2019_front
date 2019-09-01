@@ -1,0 +1,17 @@
+.sidebar__edit_category {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-top: 12px;
+  padding-bottom: 4px;
+  &__icon {
+    display: block;
+    width: 22px;
+  }
+  &__text {
+    padding-left: 4px;
+    @include noto-font(1.6rem);
+    &--strong {
+      font-weight: bold;
+    }
+  }
+}

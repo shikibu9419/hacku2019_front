@@ -1,8 +1,11 @@
 <template lang="pug">
   .commentbar__comment_list
-    img.commentbar__comment_list__label_icon(src="~/assets/svgs/comment_mini.svg")
-    p.commentbar__comment_list__label {{ comments.length }} Comments
-    comment-box(v-for="comment in comments" :key="`comment_list_${comment}`" v-bind="comment" :on-box="toolId")
+    .sidebar__edit_category
+      img.sidebar__edit_category__icon(src="~assets/svgs/comment_box.svg")
+      .sidebar__edit_category__text
+        span.sidebar__edit_category__text--strong {{comments.length}}
+        span  Comments
+    comment-box(v-for="comment in comments" :key="`comment_list_${comment.comment}`" v-bind="comment" :on-box="toolId")
 </template>
 
 <script>
@@ -23,6 +26,8 @@ export default {
 
 <style lang="scss">
 @import "~/assets/styles/variables.scss";
+@import "~/assets/styles/mixin.scss";
+@import "~/assets/styles/atoms/Sidebar.scss";
 
 .commentbar__comment_list {
   &__label_icon {

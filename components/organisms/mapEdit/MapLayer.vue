@@ -3,17 +3,23 @@
     svg.map_edit__map__svg(@mousemove="moveOrScroll" @mousedown="grabMap" @mouseup="resetGrabbing" @click.right="resetEditting")
       rect.map_edit__map__svg_filter(v-if="isActive")
       tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :selected="false" :layer-active="isActive")
-      toolbar(v-if="isActive")
-      tool(v-for="[id, attr] in selectingTools"   :key="attr.id" :id="id" :attr="attr" :selected="true" :layer-active="isActive")
+      rect.map_edit__toolbar__background(:transform="`translate(${this.center.x - 340 / 2},10)`")
+      tool(v-for="[id, attr] in selectingTools" :key="attr.id" :id="id" :attr="attr" :selected="true" :layer-active="isActive")
+      toolbar-icons(v-if="isActive")
 </template>
 
 <script>
 export default {
   components: {
     Tool: () => import('~/components/atoms/mapTools/ToolWrapper'),
-    Toolbar: () => import('~/components/molecules/Toolbar'),
+    ToolbarIcons: () => import('~/components/molecules/ToolbarIcons'),
   },
   props: ['id', 'name', 'color', 'visible', 'tools'],
+  data() {
+    return {
+      center: this.$store.getters['ymap/latLngToPixel'](this.$store.state.ymap.now)
+    }
+  },
   methods: {
     moveOrScroll(e) {
       const prev = this.$store.state.mapEdit.mousePosition
@@ -36,18 +42,18 @@ export default {
       this.$store.dispatch('mapEdit/setMousePosition', now)
     },
     grabMap() {
-      this.$store.dispatch('mapEdit/toggleMapGrabbing')
+      this.$store.dispatch('mapEdit/toggle', 'mapGrabbing')
       this.$store.dispatch('mapEdit/clearSelection')
     },
     resetGrabbing() {
       if(this.$store.state.mapEdit.grabbing)
-        this.$store.dispatch('mapEdit/toggleGrabbing')
+        this.$store.dispatch('mapEdit/toggle', 'grabbing')
       if(this.$store.state.mapEdit.mapGrabbing)
-        this.$store.dispatch('mapEdit/toggleMapGrabbing')
+        this.$store.dispatch('mapEdit/toggle', 'mapGrabbing')
     },
     resetEditting() {
       if (this.$store.state.mapEdit.plotting)
-        this.$store.dispatch('mapEdit/togglePlotting')
+        this.$store.dispatch('mapEdit/toggle', 'plotting')
       this.resetGrabbing()
     },
   },
@@ -67,7 +73,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import "~/assets/styles/variables.scss";
+
 .map_edit__map__layer {
   position: absolute;
   top: 0;
@@ -89,5 +97,14 @@ export default {
     width: 10000px;
     height: 10000px;
   }
+}
+
+.map_edit__toolbar__background {
+  cursor: pointer;
+  fill: $back-gray;
+  height: $toolbar-height;
+  width: $toolbar-width;
+  rx: 10px;
+  ry: 10px;
 }
 </style>

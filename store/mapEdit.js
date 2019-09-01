@@ -22,19 +22,14 @@ const state = () => ({
   plotting: false,
   grabbing: false,
   mapGrabbing: false,
-  backgroundFocused: false
+  backgroundFocused: false,
+  commentbarOpen: false
 })
 
 // map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
 const mutations = {
-  togglePlotting(state) {
-    state.plotting = !state.plotting
-  },
-  toggleGrabbing(state) {
-    state.grabbing = !state.grabbing
-  },
-  toggleMapGrabbing(state) {
-    state.mapGrabbing = !state.mapGrabbing
+  toggle(state, key) {
+    state[key] = !state[key]
   },
   setOffset(state, prop) {
     state.offset = {...state.offset, x: prop.x, y: prop.y}
@@ -43,7 +38,7 @@ const mutations = {
     state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
   },
   addTool(state, {attr, toolId}) {
-    attr = Object.assign(toolList[attr.type], attr, {id: toolId})
+    attr = Object.assign(selectToolModel(attr.type), attr, {id: toolId})
     state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
   },
   updateTool(state, attr) {
@@ -122,14 +117,8 @@ const mutations = {
 }
 
 const actions = {
-  togglePlotting(context) {
-    context.commit('togglePlotting')
-  },
-  toggleGrabbing(context) {
-    context.commit('toggleGrabbing')
-  },
-  toggleMapGrabbing(context) {
-    context.commit('toggleMapGrabbing')
+  toggle(context, key) {
+    context.commit('toggle', key)
   },
   setOffset(context, prop) {
     context.commit('setOffset', prop)
@@ -230,8 +219,17 @@ const getters = {
     }
   },
   comments(state, _, rootState) {
-    const dummyComment = {...rootState.ymap.center, id: 'hoge', title: 'kitasenju', comment: 'ここやで', user: getters.getUser}
-    return [dummyComment]
+    const toolsWithComments = state.layers.map(layer => {
+      return Object.values(layer.tools).filter(tool => ['pin', 'box'].includes(tool.type))
+    }).flat(5).filter(tool => tool.comments.length)
+
+    const comments = toolsWithComments.map(tool => {
+      return tool.comments.map(comment => {
+        return {...tool, ...comment, toolId: tool.id}
+      })
+    }).flat()
+
+    return comments
   },
   getTags(state) {
     return state.map.tags
