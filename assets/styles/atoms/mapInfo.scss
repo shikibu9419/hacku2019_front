@@ -1,0 +1,18 @@
+.number_info {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.number_info__one {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-right: 12px;
+}
+.number_info__one__svg {
+  width: 22px;
+}
+.number_info__one__count {
+  @include noto-font(1.7rem);
+  padding-left: 4px;
+  padding-right: 8px;
+}

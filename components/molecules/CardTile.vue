@@ -3,18 +3,24 @@
     img.maplist__card__img(:src="mapCard.img_url")
     .maplist__card__content
       .map_title {{ mapCard.title }}
-      UserInfo(
-        :username="mapCard.author"
-        :mulch_user="mapCard.editors"
-      )
+      .maplist__card__blocks
+        UserInfo(
+          :username="mapCard.author"
+          :mulch_user="mapCard.editors"
+        )
+      .maplist__card__blocks
       .maplist__card__layers
         font-awesome-icon.maplist__card__icon(icon="layer-group")
         tag-item(v-for="layer in mapCard.layers" v-bind="layer" :key="`maplist_layer_${layer.id}`")
       .maplist__card__tags
         font-awesome-icon.maplist__card__icon(icon="tag")
         tag-item(v-for="tag in mapCard.tags" v-bind="tag" :key="`maplist_tag_${tag.id}`")
-      .maplist__card__comments
-        Comment(:comment_count="mapCard.comments.length")
+      .maplist__card__blocks
+        NumberInfo(
+          :comments="mapCard.comments"
+          :like="mapCard.like"
+          :stock="mapCard.stock"
+          )
 </template>
 
 <script>
@@ -25,7 +31,7 @@ export default {
     //components
     UserInfo: () => import('~/components/atoms/UserInfo'),
     TagItem: () => import('~/components/atoms/TagItem'),
-    Comment: () => import('~/components/atoms/CardTile/Comment')
+    NumberInfo: () => import('~/components/atoms/CardTile/NumberInfo')
   },
   props: ["mapCard"]
 }
