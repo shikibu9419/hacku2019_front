@@ -71,6 +71,7 @@ export default {
   margin: auto;
   width: 400px;
   height: 100%;
+  z-index: 10;
 }
 
 .login_form {

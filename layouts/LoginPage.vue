@@ -75,6 +75,7 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  z-index: 0;
 }
 .login_background_image {
   position: absolute;
@@ -149,5 +150,6 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
   padding: $border-margin + $border-width;
   width: 100%;
   height: 100%;
+  z-index: 0;
 }
 </style>
