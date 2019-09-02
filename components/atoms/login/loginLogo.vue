@@ -13,12 +13,22 @@
   &__logo {
     display: block;
     margin: auto;
+    width: calc(16vh + 120px);
     max-width: 280px;
   }
   &__comment {
     text-align: center;
     @include noto-font(2rem,$text-black);
     letter-spacing: .6rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .top_title {
+    &__comment {
+      @include noto-font(1.8rem,$text-black);
+      letter-spacing: .5rem;
+    }
   }
 }
 </style>
