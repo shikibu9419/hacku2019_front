@@ -5,28 +5,50 @@
       .sidebar__edit_category__text
         span.sidebar__edit_category__text--strong {{tags.length}}
         span  Tags
+    vue-tags-input(
+      v-if="editingTags"
+      :selected-tags="tags"
+      :existing-tags="existingTags"
+      v-on:edit-tags-finish="editTagsFinish"
+    )
     .sidebar__map_tags__tags(
       @click="editTags()"
     )
-      .sidebar__map_tags__tag(v-for="tag in tags" v-bind="tag" :key="`map_edit_tags_${tag.id}`")
-        .sidebar__map_tags__tag__text {{tag.name}}
+      .sidebar__map_tags__tag(v-for="(tag, index) in tags" v-bind="tag" :key="`map_edit_tags_${tag.key}_${index}`")
+        .sidebar__map_tags__tag__text {{tag.value}}
 </template>
 
 <script>
 import ModalService from '~/services/ModalSvc'
 import layer from '~/models/layer'
+import VueTagsInput from '~/components/atoms/VueTagsInput'
 
 export default {
+  components: { VueTagsInput },
+    data() {
+      return {
+        editingTags: false,
+        tags: []
+      }
+    },
   computed: {
-    tags() {
-      return [{id: 1, name: 'tag1'}, {id: 2, name: 'tag2'}, {id: 3, name: 'tag3'}]
+    existingTags() {
+      return [{key: 100, value: 'red'}, {key: 101, value: 'blue'}, {key: 102, value: 'green'}]
     }
   },
   methods: {
-    editTags(){
+    editTags() {
       // タグ検索inputを表示
-    }
+      this.editingTags = true
+    },
+    editTagsFinish() {
+      this.tags = this.$store.getters['mapEdit/getTags']
+      this.editingTags = false
+    },
   },
+  mounted() {
+    this.tags = [{key: 1, value: 'tag1'}, {key: 2, value: 'tag2'}, {key: 3, value: 'tag3'}]
+  }
 }
 </script>
 

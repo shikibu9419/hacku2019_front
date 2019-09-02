@@ -1,4 +1,3 @@
-import selectToolModel from '~/models/selectToolModel.js'
 import map from '~/models/map.js'
 import layer from '~/models/layer.js'
 
@@ -102,6 +101,9 @@ const mutations = {
   },
   focusBackground(state) {
     state.backgroundFocused = true
+  },
+  updateTags(state, tags) {
+    state.map = {...map, tags: tags}
   }
 }
 
@@ -171,6 +173,9 @@ const actions = {
   focusBackground(context) {
     context.commit('focusBackground')
     context.dispatch('clearSelection')
+  },
+  updateTags(context, tags) {
+    context.commit('updateTags', tags)
   }
 }
 
@@ -213,6 +218,9 @@ const getters = {
     }).flat()
 
     return comments
+  },
+  getTags(state) {
+    return state.map.tags
   }
 }
 
