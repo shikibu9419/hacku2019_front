@@ -3,12 +3,16 @@
         .layer-setting-popup__title レイヤーを編集
             DeleteAndCloseButton(v-bind:deleteHandler="closeModal" v-bind:closeHandler="closeModal")
         .layer-setting-popup__setting
-            .layer-setting-popup__setting-name レイヤー名
-                input.layer-setting-popup--end
-            .layer-setting-popup__setting-color レイヤーカラー
+            .layer-setting-popup__setting_box
+                .layer-setting-popup__setting-name レイヤー名
+                .layer-setting-popup--end
+                    input(placeholder="レイヤー名").layer-setting-popup__layer-name
+            .layer-setting-popup__setting_box
+                .layer-setting-popup__setting-name レイヤーカラー
                 .layer-setting-popup--end
                     Selector.layer-setting-popup__selector(v-bind:component="'selectColorItem'" v-bind:items.async="items" v-bind:width="'100px'")
-            .layer-setting-popup__setting-transform レイヤーの移動
+            .layer-setting-popup__setting_box
+                .layer-setting-popup__setting-name レイヤーの移動
                 .layer-setting-popup--end
                     CustomButton.layer-setting-popup__button 上へ
                     CustomButton.layer-setting-popup__button 下へ
@@ -75,11 +79,14 @@
         &__setting {
             padding: 8px;
         }
-        &__setting-name,&__setting-color,&__setting-transform {
+        &__setting_box {
             display: flex;
             flex-direction: row;
             align-items: center;
             margin: 4px;
+        }
+        &__setting-name {
+            width: 30%;
         }
         &__floor-count {
             margin-left: 8px;
@@ -88,8 +95,14 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            width: 60%;
-            margin: 0 0 0 auto;
+            width: 70%;
+        }
+        &__layer-name {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin: 8px;
+            border: solid 2px $dark-gray;
         }
         &__button {
             width: 64px !important;

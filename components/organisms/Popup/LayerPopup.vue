@@ -1,14 +1,20 @@
 <template lang="pug">
   .layer-popup
     .layer-popup__titles
-      LayerSelectorItem.layer-popup__title(v-bind="backgroundAttr")
+      LayerSelectorItem.layer-popup__title(
+        v-bind="backgroundAttr"
+        :id="layer.id"
+        :name="layer.name"
+        :color="getLayerColorCom"
+        :edit="false"
+        )
       CustomButton.layer-popup--button(:handler="createLayer") 追加
     .layer-popup__create
       .layer-popup__create__new レイヤーを新規作成
         .layer-popup__create__new__content
           .layer-popup__create__new__content__name
             .layer-popup--column-title レイヤー名
-            input(placeholder="layer", v-model="layer.name")
+            input(placeholder="レイヤー名", v-model="layer.name").layer-popup--column--name_input
           .layer-popup__create__new__content__color
             .layer-popup--column-title レイヤーカラー
             Selector(:component="'selectColorItem'" :items.async="layerColorItems"  v-bind:width="'100px'")
@@ -46,12 +52,20 @@
           alert('レイヤー名を入力してください')
           return
         }
+        this.layer.id = this.$store.state.mapEdit.layers.length;
         this.layer.color = this.getLayerColor()
         this.$store.dispatch('mapEdit/addLayer', this.layer)
         this.layerSvcCreate(this.params.mapId, this.layer.name, this.layer.color)
         this.closeModal()
       },
       getLayerColor() {
+        return this.layerColorItems.filter(item => {
+          return item.selected
+        })[0].value
+      }
+    },
+    computed:{
+      getLayerColorCom() {
         return this.layerColorItems.filter(item => {
           return item.selected
         })[0].value
@@ -119,10 +133,13 @@
     }
     &__title {
       width: 70%;
+      border: none !important;
     }
     &--button {
-      background: $dark-gray;
+      background: $theme-pink;
       color: $white;
+      transition: .3s $bezier-fast-ease-out;
+      cursor: pointer;
     }
     &__create {
       padding: 8px;
@@ -158,6 +175,11 @@
     &--column-title {
       width: 35%;
       font-weight: normal;
+    }
+    &--column--name_input {
+      margin: 8px;
+      border: 2px solid $dark-gray;
+      padding: 8px;
     }
   }
 </style>
