@@ -28,7 +28,8 @@
 </template>
 
 <script>
-import ModalService from '~/services/ModalSvc'
+import ModalSvc from '~/services/ModalSvc'
+import LayerSvc from '~/services/LayerSvc'
 import layerModel from '~/models/layer'
 import Selector from '~/components/atoms/selector/Selector'
 
@@ -67,16 +68,14 @@ export default {
       this.$store.dispatch('mapEdit/addLayer', layer)
     },
     popup() {
-      this.modalSvc.openPopup('LayerSettingPopup', {}, null)
+      this.openPopup('LayerSettingPopup', {}, null)
     }
   },
   components: {
     LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem'),
     Selector
   },
-  mounted() {
-    this.modalSvc = new ModalService(this.$store)
-  },
+  mixins: [ LayerSvc, ModalSvc ]
 }
 </script>
 

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import ModalService from '~/services/ModalSvc'
+    import ModalSvc from '~/services/ModalSvc'
     import BoxAndPinPopup from '~/components/organisms/Popup/BoxAndPinPopup'
     import LayerSettingPopup from '~/components/organisms/Popup/LayerSettingPopup'
     import ShareSettingPopup from '~/components/organisms/Popup/ShareSettingPopup'
@@ -26,12 +26,10 @@
         },
         methods: {
             closeModal() {
-                this.modalSvc.close()
+                this.closeModal()
             }
         },
-        created() {
-            this.modalSvc = new ModalService(this.$store)
-        }
+        mixins: [ ModalSvc ]
     }
 </script>
 
