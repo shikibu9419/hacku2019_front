@@ -8,16 +8,18 @@
             :typeahead="true"
             :typeahead-style="'dropdown'"
             :typeahead-activation-threshold="2"
+            :placeholder="placeholder"
+            :allow-duplicates="true"
             @initialized="onInitialized"
         )
-        button.buttons(v-on:click="updateFinish()") Save
+        button.buttons(v-on:click="updateFinish()") {{button_text}}
 </template>
 
 <script>
 import { async } from 'q';
     export default {
         name: "VueTagsInput.vue",
-        props: { selectedTags: Array, existingTags: Array },
+        props: ["selectedTags","existingTags","placeholder","button_text"],
         data() {
             return {
                 choosingTags: []
@@ -28,8 +30,7 @@ import { async } from 'q';
                 this.choosingTags = this.selectedTags
             },
             updateFinish(){
-                this.$store.dispatch('mapEdit/updateTags', this.choosingTags)
-                this.$emit('edit-tags-finish')
+                this.$emit('edit-tags-finish',this.choosingTags)
             }
         },
     }
@@ -49,6 +50,9 @@ import { async } from 'q';
     color: $white;
     &:hover{
         background: $palette-light-pink;
+    }
+    &:focus{
+        outline: none;
     }
 }
 </style>

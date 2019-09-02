@@ -11,16 +11,22 @@
                 ) {{ item.text }}
         .selector--with-component(v-if="component")
             .selector__selected(v-on:click="selectorEnable(!isShowing)")
-                component(v-bind:is="component" v-bind:item.async="getSelected")
-                    img.selector__select-icon(width="16px" src="~/assets/svgs/select.svg")
+                component(
+                    v-bind:is="component"
+                    v-bind:item="getSelected()[0]"
+                ) {{  }}
+                img.selector__select-icon(width="16px" src="~/assets/svgs/select.svg")
             .selector__selecting-wrapper(v-if="isShowing")
-                component.selector__selecting(
-                v-bind:is="component"
-                v-for="(item, i) in items" :key="`item2_${i}`"
-                v-bind:item.async="item"
-                @click="selectingAndClose(i)"
-                v-bind:class="{ selected: item.selected }"
-                ) {{ item.text }}
+                .selector__selecting-component-wrapper(
+                        v-for="(item, i) in items"
+                        :key="`item2_${i}`"
+                        @click="selectingAndClose(i)"
+                    )
+                    component.selector__selecting(
+                        v-bind:is="component"
+                        v-bind:item="item"
+                        v-bind:class="{ selected: item.selected }"
+                    ) {{  }}
 </template>
 
 <script>
@@ -98,6 +104,8 @@
             margin-right: 8px;
         }
         &__selecting-wrapper {
+            max-height: 80px;
+            overflow-y: scroll;
             border-left: solid 2px $dark-gray;
             border-right: solid 2px $dark-gray;
             border-bottom: solid 2px $dark-gray;

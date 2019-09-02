@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import io from 'socket.io-client'
 import axios from 'axios'
 
 export default {
@@ -29,15 +30,56 @@ export default {
     Commentbar: () => import('~/components/organisms/mapEdit/Commentbar')
   },
   beforeCreate() {
-    this.$store.dispatch('mapEdit/initLayers')
-    this.$store.dispatch('mapEdit/selectLayer', 1)
     this.$store.dispatch('mapEdit/setLike', this.$store.state.user.id)
     this.$store.dispatch('mapEdit/setStock', this.$store.state.user.id)
+//     const socket = io(process.env.SOCKET_SERVER_URL)
+//
+//     socket.on('init', map => {
+//       this.$store.dispatch('mapEdit/initSocket', map)
+//     })
+//
+//     socket.on('map/update', prop => {
+//       this.$store.dispatch('mapEdit/mapSocket', {...prop, method: 'update'})
+//     })
+//
+//     socket.on('layer/add', layer => {
+//       this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'add'})
+//     })
+//     socket.on('layer/update', layer => {
+//       this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'update'})
+//     })
+//     socket.on('layer/delete', layer => {
+//       this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'delete'})
+//     })
+//
+//     socket.on('tool/add', prop => {
+//       this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'add'})
+//     })
+//     socket.on('tool/update', prop => {
+//       this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'update'})
+//     })
+//     socket.on('tool/delete', prop => {
+//       this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'delete'})
+//     })
+//
+//     socket.on('select/add', prop => {
+//       this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'add'})
+//     })
+//     socket.on('select/clear', prop => {
+//       this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'clear'})
+//     })
+
+//     this.$store.commit('mapEdit/init', socket)
+
+    if (this.$store.state.mapEdit.layers.length)
+      this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
   },
   mounted() {
-    this.$store.dispatch('ymap/init')
-  },
-  methods: {
+    this.$store.commit('ymap/init')
+
+//     this.setOffset()
+//     window.addEventListener('resize', () => this.setOffset())
+//     window.addEventListener('scroll', () => this.setOffset())
   },
   computed: {
     activeLayer () {
@@ -52,7 +94,17 @@ export default {
     backgroundFocused() {
       return this.$store.state.mapEdit.backgroundFocused
     }
-  }
+  },
+  methods: {
+//     setOffset() {
+//       const rect = this.$refs.layer.getBoundingClientRect()
+//       const prop = {
+//         x: window.pageXOffset + rect.left,
+//         y: window.pageYOffset + rect.top
+//       }
+//       this.$store.dispatch('mapEdit/setOffset', prop)
+//     }
+  },
 }
 </script>
 
