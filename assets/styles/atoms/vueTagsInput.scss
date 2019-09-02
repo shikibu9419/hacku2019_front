@@ -1,3 +1,7 @@
+
+@import "~assets/styles/variables.scss";
+@import "~assets/styles/mixin.scss";
+
 /* The input */
 .tags-input {
   display: flex;
@@ -16,30 +20,26 @@
 }
 
 .tags-input input[type="text"] {
-  color: #495057;
+  color: $dark-gray;
 }
 
 .tags-input-wrapper-default {
   padding: .5rem .25rem;
-
-  background: #fff;
-
-  border: 1px solid transparent;
-  border-radius: .25rem;
-  border-color: #dbdbdb;
+  background: $back-gray;
+  border: 2px solid $gray;
 }
 
 /* The tag badges & the remove icon */
-.tags-input span {
-  margin-right: 0.3rem;
+.tags-input-badge span {
+  margin-right: 1px;
 }
 
 .tags-input-remove {
   cursor: pointer;
   position: relative;
   display: inline-block;
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 10px;
+  height: 10px;
   overflow: hidden;
 }
 
@@ -49,8 +49,7 @@
   width: 100%;
   top: 50%;
   left: 0;
-  background: #5dc282;
-
+  background: $palette-green;
   height: 2px;
   margin-top: -1px;
 }
@@ -65,31 +64,31 @@
 /* Tag badge styles */
 .tags-input-badge {
   display: inline-block;
-  padding: 0.25em 0.4em;
-  font-size: 75%;
-  font-weight: 700;
-  line-height: 1;
+  padding: 1px 8px;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: 0.25rem;
+  background: $white;
+  margin-bottom: 4px;
+  margin-right: 4px;
+  border-radius: 8px;
+  @include noto-font(1.4rem);
 }
 
 .tags-input-badge-pill {
-  padding-right: 0.6em;
-  padding-left: 0.6em;
-  border-radius: 10rem;
+  // padding-right: 0.6em;
+  // padding-left: 0.6em;
+  // border-radius: 10rem;
 }
 
 .tags-input-badge-selected-default {
-  color: #212529;
-  background-color: #f0f1f2;
+  color: $text-main;
+  background-color: $white;
 }
 
 /* Typeahead */
 .typeahead-hide-btn {
-  color: #999 !important;
-  font-style: italic;
+  color: $text-light !important;
 }
 
 /* Typeahead - badges */
@@ -106,6 +105,8 @@
   position: absolute;
   width: 100%;
   z-index: 1000;
+  border: 2px solid $gray;
+  border-top: none;
 }
 
 .typeahead-dropdown li {
@@ -115,11 +116,11 @@
 
 /* Typeahead elements style/theme */
 .tags-input-typeahead-item-default {
-  color: #fff;
-  background-color: #343a40;
+  color: $text-main;
+  background-color: $white;
 }
 
 .tags-input-typeahead-item-highlighted-default {
-  color: #fff;
-  background-color: #007bff;
+  color: $white;
+  background-color: $theme-pink;
 }

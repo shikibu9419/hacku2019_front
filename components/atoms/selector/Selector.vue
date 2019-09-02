@@ -5,7 +5,7 @@
                 img.selector__select-icon(width="16px" src="~/assets/svgs/select.svg")
             .selector__selecting-wrapper(v-if="isShowing")
                 .selector__selecting(
-                v-for="(item, i) in items" :key="`item_${i}`"
+                v-for="(item, i) in items" :key="`item1_${i}`"
                 @click="selectingAndClose(i)"
                 v-bind:class="{ selected: item.selected }"
                 ) {{ item.text }}
@@ -16,7 +16,7 @@
             .selector__selecting-wrapper(v-if="isShowing")
                 component.selector__selecting(
                 v-bind:is="component"
-                v-for="(item, i) in items" :key="`item_${i}`"
+                v-for="(item, i) in items" :key="`item2_${i}`"
                 v-bind:item.async="item"
                 @click="selectingAndClose(i)"
                 v-bind:class="{ selected: item.selected }"
@@ -35,24 +35,11 @@
                 isShowing: false,
             }
         },
-        props: {
-            component: String,
-            items: [Object],
-            // text only
-            // {
-            //  text: string,
-            //  value: any,
-            //  selected: boolean
-            // }
-            // with component
-            // {
-            //  param: Object
-            //  value: any,
-            //  selected: boolean
-            // }
-            width: String
-            // ex. '200px'
-        },
+        props: [
+            "component",
+            "items",
+            "width"
+        ],
         created() {
             this.initSelected()
         },
@@ -97,7 +84,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "../../../assets/styles/variables";
+    @import "~assets/styles/variables";
     .selector {
         margin: 8px;
         &__selected {
