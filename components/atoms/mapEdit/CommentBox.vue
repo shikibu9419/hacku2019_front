@@ -1,11 +1,11 @@
 <template lang="pug">
-  .comment_box
-    button.comment_box__button(@click.stop="focusComment()" v-if="!onBox") {{ title }}
-    .comment_box__content
+  .comment_box(:class="{in_popup: inPopup}")
+    .comment_box__button(@click.stop="focusComment()" v-if="!onBox" :class="{in_popup: inPopup}") {{ title }}
+    .comment_box__content(:class="{in_popup: inPopup}")
       UserInfo(
-          :author="'tanakataro'"
-          :editors="null"
-        )
+        :author="user.name"
+        :editors="null"
+      )
       p.comment_box__comment {{ comment }}
 </template>
 
@@ -14,7 +14,7 @@ export default {
   components: {
     UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
   },
-  props: ['toolId', 'title', 'comment', 'user', 'lat', 'lng', 'onBox'],
+  props: ['toolId', 'title', 'comment', 'user', 'lat', 'lng', 'onBox', 'inPopup'],
   methods: {
     focusComment() {
       if (this.onBox) return
@@ -29,6 +29,12 @@ export default {
 @import "~/assets/styles/variables.scss";
 
 .comment_box {
+  bottom: 0px;
+  width: 100%;
+
+  &.in_popup {
+    position: absolute;
+  }
 
   &__button {
     width: 100%;
@@ -37,9 +43,15 @@ export default {
     border: 2px solid transparent;
     text-align: left;
     color: $text-main;
+
     &:focus {
       outline: none;
       border: 2px solid $gray;
+    }
+
+    &.in_popup {
+      border: 2px;
+      border-style: solid solid none;
     }
   }
 
@@ -48,6 +60,10 @@ export default {
     margin-bottom: 10px;
     padding: 8px;
     padding-top: 4px;
+
+    &.in_popup {
+      border: 2px solid;
+    }
   }
 }
 </style>

@@ -32,8 +32,7 @@ export default {
       let pin = JSON.parse(JSON.stringify(pinModel))
       let comment = JSON.parse(JSON.stringify(commentModel))
 
-      comment.comment = commentText
-      comment.user = this.$store.getters['user/getUser']
+      comment = {...comment, comment: commentText, user: this.$store.getters['user/getUser']}
       pin.comments.push(comment)
       pin = {...pin, ...this.$store.state.ymap.now}
 

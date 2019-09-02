@@ -82,13 +82,16 @@ export default {
       return {
         id: this.id,
         position: {
-          x: position.x - 50,
-          y: position.y - 120
+          x: position.x - 60,
+          y: position.y - 220
         },
         title: this.attr.title,
         content: content,
         comments: this.attr.comments
       }
+    },
+    mounted() {
+      console.log(this.$refs)
     }
   },
   components: {
