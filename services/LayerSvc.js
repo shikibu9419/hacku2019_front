@@ -1,5 +1,6 @@
 import axios from 'axios'
 const baseUrl = 'https://api.mille-feuille.app/maps'
+
 export default {
     create(token, mapId, layerName, description) {
         return axios.post(
