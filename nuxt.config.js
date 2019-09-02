@@ -46,7 +46,8 @@ export default {
     { src: '~/plugins/axios.js', ssr: false },
     { src: '~/plugins/global-component' },
     { src: '~/plugins/vue-tagsinput.js'},
-    { src: '~/plugins/socket.io' }
+    { src: '~/plugins/socket.io' },
+    { src: '~/plugins/localStorage.js', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules
