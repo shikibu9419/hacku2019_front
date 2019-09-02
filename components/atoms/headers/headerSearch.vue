@@ -12,7 +12,24 @@
         FilterBtn.filter_button__icon
         .filter_button__text Filter
       .filter_menu(:class="{'filter_menu--open':!filterMenu_close}")
-        input(v-model="filter.tag" type="text" placeholder="タグを検索").filter_menu__input_text
+        .sidebar__map_tags__tags
+          .filter_menu__type__text タグ：
+          .sidebar__map_tags__tags__wrapper(
+              v-if="!editingTags"
+              @click="editTags()"
+            )
+            .sidebar__map_tags__tag--placeholder(v-if="filter.tags.length==0") 何も設定されていません
+            .sidebar__map_tags__tag(v-for="(tag, index) in filter.tags" v-bind="filter.tags" :key="`header_search_tags_${tag.key}_${index}`")
+              .sidebar__map_tags__tag__text {{tag.value}}
+          .vue_tags_input__wrapper()
+            VueTagsInput(
+              v-if="editingTags"
+              :selected-tags="filter.tags"
+              :existing-tags="existingTags"
+              @edit-tags-finish="editTagsFinish"
+              :placeholder="'タグで検索'"
+              :button_text="'決定'"
+            ).filter_menu__input_text
         .filter_menu__types
           .filter_menu__type
             .filter_menu__type__text マイマップ：
@@ -36,11 +53,14 @@ export default {
     //svg
     SearchBtn: () => import('~/assets/svgs/search.svg?inline'),
     FilterBtn: () => import('~/assets/svgs/filter.svg?inline'),
+    //components
+    VueTagsInput: () => import('~/components/atoms/VueTagsInput'),
   },
   data() {
     return {
+      editingTags:false,
       filter:{
-        tag: "",
+        tags: [],
         like: false,
         mymap: false,
         stock: false
@@ -60,6 +80,11 @@ export default {
     if(this.type.split('/')[1] === "stock"){
       this.filter.stock = true
     }
+  },
+  computed:{
+    existingTags() {
+      return [{key: 100, value: 'red'}, {key: 101, value: 'blue'}, {key: 102, value: 'green'}]
+    },
   },
   methods: {
     update() {
@@ -96,12 +121,15 @@ export default {
     toggleFilterMenu(){
       this.filterMenu_close = (this.filterMenu_close ? false:true)
     },
-    OnFilterMenu(){
-      this.filterMenu_close = false;
+    editTags() {
+      // タグ検索inputを表示
+      this.editingTags = true;
     },
-    OffFilterMenu(){
-      this.filterMenu_close = true;
-    }
+    editTagsFinish(tags) {
+      this.filter.tags = tags
+      //this.$store.dispatch('', tags)
+      this.editingTags = false
+    },
   }
 }
 </script>
@@ -191,15 +219,17 @@ button {
 .filter_menu {
   position: absolute;
   top: 0;
-  left: 0;
+  right: -80px;
   background: $white;
   padding: 16px 20px;
-  border-radius: 0 0 8px 8px;
+  border-radius: 8px;
   z-index: -1;
   transform: translateY(-20px);
   opacity: 0;
   transition: .3s $bezier-ease-out;
   pointer-events: none;
+  width: 300px;
+  box-shadow: 0 4px 12px rgba($black,.3); 
   &--open {
     transform: translateY(30px);
     opacity: 2;
@@ -207,8 +237,7 @@ button {
   }
 }
 .filter_menu__input_text {
-  padding: 4px 8px;
-  margin: 4px 0;
+  width: 100%;
 }
 .filter_menu__type {
   display: flex;
@@ -216,4 +245,37 @@ button {
   justify-content: space-between;
 }
 
+
+.sidebar__map_tags__tags {
+  width: 100%;
+}
+.sidebar__map_tags__tags__wrapper{
+  width: 100%;
+  min-height: 30px;
+  background: $back-gray;
+  padding: .5rem .25rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  margin-bottom: 8px;
+  &:hover {
+    border: 2px solid $gray;
+  }
+}
+.sidebar__map_tags__tags__wrapper--click {
+  cursor: pointer;
+  &:hover {
+    background: $back-light-gray;
+  }
+}
+.sidebar__map_tags__tag {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 1px 8px;
+  background: $white;
+  margin-right: 4px;
+  border-radius: 8px;
+  &__text {
+    @include noto-font(1.4rem);
+  }
+}
 </style>
