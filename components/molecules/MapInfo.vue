@@ -1,12 +1,14 @@
 <template lang="pug">
   .sidebar_edit__map_info
-    .sidebar_edit__map_info__mapname hoge
+    .sidebar_edit__map_info__mapname {{ map.name }}
     .sidebar_edit__map_info__user
+      // TODO: author name & editors name
       UserInfo(
         :author="'username'"
         :editors="null"
       )
     .sidebar_edit__map_info__others
+      // TODO: num
       NumberInfo(
         :comments="'5'"
         :like="'8'"
@@ -18,6 +20,7 @@
 import ModalService from '~/services/ModalSvc'
 
 export default {
+  props: ["map"],
   computed: {
     layers () {
       return this.$store.state.mapEdit.layers

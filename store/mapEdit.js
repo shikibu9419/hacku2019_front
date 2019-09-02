@@ -68,10 +68,10 @@ const mutations = {
   },
 
   plot(state, prop) {
-    state.activeLayer.tools[prop.toolId].points.push(prop)
+    state.activeLayer.tools[prop.toolId].points.push(prop.point)
   },
   replot(state, prop) {
-    state.activeLayer.tools[prop.toolId].points.splice(prop.index, 1, {lat: prop.lat, lng: prop.lng})
+    state.activeLayer.tools[prop.toolId].points.splice(prop.index, 1, prop.point)
   },
   replotAll(state, prop) {
     const dlat = prop.now.lat - prop.prev.lat
@@ -111,6 +111,7 @@ const mutations = {
       state.layers[index] = Object.assign(state.layers[index], layer)
     else
       state.layers.push(layer)
+    console.log(state.layers)
   },
   selectLayer(state, layerId) {
     state.activeLayer = state.layers.find(layer => layer.id === layerId)
@@ -195,12 +196,24 @@ const actions = {
 
   plot(context, prop) {
     context.commit('plot', prop)
+
+    const tool = context.getters.getTool(prop.toolId)
+    const layerId = context.state.activeLayer.id
+    socket.emit('tool/update', {tool: tool, layerId: layerId})
   },
   replot(context, prop) {
     context.commit('replot', prop)
+
+    const tool = context.getters.getTool(prop.toolId)
+    const layerId = context.state.activeLayer.id
+    socket.emit('tool/update', {tool: tool, layerId: layerId})
   },
   replotAll(context, prop) {
     context.commit('replotAll', prop)
+
+    const tool = context.getters.getTool(prop.toolId)
+    const layerId = context.state.activeLayer.id
+    socket.emit('tool/update', {tool: tool, layerId: layerId})
   },
   resize(context, prop) {
     context.commit('resize', prop)
@@ -252,14 +265,9 @@ const actions = {
         context.commit('addTool', {tool, layerId})
         break;
       case 'update':
-        console.log('updated')
         context.commit('updateTool', {tool, layerId})
         break;
       case 'delete':
-        break;
-      case 'comments':
-        break;
-      case 'contents':
         break;
     }
   },

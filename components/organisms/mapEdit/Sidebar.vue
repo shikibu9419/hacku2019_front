@@ -5,9 +5,9 @@
         .sidebar_edit__scroll__wrapper
           .sidebar_edit__header
             img.sidebar_edit__header__img(src="")
-            MapInfo
+            MapInfo(:map="map")
           .sidebar_edit__content
-            MapTags
+            MapTags(:map="map")
             LayerSelector(:layers="layers")
         .sidebar_edit__view_button
           EditViewButton

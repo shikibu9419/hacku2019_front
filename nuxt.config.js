@@ -41,7 +41,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-//     { src: '~/plugins/vue-jsonp.js' },
+    { src: '~/plugins/vue-jsonp.js' },
     { src: '~/plugins/font-awesome', ssr: false },
     { src: '~/plugins/axios.js', ssr: false },
     { src: '~/plugins/global-component' },

@@ -30,7 +30,7 @@ export default {
     plot() {
       if (this.$store.state.mapEdit.plotting) {
         this.$store.dispatch('mapEdit/plot', {
-          ...this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition),
+          point: this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition),
           toolId: this.id
         })
       }
@@ -42,7 +42,7 @@ export default {
     releasePoint() {
       if (! this.$store.state.mapEdit.plotting) {
         this.$store.dispatch('mapEdit/replot', {
-          ...this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition),
+          point: this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition),
           toolId: this.id,
           index: this.index
         })
