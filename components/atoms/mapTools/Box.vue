@@ -25,7 +25,6 @@ export default {
     }
   },
   mounted() {
-    this.modalSvc = new ModalService(this.$store)
     this.width = 100
   },
   watch: {
@@ -74,7 +73,7 @@ export default {
   },
   methods: {
     popup() {
-      this.modalSvc.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
+      this.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
       this.select()
     },
     grabPoint() {
@@ -93,7 +92,7 @@ export default {
     ContentBox: () => import('~/components/atoms/mapEdit/ContentBox'),
     CommentBox: () => import('~/components/atoms/mapEdit/CommentBox')
   },
-  mixins: [Shared],
+  mixins: [Shared, ModalService],
 }
 </script>
 

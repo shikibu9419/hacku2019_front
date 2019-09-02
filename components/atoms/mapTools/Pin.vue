@@ -48,11 +48,8 @@ export default {
   methods: {
     popup() {
       if(!this.selected || this.grabbing) return
-      this.modalSvc.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
+      this.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
     }
-  },
-  created() {
-    this.modalSvc = new ModalService(this.$store)
   },
   computed: {
     attributes() {
@@ -103,7 +100,7 @@ export default {
     CommentPin: () => import('~/assets/svgs/comment_pin.svg?inline'),
     LinkPin: () => import('~/assets/svgs/link_pin.svg?inline'),
   },
-  mixins: [Shared],
+  mixins: [Shared, ModalService],
 }
 </script>
 
