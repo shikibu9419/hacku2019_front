@@ -15,7 +15,7 @@ import ModalSvc from '~/services/ModalSvc'
 import LayerSvc from '~/services/LayerSvc'
 
 export default {
-  props: ['id', 'name', 'color'],
+  props: ['id', 'name', 'color','edit'],
   components: {
     LayerIcon: () => import('~/assets/svgs/layer.svg?inline')
   },
@@ -27,21 +27,24 @@ export default {
       return this.$store.state.mapEdit.activeLayer.id === this.id
     },
     EditOnly(){
-      if(this.$route.path.match(/\/view$/)){
+      if(this.$route.path.match(/\/view$/) || this.edit){
         return false
       }
-      if(this.$route.path.match(/\/edit$/)){
+      if(this.$route.path.match(/\/edit$/) && !this.edit){
         return true
       }
     }
   },
   methods: {
     selectLayer() {
-      if (this.id !== 'background')
-        this.$store.dispatch('mapEdit/selectLayer', this.id)
-      else
-        this.$store.dispatch('mapEdit/focusBackground')
-      this.$store.commit('ymap/updateNow')
+      if(this.id !== 'null' || this.id !== 'undefined'){
+        if (this.id !== 'background')
+          this.$store.dispatch('mapEdit/selectLayer', this.id)
+        else
+          this.$store.dispatch('mapEdit/focusBackground')
+        this.$store.commit('ymap/updateNow')
+      }
+
     },
     editLayer(){
       this.openPopup('LayerSettingPopup', {}, null)
