@@ -18,6 +18,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   layout: 'MapHeaderLayout',
   middleware: 'authenticated',
@@ -28,24 +29,13 @@ export default {
     Commentbar: () => import('~/components/organisms/mapEdit/Commentbar')
   },
   beforeCreate() {
-    this.$store.commit('mapEdit/initLayers')
+    this.$store.dispatch('mapEdit/initLayers')
     this.$store.dispatch('mapEdit/selectLayer', 1)
   },
   mounted() {
     this.$store.dispatch('ymap/init')
-//     this.setOffset()
-//     window.addEventListener('resize', () => this.setOffset())
-//     window.addEventListener('scroll', () => this.setOffset())
   },
   methods: {
-//     setOffset() {
-//       const rect = this.$refs.layer.getBoundingClientRect()
-//       const prop = {
-//         x: window.pageXOffset + rect.left,
-//         y: window.pageYOffset + rect.top
-//       }
-//       this.$store.dispatch('mapEdit/setOffset', prop)
-//     }
   },
   computed: {
     activeLayer () {
@@ -66,24 +56,29 @@ export default {
 
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
+
 .map_edit {
   width: 100%;
   height: 100vh;
 }
+
 .map_edit__map {
   position: relative;
   width: 100%;
   height: $main-height;
   background: $back-light-gray;
   overflow: hidden;
+
   &__background {
     width: 100%;
     height: 100%;
+
     &.background__focus_on {
       z-index: 9;
     }
   }
 }
+
 .map_edit__bar {
   z-index: 10;
 }

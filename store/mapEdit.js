@@ -11,6 +11,10 @@ const uuid = function() {
   });
 };
 
+const emit = function(req, params) {
+  if (socket) socket.emit(req, params)
+}
+
 const state = () => ({
   // APIと通信して逐次変更する変数
   map: JSON.parse(JSON.stringify(mapModel)),
@@ -28,6 +32,11 @@ const state = () => ({
 })
 
 const mutations = {
+  // TODO: Delete when completing realtime edit
+  initLayers(state) {
+    state.layers = [{id: 1, name: 'layer1', color: 'red', visible: true, tools: {}}]
+  },
+
   // user status
   init(state, sckt) {
     socket = sckt
@@ -48,7 +57,7 @@ const mutations = {
   },
   updateTags(state, tags) {
     state.map = {...state.map, tags: tags}
-  }
+  },
 
   // tool
   addTool(state, {tool, layerId}) {
@@ -151,7 +160,7 @@ const actions = {
 
     const clone = JSON.parse(JSON.stringify(context.state.map))
     delete clone.layers
-    socket.emit('map/update', {map: clone})
+    emit('map/update', {map: clone})
   },
 
   // layer
@@ -164,7 +173,7 @@ const actions = {
     context.commit('addLayer', layer)
     context.dispatch('selectLayer', id)
 
-    socket.emit('layer/add', layer)
+    emit('layer/add', layer)
   },
   // layer (without emitting)
   selectLayer(context, layerId) {
@@ -185,19 +194,19 @@ const actions = {
     context.commit('addTool', {tool, layerId})
     context.dispatch('selectTool', {toolId: toolId})
 
-    socket.emit('tool/add', {tool: tool, layerId: layerId})
+    emit('tool/add', {tool: tool, layerId: layerId})
   },
   updateTool(context, tool) {
     const layerId = context.state.activeLayer.id
     context.commit('updateTool', {tool, layerId})
-    socket.emit('tool/update', {tool: tool, layerId: layerId})
+    emit('tool/update', {tool: tool, layerId: layerId})
   },
   updateToolPosition(context) {
     const layerId = context.state.activeLayer.id
     const toolIds = Object.keys(context.getters.selecting())
     toolIds.forEach(toolId => {
       const tool = context.state.activeLayer.tools[toolId]
-      socket.emit('tool/update', {tool: tool, layerId: layerId})
+      emit('tool/update', {tool: tool, layerId: layerId})
     })
   },
   selectTool(context, prop) {
@@ -209,25 +218,25 @@ const actions = {
     const toolId = prop.toolId
     context.commit('selectTool', {toolId, userId})
 
-    socket.emit('select/add', {toolId: toolId, userId: userId})
+    emit('select/add', {toolId: toolId, userId: userId})
   },
   clearSelection(context) {
     context.commit('clearSelection', context.getters.othersSelecting())
 
-    socket.emit('select/clear', {userId: context.getters.getUser.id})
+    emit('select/clear', {userId: context.getters.getUser.id})
   },
   plot(context, prop) {
     context.commit('plot', prop)
 
     const tool = context.getters.getTool(prop.toolId)
     const layerId = context.state.activeLayer.id
-    socket.emit('tool/update', {tool: tool, layerId: layerId})
+    emit('tool/update', {tool: tool, layerId: layerId})
   },
   deleteTool(context, toolId) {
     const layerId = context.state.activeLayer.id
     context.commit('deleteTool', {toolId, layerId})
 
-    socket.emit('tool/delete', {toolId: toolId, layerId: layerId})
+    emit('tool/delete', {toolId: toolId, layerId: layerId})
   },
   // tool (without emitting)
   moveTools({commit, getters}, prop) {
@@ -246,7 +255,7 @@ const actions = {
     context.commit('resize', prop)
 //     const tool = context.getters.getTool(prop.toolId)
 //     const layerId = context.state.activeLayer.id
-//     socket.emit('tool/update', {tool: tool, layerId: layerId})
+//     emit('tool/update', {tool: tool, layerId: layerId})
   },
 
   // サーバから受け取った情報をもとに実行
