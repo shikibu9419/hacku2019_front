@@ -15,11 +15,11 @@ export default {
                          description: '説明',
                          publish_setting: 0 }
       ).then(response => {
-//         const map = response.data.map
-        this.$router.push(`/maps/${response.data.map.id}/edit`)
+        console.log(response.data)
+        this.$router.push({name: 'maps-edit', params: {mapId: response.data.map.id}})
       }).catch(err => {
         console.log(err.response)
-        this.$router.push(`/maps/edit/`)
+        this.$router.push('/maps/edit')
       })
     }
   },

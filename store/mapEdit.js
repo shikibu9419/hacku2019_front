@@ -32,11 +32,6 @@ const state = () => ({
 })
 
 const mutations = {
-  // TODO: Delete when completing realtime edit
-  initLayers(state) {
-    state.layers = [{id: 1, name: 'layer1', color: 'red', visible: true, tools: {}}]
-  },
-
   // user status
   init(state, sckt) {
     socket = sckt
