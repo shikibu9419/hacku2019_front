@@ -17,7 +17,7 @@ export default {
   },
   methods:{
     pushStock(){
-      this.$store.dispatch('changeStock')
+      this.$store.dispatch('mapEdit/changeStock')
     }
   },
   computed:{
