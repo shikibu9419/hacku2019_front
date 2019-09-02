@@ -9,10 +9,13 @@
       .sidebar__map_tags__tags__wrapper(
           v-if="!editingTags"
           @click="editTags()"
+          :class="{'sidebar__map_tags__tags__wrapper--click':viewOnly}"
         )
         .sidebar__map_tags__tag(v-for="(tag, index) in tags" v-bind="tag" :key="`map_edit_tags_${tag.key}_${index}`")
           .sidebar__map_tags__tag__text {{tag.value}}
-      .vue_tags_input__wrapper
+      .vue_tags_input__wrapper(
+        v-if="viewOnly"
+      )
         vue-tags-input(
           v-if="editingTags"
           :selected-tags="tags"
@@ -54,9 +57,9 @@ export default {
   methods: {
     editTags() {
       // タグ検索inputを表示
-      this.editingTags = true;
-      console.log(this.$route.path)
-      console.log(this.$route.name)
+      if(this.$route.path.match(/\/edit$/)){
+        this.editingTags = true;
+      }
     },
     editTagsFinish() {
       this.tags = this.$store.getters['mapEdit/getTags']
@@ -80,8 +83,10 @@ export default {
 .sidebar__map_tags__tags__wrapper{
   width: 100%;
   min-height: 20px;  
-  cursor: pointer;
   border-radius: 8px;
+}
+.sidebar__map_tags__tags__wrapper--click {
+  cursor: pointer;
   &:hover {
     background: $back-light-gray
   }
