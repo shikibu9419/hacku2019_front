@@ -5,7 +5,10 @@
         SearchBtn.search_button__icon
       input(v-model="query" :placeholder="placeholder" @change="update()").header_search__input
     .filter_wrapper(v-if="type.split('/')[0] === 'maplists'")
-      button(@click="toggleFilterMenu()").filter_button.button
+      button(
+        @click="toggleFilterMenu()"
+        :class="{'filter_button--on':!filterMenu_close}"
+      ).filter_button.button
         FilterBtn.filter_button__icon
         .filter_button__text Filter
       .filter_menu(:class="{'filter_menu--open':!filterMenu_close}")
@@ -92,6 +95,12 @@ export default {
     },
     toggleFilterMenu(){
       this.filterMenu_close = (this.filterMenu_close ? false:true)
+    },
+    OnFilterMenu(){
+      this.filterMenu_close = false;
+    },
+    OffFilterMenu(){
+      this.filterMenu_close = true;
     }
   }
 }
@@ -155,6 +164,20 @@ button {
   display: flex;
   align-items: center;
   padding: 2px;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &--on {
+    .filter_button__icon {
+      .filter_cls-1 {
+        fill: $theme-pink !important;
+      }
+    }
+    .filter_button__text {
+      color: $theme-pink;
+    }
+  }
 }
 .filter_button__icon {
   display: block;
