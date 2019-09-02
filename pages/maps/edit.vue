@@ -35,6 +35,11 @@ export default {
     socket.on('init', map => {
       this.$store.dispatch('mapEdit/initSocket', map)
     })
+
+    socket.on('map/update', prop => {
+      this.$store.dispatch('mapEdit/mapSocket', {...prop, method: 'update'})
+    })
+
     socket.on('layer/add', layer => {
       this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'add'})
     })
@@ -44,6 +49,7 @@ export default {
     socket.on('layer/delete', layer => {
       this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'delete'})
     })
+
     socket.on('tool/add', prop => {
       this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'add'})
     })
@@ -53,12 +59,7 @@ export default {
     socket.on('tool/delete', prop => {
       this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'delete'})
     })
-    socket.on('tool/update_contents', prop => {
-      this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'contents'})
-    })
-    socket.on('tool/update_comments', prop => {
-      this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'comments'})
-    })
+
     socket.on('select/add', prop => {
       this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'add'})
     })
@@ -67,7 +68,12 @@ export default {
     })
 
     this.$store.commit('mapEdit/init', socket)
-    this.$store.commit('mapEdit/selectLayer', 1)
+
+    if (!this.$store.state.layers.length)
+      // TODO: send request to create layer
+      this.$store.commit('mapEdit/addLayer', {id: 1, name: 'layer', color: 'red', visible: true, tools: {}})
+    else
+      this.$store.commit('mapEdit/selectLayer', this.$store.state.layers[0].id)
   },
   mounted() {
     this.$store.commit('ymap/init')
