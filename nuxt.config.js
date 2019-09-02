@@ -47,7 +47,7 @@ export default {
     { src: '~/plugins/global-component' },
     { src: '~/plugins/vue-tagsinput.js'},
     { src: '~/plugins/socket.io' },
-    { src: '~/plugins/localStorage.js', ssr: false }
+    { src: '~/plugins/localStorage.js', ssr: false },
     { src: '~/plugins/vue-carousel', ssr: false }
   ],
   /*
