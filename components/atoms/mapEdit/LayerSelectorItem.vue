@@ -27,11 +27,15 @@ export default {
       return this.$store.state.mapEdit.activeLayer.id === this.id
     },
     EditOnly(){
-      if(this.$route.path.match(/\/view$/) || this.edit){
+      if(this.$route.path.match(/\/view$/)){
         return false
       }
-      if(this.$route.path.match(/\/edit$/) && !this.edit){
-        return true
+      if(this.$route.path.match(/\/edit$/)){
+        if(this.edit){
+          return true
+        }else{
+          return false
+        }
       }
     }
   },
@@ -47,7 +51,8 @@ export default {
 
     },
     editLayer(){
-      this.openPopup('LayerSettingPopup', {}, null)
+      //mapId, layerId, layerName, description, color
+      this.openPopup('LayerSettingPopup', null,this.id,this.name, null, this.color)
     }
   },
   mixins: [ LayerSvc, ModalSvc ]

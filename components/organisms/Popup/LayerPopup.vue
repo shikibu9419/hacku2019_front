@@ -6,7 +6,7 @@
         :id="layer.id"
         :name="layer.name"
         :color="getLayerColorCom"
-        :edit="'false'"
+        :edit="false"
         )
       CustomButton.layer-popup--button(:handler="createLayer") 追加
     .layer-popup__create
@@ -133,6 +133,7 @@
     }
     &__title {
       width: 70%;
+      border: none !important;
     }
     &--button {
       background: $theme-pink;

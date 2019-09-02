@@ -7,7 +7,7 @@
         span  Layers
     .sidebar__layer_selector__content
       .sidebar__layer_selector__content__item(v-for="layer in layers")
-        layer-selector-item(:key="layer.id" v-bind="layer" :edit="'true'")
+        layer-selector-item(:key="layer.id" v-bind="layer" :edit="true")
     .sidebar__layer_selector__add(
         @click="addLayer()"
         v-if="CanIEdit"
@@ -21,7 +21,7 @@
         //span.sidebar__edit_category__text--strong {{layers.length}}
         span Background
     .sidebar__background__content
-        layer-selector-item(v-bind="backgroundAttr")
+        layer-selector-item(v-bind="backgroundAttr" :edit="true")
 </template>
 
 <script>
