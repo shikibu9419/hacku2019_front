@@ -69,6 +69,9 @@ export default {
 
 //     this.$store.commit('mapEdit/init', socket)
 
+    this.$store.dispatch('mapEdit/setLike', this.$store.state.user.id)
+    this.$store.dispatch('mapEdit/setStock', this.$store.state.user.id)
+
     if (!this.$store.state.mapEdit.layers.length)
       // TODO: send request to create layer
       this.$store.dispatch('mapEdit/addLayer', {id: 1, name: 'layer', color: 'red', visible: true, tools: {}})

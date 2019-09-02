@@ -17,19 +17,12 @@ export default {
   },
   methods:{
     pushStock(){
-      //VueXから拾ってきて条件分岐
-      let stockd_on // = this.$store.like
-      if(stockd_on){
-        //外す処理
-      }else{
-        //つける処理
-      }
+      this.$store.dispatch('changeStock')
     }
   },
   computed:{
     mapStockdOn(){
-      //VueXから、マップがすでにストックされていたらtrueを返す
-      return false
+      return this.$store.state.mapEdit.stock
     }
   }
 }

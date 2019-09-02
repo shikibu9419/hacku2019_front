@@ -31,6 +31,8 @@ export default {
   beforeCreate() {
     this.$store.dispatch('mapEdit/initLayers')
     this.$store.dispatch('mapEdit/selectLayer', 1)
+    this.$store.dispatch('mapEdit/setLike', this.$store.state.user.id)
+    this.$store.dispatch('mapEdit/setStock', this.$store.state.user.id)
   },
   mounted() {
     this.$store.dispatch('ymap/init')

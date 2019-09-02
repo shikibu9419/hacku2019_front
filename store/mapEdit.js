@@ -1,5 +1,6 @@
 import selectToolModel from '~/models/selectToolModel.js'
 import mapModel from '~/models/map.js'
+import axios from 'axios'
 
 var socket;
 
@@ -28,7 +29,9 @@ const state = () => ({
   grabbing: false,
   mapGrabbing: false,
   backgroundFocused: false,
-  commentbarOpen: false
+  commentbarOpen: false,
+  like: false,
+  stock: false,
 })
 
 const mutations = {
@@ -52,6 +55,35 @@ const mutations = {
   },
   updateTags(state, tags) {
     state.map = {...state.map, tags: tags}
+  },
+
+  //like
+  setLike(state, user_id) {
+    state.like = (state.map.like.filter(function(element) {
+      return (element.user_id == user_id)
+    })).length !== 0
+  },
+  changeLike(state) {
+    if(state.like) {
+      this.$axios.delete('https://api.mille-feuille.app/maps/' + state.map.map_id + '/like')
+    } else {
+      this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/like')      
+    }
+    state.like = !state.like
+  },
+  //stock
+  changeStock(state) {
+    if(state.stock) {
+      this.$axios.delete('https://api.mille-feuille.app/maps/' + state.map.map_id + '/stock')
+    } else {
+      this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/stock')      
+    }
+    state.stock = !state.stock
+  },
+  setStock(state, user_id) {
+    state.stock = (state.map.stock.filter(function(element) {
+      return (state.map.stock.user_id == user_id)
+    })) != 0
   },
 
   // tool
@@ -178,6 +210,22 @@ const actions = {
   focusBackground(context) {
     context.commit('focusBackground')
     context.dispatch('clearSelection')
+  },
+
+  //like
+  setLike(context, user_id) {
+    context.commit('setLike', user_id)
+  },
+  changeLike(context) {
+    context.commit('changeLike')
+  },
+
+  //stock
+  setStock(context, user_id) {
+    context.commit('setStock', user_id)
+  },
+  changeStock(context) {
+    context.commit('changeStock')
   },
 
   // tool
