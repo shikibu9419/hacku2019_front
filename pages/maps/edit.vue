@@ -13,7 +13,7 @@
       sidebar.map_edit__bar
       commentbar.map_edit__bar
     .map_edit__popup-modal
-      component(v-for="(modal, i) in modals" :is="modal.component" :key="`modals_${i}`" v-bind:params="modal.params")
+      component(v-for="(modal, i) in modals" :is="modal.component" :key="`modal_${i}`" v-bind:params="modal.params")
 </template>
 
 <script>
