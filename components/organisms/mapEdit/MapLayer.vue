@@ -2,9 +2,9 @@
   .map_edit__map__layer(v-if="visible")
     svg.map_edit__map__svg(@mousemove="moveOrScroll" @mousedown="grabMap" @mouseup="resetGrabbing" @click.right="resetEditting")
       rect.map_edit__map__svg_filter(v-if="isActive")
-      tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :selected="false" :layer-active="isActive")
+      tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :layer-active="isActive")
       rect.map_edit__toolbar__background(:transform="`translate(${this.center.x - 340 / 2},10)`")
-      tool(v-for="[id, attr] in selectingTools" :key="attr.id" :id="id" :attr="attr" :selected="true" :layer-active="isActive")
+      tool(v-for="[id, attr] in selectingTools" :key="attr.id" :id="id" :attr="attr" :layer-active="isActive")
       toolbar-icons(v-if="isActive")
 </template>
 

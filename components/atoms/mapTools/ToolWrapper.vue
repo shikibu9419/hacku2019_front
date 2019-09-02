@@ -1,14 +1,14 @@
 <template lang="pug">
   building-basic(v-if="attr.type === 'building_basic'"
-      :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
+      :id="id" :attr="attr" :layer-active="layerActive")
   building(v-else-if="attr.type === 'building'"
-      :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
+      :id="id" :attr="attr" :layer-active="layerActive")
   direction(v-else-if="attr.type === 'direction'"
-      :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
+      :id="id" :attr="attr" :layer-active="layerActive")
   pin(v-else-if="attr.type === 'pin'"
-      :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
+      :id="id" :attr="attr" :layer-active="layerActive")
   box(v-else-if="attr.type === 'box'"
-      :id="id" :attr="attr" :selected="selected" :layer-active="layerActive")
+      :id="id" :attr="attr" :layer-active="layerActive")
 </template>
 
 <script>

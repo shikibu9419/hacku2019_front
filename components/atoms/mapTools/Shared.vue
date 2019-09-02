@@ -41,7 +41,7 @@ export default {
       return this.$store.state.mapEdit.grabbing
     },
     selected() {
-      return Object.keys(this.$store.getters['mapEdit/selecting']).includes(this.id)
+      return Object.keys(this.$store.state.mapEdit.selected).includes(this.id)
     }
   },
 }

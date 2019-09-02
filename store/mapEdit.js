@@ -1,6 +1,7 @@
-import socket from '~/plugins/socket.io.js'
 import selectToolModel from '~/models/selectToolModel.js'
 import mapModel from '~/models/map.js'
+
+var socket;
 
 const uuid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -27,9 +28,10 @@ const state = () => ({
 })
 
 const mutations = {
-  init(state) {
+  init(state, sckt) {
     // 実際はAPIからデータをとりにきてlayersにセット
     state.layers = [{id: 1, name: 'layer1', color: 'red', visible: true, tools: {}}]
+    socket = sckt
   },
   toggle(state, key) {
     state[key] = !state[key]
@@ -127,6 +129,9 @@ const mutations = {
 }
 
 const actions = {
+  init(context, sckt) {
+    context.commit('init', sckt)
+  },
   toggle(context, key) {
     context.commit('toggle', key)
   },
@@ -184,15 +189,16 @@ const actions = {
     const userId = context.getters.getUser.id
     const toolId = prop.toolId
     context.commit('selectTool', {toolId, userId})
+
+    socket.emit('select/add', {toolId: toolId, userId: userId})
   },
   clearSelection(context) {
     context.commit('clearSelection', context.getters.othersSelecting())
+
+    socket.emit('select/clear', {userId: context.getters.getUser.id})
   },
   moveTools({commit, getters}, prop) {
     commit('moveTools', {prop, getters})
-  },
-  init(context) {
-    context.commit('init')
   },
   addLayer(context, layer) {
     // 実際はlayer作成要求をして, レスポンスをlayerにセット
@@ -260,10 +266,10 @@ const actions = {
 
     switch (prop.method) {
       case 'add':
-        context.dispatch('selectTool', {toolId, userId})
+        context.commit('selectTool', {toolId, userId})
         break;
       case 'clear':
-        context.dispatch('clearSelection', context.getters.othersSelecting(userId))
+        context.commit('clearSelection', context.getters.othersSelecting(userId))
         break;
     }
   }
