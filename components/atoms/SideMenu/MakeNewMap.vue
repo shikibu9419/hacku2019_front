@@ -5,17 +5,27 @@
         fa-icon(icon="plus").sidemenu_button__icon__svg
       .sidemenu_button__text マップを作る
 </template>
+
 <script>
 export default {
   methods:{
-    makeNewMap(){
-      //新しいマップを作る処理
-      //mapIDをサーバーから受け取る
-      this.$router.push('/maps/edit')
+    makeNewMap() {
+      this.$axios.post(process.env.API_URL + '/maps',
+                       { name: '新しい地図',
+                         description: '説明',
+                         publish_setting: 0 }
+      ).then(response => {
+//         const map = response.data.map
+        this.$router.push(`/maps/${response.data.map.id}/edit`)
+      }).catch(err => {
+        console.log(err.response)
+        this.$router.push(`/maps/edit/`)
+      })
     }
   },
 }
 </script>
+
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";
