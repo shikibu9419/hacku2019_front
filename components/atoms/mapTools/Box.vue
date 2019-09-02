@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import ModalService from '~/services/ModalSvc'
+import ModalSvc from '~/services/ModalSvc'
 import Shared from './Shared'
 
 export default {
@@ -92,7 +92,7 @@ export default {
     ContentBox: () => import('~/components/atoms/mapEdit/ContentBox'),
     CommentBox: () => import('~/components/atoms/mapEdit/CommentBox')
   },
-  mixins: [Shared, ModalService],
+  mixins: [ Shared, ModalSvc ],
 }
 </script>
 

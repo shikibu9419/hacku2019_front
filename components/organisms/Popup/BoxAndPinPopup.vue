@@ -54,7 +54,7 @@
                         img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/text_box.svg")
                         .box-and-pin-popup__info-type Comments
                     comment-form(:id="params.attr.id")
-                    comment-list(:tool-id="params.attr.id")
+                    comment-list.box-and-pin-popup__comment-list(:tool-id="params.attr.id")
 </template>
 
 <script>
@@ -308,6 +308,11 @@ export default {
     background-color: $back-gray;
     padding: 8px;
     margin-bottom: 4px;
+  }
+  &__comment-list {
+      margin-top: 8px;
+      max-height: 320px;
+      overflow-y: scroll;
   }
 }
 </style>

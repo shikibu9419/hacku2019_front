@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     rows() {
-      return Math.max(Math.min(this.localText.split('\n').length, this.maxSize), this.defaultSize)
+      return Math.max(Math.min(Math.max(this.localText.split('\n').length, Math.ceil(this.localText.length/20)), this.maxSize), this.defaultSize)
     }
   },
   watch: {
@@ -34,7 +34,6 @@ export default {
 
 <style lang="scss" scoped>
 .autosize-textarea {
-  height: 100%;
   width: 100%;
   outline: none;
   resize: none;
