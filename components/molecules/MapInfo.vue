@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import ModalService from '~/services/ModalSvc'
+import ModalSvc from '~/services/ModalSvc'
 
 export default {
   props: ["map"],
@@ -36,7 +36,7 @@ export default {
       this.$store.dispatch('mapEdit/addLayer', prop)
     },
     popup() {
-      this.modalSvc.openPopup('BoxAndPinPopup', {}, null)
+      this.openPopup('BoxAndPinPopup', {}, null)
     }
   },
   components: {
@@ -44,9 +44,7 @@ export default {
     UserInfo: () => import('~/components/atoms/mapInfo/UserInfo'),
     NumberInfo: () => import('~/components/atoms/mapInfo/NumberInfo')
   },
-  created() {
-    this.modalSvc = new ModalService(this.$store)
-  },
+  mixins: [ ModalSvc ]
 }
 </script>
 

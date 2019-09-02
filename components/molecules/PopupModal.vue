@@ -1,7 +1,7 @@
 <template lang="pug">
     .popup-modal
         .popup-modal__popup-content(v-bind:class="{ 'for-box-and-pin-popup': params.component === 'BoxAndPinPopup' }")
-            component(v-bind:is="params.component", :closeModal="closeModal", v-bind:params="params.property")
+            component(v-bind:is="params.component", :closeModal="closePopup", v-bind:params="params.property")
 </template>
 
 <script>
@@ -22,11 +22,6 @@
                 component: String,
                 property: Object,
                 onOk: () => {}
-            }
-        },
-        methods: {
-            closeModal() {
-                this.closeModal()
             }
         },
         mixins: [ ModalSvc ]
