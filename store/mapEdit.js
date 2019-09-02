@@ -385,6 +385,9 @@ const getters = {
   activeLayer(state) {
     return state.activeLayer
   },
+  getAllLayer(state) {
+    return state.layers
+  },
   inactiveLayers(state) {
     return state.layers.filter(layer => layer.id !== state.activeLayer.id)
   },

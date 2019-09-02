@@ -71,7 +71,7 @@
           color: 'gray'
         },
         items: [
-          { text: '', value: 0, selected: true },
+          { text: '拒否', value: 0, selected: true },
           { text: '無理', value: 1, selected: false },
           { text: '閲覧可', value: 2, selected: false },
         ],
