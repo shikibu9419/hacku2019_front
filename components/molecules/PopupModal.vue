@@ -9,11 +9,13 @@
     import BoxAndPinPopup from '~/components/organisms/Popup/BoxAndPinPopup'
     import LayerSettingPopup from '~/components/organisms/Popup/LayerSettingPopup'
     import ShareSettingPopup from '~/components/organisms/Popup/ShareSettingPopup'
+    import LayerPopup from '~/components/organisms/Popup/LayerPopup'
     export default {
         components: {
             BoxAndPinPopup,
             LayerSettingPopup,
-            ShareSettingPopup
+            ShareSettingPopup,
+            LayerPopup
         },
         props: {
             params: {

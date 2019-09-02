@@ -69,7 +69,7 @@ export default {
       this.$store.dispatch('mapEdit/addLayer', layer)
     },
     popup() {
-      this.modalSvc.openPopup('ShareSettingPopup', {}, null)
+      this.modalSvc.openPopup('LayerPopup', {}, null)
     }
   },
   components: {
