@@ -13,7 +13,7 @@ const latLngToPixel = function(position) {
 
 
 const state = () => ({
-  center: {lat: 35.71, lng: 139.72},
+  center: {lat: 34.70, lng: 135.49},
   now: {},
   zoom: 18
 })
