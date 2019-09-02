@@ -7,15 +7,15 @@
 export default {
   computed:{
     ButtonLink(){
-      if(this.$route.path === "/maps/view"){
+      if(this.$route.path.match(/\/view$/)){
         return "/maps/edit"
       }
-      if(this.$route.path === "/maps/edit"){
+      if(this.$route.path.match(/\/edit$/)){
         return "/maps/view"
       }
     },
     ButtonText(){
-      if(this.$route.path === "/maps/view"){
+      if(this.$route.path.match(/\/view$/)){
         // 編集権限があれば
         // if(){
         //   return "編集する"
@@ -23,7 +23,7 @@ export default {
         return "編集権限をリクエスト"
         // }
       }
-      if(this.$route.path === "/maps/edit"){
+      if(this.$route.path.match(/\/edit$/)){
         return "閲覧モードでみる"
       }
     }

@@ -5,17 +5,20 @@
       .sidebar__edit_category__text
         span.sidebar__edit_category__text--strong {{tags.length}}
         span  Tags
-    vue-tags-input(
-      v-if="editingTags"
-      :selected-tags="tags"
-      :existing-tags="existingTags"
-      v-on:edit-tags-finish="editTagsFinish"
-    )
-    .sidebar__map_tags__tags(
-      @click="editTags()"
-    )
-      .sidebar__map_tags__tag(v-for="(tag, index) in tags" v-bind="tag" :key="`map_edit_tags_${tag.key}_${index}`")
-        .sidebar__map_tags__tag__text {{tag.value}}
+    .sidebar__map_tags__tags
+      .sidebar__map_tags__tags__wrapper(
+          v-if="!editingTags"
+          @click="editTags()"
+        )
+        .sidebar__map_tags__tag(v-for="(tag, index) in tags" v-bind="tag" :key="`map_edit_tags_${tag.key}_${index}`")
+          .sidebar__map_tags__tag__text {{tag.value}}
+      .vue_tags_input__wrapper
+        vue-tags-input(
+          v-if="editingTags"
+          :selected-tags="tags"
+          :existing-tags="existingTags"
+          v-on:edit-tags-finish="editTagsFinish"
+        )
 </template>
 
 <script>
@@ -31,15 +34,29 @@ export default {
         tags: []
       }
     },
+  mounted(){
+    console.log(this.$route.path)
+    console.log(this.$route.name)
+  },
   computed: {
     existingTags() {
       return [{key: 100, value: 'red'}, {key: 101, value: 'blue'}, {key: 102, value: 'green'}]
+    },
+    viewOnly(){
+      if(this.$route.path.match(/\/view$/)){
+        return false
+      }
+      if(this.$route.path.match(/\/edit$/)){
+        return true
+      }
     }
   },
   methods: {
     editTags() {
       // タグ検索inputを表示
-      this.editingTags = true
+      this.editingTags = true;
+      console.log(this.$route.path)
+      console.log(this.$route.name)
     },
     editTagsFinish() {
       this.tags = this.$store.getters['mapEdit/getTags']
@@ -58,9 +75,20 @@ export default {
 @import "~/assets/styles/atoms/Sidebar.scss";
 
 .sidebar__map_tags__tags {
-  display: flex;
+  width: 100%;
+}
+.sidebar__map_tags__tags__wrapper{
+  width: 100%;
+  min-height: 20px;  
+  cursor: pointer;
+  border-radius: 8px;
+  &:hover {
+    background: $back-light-gray
+  }
 }
 .sidebar__map_tags__tag {
+  display: inline-block;
+  margin-bottom: 4px;
   padding: 1px 8px;
   background: $white;
   margin-right: 4px;
