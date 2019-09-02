@@ -20,7 +20,9 @@
           v-if="editingTags"
           :selected-tags="tags"
           :existing-tags="existingTags"
-          v-on:edit-tags-finish="editTagsFinish"
+          @edit-tags-finish="editTagsFinish"
+          :placeholder="'タグを追加'"
+          :button_text="'保存'"
         )
 </template>
 
@@ -61,8 +63,8 @@ export default {
         this.editingTags = true;
       }
     },
-    editTagsFinish() {
-      this.tags = this.$store.getters['mapEdit/getTags']
+    editTagsFinish(tags) {
+      this.$store.dispatch('mapEdit/updateTags', tags)
       this.editingTags = false
     },
   },
