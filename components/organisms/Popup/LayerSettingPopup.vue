@@ -6,7 +6,8 @@
             .layer-setting-popup__setting-name レイヤー名
                 input.layer-setting-popup--end
             .layer-setting-popup__setting-color レイヤーカラー
-                .layer-setting-popup__selector hoge
+                .layer-setting-popup--end
+                    Selector.layer-setting-popup__selector(v-bind:component="'selectColorItem'" v-bind:items.async="items" v-bind:width="'100px'")
             .layer-setting-popup__setting-transform レイヤーの移動
                 .layer-setting-popup--end
                     CustomButton.layer-setting-popup__button 上へ
@@ -17,6 +18,7 @@
 <script>
     import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
     import CustomButton from '~/components/atoms/CustomButton'
+    import Selector from '~/components/atoms/selector/Selector'
     export default {
         name: 'LayerSettingPopup.vue',
         props: {
@@ -25,7 +27,35 @@
         },
         components: {
             DeleteAndCloseButton,
-            CustomButton
+            CustomButton,
+            Selector
+        },
+        data() {
+            return {
+                items: [
+                    { params: {}, value: 'light-pink', selected: true },
+                    { params: {}, value: 'pink', selected: false },
+                    { params: {}, value: 'red', selected: false },
+                    { params: {}, value: 'light-orange', selected: false },
+                    { params: {}, value: 'orange', selected: false },
+                    { params: {}, value: 'dark-orange', selected: false },
+                    { params: {}, value: 'light-yellow', selected: false },
+                    { params: {}, value: 'yellow', selected: false },
+                    { params: {}, value: 'dark-yellow', selected: false },
+                    { params: {}, value: 'light-green', selected: false },
+                    { params: {}, value: 'green', selected: false },
+                    { params: {}, value: 'blue-green', selected: false },
+                    { params: {}, value: 'light-sky', selected: false },
+                    { params: {}, value: 'sky', selected: false },
+                    { params: {}, value: 'cyan', selected: false },
+                    { params: {}, value: 'light-purple', selected: false },
+                    { params: {}, value: 'purple', selected: false },
+                    { params: {}, value: 'dark-blue', selected: false },
+                    { params: {}, value: 'light-gray', selected: false },
+                    { params: {}, value: 'gray', selected: false },
+                    { params: {}, value: 'black', selected: false }
+                ]
+            }
         }
     }
 </script>

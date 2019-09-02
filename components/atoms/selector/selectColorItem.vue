@@ -26,6 +26,7 @@
     @import "../../../assets/styles/variables";
     @import "../../../assets/styles/atoms/layerSvg";
     .select-color-item {
+        background: $white;
         height: 32px;
         display: flex;
         align-items: center;

@@ -14,7 +14,7 @@
                 component(
                     v-bind:is="component"
                     v-bind:item="getSelected()[0]"
-                ) {{ 'hoge' }}
+                ) {{  }}
                 img.selector__select-icon(width="16px" src="~/assets/svgs/select.svg")
             .selector__selecting-wrapper(v-if="isShowing")
                 .selector__selecting-component-wrapper(
@@ -26,7 +26,7 @@
                         v-bind:is="component"
                         v-bind:item="item"
                         v-bind:class="{ selected: item.selected }"
-                    ) {{ 'hoge' }}
+                    ) {{  }}
 </template>
 
 <script>
