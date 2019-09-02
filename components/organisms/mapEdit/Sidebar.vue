@@ -5,10 +5,10 @@
         .sidebar_edit__scroll__wrapper
           .sidebar_edit__header
             img.sidebar_edit__header__img(src="")
-            MapInfo
+            MapInfo(:map="map")
           .sidebar_edit__content
-            MapTags
-            LayerSelector
+            MapTags(:map="map")
+            LayerSelector(:layers="layers")
         .sidebar_edit__view_button
           EditViewButton
       .toggle_sidebar
@@ -32,9 +32,12 @@ export default {
     EditViewButton: () => import('~/components/atoms/mapEdit/EditViewButton')
   },
   computed: {
-    layers () {
+    map() {
+      return this.$store.state.mapEdit.map
+    },
+    layers() {
       return this.$store.state.mapEdit.layers
-    }
+    },
   },
   methods: {
     toggleBar(){

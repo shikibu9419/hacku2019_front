@@ -33,6 +33,7 @@ import layerModel from '~/models/layer'
 import Selector from '~/components/atoms/selector/Selector'
 
 export default {
+  props: ['layers'],
   data() {
     return {
       backgroundAttr: {
@@ -48,9 +49,6 @@ export default {
     }
   },
   computed: {
-    layers () {
-      return this.$store.state.mapEdit.layers
-    },
     CanIEdit(){
       if(this.$route.path === "/maps/edit"){
         return true

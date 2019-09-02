@@ -23,9 +23,8 @@
         :text="'いいね'"
         :link="'/maplists/like'"
       )
-
-
 </template>
+
 <script>
 export default {
   components:{
@@ -35,6 +34,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";

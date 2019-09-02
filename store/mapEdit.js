@@ -1,6 +1,7 @@
 import selectToolModel from '~/models/selectToolModel.js'
-import map from '~/models/map.js'
-import layer from '~/models/layer.js'
+import mapModel from '~/models/map.js'
+
+var socket;
 
 const uuid = function() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -10,10 +11,14 @@ const uuid = function() {
   });
 };
 
+const emit = function(req, params) {
+  if (socket) socket.emit(req, params)
+}
+
 const state = () => ({
   // APIと通信して逐次変更する変数
-  map: JSON.parse(JSON.stringify(map)),
-  layers: JSON.parse(JSON.stringify(map.layers)),
+  map: JSON.parse(JSON.stringify(mapModel)),
+  layers: [],
   activeLayer: {},
   selected: {},
   // 自己保持する変数
@@ -26,8 +31,11 @@ const state = () => ({
   commentbarOpen: false
 })
 
-// map = {...map, key: value} はMapをリアクティブに編集するいい書き方 (らしい)
 const mutations = {
+  // user status
+  init(state, sckt) {
+    socket = sckt
+  },
   toggle(state, key) {
     state[key] = !state[key]
   },
@@ -37,18 +45,32 @@ const mutations = {
   setMousePosition(state, prop) {
     state.mousePosition = {...state.mousePosition, x: prop.x, y: prop.y}
   },
-  addTool(state, {attr, toolId}) {
-    attr = Object.assign(selectToolModel(attr.type), attr, {id: toolId})
-    state.activeLayer.tools = {...state.activeLayer.tools, [toolId]: attr}
+
+  // map
+  updateMap(state, map) {
+    state.map = Object.assign(state.map, map)
   },
-  updateTool(state, attr) {
-    const tool = Object.assign(state.activeLayer.tools[attr.id], attr)
-    state.activeLayer.tools = {...state.activeLayer.tools, [attr.id]: tool}
+  updateTags(state, tags) {
+    state.map = {...state.map, tags: tags}
   },
-  deleteTool(state, toolId) {
-    let obj = {...state.activeLayer.tools}
-    delete(obj[toolId])
-    state.activeLayer.tools = obj
+
+  // tool
+  addTool(state, {tool, layerId}) {
+    // ツールの初期化と代入を同時に行う高等テクニック
+    tool = Object.assign(selectToolModel(tool.type), tool)
+
+    let tools = state.layers.find(layer => layer.id === layerId).tools
+    state.layers.find(layer => layer.id === layerId).tools = {...tools, [tool.id]: tool}
+  },
+  updateTool(state, {tool, layerId}) {
+    const layerTools = state.layers.find(layer => layer.id === layerId).tools
+    const newTool = Object.assign(layerTools[tool.id], tool)
+    state.layers.find(layer => layer.id === layerId).tools = {...layerTools, [tool.id]: newTool}
+  },
+  deleteTool(state, {toolId, layerId}) {
+    let tools = {...state.layers.find(layer => layer.id === layerId).tools}
+    delete(tools[toolId])
+    state.activeLayer.tools = tools
   },
   addComment(state, {prop, getters}) {
     if (!['pin', 'box'].includes(state.activeLayer.tools[prop.toolId].type)) return
@@ -57,10 +79,10 @@ const mutations = {
     state.activeLayer.tools[prop.toolId].comments.push(comment)
   },
   plot(state, prop) {
-    state.activeLayer.tools[prop.toolId].points.push(prop)
+    state.activeLayer.tools[prop.toolId].points.push(prop.point)
   },
   replot(state, prop) {
-    state.activeLayer.tools[prop.toolId].points.splice(prop.index, 1, {lat: prop.lat, lng: prop.lng})
+    state.activeLayer.tools[prop.toolId].points.splice(prop.index, 1, prop.point)
   },
   replotAll(state, prop) {
     const dlat = prop.now.lat - prop.prev.lat
@@ -74,27 +96,17 @@ const mutations = {
     var tool = state.activeLayer.tools[prop.toolId]
     state.activeLayer.tools[prop.toolId] = {...tool, width: prop.width, height: prop.height}
   },
-  selectTool(state, {prop, getters}) {
-    state.selected = {...state.selected, [prop.toolId]: getters.getUser.id}
-  },
-  clearSelection(state, othersSelecting) {
-    state.selected = othersSelecting
-  },
-  moveTools(state, {prop, getters}) {
-    const dlat = prop.now.lat - prop.prev.lat
-    const dlng = prop.now.lng - prop.prev.lng
 
-    for(const toolId of Object.keys(getters.selecting)) {
-      const tool = state.activeLayer.tools[toolId]
-      state.activeLayer.tools[toolId] = {...tool, lat: tool.lat + dlat, lng: tool.lng + dlng}
-    }
-  },
-  initLayers(state) {
-    // 実際はAPIからデータをとりにきてlayersにセット
-    state.layers = [{id: 1, name: 'layer1', color: 'red', visible: true, tools: {}}]
-  },
+  // layer
   addLayer(state, layer) {
     state.layers.push(layer)
+  },
+  updateLayer(state, layer) {
+    const index = state.layers.findIndex(lyr => lyr.id === layer.id)
+    if (index >= 0)
+      state.layers[index] = Object.assign(state.layers[index], layer)
+    else
+      state.layers.push(layer)
   },
   selectLayer(state, layerId) {
     state.activeLayer = state.layers.find(layer => layer.id === layerId)
@@ -103,12 +115,30 @@ const mutations = {
   focusBackground(state) {
     state.backgroundFocused = true
   },
-  updateTags(state, tags) {
-    state.map = {...map, tags: tags}
-  }
+
+  // selecting / moving
+  selectTool(state, {toolId, userId}) {
+    state.selected = {...state.selected, [toolId]: userId}
+  },
+  clearSelection(state, othersSelecting) {
+    state.selected = othersSelecting
+  },
+  moveTools(state, {prop, getters}) {
+    const dlat = prop.now.lat - prop.prev.lat
+    const dlng = prop.now.lng - prop.prev.lng
+
+    for(const toolId of Object.keys(getters.selecting())) {
+      const tool = state.activeLayer.tools[toolId]
+      state.activeLayer.tools[toolId] = {...tool, lat: tool.lat + dlat, lng: tool.lng + dlng}
+    }
+  },
 }
 
 const actions = {
+  // user status
+  init(context, sckt) {
+    context.commit('init', sckt)
+  },
   toggle(context, key) {
     context.commit('toggle', key)
   },
@@ -118,22 +148,97 @@ const actions = {
   setMousePosition(context, prop) {
     context.commit('setMousePosition', prop)
   },
-  addTool(context, attr) {
+
+  // map
+  updateTags(context, tags) {
+    context.commit('updateTags', tags)
+
+    const clone = JSON.parse(JSON.stringify(context.state.map))
+    delete clone.layers
+    emit('map/update', {map: clone})
+  },
+
+  // layer
+  addLayer(context, layer) {
+    // TODO: 実際はlayer作成要求をして, レスポンスをlayerにセット
+    const id = Object.keys(context.state.layers).length + 1
+    layer.id = id
+    layer.tools = {}
+
+    context.commit('addLayer', layer)
+    context.dispatch('selectLayer', id)
+
+    emit('layer/add', layer)
+  },
+  // layer (without emitting)
+  selectLayer(context, layerId) {
+    context.commit('selectLayer', layerId)
+    context.dispatch('clearSelection')
+  },
+  focusBackground(context) {
+    context.commit('focusBackground')
+    context.dispatch('clearSelection')
+  },
+
+  // tool
+  addTool(context, tool) {
+    const layerId = context.state.activeLayer.id
     const toolId = uuid()
-    context.commit('addTool', {attr, toolId})
+    tool = {...tool, id: toolId}
+
+    context.commit('addTool', {tool, layerId})
     context.dispatch('selectTool', {toolId: toolId})
+
+    emit('tool/add', {tool: tool, layerId: layerId})
   },
-  updateTool(context, attr) {
-    context.commit('updateTool', attr)
+  updateTool(context, tool) {
+    const layerId = context.state.activeLayer.id
+    context.commit('updateTool', {tool, layerId})
+    emit('tool/update', {tool: tool, layerId: layerId})
   },
-  deleteTool(context, toolId) {
-    context.commit('deleteTool', toolId)
+  updateToolPosition(context) {
+    const layerId = context.state.activeLayer.id
+    const toolIds = Object.keys(context.getters.selecting())
+    toolIds.forEach(toolId => {
+      const tool = context.state.activeLayer.tools[toolId]
+      emit('tool/update', {tool: tool, layerId: layerId})
+    })
   },
-  addComment({commit, getters}, prop) {
-    commit('addComment', {prop, getters})
+  selectTool(context, prop) {
+    if (context.state.selected[prop.toolId]) return
+    if (!prop.multiple)
+      context.dispatch('clearSelection')
+
+    const userId = context.getters.getUser.id
+    const toolId = prop.toolId
+    context.commit('selectTool', {toolId, userId})
+
+    emit('select/add', {toolId: toolId, userId: userId})
+  },
+  clearSelection(context) {
+    context.commit('clearSelection', context.getters.othersSelecting())
+
+    emit('select/clear', {userId: context.getters.getUser.id})
   },
   plot(context, prop) {
     context.commit('plot', prop)
+
+    const tool = context.getters.getTool(prop.toolId)
+    const layerId = context.state.activeLayer.id
+    emit('tool/update', {tool: tool, layerId: layerId})
+  },
+  deleteTool(context, toolId) {
+    const layerId = context.state.activeLayer.id
+    context.commit('deleteTool', {toolId, layerId})
+
+    emit('tool/delete', {toolId: toolId, layerId: layerId})
+  },
+  // tool (without emitting)
+  moveTools({commit, getters}, prop) {
+    commit('moveTools', {prop, getters})
+  },
+  addComment({commit, getters}, prop) {
+    commit('addComment', {prop, getters})
   },
   replot(context, prop) {
     context.commit('replot', prop)
@@ -143,55 +248,89 @@ const actions = {
   },
   resize(context, prop) {
     context.commit('resize', prop)
+//     const tool = context.getters.getTool(prop.toolId)
+//     const layerId = context.state.activeLayer.id
+//     emit('tool/update', {tool: tool, layerId: layerId})
   },
-  selectTool({commit, getters}, prop) {
-    if(!prop.multiple)
-      commit('clearSelection')
-    commit('selectTool', {prop, getters})
-  },
-  clearSelection(context) {
-    context.commit('clearSelection', context.getters.othersSelecting)
-  },
-  moveTools({commit, getters}, prop) {
-    commit('moveTools', {prop, getters})
-  },
-  initLayers(context) {
-    context.commit('initLayers')
-  },
-  addLayer(context, layer) {
-    // 実際はlayer作成要求をして, レスポンスをlayerにセット
-    const id = Object.keys(context.state.layers).length + 1
-    layer.id = id
-    layer.tools = {}
 
-    context.commit('addLayer', layer)
-    context.dispatch('selectLayer', id)
+  // サーバから受け取った情報をもとに実行
+  initSocket(context, map) {
+    context.commit('updateMap', map)
+    map.layers.forEach(layer => context.commit('updateLayer', layer))
   },
-  selectLayer(context, layerId) {
-    context.commit('selectLayer', layerId)
-    context.dispatch('clearSelection')
+  mapSocket(context, prop) {
+    switch (prop.method) {
+      case 'update':
+        context.commit('updateMap', prop.map)
+        break;
+    }
   },
-  focusBackground(context) {
-    context.commit('focusBackground')
-    context.dispatch('clearSelection')
+  layerSocket(context, prop) {
+    switch (prop.method) {
+      case 'add':
+        context.commit('addLayer', prop.layer)
+        break;
+      case 'update':
+        context.commit('updateLayer', prop.layer)
+        break;
+      case 'delete':
+        const layerId = prop.layerId
+        context.commit('deleteLayer', layerId)
+        break;
+    }
   },
-  updateTags(context, tags) {
-    context.commit('updateTags', tags)
+  toolSocket(context, prop) {
+    const tool = prop.tool
+    const layerId = prop.layerId
+
+    switch (prop.method) {
+      case 'add':
+        context.commit('addTool', {tool, layerId})
+        break;
+      case 'update':
+        context.commit('updateTool', {tool, layerId})
+        break;
+      case 'delete':
+        const toolId = tool.id
+        context.commit('deleteTool', {toolId, layerId})
+        break;
+    }
+  },
+  selectSocket(context, prop) {
+    const userId = prop.userId
+    const toolId = prop.toolId
+
+    switch (prop.method) {
+      case 'add':
+        context.commit('selectTool', {toolId, userId})
+        break;
+      case 'clear':
+        context.commit('clearSelection', context.getters.othersSelecting(userId))
+        break;
+    }
   }
 }
 
 const getters = {
   selecting(state, getters, rootState, rootGetters) {
-    if (!Object.keys(state.selected).length) return state.selected
-    return Object.entries(state.selected)                              // [key, value]のArrayを取得
-      .filter(item => item[1] === getters.getUser.id)        // 本人が選択しているものだけ抽出
-      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
+    return (userId) => {
+      if (!Object.keys(state.selected).length) return state.selected
+      if (!userId) userId = getters.getUser.id
+
+      return Object.entries(state.selected)                              // [key, value]のArrayを取得
+        .filter(item => item[1] === getters.getUser.id)        // 本人が選択しているものだけ抽出
+        .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})  // Mapに再構成
+    }
   },
   othersSelecting(state, getters, rootState, rootGetters) {
-    if (!Object.keys(state.selected).length) return state.selected
-    return Object.entries(state.selected)
-      .filter(item => item[1] !== getters.getUser.id)         // 本人が選択していないものだけ抽出
-      .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
+    return (userId) => {
+      if (!Object.keys(state.selected).length) return state.selected
+      if (!userId) userId = getters.getUser.id
+
+      return Object.entries(state.selected)
+        .filter(item => item[1] !== userId)         // 本人が選択していないものだけ抽出
+        .reduce((l,[k,v]) => Object.assign(l, {[k]: v}), {})
+    }
   },
   getUser(state, _, rootState, rootGetters) {
     return rootGetters['user/getUser']
@@ -210,7 +349,7 @@ const getters = {
   comments(state, _, rootState) {
     const toolsWithComments = state.layers.map(layer => {
       return Object.values(layer.tools).filter(tool => ['pin', 'box'].includes(tool.type))
-    }).flat(5).filter(tool => tool.comments.length)
+    }).flat(10).filter(tool => tool.comments.length)
 
     const comments = toolsWithComments.map(tool => {
       return tool.comments.map(comment => {

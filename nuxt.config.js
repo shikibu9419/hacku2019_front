@@ -3,7 +3,9 @@ require('dotenv').config();
 export default {
   env: {
     YOLP_APPID: process.env.YOLP_APPID,
-    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
+//     GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
+    API_URL: process.env.API_URL,
+    SOCKET_SERVER_URL: process.env.SOCKET_SERVER_URL,
   },
 
   mode: 'spa',
@@ -21,7 +23,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { src: 'https://maps.googleapis.com/maps/api/js?key=' + process.env.GOOGLE_MAPS_API_KEY },
+//       { src: 'https://maps.googleapis.com/maps/api/js?key=' + process.env.GOOGLE_MAPS_API_KEY },
       { src: 'https://map.yahooapis.jp/js/V1/jsapi?appid=' + process.env.YOLP_APPID }
     ],
   },
@@ -43,7 +45,8 @@ export default {
     { src: '~/plugins/font-awesome', ssr: false },
     { src: '~/plugins/axios.js', ssr: false },
     { src: '~/plugins/global-component' },
-    { src: '~/plugins/vue-tagsinput.js'}
+    { src: '~/plugins/vue-tagsinput.js'},
+    { src: '~/plugins/socket.io' }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -66,18 +69,18 @@ export default {
   /*
   ** Nuxt.js vendor
   */
-//   vendor: ['vue2-google-maps'],
+  vendor: ['socket.io-client'],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
     proxy: true,
-    baseURL: 'https://api.mille-feuille.app'
+    baseURL: process.env.API_URL
   },
 /*
   proxy: {
-    '/api': { target: 'https://api.mille-feuille.app', pathRewrite: {'^/api': ''} }
+    '/api': { target: process.env.API_URL, pathRewrite: {'^/api': ''} }
   },
 */
   toast: {
