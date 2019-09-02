@@ -14,6 +14,6 @@ export default {
         closePopup() {
             this.$store.dispatch('modal/closeModal')
         }
-    }
+    },
 }
 </script>
