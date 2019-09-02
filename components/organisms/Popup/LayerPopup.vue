@@ -2,7 +2,7 @@
     .layer-popup
         .layer-popup__titles
             LayerSelectorItem.layer-popup__title(v-bind="backgroundAttr")
-            button(v-on:click="closeModal") 仮置き
+            button(v-on:click="create") 仮置き
         .layer-popup__create
             .layer-popup__create__new レイヤーを新規作成
                 .layer-popup__create__new__content
@@ -23,11 +23,20 @@
 <script>
     import LayerSelectorItem from '~/components/atoms/mapEdit/LayerSelectorItem'
     import Selector from '~/components/atoms/selector/Selector'
+    import LayerSvc from '~/services/LayerSvc'
     export default {
         name: "LayerPopup.vue",
         props: {
             params: Object,
             closeModal: () => {}
+        },
+        methods: {
+            create() {
+                console.log(this.$store.getters['user/getToken'])
+                LayerSvc.display(1, 1).then(_ => {
+                    console.log(_)
+                })
+            }
         },
         components: {
             LayerSelectorItem,
