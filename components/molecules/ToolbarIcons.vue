@@ -1,5 +1,8 @@
 <template lang="pug">
-  g.map_edit__toolbar(:transform="`translate(${this.center.x - 340 / 2},10)`")
+  g.map_edit__toolbar(
+    :transform="`translate(${this.center.x - 340 / 2},10)`"
+    v-if="EditOnly"
+  )
     image.map_edit__toolbar__icon(:x="iconX(0)" @click="addBuilding" xlink:href="~assets/svgs/pen_tool.svg")
     image.map_edit__toolbar__icon(:x="iconX(1)" @mousedown.stop="addBuildingBasic" xlink:href="~assets/svgs/figure_tool.svg")
     image.map_edit__toolbar__icon(:x="iconX(2)" @click="addDirection" xlink:href="~assets/svgs/way_tool.svg")
@@ -55,6 +58,20 @@ export default {
       return function(index) {
         // icon + space + center-space
         return 30 * index + 20 * (index + 1) + (index > 2 ? 20 : 0)
+      }
+    }
+  }
+}
+</script>
+<script>
+export default {
+  computed:{
+    EditOnly(){
+      if(this.$route.path.match(/\/view$/)){
+        return false
+      }
+      if(this.$route.path.match(/\/edit$/)){
+        return true
       }
     }
   }
