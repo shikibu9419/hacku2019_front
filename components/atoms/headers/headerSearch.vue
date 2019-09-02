@@ -1,7 +1,7 @@
 <template lang="pug">
   .header_search
     .search_input
-      button().search_button.button
+      button(@click="update()").search_button.button
         SearchBtn.search_button__icon
       input(v-model="query" :placeholder="placeholder" @change="update()").header_search__input
     .filter_wrapper(v-if="type.split('/')[0] === 'maplists'")
