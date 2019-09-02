@@ -1,6 +1,6 @@
 <template lang="pug">
   .map_edit__comment_form__main
-    autosize-textarea.map_edit__comment_form__textarea(:text.sync="comment" :maxSize="6" :defaultSize="3")
+    autosize-textarea.map_edit__comment_form__textarea(:text.sync="comment" :maxSize="4" :defaultSize="2")
     .comment_form__wrapper
       .map_edit__comment_form__pin
         //img(src="~/assets/svgs/comment_pin.svg" @click="addComment").map_edit__comment__form_pin_icon
@@ -50,6 +50,8 @@ export default {
 
 .map_edit__comment_form_main {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .map_edit__comment_form__textarea {
   border: 2px solid transparent;

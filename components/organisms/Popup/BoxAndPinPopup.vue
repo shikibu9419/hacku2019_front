@@ -46,7 +46,7 @@
                         img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/link_box.svg" @click="addContent('link')")
             .box-and-pin-popup--right
                 .box-and-pin-popup__set-layer 属するレイヤー
-                    .box-and-pin-popup__selector
+                    Selector.box-and-pin-popup__selector(component="selectColorItem" :items.async="items" :width="'160px'")
                 .box-and-pin-popup__set-tool ツールの変更
                     .box-and-pin-popup__selector
                 .box-and-pin-popup__comment-wrapper
@@ -54,7 +54,7 @@
                         img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/text_box.svg")
                         .box-and-pin-popup__info-type Comments
                     comment-form(:id="params.attr.id")
-                    comment-list(:tool-id="params.attr.id")
+                    comment-list.box-and-pin-popup__comment-list(:tool-id="params.attr.id")
 </template>
 
 <script>
@@ -62,6 +62,7 @@ import AutosizeTextarea from '~/components/atoms/AutosizeTextarea'
 import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
 import CommentForm from '~/components/atoms/mapEdit/CommentForm'
 import CommentList from '~/components/molecules/commentbar/CommentList'
+import Selector from '~/components/atoms/selector/Selector'
 
 export default {
   name: "BoxAndPinPopup",
@@ -69,7 +70,8 @@ export default {
     AutosizeTextarea,
     DeleteAndCloseButton,
     CommentForm,
-    CommentList
+    CommentList,
+    Selector
   },
   props: {
     params: Object,
@@ -81,13 +83,28 @@ export default {
         title: '',
         contents: [
         ]
-      }
+      },
+      items: [
+        {
+          param: Object,
+          value: String,
+          selected: Boolean
+        }
+      ]
     }
   },
   mounted() {
     const attr = JSON.parse(JSON.stringify(this.params.attr))
     delete attr.comments
     this.tool = attr
+    let activeLayer = this.$store.getters['mapEdit/activeLayer']
+    this.items = this.$store.getters['mapEdit/getAllLayer'].map(layer => {
+      return {
+        param: layer,
+        value: layer.color,
+        selected: activeLayer.id === layer.id
+      }
+    })
   },
   methods: {
     getLinkTitle(linkContent) {
@@ -288,6 +305,8 @@ export default {
   &__set-layer {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     border-radius: 8px;
     background-color: $back-gray;
     padding: 8px;
@@ -308,6 +327,11 @@ export default {
     background-color: $back-gray;
     padding: 8px;
     margin-bottom: 4px;
+  }
+  &__comment-list {
+      margin-top: 8px;
+      max-height: 320px;
+      overflow-y: scroll;
   }
 }
 </style>

@@ -15,7 +15,7 @@ export default {
     comments () {
       if (this.toolId)
         return this.$store.getters['mapEdit/getTool'](this.toolId).comments
-      return this.$store.getters['mapEdit/comments']
+      return this.$store.getters['mapEdit/comments'] ? this.$store.getters['mapEdit/comments'] : []
     }
   },
   components: {

@@ -29,13 +29,12 @@ export default {
 @import "~/assets/styles/variables.scss";
 
 .comment_box {
+  word-wrap: break-word;
   bottom: 0px;
   width: 100%;
-
   &.in_popup {
     position: absolute;
   }
-
   &__button {
     width: 100%;
     padding: 6px 8px;
