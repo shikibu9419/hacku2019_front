@@ -48,7 +48,7 @@ export default {
     { src: '~/plugins/vue-tagsinput.js'},
     { src: '~/plugins/socket.io' },
     { src: '~/plugins/localStorage.js', ssr: false },
-    { src: '~/plugins/vue-carousel', ssr: false }
+    { src: '~/plugins/vue-carousel.js', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules
