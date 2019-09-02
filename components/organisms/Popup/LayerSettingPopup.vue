@@ -9,13 +9,14 @@
                 .layer-setting-popup__selector hoge
             .layer-setting-popup__setting-transform レイヤーの移動
                 .layer-setting-popup--end
-                    button.layer-setting-popup__button 上へ
-                    button.layer-setting-popup__button 下へ
+                    CustomButton.layer-setting-popup__button 上へ
+                    CustomButton.layer-setting-popup__button 下へ
                     .layer-setting-popup__floor-count 現在2列目
 </template>
 
 <script>
     import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
+    import CustomButton from '~/components/atoms/CustomButton'
     export default {
         name: 'LayerSettingPopup.vue',
         props: {
@@ -23,7 +24,8 @@
             closeModal: () => {}
         },
         components: {
-            DeleteAndCloseButton
+            DeleteAndCloseButton,
+            CustomButton
         }
     }
 </script>
@@ -32,7 +34,7 @@
     @import "../../../assets/styles/variables";
     .layer-setting-popup {
         height: auto;
-        width: 400px;
+        width: 480px;
         flex-direction: column;
         &__title {
             display: flex;
@@ -46,6 +48,7 @@
         &__setting-name,&__setting-color,&__setting-transform {
             display: flex;
             flex-direction: row;
+            align-items: center;
             margin: 4px;
         }
         &__floor-count {
@@ -54,8 +57,14 @@
         &--end {
             display: flex;
             flex-direction: row;
+            align-items: center;
             width: 60%;
             margin: 0 0 0 auto;
+        }
+        &__button {
+            width: 64px !important;
+            border: solid 2px $dark-gray;
+            background: $white;
         }
     }
 </style>
