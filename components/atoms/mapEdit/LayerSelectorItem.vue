@@ -1,6 +1,6 @@
 <template lang="pug">
   .sidebar__layer_selector__item(:class="{active__layer_on: isActive}" @click="selectLayer")
-    LayerIcon.sidebar__layer_selector__item_icon(src="~/assets/svgs/layer.svg" :style="{fill: color}")
+    LayerIcon.sidebar__layer_selector__item_icon(v-bind:class="[color]")
     .sidebar__layer_selector__item_name {{ name }}
 </template>
 
@@ -36,6 +36,7 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/styles/variables.scss";
 @import "~/assets/styles/mixin.scss";
+@import "../../../assets/styles/atoms/layerSvg";
 
 .sidebar__layer_selector__item {
   height: 44px;
@@ -61,9 +62,5 @@ export default {
     display: block;
     @include noto-font(1.6rem);
   }
-}
-
-.layer_cls-1 {
-  
 }
 </style>
