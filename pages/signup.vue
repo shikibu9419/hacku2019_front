@@ -37,10 +37,10 @@ export default {
   methods: {
     async signup() {
       if(this.password == this.passwordconfirm) {
-        const response = await this.$axios.post('https://api.mille-feuille.app/users',
-                                                     { email: this.email,
-                                                       user_name: this.name,
-                                                       password: this.password })
+        const response = await this.$axios.post(process.env.API_URL + '/users',
+                                                { email: this.email,
+                                                  user_name: this.name,
+                                                  password: this.password })
         .then( response => {
           Vue.toasted.success('登録に成功しました')
           this.$router.push('/login')

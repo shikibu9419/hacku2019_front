@@ -3,7 +3,9 @@ require('dotenv').config();
 export default {
   env: {
     YOLP_APPID: process.env.YOLP_APPID,
-    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
+    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
+    API_URL: process.env.API_URL,
+    SOCKET_SERVER_URL: process.env.SOCKET_SERVER_URL,
   },
 
   mode: 'spa',
@@ -74,11 +76,11 @@ export default {
   */
   axios: {
     proxy: true,
-    baseURL: 'https://api.mille-feuille.app'
+    baseURL: process.env.API_URL
   },
 /*
   proxy: {
-    '/api': { target: 'https://api.mille-feuille.app', pathRewrite: {'^/api': ''} }
+    '/api': { target: process.env.API_URL, pathRewrite: {'^/api': ''} }
   },
 */
   toast: {
