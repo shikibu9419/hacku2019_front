@@ -42,6 +42,7 @@
     "@voerro/vue-tagsinput": "^2.0.2",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-jest": "^24.1.0",
-    "jest": "^24.1.0"
+    "jest": "^24.1.0",
+    "vue-carousel": "^0.18.0"
   }
 }

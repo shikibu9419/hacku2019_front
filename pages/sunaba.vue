@@ -64,7 +64,7 @@ export default {
         data: [
           {
             type: 'image',
-            src: ['./icon.png','./icon.png']
+            src: ['./icon.png','./icon.png','./icon.png']
           },
           {
             type: 'text',
