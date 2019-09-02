@@ -9,10 +9,6 @@ export default {
       type: Object,
       required: true
     },
-    selected: {
-      type: Boolean,
-      required: true
-    },
     layerActive: {
       type: Boolean,
       required: true

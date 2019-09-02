@@ -17,7 +17,7 @@ export default {
   },
   methods:{
     pushLike(){
-      this.$store.dispatch('changeLike')
+      this.$store.dispatch('mapEdit/changeLike')
     }
   },
   computed:{

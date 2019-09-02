@@ -1,13 +1,13 @@
 <template lang="pug">
   foreignObject.map_edit_tools__pin_popup(v-bind="position" @mousedown.stop="popup")
-    comment-box(v-if="comments.length && !Object.keys(content).length" :title="title" :comment="comments[0].comment")
-    content-box(v-else :title="title" :content="content")
+    comment-box(v-if="comments.length && !Object.keys(content).length" :tool-id="id" :title="title" v-bind="comments[0]" :in-popup="true")
+    content-box(v-else :title="title" :content="content" :in-popup="true")
 </template>
 
 <script>
 export default {
   name: "PinPopup.vue",
-  props: ['position', 'title', 'content', 'comments'],
+  props: ['id', 'position', 'title', 'content', 'comments'],
   methods: {
     popup() {
       this.$emit('popup')
@@ -24,7 +24,7 @@ export default {
 @import "~/assets/styles/variables.scss";
 
 .map_edit_tools__pin_popup {
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 150px;
 }
 </style>

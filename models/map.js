@@ -5,5 +5,7 @@ export default {
   userId: '',
   publish_setting: 0,
   layers: [],
+  likes: [],
+  stocks: [],
   tags: []
 }

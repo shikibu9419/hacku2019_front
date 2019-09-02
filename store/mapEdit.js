@@ -59,7 +59,7 @@ const mutations = {
 
   //like
   setLike(state, user_id) {
-    state.like = (state.map.like.filter(function(element) {
+    state.like = (state.map.likes.filter(function(element) {
       return (element.user_id == user_id)
     })).length !== 0
   },
@@ -67,7 +67,7 @@ const mutations = {
     if(state.like) {
       this.$axios.delete('https://api.mille-feuille.app/maps/' + state.map.map_id + '/like')
     } else {
-      this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/like')      
+      this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/like')
     }
     state.like = !state.like
   },
@@ -76,12 +76,12 @@ const mutations = {
     if(state.stock) {
       this.$axios.delete('https://api.mille-feuille.app/maps/' + state.map.map_id + '/stock')
     } else {
-      this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/stock')      
+      this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/stock')
     }
     state.stock = !state.stock
   },
   setStock(state, user_id) {
-    state.stock = (state.map.stock.filter(function(element) {
+    state.stock = (state.map.stocks.filter(function(element) {
       return (state.map.stock.user_id == user_id)
     })) != 0
   },

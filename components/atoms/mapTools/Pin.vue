@@ -48,11 +48,8 @@ export default {
   methods: {
     popup() {
       if(!this.selected || this.grabbing) return
-      this.modalSvc.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
+      this.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
     }
-  },
-  created() {
-    this.modalSvc = new ModalService(this.$store)
   },
   computed: {
     attributes() {
@@ -82,13 +79,16 @@ export default {
       return {
         id: this.id,
         position: {
-          x: position.x - 50,
-          y: position.y - 120
+          x: position.x - 60,
+          y: position.y - 220
         },
         title: this.attr.title,
         content: content,
         comments: this.attr.comments
       }
+    },
+    mounted() {
+      console.log(this.$refs)
     }
   },
   components: {
@@ -100,7 +100,7 @@ export default {
     CommentPin: () => import('~/assets/svgs/comment_pin.svg?inline'),
     LinkPin: () => import('~/assets/svgs/link_pin.svg?inline'),
   },
-  mixins: [Shared],
+  mixins: [Shared, ModalService],
 }
 </script>
 
