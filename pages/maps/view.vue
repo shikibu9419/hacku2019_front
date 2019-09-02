@@ -30,6 +30,8 @@ export default {
     Commentbar: () => import('~/components/organisms/mapEdit/Commentbar')
   },
   beforeCreate() {
+    this.$store.dispatch('mapEdit/setLike', this.$store.state.user.id)
+    this.$store.dispatch('mapEdit/setStock', this.$store.state.user.id)
 //     const socket = io(process.env.SOCKET_SERVER_URL)
 //
 //     socket.on('init', map => {

@@ -17,20 +17,12 @@ export default {
   },
   methods:{
     pushLike(){
-      //VueXから拾ってきて条件分岐
-      let like_on // = this.$store.hoge
-      if(like_on){
-        //外す処理
-      }else{
-        //つける処理
-      }
+      this.$store.dispatch('changeLike')
     }
   },
   computed:{
     mapLikedOn(){
-      //マップがすでにいいねされていたらtrueを返す
-      //VueXにlike:true/falseを用意して、そこから直接拾ってくる
-      return false
+      return this.$store.state.mapEdit.like
     }
   }
 }
