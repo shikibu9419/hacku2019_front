@@ -23,8 +23,8 @@
     .sidebar__background__content
         layer-selector-item(v-bind="backgroundAttr")
 
-    button(@click="popup") hogehoge
-    Selector(v-bind:component="'selectColorItem'" v-bind:items.async="items")
+    //- button(@click="popup") hogehoge
+    //- Selector(v-bind:component="'selectColorItem'" v-bind:items.async="items")
 </template>
 
 <script>
@@ -61,6 +61,7 @@ export default {
   methods: {
     // あとでmodalとかに移行
     addLayer() {
+      //先にpopupが出るように変更
       let layer = JSON.parse(JSON.stringify(layerModel))
 
       layer.name = 'layer'
