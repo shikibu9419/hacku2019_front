@@ -141,6 +141,18 @@ const actions = {
   setMousePosition(context, prop) {
     context.commit('setMousePosition', prop)
   },
+
+  addLayer(context, layer) {
+    // 実際はlayer作成要求をして, レスポンスをlayerにセット
+    const id = Object.keys(context.state.layers).length + 1
+    layer.id = id
+    layer.tools = {}
+
+    context.commit('addLayer', layer)
+    context.dispatch('selectLayer', id)
+
+    socket.emit('layer/add', layer)
+  },
   addTool(context, tool) {
     const layerId = context.state.activeLayer.id
     const toolId = uuid()
@@ -154,6 +166,7 @@ const actions = {
   updateTool(context, tool) {
     const layerId = context.state.activeLayer.id
     context.commit('updateTool', {tool, layerId})
+    socket.emit('tool/update', {tool: tool, layerId: layerId})
   },
   updateToolPosition(context) {
     const layerId = context.state.activeLayer.id
@@ -162,24 +175,6 @@ const actions = {
       const tool = context.state.activeLayer.tools[toolId]
       socket.emit('tool/update', {tool: tool, layerId: layerId})
     })
-  },
-  deleteTool(context, toolId) {
-    context.commit('deleteTool', toolId)
-  },
-  addComment({commit, getters}, prop) {
-    commit('addComment', {prop, getters})
-  },
-  plot(context, prop) {
-    context.commit('plot', prop)
-  },
-  replot(context, prop) {
-    context.commit('replot', prop)
-  },
-  replotAll(context, prop) {
-    context.commit('replotAll', prop)
-  },
-  resize(context, prop) {
-    context.commit('resize', prop)
   },
   selectTool(context, prop) {
     if (context.state.selected[prop.toolId]) return
@@ -197,19 +192,28 @@ const actions = {
 
     socket.emit('select/clear', {userId: context.getters.getUser.id})
   },
+
+  plot(context, prop) {
+    context.commit('plot', prop)
+  },
+  replot(context, prop) {
+    context.commit('replot', prop)
+  },
+  replotAll(context, prop) {
+    context.commit('replotAll', prop)
+  },
+  resize(context, prop) {
+    context.commit('resize', prop)
+  },
+
+  deleteTool(context, toolId) {
+    context.commit('deleteTool', toolId)
+  },
+  addComment({commit, getters}, prop) {
+    commit('addComment', {prop, getters})
+  },
   moveTools({commit, getters}, prop) {
     commit('moveTools', {prop, getters})
-  },
-  addLayer(context, layer) {
-    // 実際はlayer作成要求をして, レスポンスをlayerにセット
-    const id = Object.keys(context.state.layers).length + 1
-    layer.id = id
-    layer.tools = {}
-
-    context.commit('addLayer', layer)
-    context.dispatch('selectLayer', id)
-
-    socket.emit('layer/add', layer)
   },
   selectLayer(context, layerId) {
     context.commit('selectLayer', layerId)
@@ -223,9 +227,8 @@ const actions = {
     context.commit('updateTags', tags)
   },
 
-
+  // サーバから受け取った情報から行う
   initSocket(context, map) {
-    console.log(map)
     context.commit('updateMap', map)
     map.layers.forEach(layer => context.commit('updateLayer', layer))
   },
@@ -313,7 +316,7 @@ const getters = {
   comments(state, _, rootState) {
     const toolsWithComments = state.layers.map(layer => {
       return Object.values(layer.tools).filter(tool => ['pin', 'box'].includes(tool.type))
-    }).flat(5).filter(tool => tool.comments.length)
+    }).flat(10).filter(tool => tool.comments.length)
 
     const comments = toolsWithComments.map(tool => {
       return tool.comments.map(comment => {
