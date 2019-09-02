@@ -68,16 +68,19 @@ export default {
 @import "~/assets/styles/mixin.scss";
 
 .login_container {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 12px;
   margin: auto;
   width: 400px;
-  height: 100%;
+  height: min-content;
   z-index: 10;
 }
 
-.login_form {
-  margin-top: 80px;
-}
 .login_input__box{
   margin: 20px 0;
 }
