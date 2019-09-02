@@ -1,16 +1,13 @@
 <template lang="pug">
     .select-color-item
         LayerIcon.select-color-item__icon(v-bind:class="[item.value]")
-        img.select-color-item__icon(src="~/assets/svgs/layer.svg?data" v-bind:class="[item.value]")
+        slot
 </template>
 
 <script>
     import LayerIcon from '~/assets/svgs/layer.svg?inline'
     export default {
         name: "selectColorItem.vue",
-        modules: [
-            '@nuxtjs/svg'
-        ],
         components: {
             LayerIcon
         },
@@ -27,26 +24,14 @@
 
 <style lang="scss" scoped>
     @import "../../../assets/styles/variables";
+    @import "../../../assets/styles/atoms/layerSvg";
     .select-color-item {
+        height: 32px;
+        display: flex;
+        align-items: center;
         &__icon {
-            width: 20px;
-        }
-        .light-pink {
-            color: $palette-light-pink;
-        }
-        .pink {
-            color: $palette-pink;
-        }
-        .red {
-            color: $palette-red;
-            fill: $palette-red;
-            stroke: red;
-        }
-        .light-orange {
-            color: $palette-light-orange;
-        }
-        .orange {
-            color: $palette-orange;
+            width: 24px;
+            margin-right: 8px;
         }
     }
 </style>
