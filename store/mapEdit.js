@@ -1,3 +1,4 @@
+import selectToolModel from '~/models/selectToolModel.js'
 import map from '~/models/map.js'
 import layer from '~/models/layer.js'
 
