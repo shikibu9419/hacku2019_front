@@ -9,7 +9,7 @@
 @import "~/assets/styles/mixin.scss";
 
 .top_title {
-  margin: 56px 0;
+  margin-bottom: 9vh;
   &__logo {
     display: block;
     margin: auto;
