@@ -53,7 +53,7 @@ const mutations = {
   updateTool(state, {tool, layerId}) {
     const layerTools = state.layers.find(layer => layer.id === layerId).tools
     const newTool = Object.assign(layerTools[tool.id], tool)
-    state.activeLayer.tools = {...layerTools, [tool.id]: newTool}
+    state.layers.find(layer => layer.id === layerId).tools = {...layerTools, [tool.id]: newTool}
   },
   deleteTool(state, toolId) {
     let obj = {...state.activeLayer.tools}
