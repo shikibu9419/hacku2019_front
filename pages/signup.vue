@@ -49,8 +49,8 @@ export default {
           if(this.name == "") {
             Vue.toasted.error('名前を入力してください')
           }
-          if(this.password == "") {
-            Vue.toasted.error('パスワードを入力してください')
+          if(this.password.length < 6 || this.password.length > 72) {
+            Vue.toasted.error('パスワードは6文字以上72文字以内で入力してください')
           }
           if(this.email.match(/.+@.+\..+/) == null) {
             Vue.toasted.error('メールアドレスを正しく入力してください')

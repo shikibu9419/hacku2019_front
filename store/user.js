@@ -6,15 +6,22 @@ const state = () => ({
 })
 
 const mutations = {
+  setUser(state, user) {
+    state.user.id = user.id
+    state.user.name = user.name
+  },
   setToken(state, key) {
     state.apiToken = key
   },
   removeToken(state) {
     state.apiToken = null
-  }
+  },
 }
 
 const actions = {
+  async  setUserInfo(context, user) {
+    context.commit("setUser", user)
+  }
 }
 
 const getters = {
