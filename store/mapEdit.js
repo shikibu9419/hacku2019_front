@@ -30,8 +30,8 @@ const state = () => ({
   mapGrabbing: false,
   backgroundFocused: false,
   commentbarOpen: false,
-  like: false,
-  stock: false,
+  liked: false,
+  stocked: false,
 })
 
 const mutations = {
@@ -59,30 +59,30 @@ const mutations = {
 
   //like
   setLike(state, user_id) {
-    state.like = (state.map.likes.filter(function(element) {
+    state.liked = (state.map.likes.filter(function(element) {
       return (element.user_id == user_id)
     })).length !== 0
   },
   changeLike(state) {
-    if(state.like) {
+    if(state.liked) {
       this.$axios.delete('https://api.mille-feuille.app/maps/' + state.map.map_id + '/like')
     } else {
       this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/like')
     }
-    state.like = !state.like
+    state.liked = !state.liked
   },
   //stock
   changeStock(state) {
-    if(state.stock) {
+    if(state.stocked) {
       this.$axios.delete('https://api.mille-feuille.app/maps/' + state.map.map_id + '/stock')
     } else {
       this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/stock')
     }
-    state.stock = !state.stock
+    state.stocked = !state.stocked
   },
   setStock(state, user_id) {
-    state.stock = (state.map.stocks.filter(function(element) {
-      return (state.map.stock.user_id == user_id)
+    state.stocked = (state.map.stocks.filter(function(element) {
+      return (state.map.stocks.user_id == user_id)
     })) != 0
   },
 
@@ -131,6 +131,7 @@ const mutations = {
 
   // layer
   addLayer(state, layer) {
+    console.log(state.layers)
     state.layers.push(layer)
   },
   updateLayer(state, layer) {
@@ -141,6 +142,7 @@ const mutations = {
       state.layers.push(layer)
   },
   selectLayer(state, layerId) {
+    console.log(state.layers)
     state.activeLayer = state.layers.find(layer => layer.id === layerId)
     state.backgroundFocused = false
   },
@@ -192,9 +194,6 @@ const actions = {
 
   // layer
   addLayer(context, layer) {
-    // TODO: 実際はlayer作成要求をして, レスポンスをlayerにセット
-    const id = Object.keys(context.state.layers).length + 1
-    layer.id = id
     layer.tools = {}
 
     context.commit('addLayer', layer)

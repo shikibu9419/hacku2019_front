@@ -3,7 +3,7 @@ const baseUrl = 'https://api.mille-feuille.app/maps'
 
 export default {
     methods: {
-        layerSvcCreate(mapId, layerName, description) {
+        layerSvcCreate(mapId, layerName, description, color) {
             return this.$axios.post(
                 `${baseUrl}/${mapId}/layers`,
                 JSON.stringify({ layer_name: layerName, description: description }),
@@ -16,7 +16,7 @@ export default {
         layerSvcDisplay(mapId, layerId) {
             return this.$axios.get(`${baseUrl}/${mapId}/layers/${layerId}`)
         },
-        layerSvcEdit(mapId, layerId, layerName, description) {
+        layerSvcEdit(mapId, layerId, layerName, description, color) {
             return this.$axios.patch(
                 `${baseUrl}/${mapId}/layers/${layerId}`,
                 JSON.stringify({ layer_name: layerName, description: description }),
