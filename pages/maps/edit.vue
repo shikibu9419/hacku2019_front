@@ -71,9 +71,9 @@ export default {
 
     if (!this.$store.state.mapEdit.layers.length)
       // TODO: send request to create layer
-      this.$store.dispatch('mapEdit/addLayer', {id: 1, name: 'layer', color: 'red', visible: true, tools: {}})
-    else
-      this.$store.commit('mapEdit/selectLayer', this.$store.state.layers[0].id)
+      this.$store.commit('mapEdit/addLayer', {id: 1, name: 'layer', color: 'red', visible: true, tools: {}})
+
+    this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
   },
   mounted() {
     this.$store.commit('ymap/init')

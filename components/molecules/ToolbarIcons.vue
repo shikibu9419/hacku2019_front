@@ -59,13 +59,7 @@ export default {
         // icon + space + center-space
         return 30 * index + 20 * (index + 1) + (index > 2 ? 20 : 0)
       }
-    }
-  }
-}
-</script>
-<script>
-export default {
-  computed:{
+    },
     EditOnly(){
       if(this.$route.path.match(/\/view$/)){
         return false
