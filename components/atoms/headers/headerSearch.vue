@@ -27,6 +27,7 @@
 
 </template>
 <script>
+import Vue from 'vue'
 export default {
   props: ["placeholder", "type"],
   components: {
@@ -63,10 +64,7 @@ export default {
         if(this.type === "inmap")
           this.searchYOLP()
         if(this.type.split('/')[0] === "maplists") {
-          
-          //マップをさがす
-          //filter処理(tag,like-only,mymap-only,stock-only)
-          // this.searchMap()
+          this.searchMap()
         }
     },
     searchYOLP() {
@@ -85,10 +83,21 @@ export default {
         })
     },
     searchMap() {
-      const baseUrl = 'API base url'
-
-      this.$axios(baseUrl, {})
-        .then(response => {})
+      const baseUrl = 'https://api.mille-feuille.app/maps'
+      const filter = ((this.filter.like ? 'like,' : '') + (this.filter.mymap ? 'mymap,' : '') + (this.filter.stock ? 'stock,' : '')).slice(0,-1) || 'all'
+      this.$axios.get(baseUrl, {
+        params: {
+          query: this.query,
+          tags: this.filter.tag,
+          filter: filter
+        }
+      })
+      .then(response => {
+        this.$store.dispatch('maplist/setMaps', response.data)
+      })
+      .catch(err => {
+        Vue.toasted.error('検索に失敗しました')
+      })
     },
     toggleFilterMenu(){
       this.filterMenu_close = (this.filterMenu_close ? false:true)
