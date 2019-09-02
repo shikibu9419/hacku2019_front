@@ -1,5 +1,6 @@
 <template lang="pug">
     .popup-modal
+        .popup-modal__background(@click="closePopup()")
         .popup-modal__popup-content(v-bind:class="{ 'for-box-and-pin-popup': params.component === 'BoxAndPinPopup' }")
             component(v-bind:is="params.component", :closeModal="closePopup", :params="params.property" :onOk="params.onOk")
 </template>
@@ -34,12 +35,21 @@
         z-index: 5000000000000000;
         position: absolute;
         top: 0;
+        left: 0;
         height: 100%;
         width: 100%;
-        background: rgba(0, 0, 0, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
+        &__background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: rgba(0, 0, 0, 0.4);
+            height: 100%;
+            width: 100%;
+        }
         &__popup-content {
             background: $back-gray;
             height: auto;
