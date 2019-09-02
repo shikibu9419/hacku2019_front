@@ -20,9 +20,6 @@ export default {
     LayerIcon: () => import('~/assets/svgs/layer.svg?inline')
   },
   computed: {
-    backgroundFocused() {
-      return this.$store.state.mapEdit.backgroundFocused
-    },
     isActive() {
       if (this.$store.state.mapEdit.backgroundFocused)
         return this.id === 'background'

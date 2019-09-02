@@ -131,7 +131,8 @@ const mutations = {
 
   // layer
   addLayer(state, layer) {
-    console.log(state.layers)
+    layer.tools = {}
+    layer.visible = true
     state.layers.push(layer)
   },
   updateLayer(state, layer) {
@@ -142,7 +143,6 @@ const mutations = {
       state.layers.push(layer)
   },
   selectLayer(state, layerId) {
-    console.log(state.layers)
     state.activeLayer = state.layers.find(layer => layer.id === layerId)
     state.backgroundFocused = false
   },
@@ -194,10 +194,8 @@ const actions = {
 
   // layer
   addLayer(context, layer) {
-    layer.tools = {}
-
     context.commit('addLayer', layer)
-    context.dispatch('selectLayer', id)
+    context.dispatch('selectLayer', layer.id)
 
     emit('layer/add', layer)
   },

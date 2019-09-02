@@ -6,7 +6,7 @@ export default {
         layerSvcCreate(mapId, layerName, description, color) {
             return this.$axios.post(
                 `${baseUrl}/${mapId}/layers`,
-                JSON.stringify({ layer_name: layerName, description: description }),
+                JSON.stringify({ name: layerName, description: description }),
                 { headers: {
                     'Content-Type': 'application/json',
                     'x-api-key': this.$store.getters['user/getToken']
@@ -19,7 +19,7 @@ export default {
         layerSvcEdit(mapId, layerId, layerName, description, color) {
             return this.$axios.patch(
                 `${baseUrl}/${mapId}/layers/${layerId}`,
-                JSON.stringify({ layer_name: layerName, description: description }),
+                JSON.stringify({ name: layerName, description: description }),
                 { headers: {
                     'Content-Type': 'application/json',
                     'x-api-key': this.$store.getters['user/getToken']

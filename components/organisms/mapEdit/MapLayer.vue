@@ -5,7 +5,7 @@
       tool(v-for="[id, attr] in unSelectingTools" :key="attr.id" :id="id" :attr="attr" :layer-active="isActive")
       rect.map_edit__toolbar__background(
         :transform="`translate(${this.center.x - 340 / 2},10)`"
-        v-if="EditOnly"
+        v-if="EditOnly && isActive"
       )
       tool(v-for="[id, attr] in selectingTools" :key="attr.id" :id="id" :attr="attr" :layer-active="isActive")
       toolbar-icons(v-if="isActive")

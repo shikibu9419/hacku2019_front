@@ -9,7 +9,7 @@
 export default {
   data() {
     return {
-      menu_close:false,
+      menu_close: false,
       message: '',
     }
   },
@@ -18,9 +18,6 @@ export default {
     CommentList: () => import('~/components/molecules/commentbar/CommentList'),
   },
   computed: {
-    layers() {
-      return this.$store.state.mapEdit.layers
-    },
     commentbarClose() {
       return !this.$store.state.mapEdit.commentbarOpen
     }

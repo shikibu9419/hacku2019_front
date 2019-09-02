@@ -82,8 +82,7 @@ export default {
           this.layerSvcDisplay(mapId, response.data.id).then(response => {
             // add init layer
             const layer = response.data
-            this.$store.commit('mapEdit/addLayer', layer)
-            this.$store.commit('mapEdit/selectLayer', layer.id)
+            this.$store.dispatch('mapEdit/addLayer', layer)
           })
         }).catch(err => {
           console.log('layer error:', err)
