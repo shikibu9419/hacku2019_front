@@ -74,7 +74,7 @@ export default {
     LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem'),
     Selector
   },
-  created() {
+  mounted() {
     this.modalSvc = new ModalService(this.$store)
   },
 }

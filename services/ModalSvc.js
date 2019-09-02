@@ -1,4 +1,3 @@
-// import store from '~/store/index'
 import PopupModal from '~/components/molecules/PopupModal'
 
 export default class ModalService {
