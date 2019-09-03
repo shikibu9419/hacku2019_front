@@ -19,7 +19,7 @@
 import { async } from 'q';
     export default {
         name: "VueTagsInput.vue",
-        props: ["selectedTags","existingTags","placeholder","button_text"],
+        props: ["selectedTags", "existingTags", "placeholder", "button_text"],
         data() {
             return {
                 choosingTags: []
@@ -30,7 +30,7 @@ import { async } from 'q';
                 this.choosingTags = this.selectedTags
             },
             updateFinish(){
-                this.$emit('edit-tags-finish',this.choosingTags)
+                this.$emit('edit-tags-finish', this.choosingTags)
             }
         },
     }
