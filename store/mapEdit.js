@@ -142,6 +142,11 @@ const mutations = {
     else
       state.layers.push(layer)
   },
+  deleteLayer(state, layerId) {
+    const index = state.layers.findIndex(lyr => lyr.id === layerId)
+    console.log(index)
+    state.layers.splice(index, 1)
+  },
   selectLayer(state, layerId) {
     state.activeLayer = state.layers.find(layer => layer.id === layerId)
     state.backgroundFocused = false
@@ -203,6 +208,9 @@ const actions = {
   selectLayer(context, layerId) {
     context.commit('selectLayer', layerId)
     context.dispatch('clearSelection')
+  },
+  deleteLayer(context, layerId) {
+    context.commit('deleteLayer', layerId)
   },
   focusBackground(context) {
     context.commit('focusBackground')
