@@ -7,6 +7,7 @@
         :transform="`translate(${this.center.x - 340 / 2},10)`"
         v-if="EditOnly && isActive"
       )
+      pin(v-for="attr in pins" :key="`pin_popups_${attr.id}`" :id="attr.id" :attr="attr")
       tool(v-for="[id, attr] in selectingTools" :key="attr.id" :id="id" :attr="attr" :layer-active="isActive")
       toolbar-icons(v-if="isActive")
 </template>
@@ -16,6 +17,7 @@ export default {
   components: {
     Tool: () => import('~/components/atoms/mapTools/ToolWrapper'),
     ToolbarIcons: () => import('~/components/molecules/ToolbarIcons'),
+    Pin: () => import('~/components/atoms/mapTools/Pin'),
   },
   props: ['id', 'name', 'color', 'visible', 'tools'],
   data() {
@@ -80,6 +82,10 @@ export default {
       if(this.$route.path.match(/\/edit$/)){
         return true
       }
+    },
+    pins() {
+      const tools = this.$store.state.mapEdit.activeLayer.tools
+      return Object.values(tools).filter(tool => tool.type === 'pin')
     }
   }
 }
