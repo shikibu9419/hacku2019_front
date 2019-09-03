@@ -417,12 +417,13 @@ const getters = {
     }
   },
   comments(state, _, rootState) {
-    const toolsWithComments = state.layers.map(layer => {
+    var toolsWithComments = state.layers.map(layer => {
       return Object.values(layer.tools).filter(tool => ['pin', 'box'].includes(tool.type))
     }).flat(10)
-    console.log(toolsWithComments)
-    toolsWithComments.filter(tool => tool.comments.length)
+    toolsWithComments = toolsWithComments.filter(tool => tool.comments && tool.comments.length)
 
+    console.log(toolsWithComments)
+    console.log('hoge')
     const comments = toolsWithComments.map(tool => {
       return tool.comments.map(comment => {
         return {...tool, ...comment, toolId: tool.id}
