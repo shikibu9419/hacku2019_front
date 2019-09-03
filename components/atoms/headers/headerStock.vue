@@ -22,7 +22,7 @@ export default {
   },
   computed:{
     mapStockdOn(){
-      return this.$store.state.mapEdit.stock
+      return this.$store.state.mapEdit.stocked
     }
   }
 }
