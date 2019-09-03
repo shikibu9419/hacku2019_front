@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import ModalSvc from '~/services/ModalSvc'
+import LayerSvc from '~/services/LayerSvc'
 export default {
   components:{
     shareBtn: () => import('~/assets/svgs/share.svg?inline'),
@@ -16,6 +18,7 @@ export default {
   methods:{
     pushShare(){
       //処理
+      this.openPopup('ShareSettingPopup')
     }
   },
   computed:{
@@ -23,7 +26,8 @@ export default {
       //VueXから取ってくる
       return false
     }
-  }
+  },
+  mixins: [ LayerSvc, ModalSvc ]
 }
 </script>
 <style lang="scss" scoped>
