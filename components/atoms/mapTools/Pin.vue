@@ -97,7 +97,6 @@ export default {
           data.push(comment)
         }
       }
-      console.log(data)
 
       return {
         id: this.id,
