@@ -41,18 +41,21 @@ export default {
   },
   methods: {
     selectLayer() {
-      if(this.id !== 'null' || this.id !== 'undefined'){
-        if (this.id !== 'background')
-          this.$store.dispatch('mapEdit/selectLayer', this.id)
-        else
-          this.$store.dispatch('mapEdit/focusBackground')
-        this.$store.commit('ymap/updateNow')
+      if(this.edit){
+        if(this.id !== 'null' || this.id !== 'undefined'){
+          if (this.id !== 'background')
+            this.$store.dispatch('mapEdit/selectLayer', this.id)
+          else
+            this.$store.dispatch('mapEdit/focusBackground')
+          this.$store.commit('ymap/updateNow')
+        }
       }
-
     },
     editLayer(){
-      //mapId, layerId, layerName, description, color
-      this.openPopup('LayerSettingPopup', null,this.id,this.name, null, this.color)
+      if(this.edit){
+        //mapId, layerId, layerName, description, color
+        this.openPopup('LayerSettingPopup', null,this.id,this.name, null, this.color)
+      }
     }
   },
   mixins: [ LayerSvc, ModalSvc ]
