@@ -48,10 +48,11 @@ export default {
           let fMap = {}
           fMap.map_id = sMap.map_id
           fMap.title = sMap.map_name
-          fMap.author = sMap.permission[0].user_name
+          fMap.author = sMap.permission.filter(x => (x.permission_id == 1))[0].user_name
           //途中で投げた。誰かお願いします。
           map_datas.push()
         }
+        
       }
       return map_datas
     },

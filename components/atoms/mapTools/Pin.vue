@@ -82,6 +82,9 @@ export default {
           x: position.x - 60,
           y: position.y - 220
         },
+        data: {
+          
+        },
         title: this.attr.title,
         content: content,
         comments: this.attr.comments
