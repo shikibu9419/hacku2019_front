@@ -7,6 +7,7 @@ secrets:
       GOOGLE_MAPS_API_KEY: CiQAr+nDhuO9BTkvy7wqAUsaO6SRV24xRVReVcMR2TmdxoYHtw0SUABnEklwb+4jrofs6cYIbw7/naejicWfjHKKmbgu2DJk1WJSPcHoxPsc/fj1lc18+PLtTV4eRvlkZ8cdytuR5m9Kz2e6Gf8usZRlwJ6ZZUJ+
       YOLP_APPID: CiQAr+nDhmtQ72UKOKpkgW/+Fc2CNq3ssL0eP8Ywm+dKn2nMmb8SYQBnEklwHqUJNBdQX4+yomfqFlytNIJHWSUujoI4Z5H363bk7YIpj4ByKN43hbm0b0ldCEgFPrzH+EeG9xXYBn68P09SUTXfJ7n/WNBbWauFgHlUbK69hV+z5kNM31QeZUY=
       API_URL: CiQAr+nDhi5Nv+SCE6RE5rlRol0QOdyIEPhRY/p7Sn67khGqc6kSRgBnEklwPo7ZOgoPTeEBZhEzzcr7xDPB5Qur/ud+DaRaPer//Dq2fV4fZbpkw9bima/dHXDQ3PBRZoDiU8vsONT/+saoxTI=
+      SOCKET_SERVER_URL: CiQAr+nDhol0DT5bjIzxdLOYWNa9J02T9qcK1lgFiewBkUWmx0USRQBnEklwZFPZJcK6aGxHWh57Fb1ckfKpbhHG9M/PnxpVuvKEzHLPlkBtxXpevKC5KTDFNrTwkWShRz+sWXuutpWly3aIcw==
 steps:
 - name: 'gcr.io/cloud-builders/yarn'
   args: ['install']
