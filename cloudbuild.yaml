@@ -19,7 +19,7 @@ steps:
     'API_URL',
     'SOCKET_SERVER_URL',
 ]
-  
+
 - name: 'gcr.io/mille-feuille/firebase'
   args: ['deploy']
   secretEnv: ['FIREBASE_TOKEN']

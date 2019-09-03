@@ -35,7 +35,8 @@ export default {
 
     socket.on('init', map => {
       console.log(map)
-      this.$store.dispatch('mapEdit/initSocket', JSON.parse(map))
+      this.$store.commit('mapEdit/initSocket', JSON.parse(map))
+      console.log(this.$store.state.mapEdit.layers)
       if(this.$store.state.mapEdit.layers.length)
         this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
       else
@@ -43,34 +44,43 @@ export default {
     })
 
     socket.on('map/update', prop => {
-      this.$store.dispatch('mapEdit/mapSocket', {...prop, method: 'update'})
+      const hoge = JSON.parse(prop)
+      this.$store.dispatch('mapEdit/mapSocket', {...hoge, method: 'update'})
     })
 
     socket.on('layer/add', layer => {
-      this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'add'})
+      const hoge = JSON.parse(layer)
+      this.$store.dispatch('mapEdit/layerSocket', {layer: hoge, method: 'add'})
     })
     socket.on('layer/update', layer => {
-      this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'update'})
+      const hoge = JSON.parse(layer)
+      this.$store.dispatch('mapEdit/layerSocket', {layer: hoge, method: 'update'})
     })
     socket.on('layer/delete', layer => {
-      this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'delete'})
+      const hoge = JSON.parse(layer)
+      this.$store.dispatch('mapEdit/layerSocket', {layer: hoge, method: 'delete'})
     })
 
     socket.on('tool/add', prop => {
-      this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'add'})
+      const hoge = JSON.parse(prop)
+      this.$store.dispatch('mapEdit/toolSocket', {...hoge, method: 'add'})
     })
     socket.on('tool/update', prop => {
-      this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'update'})
+      const hoge = JSON.parse(prop)
+      this.$store.dispatch('mapEdit/toolSocket', {...hoge, method: 'update'})
     })
     socket.on('tool/delete', prop => {
-      this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'delete'})
+      const hoge = JSON.parse(prop)
+      this.$store.dispatch('mapEdit/toolSocket', {...hoge, method: 'delete'})
     })
 
     socket.on('select/add', prop => {
-      this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'add'})
+      const hoge = JSON.parse(prop)
+      this.$store.dispatch('mapEdit/selectSocket', {...hoge, method: 'add'})
     })
     socket.on('select/clear', prop => {
-      this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'clear'})
+      const hoge = JSON.parse(prop)
+      this.$store.dispatch('mapEdit/selectSocket', {...hoge, method: 'clear'})
     })
 
 //     const mapId = 157

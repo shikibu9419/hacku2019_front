@@ -13,7 +13,7 @@ const uuid = function() {
 };
 
 const emit = function(req, params) {
-  if (socket) socket.emit(req, params)
+  if (socket) socket.emit(req, JSON.stringify(params))
 }
 
 const state = () => ({
@@ -173,6 +173,18 @@ const mutations = {
       state.activeLayer.tools[toolId] = {...tool, lat: tool.lat + dlat, lng: tool.lng + dlng}
     }
   },
+
+  initSocket(state, map) {
+//     context.commit('updateMap', map)
+    state.map = Object.assign(state.map, map)
+    map.layers.forEach(layer => {
+      const index = state.layers.findIndex(lyr => lyr.id === layer.id)
+      if (index >= 0)
+        state.layers[index] = Object.assign(state.layers[index], layer)
+      else
+        state.layers.push(layer)
+    })
+  },
 }
 
 const actions = {
@@ -309,10 +321,10 @@ const actions = {
   },
 
   // サーバから受け取った情報をもとに実行
-  initSocket(context, map) {
-    context.commit('updateMap', map)
-    map.layers.forEach(layer => context.commit('updateLayer', layer))
-  },
+//   initSocket(context, map) {
+//     context.commit('updateMap', map)
+//     map.layers.forEach(layer => context.commit('updateLayer', layer))
+//   },
   mapSocket(context, prop) {
     switch (prop.method) {
       case 'update':
