@@ -65,18 +65,18 @@ const mutations = {
   },
   changeLike(state) {
     if(state.liked) {
-      this.$axios.delete(process.env.API_URL + '/maps/' + state.map.map_id + '/like')
+      this.$axios.delete(process.env.API_URL + '/maps/' + state.map.id + '/like')
     } else {
-      this.$axios.post(process.env.API_URL + '/maps/' + state.map.map_id + '/like')
+      this.$axios.post(process.env.API_URL + '/maps/' + state.map.id + '/like',{})
     }
     state.liked = !state.liked
   },
   //stock
   changeStock(state) {
     if(state.stocked) {
-      this.$axios.delete(process.env.API_URL + '/maps/' + state.map.map_id + '/stock')
+      this.$axios.delete(process.env.API_URL + '/maps/' + state.map.id + '/stock')
     } else {
-      this.$axios.post(process.env.API_URL + '/maps/' + state.map.map_id + '/stock')
+      this.$axios.post(process.env.API_URL + '/maps/' + state.map.id + '/stock',{})
     }
     state.stocked = !state.stocked
   },
