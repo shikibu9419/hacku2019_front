@@ -68,7 +68,7 @@ export default {
       this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'clear'})
     })
 
-    const mapId = this.$route.params.mapId
+    const mapId = 1
     const mapUrl = process.env.API_URL + '/maps/' + mapId
 
     this.$axios.get(mapUrl).then(response => {

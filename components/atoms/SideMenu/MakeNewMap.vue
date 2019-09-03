@@ -10,16 +10,16 @@
 export default {
   methods:{
     makeNewMap() {
-      this.$axios.post(process.env.API_URL + '/maps',
-                       { name: '新しい地図',
-                         description: '説明',
-                         publish_setting: 0 }
-      ).then(response => {
-        this.$router.push({name: 'maps-edit', params: {mapId: response.data.id}})
-      }).catch(err => {
-        console.log(err)
-        alert('Woops! An error occurred!')
-      })
+      this.$router.push('/maps/edit')
+//       this.$axios.post(process.env.API_URL + '/maps',
+//                        { name: '新しい地図',
+//                          description: '説明',
+//                          publish_setting: 0 }
+//       ).then(response => {
+//       }).catch(err => {
+//         console.log(err)
+//         alert('Woops! An error occurred!')
+//       })
     }
   },
 }
