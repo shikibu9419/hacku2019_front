@@ -1,5 +1,5 @@
 <script>
-const baseUrl = 'https://api.mille-feuille.app/maps'
+const baseUrl = process.env.API_URL + '/maps'
 
 export default {
     methods: {

@@ -9,7 +9,7 @@ import Vue from 'vue'
 export default {
   methods:{
     async pushLogout(){
-      const response = await this.$axios.get('https://api.mille-feuille.app/logout')
+      const response = await this.$axios.get(process.env.API_URL + '/logout')
       .then(response => {
         if(response.data.success) {
           Vue.toasted.success('ログアウトに成功しました')

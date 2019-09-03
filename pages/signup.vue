@@ -39,7 +39,7 @@ export default {
       if(this.password == this.passwordconfirm) {
         const response = await this.$axios.post(process.env.API_URL + '/users',
                                                 { email: this.email,
-                                                  user_name: this.name,
+                                                  name: this.name,
                                                   password: this.password })
         .then( response => {
           Vue.toasted.success('登録に成功しました')

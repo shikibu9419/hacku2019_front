@@ -65,18 +65,18 @@ const mutations = {
   },
   changeLike(state) {
     if(state.liked) {
-      this.$axios.delete('https://api.mille-feuille.app/maps/' + state.map.map_id + '/like')
+      this.$axios.delete(process.env.API_URL + '/maps/' + state.map.map_id + '/like')
     } else {
-      this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/like')
+      this.$axios.post(process.env.API_URL + '/maps/' + state.map.map_id + '/like')
     }
     state.liked = !state.liked
   },
   //stock
   changeStock(state) {
     if(state.stocked) {
-      this.$axios.delete('https://api.mille-feuille.app/maps/' + state.map.map_id + '/stock')
+      this.$axios.delete(process.env.API_URL + '/maps/' + state.map.map_id + '/stock')
     } else {
-      this.$axios.post('https://api.mille-feuille.app/maps/' + state.map.map_id + '/stock')
+      this.$axios.post(process.env.API_URL + '/maps/' + state.map.map_id + '/stock')
     }
     state.stocked = !state.stocked
   },
