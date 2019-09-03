@@ -27,6 +27,7 @@
 </template>
 
 <script>
+  import ModalSvc from '~/services/ModalSvc'
   import LayerSelectorItem from '~/components/atoms/mapEdit/LayerSelectorItem'
   import Selector from '~/components/atoms/selector/Selector'
   import LayerSvc from '~/services/LayerSvc'
@@ -39,7 +40,7 @@
       // {
       //  mapId: number
       // }
-      closeModal: () => {},
+      //closeModal: () => {},
       onOk: () => {}
     },
     created() {
@@ -56,7 +57,7 @@
         this.layer.color = this.getLayerColor()
         this.$store.dispatch('mapEdit/addLayer', this.layer)
         this.layerSvcCreate(this.params.mapId, this.layer.name, this.layer.color)
-        this.closeModal()
+        this.closePopup()
       },
       getLayerColor() {
         return this.layerColorItems.filter(item => {
@@ -114,7 +115,7 @@
         ]
       }
     },
-    mixins: [ LayerSvc ]
+    mixins: [ LayerSvc, ModalSvc ]
   }
 </script>
 
