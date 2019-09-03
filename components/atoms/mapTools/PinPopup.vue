@@ -3,7 +3,7 @@
       v-bind="pin_data.position"
       @mousedown.stop="popup"
     )
-    .box_tool_block( ref="boxToolBlock")
+    .box_tool_block()
       BoxToolBlock(:box_datas="pin_data.box_data")
     //comment-box(v-if="comments.length && !Object.keys(content).length" :tool-id="id" :title="title" v-bind="comments[0]" :in-popup="true")
     //content-box(v-else :title="title" :content="content" :in-popup="true")

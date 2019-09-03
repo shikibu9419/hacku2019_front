@@ -63,6 +63,7 @@ export default {
   background: $back-light-gray;
   padding: 4px 6px;
   border: 2px solid $gray;
+  width: 300px;
 }
 .box_tool__title {
   width: 100%;

@@ -1,8 +1,9 @@
 <template lang="pug">
   g.map_edit__tools.box(:class="{grab__tool_on: grabbing}" ref="box")
     foreignObject.map_edit_tools.box.content(@dblclick.stop="popup" v-bind="attributes" @mousedown.stop="grab")
-      comment-box(v-if="attr.comments.length && !Object.keys(previewContent).length" :title="title" :comment="attr.comments[0].comment")
-      content-box(v-else :title="attr.title" :content="previewContent")
+      BoxToolBlock(:box_datas="previewContent.box_data")
+      // comment-box(v-if="attr.comments.length && !Object.keys(previewContent).length" :title="title" :comment="attr.comments[0].comment")
+      // content-box(v-else :title="attr.title" :content="previewContent")
     circle.map_edit__tools.box.resizepoint(
       v-if="selected"
       v-bind="pointPosition"
@@ -25,7 +26,7 @@ export default {
     }
   },
   mounted() {
-    this.width = 100
+    this.width = 300
   },
   watch: {
     grabbing() {
@@ -64,11 +65,46 @@ export default {
       }
     },
     previewContent() {
-      var content = {}
-      content = this.attr.contents.filter(content => content.type === 'link')[0]  || content
-      content = this.attr.contents.filter(content => content.type === 'text')[0]  || content
-      content = this.attr.contents.filter(content => content.type === 'image')[0] || content
-      return content
+      // var content = {}
+      // content = this.attr.contents.filter(content => content.type === 'link')[0]  || content
+      // content = this.attr.contents.filter(content => content.type === 'text')[0]  || content
+      // content = this.attr.contents.filter(content => content.type === 'image')[0] || content
+      //return content
+      const position = this.attributes
+      
+      console.log(this.attr)
+      let data = []
+      if(this.attr.contents.length !== 0){
+        for (let i = 0; i < this.attr.contents.length; i++) {
+          let oneContent = this.attr.contents[i]
+          data.push(oneContent)
+        }
+      }
+
+      if(this.attr.comments.length !== 0){
+        for (let i = 0; i < this.attr.comments.length; i++) {
+          let oneComment = this.attr.comments[i]
+          let comment = {}
+          comment.type = 'comment'
+          comment.icon = null
+          comment.username = oneComment.user.name
+          comment.text = oneComment.comment
+          data.push(comment)
+        }
+      }
+
+      return {
+        id: this.id,
+        type: this.attr.type,
+        position: {
+          x: position.x - 140,
+          y: position.y - 20
+        },
+        box_data: {
+          title: this.attr.title,
+          data: data
+        }
+      }
     }
   },
   methods: {
@@ -90,7 +126,8 @@ export default {
   },
   components: {
     ContentBox: () => import('~/components/atoms/mapEdit/ContentBox'),
-    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox')
+    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox'),
+    BoxToolBlock: () => import('~/components/atoms/sunaba/BoxToolBlock')
   },
   mixins: [ Shared, ModalSvc ],
 }
@@ -101,6 +138,7 @@ export default {
 
 .map_edit__tools.box {
   cursor: grab;
+  overflow: initial;
 
   &.grab__tool_on {
     cursor: grabbing;
