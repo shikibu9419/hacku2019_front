@@ -51,7 +51,9 @@ const mutations = {
 
   // map
   updateMap(state, map) {
+    console.log(map)
     state.map = Object.assign(state.map, map)
+    console.log(state.map)
   },
   updateTags(state, tags) {
     state.map = {...state.map, tags: tags}
@@ -397,7 +399,9 @@ const getters = {
   comments(state, _, rootState) {
     const toolsWithComments = state.layers.map(layer => {
       return Object.values(layer.tools).filter(tool => ['pin', 'box'].includes(tool.type))
-    }).flat(10).filter(tool => tool.comments.length)
+    }).flat(10)
+    console.log(toolsWithComments)
+    toolsWithComments.filter(tool => tool.comments.length)
 
     const comments = toolsWithComments.map(tool => {
       return tool.comments.map(comment => {

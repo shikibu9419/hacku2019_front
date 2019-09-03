@@ -34,8 +34,12 @@ export default {
     const socket = io(process.env.SOCKET_SERVER_URL)
 
     socket.on('init', map => {
-      this.$store.dispatch('mapEdit/initSocket', map)
-      this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
+      console.log(map)
+      this.$store.dispatch('mapEdit/initSocket', JSON.parse(map))
+      if(this.$store.state.mapEdit.layers.length)
+        this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
+      else
+        this.$store.dispatch('mapEdit/addLayer', {color: 'red', name: '新しいレイヤー', id: 110})
     })
 
     socket.on('map/update', prop => {

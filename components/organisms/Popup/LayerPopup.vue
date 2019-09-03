@@ -56,7 +56,7 @@
         this.layer.id = this.$store.state.mapEdit.layers.length;
         this.layer.color = this.getLayerColor()
         this.$store.dispatch('mapEdit/addLayer', this.layer)
-        this.layerSvcCreate(this.params.mapId, this.layer.name, this.layer.color)
+//         this.layerSvcCreate(this.params.mapId, this.layer.name, this.layer.color)
         this.closePopup()
       },
       getLayerColor() {
