@@ -65,6 +65,7 @@ export default {
     },
     editTagsFinish(tags) {
       this.$store.dispatch('mapEdit/updateTags', tags)
+      this.tags = this.$store.getters['mapEdit/getTags']
       this.editingTags = false
     },
   },
@@ -84,7 +85,7 @@ export default {
 }
 .sidebar__map_tags__tags__wrapper{
   width: 100%;
-  min-height: 20px;  
+  min-height: 20px;
   border-radius: 8px;
 }
 .sidebar__map_tags__tags__wrapper--click {

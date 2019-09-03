@@ -54,7 +54,13 @@ export default {
     editLayer(){
       if(this.edit){
         //mapId, layerId, layerName, description, color
-        this.openPopup('LayerSettingPopup', null,this.id,this.name, null, this.color)
+        this.openPopup('LayerSettingPopup', {
+                mapId: null,
+                layerId: this.id,
+                layerName: this.name,
+                description: null,
+                color: this.color
+        })
       }
     }
   },

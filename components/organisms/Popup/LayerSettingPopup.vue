@@ -1,7 +1,7 @@
 <template lang="pug">
     .layer-setting-popup
         .layer-setting-popup__title レイヤーを編集
-            DeleteAndCloseButton(v-bind:deleteHandler="closeModal" v-bind:closeHandler="closeModal")
+            DeleteAndCloseButton(v-bind:deleteHandler="deleteLayer" v-bind:closeHandler="closeModal")
         .layer-setting-popup__setting
             .layer-setting-popup__setting_box
                 .layer-setting-popup__setting-name レイヤー名
@@ -59,6 +59,12 @@
                     { params: {}, value: 'gray', selected: false },
                     { params: {}, value: 'black', selected: false }
                 ]
+            }
+        },
+        methods: {
+            deleteLayer() {
+                this.$store.dispatch('mapEdit/deleteLayer', this.params.layerId)
+                this.closeModal()
             }
         }
     }
