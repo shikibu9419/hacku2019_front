@@ -35,6 +35,7 @@ export default {
 
     socket.on('init', map => {
       this.$store.dispatch('mapEdit/initSocket', map)
+      this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
     })
 
     socket.on('map/update', prop => {
@@ -68,37 +69,37 @@ export default {
       this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'clear'})
     })
 
-    const mapId = 1
-    const mapUrl = process.env.API_URL + '/maps/' + mapId
+//     const mapId = 157
+//     const mapUrl = process.env.API_URL + '/maps/' + mapId
 
-    this.$axios.get(mapUrl).then(response => {
-      const map = response.data
-      this.$store.commit('mapEdit/updateMap', map)
+//     this.$axios.get(mapUrl).then(response => {
+//       const map = response.data
+//       this.$store.commit('mapEdit/updateMap', map)
 
-      // layer setting
-      if (!map.layer || !map.layer.length) {
-        // init layer
-        this.layerSvcCreate(mapId, '新しいレイヤー', '', 'red').then(response => {
-          this.layerSvcDisplay(mapId, response.data.id).then(response => {
-            // add init layer
-            const layer = response.data
-            this.$store.dispatch('mapEdit/addLayer', layer)
-          })
-        }).catch(err => {
-          console.log('layer error:', err)
-          alert('Woops! An error occurred!')
-        })
-      // if map has some layers...
-      } else {
-        map.layers.forEach(layer => this.$store.commit('mapEdit/updateLayer', layer))
-        this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
-      }
+//       // layer setting
+//       if (!map.layers || !map.layers.length) {
+//         // init layer
+//         this.layerSvcCreate(mapId, '新しいレイヤー', '', 'red').then(response => {
+//           this.layerSvcDisplay(mapId, response.data.id).then(response => {
+//             // add init layer
+//             const layer = response.data
+//             this.$store.dispatch('mapEdit/addLayer', layer)
+//           })
+//         }).catch(err => {
+//           console.log('layer error:', err)
+//           alert('Woops! An error occurred!')
+//         })
+//       // if map has some layers...
+//       } else {
+//         map.layers.forEach(layer => this.$store.commit('mapEdit/updateLayer', layer))
+//         this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
+//       }
     // error handling of gettting map
-    }).catch(err => {
-      console.log(err)
-      alert('Woops! An error occurred!')
-      this.$router.push('/')
-    })
+//     }).catch(err => {
+//       console.log(err)
+//       alert('Woops! An error occurred!')
+//       this.$router.push('/')
+//     })
 
     this.$store.commit('mapEdit/init', socket)
     this.$store.dispatch('mapEdit/setLike', this.$store.state.user.user.id)
