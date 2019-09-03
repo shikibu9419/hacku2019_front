@@ -40,7 +40,7 @@
       // {
       //  mapId: number
       // }
-      //closeModal: () => {},
+      closeModal: () => {},
       onOk: () => {}
     },
     created() {

@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import ModalSvc from '~/services/ModalSvc'
 import AutosizeTextarea from '~/components/atoms/AutosizeTextarea'
 import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
 import CommentForm from '~/components/atoms/mapEdit/CommentForm'

@@ -2,7 +2,7 @@
     .popup-modal
         .popup-modal__background(@click="closePopup()")
         .popup-modal__popup-content(v-bind:class="{ 'for-box-and-pin-popup': params.component === 'BoxAndPinPopup' }")
-            component(v-bind:is="params.component", :params="params.property" :onOk="params.onOk")
+            component(v-bind:is="params.component",:closeModal="closePopup" :params="params.property" :onOk="params.onOk")
 </template>
 
 <script>
