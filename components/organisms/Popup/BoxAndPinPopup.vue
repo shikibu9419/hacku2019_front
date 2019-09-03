@@ -164,7 +164,7 @@ export default {
 @import "../../../assets/styles/variables";
 .box-and-pin-popup {
   height: auto;
-  width: 800px;
+  width: 880px;
   display: flex;
   flex-direction: column;
   &__title-wrapper {
