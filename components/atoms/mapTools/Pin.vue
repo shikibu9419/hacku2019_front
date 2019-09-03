@@ -25,7 +25,7 @@
       v-bind="attributes"
       xlink:href="~/assets/svgs/pin.svg"
     )
-    pin-popup(v-if="selected && !grabbing" @popup="popup()" v-bind="pinPopupAttr")
+    pin-popup(v-if="selected && !grabbing" @popup="popup()" :pin_data="pinPopupAttr")
 </template>
 
 <script>
@@ -71,20 +71,45 @@ export default {
     pinPopupAttr() {
       const position = this.attributes
 
-      var content = {}
-      content = this.attr.contents.filter(content => content.type === 'link')[0]  || content
-      content = this.attr.contents.filter(content => content.type === 'text')[0]  || content
-      content = this.attr.contents.filter(content => content.type === 'image')[0] || content
+      // var content = {}
+      // content = this.attr.contents.filter(content => content.type === 'link')[0]  || content
+      // content = this.attr.contents.filter(content => content.type === 'text')[0]  || content
+      // content = this.attr.contents.filter(content => content.type === 'image')[0] || content
+
+      
+      console.log(this.attr)
+      let data = []
+      if(this.attr.contents.length !== 0){
+        for (let i = 0; i < this.attr.contents.length; i++) {
+          let oneContent = this.attr.contents[i]
+          data.push(oneContent)
+        }
+      }
+
+      if(this.attr.comments.length !== 0){
+        for (let i = 0; i < this.attr.comments.length; i++) {
+          let oneComment = this.attr.comments[i]
+          let comment = {}
+          comment.type = 'comment'
+          comment.icon = null
+          comment.username = oneComment.user.name
+          comment.text = oneComment.comment
+          data.push(comment)
+        }
+      }
+      console.log(data)
 
       return {
         id: this.id,
+        type: this.attr.type,
         position: {
-          x: position.x - 60,
-          y: position.y - 220
+          x: position.x - 140,
+          y: position.y - 20
         },
-        title: this.attr.title,
-        content: content,
-        comments: this.attr.comments
+        box_data: {
+          title: this.attr.title,
+          data: data
+        }
       }
     },
     mounted() {
