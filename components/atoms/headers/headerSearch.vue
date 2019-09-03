@@ -111,7 +111,7 @@ export default {
         })
     },
     searchMap() {
-      const baseUrl = 'https://api.mille-feuille.app/maps'
+      const baseUrl = process.env.API_URL  + '/maps'
       const filter = ((this.filter.like ? 'like,' : '') + (this.filter.mymap ? 'mymap,' : '') + (this.filter.stock ? 'stock,' : '')).slice(0,-1) || 'all'
       this.$axios.get(baseUrl, {
         params: {
