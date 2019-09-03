@@ -22,7 +22,7 @@ export default {
   },
   computed:{
     mapLikedOn(){
-      return this.$store.state.mapEdit.like
+      return this.$store.state.mapEdit.liked
     }
   }
 }
