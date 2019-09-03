@@ -139,6 +139,9 @@ export default {
 .map_edit__tools.box {
   cursor: grab;
   overflow: initial;
+  .map_edit_tools.box {
+    overflow: initial;
+  }
 
   &.grab__tool_on {
     cursor: grabbing;
