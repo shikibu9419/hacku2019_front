@@ -1,13 +1,18 @@
 <template lang="pug">
-  foreignObject.map_edit_tools__pin_popup(v-bind="position" @mousedown.stop="popup")
-    comment-box(v-if="comments.length && !Object.keys(content).length" :tool-id="id" :title="title" v-bind="comments[0]" :in-popup="true")
-    content-box(v-else :title="title" :content="content" :in-popup="true")
+  foreignObject.map_edit_tools__pin_popup(
+      v-bind="pin_data.position"
+      @mousedown.stop="popup"
+    )
+    .box_tool_block( ref="boxToolBlock")
+      BoxToolBlock(:box_datas="pin_data.box_data")
+    //comment-box(v-if="comments.length && !Object.keys(content).length" :tool-id="id" :title="title" v-bind="comments[0]" :in-popup="true")
+    //content-box(v-else :title="title" :content="content" :in-popup="true")
 </template>
 
 <script>
 export default {
   name: "PinPopup.vue",
-  props: ['id', 'position', 'title', 'content', 'comments'],
+  props: ['pin_data'],
   methods: {
     popup() {
       this.$emit('popup')
@@ -15,7 +20,8 @@ export default {
   },
   components: {
     ContentBox: () => import('~/components/atoms/mapEdit/ContentBox'),
-    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox')
+    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox'),
+    BoxToolBlock: () => import('~/components/atoms/sunaba/BoxToolBlock')
   }
 }
 </script>
@@ -24,7 +30,17 @@ export default {
 @import "~/assets/styles/variables.scss";
 
 .map_edit_tools__pin_popup {
-  height: 200px;
-  width: 150px;
+  position: relative;
+  height: 10px;
+  width: 300px;
+  overflow: inherit;
+}
+.box_tool_block {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: min-content;
+  height: min-content;
 }
 </style>

@@ -98,6 +98,7 @@ export default {
   max-height: 260px;
   overflow-y: auto;
   border: 2px solid $gray;
+  background: $white;
   border-top: none;
 }
 .box_tool__content {
