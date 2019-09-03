@@ -1,7 +1,8 @@
 <template lang="pug">
     .share-setting-popup
         .share-setting-popup__title 共有設定
-            DeleteAndCloseButton(v-bind:deleteHandler="closeModal" v-bind:closeHandler="closeModal")
+            .delete-and-close-button
+                CustomButton.delete-and-close-button__close-button(v-bind:handler="closeModal") 閉じる
         .share-setting-popup__setting
             .share-setting-popup__link-wrapper 公開リンク
                 .share-setting-popup__link
@@ -41,6 +42,7 @@
 <script>
     import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
     import Selector from '~/components/atoms/selector/Selector'
+    import CustomButton from '~/components/atoms/CustomButton'
     export default {
         name: "ShareSettingPopup.vue",
         props: {
@@ -50,6 +52,7 @@
         components: {
             DeleteAndCloseButton,
             Selector,
+            CustomButton,
             TwitterBtn: () => import('~/assets/svgs/twitter.svg?inline'),
             FacebookBtn: () => import('~/assets/svgs/facebook.svg?inline'),
         },
@@ -181,6 +184,23 @@
         &__remove-user-button {
             font-size: 20px;
             margin: 0 8px 0 16px;
+        }
+    }
+
+
+    .delete-and-close-button {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 12px;
+        margin: 0 0 0 auto;
+        &__delete-button {
+            color: $white;
+            background: $dark-gray;
+        }
+        &__close-button {
+            color: $white;
+            background: $palette-pink;
         }
     }
 </style>
