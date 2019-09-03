@@ -4,7 +4,7 @@
       .sidebar_edit__scroll
         .sidebar_edit__scroll__wrapper
           .sidebar_edit__header
-            img.sidebar_edit__header__img(src="")
+            img.sidebar_edit__header__img(:src="'https://picsum.photos/400/300'")
             MapInfo(:map="map")
           .sidebar_edit__content
             MapTags(:map="map")
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     toggleBar(){
-      this.menuClose = (this.menuClose ? false:true)
+      this.menuClose = (this.menuClose ? false : true)
     }
   }
 }

@@ -43,7 +43,8 @@ export default {
       this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'pin'})
     },
     addText() {
-      alert('Text is not implemented yet!')
+      this.$store.dispatch('mapEdit/toggle', 'grabbing')
+      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'text'})
     },
     addBox() {
       this.$store.dispatch('mapEdit/toggle', 'grabbing')

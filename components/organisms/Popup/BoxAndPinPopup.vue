@@ -46,7 +46,7 @@
                         img.box-and-pin-popup__info-icon(width="24px" src="~/assets/svgs/link_box.svg" @click="addContent('link')")
             .box-and-pin-popup--right
                 .box-and-pin-popup__set-layer 属するレイヤー
-                    Selector.box-and-pin-popup__selector(component="selectColorItem" :items.async="items" :width="'160px'")
+                    Selector.box-and-pin-popup__selector(component="selectColorItem" :items.async="items" :width="'200px'")
                 .box-and-pin-popup__set-tool ツールの変更
                     .box-and-pin-popup__selector
                 .box-and-pin-popup__comment-wrapper
