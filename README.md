@@ -17,6 +17,13 @@ $ yarn start
 
 # generate static project
 $ yarn generate
+
+# test
+$ yarn run test
+
+# lint / lint and fix
+$ yarn run lint
+$ yarn run lintfix
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
