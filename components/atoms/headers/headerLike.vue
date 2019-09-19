@@ -12,23 +12,23 @@
 
 <script>
 export default {
-  components:{
+  components: {
     likeBtn: () => import('~/assets/svgs/like.svg?inline'),
   },
-  methods:{
-    pushLike(){
-      this.$store.dispatch('mapEdit/changeLike')
-    }
+  computed: {
+    mapLikedOn() {
+      return this.$store.state.mapEdit.liked;
+    },
   },
-  computed:{
-    mapLikedOn(){
-      return this.$store.state.mapEdit.liked
-    }
-  }
-}
+  methods: {
+    pushLike() {
+      this.$store.dispatch('mapEdit/changeLike');
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/headerButtons.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/headerButtons.scss';
 </style>

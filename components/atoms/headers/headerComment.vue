@@ -10,24 +10,24 @@
 
 <script>
 export default {
-  components:{
+  components: {
     commentBtn: () => import('~/assets/svgs/comment_box.svg?inline'),
   },
-  methods:{
-    toggleCommentbar() {
-      this.$store.dispatch('mapEdit/toggle', 'commentbarOpen')
-    }
-  },
-  computed:{
-    mapCommentsAreaOn(){
+  computed: {
+    mapCommentsAreaOn() {
       //VueXから取ってくる
-      return false
-    }
-  }
-}
+      return false;
+    },
+  },
+  methods: {
+    toggleCommentbar() {
+      this.$store.dispatch('mapEdit/toggle', 'commentbarOpen');
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/headerButtons.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/headerButtons.scss';
 </style>

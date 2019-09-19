@@ -25,8 +25,7 @@
 </template>
 <script>
 export default {
-  props:['placeholder','type','returnLink'],
-  components:{
+  components: {
     //svg
     ReturnBtn: () => import('~/assets/svgs/return.svg?inline'),
     //components
@@ -37,16 +36,16 @@ export default {
     HeaderStock: () => import('~/components/atoms/headers/headerStock.vue'),
     HeaderLogout: () => import('~/components/atoms/headers/headerLogout.vue'),
   },
+  props: ['placeholder', 'type', 'returnLink'],
   mounted() {
-    this.type="like"
+    this.type = 'like';
   },
-  methods:{
-  }
-}
+  methods: {},
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 .header {
   position: relative;
@@ -55,7 +54,7 @@ export default {
   display: flex;
   align-items: center;
 }
-.header_logo{
+.header_logo {
   width: $sidemenu-width;
 }
 .header_logo__img {

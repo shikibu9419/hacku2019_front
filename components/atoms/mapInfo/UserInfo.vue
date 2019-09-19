@@ -27,14 +27,14 @@
 
 <script>
 export default {
-  props: ["author","editors"]
-}
+  props: ['author', 'editors'],
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/mapInfo.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/mapInfo.scss';
 
 .user_info_icon {
   display: block;
@@ -63,5 +63,4 @@ export default {
 .user_info__editors_icon {
   position: absolute;
 }
-
 </style>

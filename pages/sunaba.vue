@@ -15,74 +15,77 @@
 </template>
 <script>
 export default {
-  components:{
-    BoxToolBlock: () => import('~/components/atoms/sunaba/BoxToolBlock')
+  components: {
+    BoxToolBlock: () => import('~/components/atoms/sunaba/BoxToolBlock'),
   },
-  data(){
+  data() {
     return {
-      box_data_1:{
+      box_data_1: {
         title: 'タイトル',
         data: [
           {
             type: 'text',
-            text: 'テキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト'
-          }
-        ]
+            text:
+              'テキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト',
+          },
+        ],
       },
-      box_data_2:{
+      box_data_2: {
         title: 'タイトル',
         data: [
           {
             type: 'image',
-            src: ['./icon.png']
-          }
-        ]
+            src: ['./icon.png'],
+          },
+        ],
       },
-      box_data_3:{
+      box_data_3: {
         title: 'タイトル',
         data: [
           {
             type: 'comment',
             icon: null,
             username: 'tanakataro',
-            text: 'テキストテキストテキスト'
-          }
-        ]
+            text: 'テキストテキストテキスト',
+          },
+        ],
       },
-      box_data_4:{
+      box_data_4: {
         title: 'タイトル',
         data: [
           {
             type: 'link',
             link: 'https://google.com',
-            text: 'テキストテキストテキスト'
-          }
-        ]
+            text: 'テキストテキストテキスト',
+          },
+        ],
       },
-      box_data_5:{
+      box_data_5: {
         title: 'タイトル',
         data: [
           {
             type: 'image',
-            src: ['./icon.png','./icon.png','./icon.png']
+            src: ['./icon.png', './icon.png', './icon.png'],
           },
           {
             type: 'text',
-            text: 'テキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト'
+            text:
+              'テキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト',
           },
           {
             type: 'text',
-            text: 'テキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト'
-          }
-        ]
+            text:
+              'テキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト\nテキスト',
+          },
+        ],
       },
-      box_data_6:{
+      box_data_6: {
         title: 'タイトル',
-        data: null
+        data: null,
       },
-    }
-  }
-}
+    };
+  },
+};
 </script>
 <style lang="scss" scoped>
 .sunaba_wrapper {

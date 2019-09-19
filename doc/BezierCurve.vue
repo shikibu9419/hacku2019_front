@@ -14,19 +14,18 @@
         circle(:cx="p[3].x" :cy="p[3].y" r="10" fill="#666666" class="oops")
 </template>
 
-
 <script>
 export default {
   data() {
     return {
       grabbingIndex: null,
       p: [
-        {x: 10,  y: 510},
-        {x: 460, y: 450},
-        {x: 60,  y: 50},
-        {x: 510, y: 10}
-      ]
-    }
+        { x: 10, y: 510 },
+        { x: 460, y: 450 },
+        { x: 60, y: 50 },
+        { x: 510, y: 10 },
+      ],
+    };
   },
   computed: {
     cubicBezier() {
@@ -34,21 +33,21 @@ export default {
         this.normalize(this.p[1].x),
         this.normalize(this.max - this.p[1].y),
         this.normalize(this.p[2].x),
-        this.normalize(this.max - this.p[2].y)
-      ].join(', ')
-      
-      return `cubic-bezier(${b})`
-    }
+        this.normalize(this.max - this.p[2].y),
+      ].join(', ');
+
+      return `cubic-bezier(${b})`;
+    },
   },
   methods: {
     mouseupContainer() {
-      this.grabbingIndex = null
+      this.grabbingIndex = null;
     },
     mousedownPoint(index) {
-      this.grabbingIndex = index
+      this.grabbingIndex = index;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +56,7 @@ export default {
 body {
   letter-spacing: 0.1em;
   color: #444;
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .oops {
@@ -105,26 +104,26 @@ body {
     top: 10px;
     left: 10px;
     background-color: #fafafa;
-      &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    background-color: #eaeaea;
-  }
-  &:before {
-    width: 100%;
-    height: 2px;
-    left: 0;
-    top: 50%;
-    margin-top: -1px;
-  }
-  &:after {
-    width: 2px;
-    height: 100%;
-    top: 0;
-    left: 50%;
-    margin-left: -1px;
-  }
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      background-color: #eaeaea;
+    }
+    &:before {
+      width: 100%;
+      height: 2px;
+      left: 0;
+      top: 50%;
+      margin-top: -1px;
+    }
+    &:after {
+      width: 2px;
+      height: 100%;
+      top: 0;
+      left: 50%;
+      margin-left: -1px;
+    }
   }
 }
 

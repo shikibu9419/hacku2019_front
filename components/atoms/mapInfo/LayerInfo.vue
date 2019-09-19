@@ -13,15 +13,15 @@
 
 </template>
 <script>
-  export default {
-    components:{
-      layersIcon: () => import('~/assets/svgs/layers.svg?inline'),
-    },
-    props: ["layers"]
-  }
+export default {
+  components: {
+    layersIcon: () => import('~/assets/svgs/layers.svg?inline'),
+  },
+  props: ['layers'],
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/mapInfo.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/mapInfo.scss';
 </style>

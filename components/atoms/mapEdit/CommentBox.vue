@@ -12,21 +12,30 @@
 <script>
 export default {
   components: {
-    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo'),
   },
-  props: ['toolId', 'title', 'comment', 'user', 'lat', 'lng', 'onBox', 'inPopup'],
+  props: [
+    'toolId',
+    'title',
+    'comment',
+    'user',
+    'lat',
+    'lng',
+    'onBox',
+    'inPopup',
+  ],
   methods: {
     focusComment() {
-      if (this.onBox) return
-      this.$store.dispatch('ymap/panTo', {lat: this.lat, lng: this.lng})
-      this.$store.dispatch('mapEdit/selectTool', {toolId: this.toolId})
-    }
-  }
-}
+      if (this.onBox) return;
+      this.$store.dispatch('ymap/panTo', { lat: this.lat, lng: this.lng });
+      this.$store.dispatch('mapEdit/selectTool', { toolId: this.toolId });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .comment_box {
   word-wrap: break-word;

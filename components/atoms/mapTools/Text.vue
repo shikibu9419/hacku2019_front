@@ -11,107 +11,120 @@
 </template>
 
 <script>
-  import ModalSvc from '~/services/ModalSvc'
-  import Shared from './Shared'
-  import AutosizeTextarea from '~/components/atoms/AutosizeTextarea'
+import ModalSvc from '~/services/ModalSvc';
+import Shared from './Shared';
+import AutosizeTextarea from '~/components/atoms/AutosizeTextarea';
 
-  export default {
-    data() {
+export default {
+  components: {
+    AutosizeTextarea,
+  },
+  mixins: [Shared, ModalSvc],
+  data() {
+    return {
+      init: true,
+      pointGrabbed: false,
+      width: 0,
+      height: 0,
+      text: '',
+      maxSize: 10,
+      defaultSize: 2,
+    };
+  },
+  computed: {
+    attributes() {
+      this.$store.state.ymap.now; // To observe map scrolling
+
+      const attr = Object.assign(
+        {},
+        this.attr,
+        this.$store.getters['ymap/latLngToPixel'](this.attr)
+      );
+      delete attr.lat;
+      delete attr.lng;
+
+      if (!this.selected || !this.pointGrabbed) return attr;
+
+      const mousePosition = this.$store.state.mapEdit.mousePosition;
+      this.width = Math.max(mousePosition.x - attr.x, 0);
+      this.height = Math.max(mousePosition.y - attr.y, 0);
+
+      return { ...attr, width: this.width, height: this.height };
+    },
+    pointPosition() {
       return {
-        init: true,
-        pointGrabbed: false,
-        width: 0,
-        height: 0,
-        text: '',
-        maxSize: 10,
-        defaultSize: 2
-      }
+        cx: this.attributes.x + this.width,
+        cy: this.attributes.y + this.height,
+      };
     },
-    mounted() {
-      this.width = 100
+    rows() {
+      return Math.max(
+        Math.min(
+          Math.max(
+            this.text.split('\n').length,
+            Math.ceil(this.text.length / 20)
+          ),
+          this.maxSize
+        ),
+        this.defaultSize
+      );
     },
-    watch: {
-      grabbing() {
-        if(!this.init) return
-        this.init = false
-      }
+  },
+  watch: {
+    grabbing() {
+      if (!this.init) return;
+      this.init = false;
     },
-    computed: {
-      attributes() {
-        this.$store.state.ymap.now // To observe map scrolling
-
-        const attr = Object.assign({}, this.attr, this.$store.getters['ymap/latLngToPixel'](this.attr))
-        delete attr.lat
-        delete attr.lng
-
-        if (!this.selected || !this.pointGrabbed) return attr
-
-        const mousePosition = this.$store.state.mapEdit.mousePosition
-        this.width  = Math.max(mousePosition.x - attr.x, 0)
-        this.height = Math.max(mousePosition.y - attr.y, 0)
-
-        return {...attr, width: this.width, height: this.height}
-      },
-      pointPosition() {
-        return {
-          cx: this.attributes.x + this.width,
-          cy: this.attributes.y + this.height
-        }
-      },
-      rows() {
-        return Math.max(Math.min(Math.max(this.text.split('\n').length, Math.ceil(this.text.length/20)), this.maxSize), this.defaultSize)
-      }
+  },
+  mounted() {
+    this.width = 100;
+  },
+  methods: {
+    grabPoint() {
+      this.pointGrabbed = true;
     },
-    methods: {
-      grabPoint() {
-        this.pointGrabbed = true
-      },
-      releasePoint() {
-        this.$store.dispatch('mapEdit/resize', {
-          toolId: this.id,
-          width: this.width,
-          height: this.height
-        })
-        this.pointGrabbed = false
-      },
+    releasePoint() {
+      this.$store.dispatch('mapEdit/resize', {
+        toolId: this.id,
+        width: this.width,
+        height: this.height,
+      });
+      this.pointGrabbed = false;
     },
-    mixins: [ Shared, ModalSvc ],
-    components: {
-      AutosizeTextarea
-    }
-  }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
-  .map_edit__tools{
-    .text {
-      cursor: grab;
-      &.input {
-        width: 160px;
-        background: transparent;
-        border: none;
-        white-space: normal;
-        &.selected {
-          border: dashed 1px;
-        }
-      }
-      &.grab__tool_on {
-        cursor: grabbing;
-      }
-
-      &.resizepoint {
-        fill-opacity: 0;
-        stroke-opacity: 0;
-        r: 3;
-        cursor: nwse-resize;
+.map_edit__tools {
+  .text {
+    cursor: grab;
+    &.input {
+      width: 160px;
+      background: transparent;
+      border: none;
+      white-space: normal;
+      &.selected {
+        border: dashed 1px;
       }
     }
+    &.grab__tool_on {
+      cursor: grabbing;
+    }
+
+    &.resizepoint {
+      fill-opacity: 0;
+      stroke-opacity: 0;
+      r: 3;
+      cursor: nwse-resize;
+    }
   }
-  .map_edit_tools__content {
-    overflow: visible;
-    width: 160px;
-    height: 100px;
-  }
+}
+.map_edit_tools__content {
+  overflow: visible;
+  width: 160px;
+  height: 100px;
+}
 </style>

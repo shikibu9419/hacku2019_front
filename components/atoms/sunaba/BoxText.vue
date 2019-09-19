@@ -4,8 +4,8 @@
 </template>
 <script>
 export default {
-  props:["box"]
-}
+  props: ['box'],
+};
 </script>
 <style lang="scss" scoped>
 .box_text {

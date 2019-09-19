@@ -8,35 +8,41 @@
 
 <script>
 export default {
-  methods:{
+  methods: {
     makeNewMap() {
-      this.$router.push('/maps/edit')
-//       this.$axios.post(process.env.API_URL + '/maps',
-//                        { name: '新しい地図',
-//                          description: '説明',
-//                          publish_setting: 0 }
-//       ).then(response => {
-//       }).catch(err => {
-//         console.log(err)
-//         alert('Woops! An error occurred!')
-//       })
-    }
+      this.$axios
+        .post(process.env.API_URL + '/maps', {
+          name: '新しい地図',
+          description: '説明',
+          publish_setting: 0,
+        })
+        .then(response => {
+          this.$router.push({
+            name: 'maps-edit',
+            params: { mapId: response.data.id },
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          alert('Woops! An error occurred!');
+        });
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 $padding: 28px;
 
-.side-menu-btn{
+.side-menu-btn {
   padding: 16px $padding;
 }
 
-.sidemenu_button{
-  width: $sidemenu-width - ($padding*2);
+.sidemenu_button {
+  width: $sidemenu-width - ($padding * 2);
   padding: 10px;
   display: flex;
   flex-wrap: nowrap;

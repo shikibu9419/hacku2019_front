@@ -5,40 +5,40 @@
 </template>
 
 <script>
-  import LayerIcon from '~/assets/svgs/layer.svg?inline'
-  export default {
-    name: "selectColorItem.vue",
-    components: {
-      LayerIcon
+import LayerIcon from '~/assets/svgs/layer.svg?inline';
+export default {
+  name: 'SelectColorItemVue',
+  components: {
+    LayerIcon,
+  },
+  props: {
+    item: Object,
+    // {
+    //  param: Object,
+    //  value: any,
+    //  selected: boolean
+    // }
+  },
+  methods: {
+    getName() {
+      if (!this.item.param) return '';
+      return Object.keys(this.item.param).length ? this.item.param.name : '';
     },
-    props: {
-      item: Object,
-      // {
-      //  param: Object,
-      //  value: any,
-      //  selected: boolean
-      // }
-    },
-    methods: {
-      getName() {
-        if(!this.item.param) return ''
-        return Object.keys(this.item.param).length ? this.item.param.name : ''
-      }
-    }
-  }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../assets/styles/variables";
-  @import "../../../assets/styles/atoms/layerSvg";
-  .select-color-item {
-    background: $white;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    &__icon {
-      width: 24px;
-      margin-right: 8px;
-    }
+@import '../../../assets/styles/variables';
+@import '../../../assets/styles/atoms/layerSvg';
+.select-color-item {
+  background: $white;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  &__icon {
+    width: 24px;
+    margin-right: 8px;
   }
+}
 </style>

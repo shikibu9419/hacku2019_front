@@ -13,19 +13,19 @@
     //fa-icon(icon="angle-left").box_image_next
 </template>
 <script>
-import Carousel from 'vue-carousel/src/Carousel.vue'
-import Slide from 'vue-carousel/src/Slide.vue'
+import Carousel from 'vue-carousel/src/Carousel.vue';
+import Slide from 'vue-carousel/src/Slide.vue';
 
 export default {
-  props:["box"],
   components: {
     Carousel,
-    Slide
-  }
-}
+    Slide,
+  },
+  props: ['box'],
+};
 </script>
 <style lang="scss" scoped>
-.box_image{
+.box_image {
   width: 100%;
   &__img {
     display: block;
@@ -54,7 +54,7 @@ export default {
   font-size: 2rem;
   text-align: center;
   padding: 0 !important;
-  &:focus{
+  &:focus {
     outline: none !important;
   }
 }

@@ -18,23 +18,23 @@
 
 <script>
 export default {
-  props:['placeholder','type','returnLink','buttons'],
-  components:{
+  components: {
     //svg
     ReturnBtn: () => import('~/assets/svgs/return.svg?inline'),
     //components
     HeaderSearch: () => import('~/components/atoms/headers/headerSearch.vue'),
-    MapHeaderButtons: () => import('~/components/molecules/MapHeaderButtons.vue'),
+    MapHeaderButtons: () =>
+      import('~/components/molecules/MapHeaderButtons.vue'),
     HeaderLogout: () => import('~/components/atoms/headers/headerLogout.vue'),
   },
-  methods:{
-  }
-}
+  props: ['placeholder', 'type', 'returnLink', 'buttons'],
+  methods: {},
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 .header {
   position: relative;
@@ -43,7 +43,7 @@ export default {
   display: flex;
   align-items: center;
 }
-.header_logo{
+.header_logo {
   width: $sidemenu-width;
 }
 .header_logo__img {

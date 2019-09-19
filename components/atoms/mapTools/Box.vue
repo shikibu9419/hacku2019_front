@@ -13,56 +13,56 @@
 </template>
 
 <script>
-import ModalSvc from '~/services/ModalSvc'
-import Shared from './Shared'
+import ModalSvc from '~/services/ModalSvc';
+import Shared from './Shared';
 
 export default {
+  components: {
+    ContentBox: () => import('~/components/atoms/mapEdit/ContentBox'),
+    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox'),
+    BoxToolBlock: () => import('~/components/atoms/sunaba/BoxToolBlock'),
+  },
+  mixins: [Shared, ModalSvc],
   data() {
     return {
       init: true,
       pointGrabbed: false,
       width: 0,
-      height: 0
-    }
-  },
-  mounted() {
-    this.width = 300
-  },
-  watch: {
-    grabbing() {
-      if(!this.init) return
-      this.popup()
-      this.init = false
-    }
+      height: 0,
+    };
   },
   computed: {
     attributes() {
-      this.$store.state.ymap.now // To observe map scrolling
+      this.$store.state.ymap.now; // To observe map scrolling
 
-      const attr = Object.assign({}, this.attr, this.$store.getters['ymap/latLngToPixel'](this.attr))
-      delete attr.lat
-      delete attr.lng
+      const attr = Object.assign(
+        {},
+        this.attr,
+        this.$store.getters['ymap/latLngToPixel'](this.attr)
+      );
+      delete attr.lat;
+      delete attr.lng;
 
-      if (!this.selected || !this.pointGrabbed) return attr
+      if (!this.selected || !this.pointGrabbed) return attr;
 
-      const mousePosition = this.$store.state.mapEdit.mousePosition
-      this.width  = Math.max(mousePosition.x - attr.x, 0)
-      this.height = Math.max(mousePosition.y - attr.y, 0)
+      const mousePosition = this.$store.state.mapEdit.mousePosition;
+      this.width = Math.max(mousePosition.x - attr.x, 0);
+      this.height = Math.max(mousePosition.y - attr.y, 0);
 
-      return {...attr, width: this.width, height: this.height}
+      return { ...attr, width: this.width, height: this.height };
     },
     pointPosition() {
       return {
         cx: this.attributes.x + this.width,
-        cy: this.attributes.y + this.height
-      }
+        cy: this.attributes.y + this.height,
+      };
     },
     typeIs() {
       return function(type) {
-        if (type === 'comment') return this.attr.comments.length
-        const contentTypes = this.attr.contents.map(content => content.type)
-        return contentTypes.includes(type)
-      }
+        if (type === 'comment') return this.attr.comments.length;
+        const contentTypes = this.attr.contents.map(content => content.type);
+        return contentTypes.includes(type);
+      };
     },
     previewContent() {
       // var content = {}
@@ -70,26 +70,26 @@ export default {
       // content = this.attr.contents.filter(content => content.type === 'text')[0]  || content
       // content = this.attr.contents.filter(content => content.type === 'image')[0] || content
       //return content
-      const position = this.attributes
-      
-      console.log(this.attr)
-      let data = []
-      if(this.attr.contents.length !== 0){
+      const position = this.attributes;
+
+      console.log(this.attr);
+      let data = [];
+      if (this.attr.contents.length !== 0) {
         for (let i = 0; i < this.attr.contents.length; i++) {
-          let oneContent = this.attr.contents[i]
-          data.push(oneContent)
+          let oneContent = this.attr.contents[i];
+          data.push(oneContent);
         }
       }
 
-      if(this.attr.comments.length !== 0){
+      if (this.attr.comments.length !== 0) {
         for (let i = 0; i < this.attr.comments.length; i++) {
-          let oneComment = this.attr.comments[i]
-          let comment = {}
-          comment.type = 'comment'
-          comment.icon = null
-          comment.username = oneComment.user.name
-          comment.text = oneComment.comment
-          data.push(comment)
+          let oneComment = this.attr.comments[i];
+          let comment = {};
+          comment.type = 'comment';
+          comment.icon = null;
+          comment.username = oneComment.user.name;
+          comment.text = oneComment.comment;
+          data.push(comment);
         }
       }
 
@@ -98,43 +98,47 @@ export default {
         type: this.attr.type,
         position: {
           x: position.x - 140,
-          y: position.y - 20
+          y: position.y - 20,
         },
         box_data: {
           title: this.attr.title,
-          data: data
-        }
-      }
-    }
+          data: data,
+        },
+      };
+    },
+  },
+  watch: {
+    grabbing() {
+      if (!this.init) return;
+      this.popup();
+      this.init = false;
+    },
+  },
+  mounted() {
+    this.width = 300;
   },
   methods: {
     popup() {
-      this.openPopup('BoxAndPinPopup', {attr: this.attr}, null)
-      this.select()
+      this.openPopup('BoxAndPinPopup', { attr: this.attr }, null);
+      this.select();
     },
     grabPoint() {
-      this.pointGrabbed = true
+      this.pointGrabbed = true;
     },
     releasePoint() {
       this.$store.dispatch('mapEdit/resize', {
         toolId: this.id,
         width: this.width,
-        height: this.height
-      })
-      this.pointGrabbed = false
+        height: this.height,
+      });
+      this.pointGrabbed = false;
     },
   },
-  components: {
-    ContentBox: () => import('~/components/atoms/mapEdit/ContentBox'),
-    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox'),
-    BoxToolBlock: () => import('~/components/atoms/sunaba/BoxToolBlock')
-  },
-  mixins: [ Shared, ModalSvc ],
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .map_edit__tools.box {
   cursor: grab;

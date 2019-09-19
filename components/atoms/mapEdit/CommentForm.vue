@@ -9,44 +9,51 @@
 </template>
 
 <script>
-import pinModel from '~/models/tools/pin'
-import commentModel from '~/models/contents/comment'
+import pinModel from '~/models/tools/pin';
+import commentModel from '~/models/contents/comment';
 
 export default {
+  components: {
+    AutosizeTextarea: () => import('~/components/atoms/AutosizeTextarea'),
+  },
   props: ['id'],
   data() {
     return {
       comment: '',
-    }
+    };
   },
   methods: {
     addComment() {
-      const commentText = this.comment
-      this.comment = ""
+      const commentText = this.comment;
+      this.comment = '';
 
       if (this.id) {
-        this.$store.dispatch('mapEdit/addComment', {toolId: this.id, commentText: commentText})
-        return
+        this.$store.dispatch('mapEdit/addComment', {
+          toolId: this.id,
+          commentText: commentText,
+        });
+        return;
       }
 
-      let pin = JSON.parse(JSON.stringify(pinModel))
-      let comment = JSON.parse(JSON.stringify(commentModel))
+      let pin = JSON.parse(JSON.stringify(pinModel));
+      let comment = JSON.parse(JSON.stringify(commentModel));
 
-      comment = {...comment, comment: commentText, user: this.$store.getters['user/getUser']}
-      pin.comments.push(comment)
-      pin = {...pin, ...this.$store.state.ymap.now}
+      comment = {
+        ...comment,
+        comment: commentText,
+        user: this.$store.getters['user/getUser'],
+      };
+      pin.comments.push(comment);
+      pin = { ...pin, ...this.$store.state.ymap.now };
 
-      this.$store.dispatch('mapEdit/addTool', pin)
-    }
+      this.$store.dispatch('mapEdit/addTool', pin);
+    },
   },
-  components: {
-    AutosizeTextarea: () => import('~/components/atoms/AutosizeTextarea')
-  }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .map_edit__comment_form_main {
   position: relative;
@@ -76,11 +83,11 @@ export default {
 }
 
 .map_edit__comment_form__btn {
-    display: inline-block;
-    background: $gray;
-    color: $white;
-    border: none;
-    padding: 6px 16px;
-    border-radius: 4px;
+  display: inline-block;
+  background: $gray;
+  color: $white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
 }
 </style>

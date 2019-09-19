@@ -25,36 +25,35 @@
 </template>
 
 <script>
-
 export default {
-  name: "CardTile",
+  name: 'CardTile',
   components: {
     //components
     UserInfo: () => import('~/components/atoms/mapInfo/UserInfo'),
     TagInfo: () => import('~/components/atoms/mapInfo/TagInfo'),
     LayerInfo: () => import('~/components/atoms/mapInfo/LayerInfo'),
-    NumberInfo: () => import('~/components/atoms/mapInfo/NumberInfo')
+    NumberInfo: () => import('~/components/atoms/mapInfo/NumberInfo'),
   },
-  props: ["mapCard"]
-}
+  props: ['mapCard'],
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
-$card-width : $sidemenu-width * 1.4;
-$card-height : $card-width / 3;
+$card-width: $sidemenu-width * 1.4;
+$card-height: $card-width / 3;
 
 .maplist__card {
   width: $card-width;
   margin: 18px 6px;
   background: $white;
   text-decoration: none;
-  transition: .5s $bezier-ease-out;
+  transition: 0.5s $bezier-ease-out;
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0px 4px 12px rgba($black,.3);
+    box-shadow: 0px 4px 12px rgba($black, 0.3);
   }
 }
 .maplist__card__img {
@@ -67,7 +66,7 @@ $card-height : $card-width / 3;
   padding: 4px 18px 18px;
 }
 .map_title {
-  @include noto-font(1.8rem,$text-black);
+  @include noto-font(1.8rem, $text-black);
   padding: 6px 0;
 }
 </style>

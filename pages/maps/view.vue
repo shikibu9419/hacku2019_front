@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import io from 'socket.io-client'
-import axios from 'axios'
+import io from 'socket.io-client';
+import axios from 'axios';
 import LayerService from '~/services/LayerSvc'
 
 export default {
@@ -28,120 +28,92 @@ export default {
     Header: () => import('~/components/organisms/Header'),
     MapLayer: () => import('~/components/organisms/mapEdit/MapLayer'),
     Sidebar: () => import('~/components/organisms/mapEdit/Sidebar'),
-    Commentbar: () => import('~/components/organisms/mapEdit/Commentbar')
-  },
-  created() {
-    const socket = io(process.env.SOCKET_SERVER_URL)
-
-    socket.on('init', map => {
-      this.$store.dispatch('mapEdit/initSocket', map)
-      this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
-    })
-
-    socket.on('map/update', prop => {
-      this.$store.dispatch('mapEdit/mapSocket', {...prop, method: 'update'})
-    })
-
-    socket.on('layer/add', layer => {
-      this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'add'})
-    })
-    socket.on('layer/update', layer => {
-      this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'update'})
-    })
-    socket.on('layer/delete', layer => {
-      this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'delete'})
-    })
-
-    socket.on('tool/add', prop => {
-      this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'add'})
-    })
-    socket.on('tool/update', prop => {
-      this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'update'})
-    })
-    socket.on('tool/delete', prop => {
-      this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'delete'})
-    })
-
-    socket.on('select/add', prop => {
-      this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'add'})
-    })
-    socket.on('select/clear', prop => {
-      this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'clear'})
-    })
-
-//     const mapId = 1
-//     const mapUrl = process.env.API_URL + '/maps/' + mapId
-//
-//     this.$axios.get(mapUrl).then(response => {
-//       const map = response.data
-//       this.$store.commit('mapEdit/updateMap', map)
-
-      // layer setting
-//       if (!map.layer || !map.layer.length) {
-        // init layer
-//         this.layerSvcCreate(mapId, '新しいレイヤー', '', 'red').then(response => {
-//           this.layerSvcDisplay(mapId, response.data.id).then(response => {
-//             // add init layer
-//             const layer = response.data
-//             this.$store.dispatch('mapEdit/addLayer', layer)
-//           })
-//         }).catch(err => {
-//           console.log('layer error:', err)
-//           alert('Woops! An error occurred!')
-//         })
-      // if map has some layers...
-//       } else {
-//         map.layers.forEach(layer => this.$store.commit('mapEdit/updateLayer', layer))
-//         this.$store.commit('mapEdit/selectLayer', this.$store.state.mapEdit.layers[0].id)
-//       }
-    // error handling of gettting map
-//     }).catch(err => {
-//       console.log(err)
-//       alert('Woops! An error occurred!')
-//       this.$router.push('/')
-//     })
-
-    this.$store.commit('mapEdit/init', socket)
-    this.$store.dispatch('mapEdit/setLike', this.$store.state.user.user.id)
-    this.$store.dispatch('mapEdit/setStock', this.$store.state.user.user.id)
-  },
-  mounted() {
-    this.$store.commit('ymap/init', this.$store.state.map)
-
-//     this.setOffset()
-//     window.addEventListener('resize', () => this.setOffset())
-//     window.addEventListener('scroll', () => this.setOffset())
+    Commentbar: () => import('~/components/organisms/mapEdit/Commentbar'),
   },
   computed: {
-    activeLayer () {
-      return this.$store.getters['mapEdit/activeLayer']
+    activeLayer() {
+      return this.$store.getters['mapEdit/activeLayer'];
     },
-    inactiveLayers () {
-      return this.$store.getters['mapEdit/inactiveLayers']
+    inactiveLayers() {
+      return this.$store.getters['mapEdit/inactiveLayers'];
     },
     modals() {
-      return this.$store.getters['modal/modals']
+      return this.$store.getters['modal/modals'];
     },
     backgroundFocused() {
-      return this.$store.state.mapEdit.backgroundFocused
-    }
+      return this.$store.state.mapEdit.backgroundFocused;
+    },
+  },
+  beforeCreate() {
+    this.$store.dispatch('mapEdit/setLike', this.$store.state.user.id);
+    this.$store.dispatch('mapEdit/setStock', this.$store.state.user.id);
+    //     const socket = io(process.env.SOCKET_SERVER_URL)
+    //
+    //     socket.on('init', map => {
+    //       this.$store.dispatch('mapEdit/initSocket', map)
+    //     })
+    //
+    //     socket.on('map/update', prop => {
+    //       this.$store.dispatch('mapEdit/mapSocket', {...prop, method: 'update'})
+    //     })
+    //
+    //     socket.on('layer/add', layer => {
+    //       this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'add'})
+    //     })
+    //     socket.on('layer/update', layer => {
+    //       this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'update'})
+    //     })
+    //     socket.on('layer/delete', layer => {
+    //       this.$store.dispatch('mapEdit/layerSocket', {layer: layer, method: 'delete'})
+    //     })
+    //
+    //     socket.on('tool/add', prop => {
+    //       this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'add'})
+    //     })
+    //     socket.on('tool/update', prop => {
+    //       this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'update'})
+    //     })
+    //     socket.on('tool/delete', prop => {
+    //       this.$store.dispatch('mapEdit/toolSocket', {...prop, method: 'delete'})
+    //     })
+    //
+    //     socket.on('select/add', prop => {
+    //       this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'add'})
+    //     })
+    //     socket.on('select/clear', prop => {
+    //       this.$store.dispatch('mapEdit/selectSocket', {...prop, method: 'clear'})
+    //     })
+
+    //     this.$store.commit('mapEdit/init', socket)
+
+    if (this.$store.state.mapEdit.layers.length)
+      this.$store.commit(
+        'mapEdit/selectLayer',
+        this.$store.state.mapEdit.layers[0].id
+      );
+  },
+  mounted() {
+    this.$store.commit('ymap/init');
+    //     this.setOffset()
+    //     window.addEventListener('resize', () => this.setOffset())
+    //     window.addEventListener('scroll', () => this.setOffset())
   },
   methods: {
-//     setOffset() {
-//       const rect = this.$refs.layer.getBoundingClientRect()
-//       const prop = {
-//         x: window.pageXOffset + rect.left,
-//         y: window.pageYOffset + rect.top
-//       }
-//       this.$store.dispatch('mapEdit/setOffset', prop)
-//     }
+    //     setOffset() {
+    //       const rect = this.$refs.layer.getBoundingClientRect()
+    //       const prop = {
+    //         x: window.pageXOffset + rect.left,
+    //         y: window.pageYOffset + rect.top
+    //       }
+    //       this.$store.dispatch('mapEdit/setOffset', prop)
+    //     }
   },
   mixins: [LayerService],
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .map_edit {
   width: 100%;

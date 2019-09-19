@@ -27,8 +27,7 @@
 </template>
 <script>
 export default {
-  props:["box_datas"],
-  components:{
+  components: {
     //components
     BoxText: () => import('~/components/atoms/sunaba/BoxText'),
     BoxImage: () => import('~/components/atoms/sunaba/BoxImage'),
@@ -37,19 +36,16 @@ export default {
     //svg
     CommentsMiniIcon: () => import('~/assets/svgs/comment_mini.svg?inline'),
   },
-  methods:{
-    openComment(){
-
-    },
-    openEditor(){
-
-    }
-  }
-}
+  props: ['boxDatas'],
+  methods: {
+    openComment() {},
+    openEditor() {},
+  },
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 .box_tool_block {
   width: 300px;
@@ -88,7 +84,7 @@ export default {
     font-size: 18px;
     padding: 2px;
   }
-  svg{
+  svg {
     display: block;
   }
 }

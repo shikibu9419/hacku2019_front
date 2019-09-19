@@ -14,67 +14,89 @@
 <script>
 export default {
   components: {
-    AddBuilding: () => import('~/assets/svgs/pen_tool.svg?inline')
+    AddBuilding: () => import('~/assets/svgs/pen_tool.svg?inline'),
   },
   data() {
     return {
-      center: this.$store.getters['ymap/latLngToPixel'](this.$store.state.ymap.center)
-    }
-  },
-  methods: {
-    addBuilding() {
-      this.$store.dispatch('mapEdit/toggle', 'plotting')
-      if (!this.$store.state.mapEdit.plotting) return
-
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building'})
-    },
-    addBuildingBasic() {
-      this.$store.dispatch('mapEdit/toggle', 'grabbing')
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'building_basic'})
-    },
-    addDirection() {
-      this.$store.dispatch('mapEdit/toggle', 'plotting')
-      if (!this.$store.state.mapEdit.plotting) return
-
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'direction'})
-    },
-    addPin() {
-      this.$store.dispatch('mapEdit/toggle', 'grabbing')
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'pin'})
-    },
-    addText() {
-      this.$store.dispatch('mapEdit/toggle', 'grabbing')
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'text'})
-    },
-    addBox() {
-      this.$store.dispatch('mapEdit/toggle', 'grabbing')
-      this.$store.dispatch('mapEdit/addTool', {...this.getLatLng(), type: 'box'})
-    },
-    getLatLng() {
-      return this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition)
-    }
+      center: this.$store.getters['ymap/latLngToPixel'](
+        this.$store.state.ymap.center
+      ),
+    };
   },
   computed: {
     iconX() {
       return function(index) {
         // icon + space + center-space
-        return 30 * index + 20 * (index + 1) + (index > 2 ? 20 : 0)
+        return 30 * index + 20 * (index + 1) + (index > 2 ? 20 : 0);
+      };
+    },
+    EditOnly() {
+      if (this.$route.path.match(/\/view$/)) {
+        return false;
+      }
+      if (this.$route.path.match(/\/edit$/)) {
+        return true;
       }
     },
-    EditOnly(){
-      if(this.$route.path.match(/\/view$/)){
-        return false
-      }
-      if(this.$route.path.match(/\/edit$/)){
-        return true
-      }
-    }
-  }
-}
+  },
+  methods: {
+    addBuilding() {
+      this.$store.dispatch('mapEdit/toggle', 'plotting');
+      if (!this.$store.state.mapEdit.plotting) return;
+
+      this.$store.dispatch('mapEdit/addTool', {
+        ...this.getLatLng(),
+        type: 'building',
+      });
+    },
+    addBuildingBasic() {
+      this.$store.dispatch('mapEdit/toggle', 'grabbing');
+      this.$store.dispatch('mapEdit/addTool', {
+        ...this.getLatLng(),
+        type: 'building_basic',
+      });
+    },
+    addDirection() {
+      this.$store.dispatch('mapEdit/toggle', 'plotting');
+      if (!this.$store.state.mapEdit.plotting) return;
+
+      this.$store.dispatch('mapEdit/addTool', {
+        ...this.getLatLng(),
+        type: 'direction',
+      });
+    },
+    addPin() {
+      this.$store.dispatch('mapEdit/toggle', 'grabbing');
+      this.$store.dispatch('mapEdit/addTool', {
+        ...this.getLatLng(),
+        type: 'pin',
+      });
+    },
+    addText() {
+      this.$store.dispatch('mapEdit/toggle', 'grabbing');
+      this.$store.dispatch('mapEdit/addTool', {
+        ...this.getLatLng(),
+        type: 'text',
+      });
+    },
+    addBox() {
+      this.$store.dispatch('mapEdit/toggle', 'grabbing');
+      this.$store.dispatch('mapEdit/addTool', {
+        ...this.getLatLng(),
+        type: 'box',
+      });
+    },
+    getLatLng() {
+      return this.$store.getters['ymap/pixelToLatLng'](
+        this.$store.state.mapEdit.mousePosition
+      );
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .map_edit__toolbar {
   width: min-content;

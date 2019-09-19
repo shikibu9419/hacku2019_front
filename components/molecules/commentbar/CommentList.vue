@@ -10,24 +10,26 @@
 
 <script>
 export default {
+  components: {
+    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox'),
+  },
   props: ['toolId'],
   computed: {
-    comments () {
+    comments() {
       if (this.toolId)
-        return this.$store.getters['mapEdit/getTool'](this.toolId).comments
-      return this.$store.getters['mapEdit/comments'] ? this.$store.getters['mapEdit/comments'] : []
-    }
+        return this.$store.getters['mapEdit/getTool'](this.toolId).comments;
+      return this.$store.getters['mapEdit/comments']
+        ? this.$store.getters['mapEdit/comments']
+        : [];
+    },
   },
-  components: {
-    CommentBox: () => import('~/components/atoms/mapEdit/CommentBox')
-  }
-}
+};
 </script>
 
 <style lang="scss">
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/Sidebar.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/Sidebar.scss';
 
 .commentbar__comment_list {
   &__label_icon {

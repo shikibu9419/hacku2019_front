@@ -4,32 +4,41 @@
 
 <script>
 export default {
-  name: "AutosizeTextarea.vue",
-  data() {
-    return {
-      localText: this.text,
-    }
-  },
+  name: 'AutosizeTextareaVue',
   props: {
     text: String,
     maxSize: Number,
     defaultSize: Number,
-    XScrollable: Boolean
+    xScrollable: Boolean,
+  },
+  data() {
+    return {
+      localText: this.text,
+    };
   },
   computed: {
     rows() {
-      return Math.max(Math.min(Math.max(this.localText.split('\n').length, Math.ceil(this.localText.length/20)), this.maxSize), this.defaultSize)
-    }
+      return Math.max(
+        Math.min(
+          Math.max(
+            this.localText.split('\n').length,
+            Math.ceil(this.localText.length / 20)
+          ),
+          this.maxSize
+        ),
+        this.defaultSize
+      );
+    },
   },
   watch: {
     localText(value) {
       this.$emit('update:text', value);
     },
     text(value) {
-      this.localText = this.text
-    }
-  }
-}
+      this.localText = this.text;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -37,7 +46,7 @@ export default {
   width: 100%;
   outline: none;
   resize: none;
-  color: #6D646A;
+  color: #6d646a;
 }
 .x-scrollable {
   white-space: nowrap;

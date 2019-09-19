@@ -47,9 +47,8 @@
 
 </template>
 <script>
-import Vue from 'vue'
+import Vue from 'vue';
 export default {
-  props: ["placeholder", "type"],
   components: {
     //svg
     SearchBtn: () => import('~/assets/svgs/search.svg?inline'),
@@ -57,94 +56,109 @@ export default {
     //components
     VueTagsInput: () => import('~/components/atoms/VueTagsInput'),
   },
+  props: ['placeholder', 'type'],
   data() {
     return {
-      editingTags:false,
-      filter:{
+      editingTags: false,
+      filter: {
         tags: [],
         like: false,
         mymap: false,
-        stock: false
+        stock: false,
       },
-      query: "",
-      filterMenu_close:true
-    }
+      query: '',
+      filterMenu_close: true,
+    };
   },
-  mounted(){
-    //ページ遷移でfilterの設定を変更
-    if(this.type.split('/')[1] === "like"){
-      this.filter.like = true
-    }
-    if(this.type.split('/')[1] === "mymap"){
-      this.filter.mymap = true
-    }
-    if(this.type.split('/')[1] === "stock"){
-      this.filter.stock = true
-    }
-  },
-  computed:{
+  computed: {
     existingTags() {
-      return [{key: 100, value: 'red'}, {key: 101, value: 'blue'}, {key: 102, value: 'green'}]
+      return [
+        { key: 100, value: 'red' },
+        { key: 101, value: 'blue' },
+        { key: 102, value: 'green' },
+      ];
     },
+  },
+  mounted() {
+    //ページ遷移でfilterの設定を変更
+    if (this.type.split('/')[1] === 'like') {
+      this.filter.like = true;
+    }
+    if (this.type.split('/')[1] === 'mymap') {
+      this.filter.mymap = true;
+    }
+    if (this.type.split('/')[1] === 'stock') {
+      this.filter.stock = true;
+    }
   },
   methods: {
     update() {
-        if(this.type === "inmap")
-          this.searchYOLP()
-        if(this.type.split('/')[0] === "maplists") {
-          this.searchMap()
-        }
+      if (this.type === 'inmap') this.searchYOLP();
+      if (this.type.split('/')[0] === 'maplists') {
+        this.searchMap();
+      }
     },
     searchYOLP() {
-      this.$store.dispatch('ymap/resetMarkers')
+      this.$store.dispatch('ymap/resetMarkers');
 
-      const baseUrl = 'https://map.yahooapis.jp/search/local/V1/localSearch'
+      const baseUrl = 'https://map.yahooapis.jp/search/local/V1/localSearch';
 
-      this.$jsonp(baseUrl, {appid: process.env.YOLP_APPID, query: this.query, output: 'json'})
-        .then(response => {
-          if (response.ResultInfo.Count === 0) return
+      this.$jsonp(baseUrl, {
+        appid: process.env.YOLP_APPID,
+        query: this.query,
+        output: 'json',
+      }).then(response => {
+        if (response.ResultInfo.Count === 0) return;
 
-          const latlngs = response.Feature.map(feature =>
-            feature.Geometry.Coordinates.split(',').map(c => parseFloat(c)).reverse()
-          )
-          this.$store.dispatch('ymap/setMarkers', latlngs)
-        })
+        const latlngs = response.Feature.map(feature =>
+          feature.Geometry.Coordinates.split(',')
+            .map(c => parseFloat(c))
+            .reverse()
+        );
+        this.$store.dispatch('ymap/setMarkers', latlngs);
+      });
     },
     searchMap() {
-      const baseUrl = process.env.API_URL  + '/maps'
-      const filter = ((this.filter.like ? 'like,' : '') + (this.filter.mymap ? 'mymap,' : '') + (this.filter.stock ? 'stock,' : '')).slice(0,-1) || 'all'
-      this.$axios.get(baseUrl, {
-        params: {
-          query: this.query,
-          tags: this.filter.tag,
-          filter: filter
-        }
-      })
-      .then(response => {
-        this.$store.dispatch('maplist/setMaps', response.data)
-      })
-      .catch(err => {
-        Vue.toasted.error('検索に失敗しました')
-      })
+      const baseUrl = process.env.API_URL + '/maps';
+      const filter =
+        (
+          (this.filter.like ? 'like,' : '') +
+          (this.filter.mymap ? 'mymap,' : '') +
+          (this.filter.stock ? 'stock,' : '')
+        ).slice(0, -1) || 'all';
+      this.$axios
+        .get(baseUrl, {
+          params: {
+            query: this.query,
+            tags: this.filter.tag,
+            filter: filter,
+          },
+        })
+        .then(response => {
+          this.$store.dispatch('maplist/setMaps', response.data);
+        })
+        .catch(err => {
+          Vue.toasted.error('検索に失敗しました');
+        });
     },
-    toggleFilterMenu(){
-      this.filterMenu_close = (this.filterMenu_close ? false:true)
+    toggleFilterMenu() {
+      this.filterMenu_close = this.filterMenu_close ? false : true;
     },
     editTags() {
       // タグ検索inputを表示
       this.editingTags = true;
     },
     editTagsFinish(tags) {
-      this.filter.tags = tags
+      this.filter.tags = tags;
       //this.$store.dispatch('', tags)
-      this.editingTags = false
+      this.editingTags = false;
     },
-  }
-}
+  },
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 .header_search {
   position: relative;
@@ -163,7 +177,7 @@ button {
   padding: 0;
 }
 
-.search_button{
+.search_button {
   left: 4px;
   background: transparent;
 }
@@ -173,7 +187,7 @@ button {
   height: 28px;
 }
 .search_cls-2 {
-  fill:$gray;
+  fill: $gray;
 }
 
 .header_search__input {
@@ -182,7 +196,7 @@ button {
   min-width: 420px;
   border: 1px solid $gray;
   color: $gray;
-  transition: .2s $bezier-ease-out;
+  transition: 0.2s $bezier-ease-out;
   &:focus {
     color: $dark-gray;
   }
@@ -235,10 +249,10 @@ button {
   z-index: -1;
   transform: translateY(-20px);
   opacity: 0;
-  transition: .3s $bezier-ease-out;
+  transition: 0.3s $bezier-ease-out;
   pointer-events: none;
   width: 300px;
-  box-shadow: 0 4px 12px rgba($black,.3); 
+  box-shadow: 0 4px 12px rgba($black, 0.3);
   &--open {
     transform: translateY(30px);
     opacity: 2;
@@ -254,15 +268,14 @@ button {
   justify-content: space-between;
 }
 
-
 .sidebar__map_tags__tags {
   width: 100%;
 }
-.sidebar__map_tags__tags__wrapper{
+.sidebar__map_tags__tags__wrapper {
   width: 100%;
   min-height: 30px;
   background: $back-gray;
-  padding: .5rem .25rem;
+  padding: 0.5rem 0.25rem;
   border: 2px solid transparent;
   cursor: pointer;
   margin-bottom: 8px;

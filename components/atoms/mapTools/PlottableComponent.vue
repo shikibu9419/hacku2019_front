@@ -9,64 +9,71 @@
 </template>
 
 <script>
-import Shared from './Shared.vue'
+import Shared from './Shared.vue';
 
 export default {
-  data() {
-    return {
-      grabbed: false
-    }
-  },
+  mixins: [Shared],
   props: {
     index: {
-      type: Number
+      type: Number,
     },
     nowPlotted: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+  },
+  data() {
+    return {
+      grabbed: false,
+    };
+  },
+  computed: {
+    attributes() {
+      this.$store.state.ymap.center; // To observe map scrolling
+
+      const position =
+        this.grabbed || this.nowPlotted
+          ? this.$store.state.mapEdit.mousePosition
+          : this.$store.getters['ymap/latLngToPixel'](this.attr);
+
+      const attr = Object.assign({}, this.attr, {
+        cx: position.x,
+        cy: position.y,
+      });
+      delete attr.lat;
+      delete attr.lng;
+
+      return attr;
+    },
   },
   methods: {
     plot() {
       if (this.$store.state.mapEdit.plotting) {
         this.$store.dispatch('mapEdit/plot', {
-          ...this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition),
-          toolId: this.id
-        })
+          ...this.$store.getters['ymap/pixelToLatLng'](
+            this.$store.state.mapEdit.mousePosition
+          ),
+          toolId: this.id,
+        });
       }
     },
     grabPoint() {
-      if (! this.$store.state.mapEdit.plotting)
-        this.grabbed = true
+      if (!this.$store.state.mapEdit.plotting) this.grabbed = true;
     },
     releasePoint() {
-      if (! this.$store.state.mapEdit.plotting) {
+      if (!this.$store.state.mapEdit.plotting) {
         this.$store.dispatch('mapEdit/replot', {
-          ...this.$store.getters['ymap/pixelToLatLng'](this.$store.state.mapEdit.mousePosition),
+          ...this.$store.getters['ymap/pixelToLatLng'](
+            this.$store.state.mapEdit.mousePosition
+          ),
           toolId: this.id,
-          index: this.index
-        })
-        this.grabbed = false
+          index: this.index,
+        });
+        this.grabbed = false;
       }
     },
   },
-  computed: {
-    attributes () {
-      this.$store.state.ymap.center // To observe map scrolling
-
-      const position = (this.grabbed || this.nowPlotted) ?
-        this.$store.state.mapEdit.mousePosition :
-        this.$store.getters['ymap/latLngToPixel'](this.attr)
-
-      const attr = Object.assign({}, this.attr, {cx: position.x, cy: position.y})
-      delete attr.lat
-      delete attr.lng
-
-      return attr
-    }
-  },
-  mixins: [Shared]
-}
+};
 </script>
 
 <style lang="scss">

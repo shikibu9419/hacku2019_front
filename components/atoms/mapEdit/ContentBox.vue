@@ -13,12 +13,12 @@
 <script>
 export default {
   props: ['title', 'content', 'onBox', 'inPopup'],
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 $label-min-height: 20px;
 

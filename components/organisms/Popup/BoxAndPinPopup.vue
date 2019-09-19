@@ -58,111 +58,110 @@
 </template>
 
 <script>
-import ModalSvc from '~/services/ModalSvc'
-import AutosizeTextarea from '~/components/atoms/AutosizeTextarea'
-import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton'
-import CommentForm from '~/components/atoms/mapEdit/CommentForm'
-import CommentList from '~/components/molecules/commentbar/CommentList'
-import Selector from '~/components/atoms/selector/Selector'
+import ModalSvc from '~/services/ModalSvc';
+import AutosizeTextarea from '~/components/atoms/AutosizeTextarea';
+import DeleteAndCloseButton from '~/components/atoms/mapEdit/DeleteAndCloseButton';
+import CommentForm from '~/components/atoms/mapEdit/CommentForm';
+import CommentList from '~/components/molecules/commentbar/CommentList';
+import Selector from '~/components/atoms/selector/Selector';
 
 export default {
-  name: "BoxAndPinPopup",
+  name: 'BoxAndPinPopup',
   components: {
     AutosizeTextarea,
     DeleteAndCloseButton,
     CommentForm,
     CommentList,
-    Selector
+    Selector,
   },
   props: {
     params: Object,
-    closeModal: () => {}
+    closeModal: () => {},
   },
   data() {
     return {
       tool: {
         title: '',
-        contents: [
-        ]
+        contents: [],
       },
       items: [
         {
           param: Object,
           value: String,
-          selected: Boolean
-        }
-      ]
-    }
+          selected: Boolean,
+        },
+      ],
+    };
   },
   mounted() {
-    const attr = JSON.parse(JSON.stringify(this.params.attr))
-    delete attr.comments
-    this.tool = attr
-    let activeLayer = this.$store.getters['mapEdit/activeLayer']
+    const attr = JSON.parse(JSON.stringify(this.params.attr));
+    delete attr.comments;
+    this.tool = attr;
+    let activeLayer = this.$store.getters['mapEdit/activeLayer'];
     this.items = this.$store.getters['mapEdit/getAllLayer'].map(layer => {
       return {
         param: layer,
         value: layer.color,
-        selected: activeLayer.id === layer.id
-      }
-    })
+        selected: activeLayer.id === layer.id,
+      };
+    });
   },
   methods: {
     getLinkTitle(linkContent) {
       new Promise(resolve => {
-        const xhr = new XMLHttpRequest()
+        const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
-          if(xhr.readyState === 4 && xhr.status === 200){
-            console.log(xhr.response)
-            resolve(xhr.response || 'no title')
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.response);
+            resolve(xhr.response || 'no title');
           }
-        }
-        xhr.open('GET', linkContent.link, true)
-        xhr.responseType = 'document'
-        xhr.send('')
+        };
+        xhr.open('GET', linkContent.link, true);
+        xhr.responseType = 'document';
+        xhr.send('');
       }).then(value => {
-        linkContent.title = value
-      })
+        linkContent.title = value;
+      });
     },
     addContent(type) {
-      var content = {type: type}
-      if (type === 'text')
-        content.text = ''
-      else if (type === 'image')
-        content.urls = []
-      else if (type === 'link')
-        content.link = ''
+      var content = { type: type };
+      if (type === 'text') content.text = '';
+      else if (type === 'image') content.urls = [];
+      else if (type === 'link') content.link = '';
 
-      this.tool.contents.push(content)
+      this.tool.contents.push(content);
     },
     deleteContent(i) {
-      this.tool.contents.splice(i, 1)
+      this.tool.contents.splice(i, 1);
     },
     sortUp(i, content) {
-      if (i === 0) return
-      this.tool.contents.splice(i, 1)
-      this.tool.contents.splice(i - 1, 0, content)
+      if (i === 0) return;
+      this.tool.contents.splice(i, 1);
+      this.tool.contents.splice(i - 1, 0, content);
     },
     sortDown(i, content) {
-      if (i === this.tool.contents.length - 1) return
-      this.tool.contents.splice(i, 1)
-      this.tool.contents.splice(i + 1, 0, content)
+      if (i === this.tool.contents.length - 1) return;
+      this.tool.contents.splice(i, 1);
+      this.tool.contents.splice(i + 1, 0, content);
     },
     deletePin() {
-      this.$store.dispatch('mapEdit/deleteTool', this.params.attr.id)
-      this.closeModal()
+      this.$store.dispatch('mapEdit/deleteTool', this.params.attr.id);
+      this.closeModal();
     },
     close() {
-      const attr = Object.assign(JSON.parse(JSON.stringify(this.params.attr)), JSON.parse(JSON.stringify(this.tool)))
-      this.$store.dispatch('mapEdit/updateTool', attr)
-      this.closeModal()
-    }
-  }
-}
+      const attr = Object.assign(
+        JSON.parse(JSON.stringify(this.params.attr)),
+        JSON.parse(JSON.stringify(this.tool))
+      );
+      this.$store.dispatch('mapEdit/updateTool', attr);
+      this.closeModal();
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-@import "../../../assets/styles/variables";
+@import '../../../assets/styles/variables';
 .box-and-pin-popup {
   height: auto;
   width: 880px;
@@ -330,9 +329,9 @@ export default {
     margin-bottom: 4px;
   }
   &__comment-list {
-      margin-top: 8px;
-      max-height: 320px;
-      overflow-y: scroll;
+    margin-top: 8px;
+    max-height: 320px;
+    overflow-y: scroll;
   }
 }
 </style>

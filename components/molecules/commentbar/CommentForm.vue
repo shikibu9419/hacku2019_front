@@ -12,29 +12,28 @@ export default {
   data() {
     return {
       message: '',
-    }
+    };
   },
   methods: {
     addComment() {
-      let pin = JSON.parse(JSON.stringify(pinModel))
-      let comment = JSON.parse(JSON.stringify(commentModel))
+      let pin = JSON.parse(JSON.stringify(pinModel));
+      let comment = JSON.parse(JSON.stringify(commentModel));
 
-      comment.message = this.message
-      comment.user = this.$store.getters['user/getUser']
-      pin.contents.push(comment)
-      pin = {...pin, ...this.$store.state.ymap.now}
+      comment.message = this.message;
+      comment.user = this.$store.getters['user/getUser'];
+      pin.contents.push(comment);
+      pin = { ...pin, ...this.$store.state.ymap.now };
 
-      this.$store.dispatch('mapEdit/addTool', pin)
-    }
-  }
-}
+      this.$store.dispatch('mapEdit/addTool', pin);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .map_edit__commentbar__form_textarea {
   border: none;
-  
 }
 </style>

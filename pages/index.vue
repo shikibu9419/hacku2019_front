@@ -13,19 +13,19 @@
 
 <script>
 export default {
-  layout: "MapListsLayout",
-  name: "home",
+  layout: 'MapListsLayout',
+  name: 'Home',
   middleware: 'authenticated',
   components: {
-    Header: () => import("~/components/organisms/Header.vue"),
-    SideMenu: () => import("~/components/organisms/topPage/SideMenu.vue"),
-    MapList: () => import("~/components/organisms/topPage/MapList.vue")
-  }
-}
+    Header: () => import('~/components/organisms/Header.vue'),
+    SideMenu: () => import('~/components/organisms/topPage/SideMenu.vue'),
+    MapList: () => import('~/components/organisms/topPage/MapList.vue'),
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .toppage {
   width: 100%;

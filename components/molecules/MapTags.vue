@@ -27,63 +27,71 @@
 </template>
 
 <script>
-import ModalService from '~/services/ModalSvc'
-import layer from '~/models/layer'
-import VueTagsInput from '~/components/atoms/VueTagsInput'
+import ModalService from '~/services/ModalSvc';
+import layer from '~/models/layer';
+import VueTagsInput from '~/components/atoms/VueTagsInput';
 
 export default {
   components: { VueTagsInput },
-    data() {
-      return {
-        editingTags: false,
-        tags: []
-      }
-    },
-  mounted(){
-    console.log(this.$route.path)
-    console.log(this.$route.name)
+  data() {
+    return {
+      editingTags: false,
+      tags: [],
+    };
   },
   computed: {
     existingTags() {
-      return [{key: 100, value: 'red'}, {key: 101, value: 'blue'}, {key: 102, value: 'green'}]
+      return [
+        { key: 100, value: 'red' },
+        { key: 101, value: 'blue' },
+        { key: 102, value: 'green' },
+      ];
     },
-    viewOnly(){
-      if(this.$route.path.match(/\/view$/)){
-        return false
+    viewOnly() {
+      if (this.$route.path.match(/\/view$/)) {
+        return false;
       }
-      if(this.$route.path.match(/\/edit$/)){
-        return true
+      if (this.$route.path.match(/\/edit$/)) {
+        return true;
       }
-    }
+    },
+  },
+  mounted() {
+    console.log(this.$route.path);
+    console.log(this.$route.name);
+  },
+  mounted() {
+    this.tags = [
+      { key: 1, value: 'tag1' },
+      { key: 2, value: 'tag2' },
+      { key: 3, value: 'tag3' },
+    ];
   },
   methods: {
     editTags() {
       // タグ検索inputを表示
-      if(this.$route.path.match(/\/edit$/)){
+      if (this.$route.path.match(/\/edit$/)) {
         this.editingTags = true;
       }
     },
     editTagsFinish(tags) {
-      this.$store.dispatch('mapEdit/updateTags', tags)
-      this.tags = this.$store.getters['mapEdit/getTags']
-      this.editingTags = false
+      this.$store.dispatch('mapEdit/updateTags', tags);
+      this.tags = this.$store.getters['mapEdit/getTags'];
+      this.editingTags = false;
     },
   },
-  mounted() {
-    this.tags = [{key: 1, value: 'tag1'}, {key: 2, value: 'tag2'}, {key: 3, value: 'tag3'}]
-  }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/Sidebar.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/Sidebar.scss';
 
 .sidebar__map_tags__tags {
   width: 100%;
 }
-.sidebar__map_tags__tags__wrapper{
+.sidebar__map_tags__tags__wrapper {
   width: 100%;
   min-height: 20px;
   border-radius: 8px;
@@ -91,7 +99,7 @@ export default {
 .sidebar__map_tags__tags__wrapper--click {
   cursor: pointer;
   &:hover {
-    background: $back-light-gray
+    background: $back-light-gray;
   }
 }
 .sidebar__map_tags__tag {
