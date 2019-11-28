@@ -27,24 +27,24 @@
 
 <script>
 export default {
-  components:{
+  components: {
     //components
     MakeNewMap: () => import('~/components/atoms/SideMenu/MakeNewMap.vue'),
     MapCategory: () => import('~/components/atoms/SideMenu/MapCategory.vue'),
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 .top_sidemenu {
   width: $sidemenu-width;
   height: 100%;
   background: $back-gray;
 }
-.map_category_list{
+.map_category_list {
   border-top: 2px solid $light-gray;
 }
 </style>

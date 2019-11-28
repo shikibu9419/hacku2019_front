@@ -14,22 +14,17 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      corner:[
-        "top_left",
-        "top_right",
-        "bottom_left",
-        "bottom_right"
-      ]
-    }
-  }
-}
+      corner: ['top_left', 'top_right', 'bottom_left', 'bottom_right'],
+    };
+  },
+};
 </script>
 <style lang="scss">
-@import "~/assets/styles/normalize.scss";
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/normalize.scss';
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 html {
   font-family: $noto-font;
   font-size: 62.5%;
@@ -52,17 +47,16 @@ body {
   @include noto-font(1.5rem);
 }
 
-:focus{
-  outline: 3px auto rgba($theme-pink,.5);
+:focus {
+  outline: 3px auto rgba($theme-pink, 0.5);
 }
 button {
   cursor: pointer;
 }
 </style>
 
-
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 $border-margin: 20px;
 $square-width: calc(100% - (20px * 2));
@@ -87,7 +81,7 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: .08;
+  opacity: 0.08;
   z-index: -1;
 }
 .login_page__border {
@@ -123,8 +117,8 @@ $border-circle-margin: $border-margin - $corner-rounded + ($border-width/2);
 
 .login_page__border__circle {
   position: absolute;
-  width: $corner-rounded*2;
-  height: $corner-rounded*2;
+  width: $corner-rounded * 2;
+  height: $corner-rounded * 2;
   background: $white;
   border-radius: $corner-rounded;
   border: $border-width solid $theme-pink;

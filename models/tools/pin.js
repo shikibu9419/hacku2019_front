@@ -4,5 +4,5 @@ export default {
   type: 'pin',
   title: '',
   contents: [],
-  comments: []
-}
+  comments: [],
+};

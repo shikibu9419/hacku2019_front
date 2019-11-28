@@ -7,26 +7,26 @@
 
 <script>
 export default {
-  data() {
-    return {
-      menu_close: false,
-      message: '',
-    }
-  },
   components: {
     CommentForm: () => import('~/components/atoms/mapEdit/CommentForm'),
     CommentList: () => import('~/components/molecules/commentbar/CommentList'),
   },
+  data() {
+    return {
+      menu_close: false,
+      message: '',
+    };
+  },
   computed: {
     commentbarClose() {
-      return !this.$store.state.mapEdit.commentbarOpen
-    }
-  }
-}
+      return !this.$store.state.mapEdit.commentbarOpen;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 $padding: 16px;
 
@@ -41,8 +41,8 @@ $padding: 16px;
   z-index: 10;
   overflow-y: auto;
   transform: translateX(0);
-  transition: .2s $bezier-ease-out;
-  &--close{
+  transition: 0.2s $bezier-ease-out;
+  &--close {
     transform: translateX($sidemenu-width);
   }
 }

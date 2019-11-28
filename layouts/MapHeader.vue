@@ -14,20 +14,19 @@
 </template>
 <script>
 export default {
-  props:['placeholder','type','returnLink'],
-  components:{
+  components: {
     //svg
     ReturnBtn: () => import('~/assets/svgs/return.svg?inline'),
     //components
     HeaderSearch: () => import('~/components/atoms/headers/headerSearch.vue'),
   },
-  methods:{
-  }
-}
+  props: ['placeholder', 'type', 'returnLink'],
+  methods: {},
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 .header {
   position: relative;
@@ -36,7 +35,7 @@ export default {
   display: flex;
   align-items: center;
 }
-.header_logo{
+.header_logo {
   width: $sidemenu-width;
 }
 .header_logo__img {

@@ -13,15 +13,15 @@
 
 </template>
 <script>
-  export default {
-    components:{
-      tagIcon: () => import('~/assets/svgs/tag.svg?inline'),
-    },
-    props: ["tags",""]
-  }
+export default {
+  components: {
+    tagIcon: () => import('~/assets/svgs/tag.svg?inline'),
+  },
+  props: ['tags', ''],
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/mapInfo.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/mapInfo.scss';
 </style>

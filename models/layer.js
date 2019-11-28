@@ -5,5 +5,5 @@ export default {
   origin: 0,
   color: '',
   visible: true,
-  tools: {}
-}
+  tools: {},
+};

@@ -7,5 +7,5 @@ export default {
   layers: [],
   likes: [],
   stocks: [],
-  tags: []
-}
+  tags: [],
+};

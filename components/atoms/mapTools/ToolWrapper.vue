@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Shared from './Shared'
+import Shared from './Shared';
 
 export default {
   components: {
@@ -21,8 +21,8 @@ export default {
     Direction: () => import('./Direction'),
     Pin: () => import('./Pin'),
     Box: () => import('./Box'),
-    TextTool: () => import('./Text')
+    TextTool: () => import('./Text'),
   },
-  mixins: [Shared]
-}
+  mixins: [Shared],
+};
 </script>

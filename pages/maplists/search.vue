@@ -12,29 +12,29 @@
 </template>
 <script>
 //components
-import Header from "~/components/organisms/Header.vue"
-import SideMenu from "~/components/organisms/topPage/SideMenu.vue"
-import MapList from "~/components/organisms/topPage/MapList.vue"
+import Header from '~/components/organisms/Header.vue';
+import SideMenu from '~/components/organisms/topPage/SideMenu.vue';
+import MapList from '~/components/organisms/topPage/MapList.vue';
 
 export default {
-  layout: "MapListsLayout",
+  layout: 'MapListsLayout',
   middleware: 'authenticated',
-  components:{
+  components: {
     Header,
     SideMenu,
-    MapList
+    MapList,
   },
-  computed:{
-    searchData(){
+  computed: {
+    searchData() {
       //vuexから受け取る
-      return "hoge"
-    }
-  }
-}
+      return 'hoge';
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 .toppage {
   width: 100%;

@@ -10,19 +10,19 @@
 </template>
 <script>
 export default {
-  props:["icon","text","link"],
-  components:{
+  components: {
     //svg
     SearchSvg: () => import('~/assets/svgs/search.svg?inline'),
     PenToolSvg: () => import('~/assets/svgs/pen_tool.svg?inline'),
     StockSvg: () => import('~/assets/svgs/stock.svg?inline'),
-    LikeSvg: () => import('~/assets/svgs/like.svg?inline')
-  }
-}
+    LikeSvg: () => import('~/assets/svgs/like.svg?inline'),
+  },
+  props: ['icon', 'text', 'link'],
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 .map_category__item_a {
   position: relative;
@@ -37,15 +37,15 @@ export default {
   background: $back-light-gray;
   background: linear-gradient(-90deg, $back-light-gray 10%, $white 100%);
   .map_category__item__text {
-    color: $text-black
+    color: $text-black;
   }
 }
-.map_category__item__icon{
+.map_category__item__icon {
   padding-right: 8px;
 }
 .map_category__item__text {
-  transition: .5s $bezier-ease-out;
-  @include noto-font(1.6rem,$text-main);
+  transition: 0.5s $bezier-ease-out;
+  @include noto-font(1.6rem, $text-main);
   text-decoration: none;
 }
 .mci__svg {

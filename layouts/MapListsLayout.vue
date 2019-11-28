@@ -5,22 +5,17 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      corner:[
-        "top_left",
-        "top_right",
-        "bottom_left",
-        "bottom_right"
-      ]
-    }
-  }
-}
+      corner: ['top_left', 'top_right', 'bottom_left', 'bottom_right'],
+    };
+  },
+};
 </script>
 <style lang="scss">
-@import "~/assets/styles/normalize.scss";
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/normalize.scss';
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 html {
   font-family: $noto-font;
   font-size: 62.5%;
@@ -42,8 +37,8 @@ body {
   height: 100%;
   @include noto-font(1.5rem);
 }
-:focus{
-  outline: 3px auto rgba($theme-pink,.5);
+:focus {
+  outline: 3px auto rgba($theme-pink, 0.5);
 }
 button {
   font-weight: normal;
@@ -51,5 +46,5 @@ button {
 }
 </style>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 </style>

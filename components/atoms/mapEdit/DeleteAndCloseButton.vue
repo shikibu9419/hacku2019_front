@@ -5,34 +5,34 @@
 </template>
 
 <script>
-    import CustomButton from '~/components/atoms/CustomButton'
-    export default {
-        name: "DeleteAndCloseButton.vue",
-        props: {
-            deleteHandler: () => {},
-            closeHandler: () => {},
-        },
-        components: {
-            CustomButton
-        }
-    }
+import CustomButton from '~/components/atoms/CustomButton';
+export default {
+  name: 'DeleteAndCloseButtonVue',
+  components: {
+    CustomButton,
+  },
+  props: {
+    deleteHandler: () => {},
+    closeHandler: () => {},
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-    @import "~/assets/styles/variables.scss";
-    .delete-and-close-button {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        font-size: 12px;
-        margin: 0 0 0 auto;
-        &__delete-button {
-            color: $white;
-            background: $dark-gray;
-        }
-        &__close-button {
-            color: $white;
-            background: $palette-pink;
-        }
-    }
+@import '~/assets/styles/variables.scss';
+.delete-and-close-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 12px;
+  margin: 0 0 0 auto;
+  &__delete-button {
+    color: $white;
+    background: $dark-gray;
+  }
+  &__close-button {
+    color: $white;
+    background: $palette-pink;
+  }
+}
 </style>

@@ -8,15 +8,15 @@
 <script>
 export default {
   computed: {
-    userName () {
-      return 'username'
-    }
+    userName() {
+      return 'username';
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .user_info_icon {
   display: inline-block;

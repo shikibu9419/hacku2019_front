@@ -11,67 +11,66 @@
 </template>
 
 <script>
-import ModalSvc from '~/services/ModalSvc'
-import LayerSvc from '~/services/LayerSvc'
+import ModalSvc from '~/services/ModalSvc';
+import LayerSvc from '~/services/LayerSvc';
 
 export default {
-  props: ['id', 'name', 'color','edit'],
   components: {
-    LayerIcon: () => import('~/assets/svgs/layer.svg?inline')
+    LayerIcon: () => import('~/assets/svgs/layer.svg?inline'),
   },
+  mixins: [LayerSvc, ModalSvc],
+  props: ['id', 'name', 'color', 'edit'],
   computed: {
     isActive() {
       if (this.$store.state.mapEdit.backgroundFocused)
-        return this.id === 'background'
+        return this.id === 'background';
 
-      return this.$store.state.mapEdit.activeLayer.id === this.id
+      return this.$store.state.mapEdit.activeLayer.id === this.id;
     },
-    EditOnly(){
-      if(this.$route.path.match(/\/view$/)){
-        return false
+    EditOnly() {
+      if (this.$route.path.match(/\/view$/)) {
+        return false;
       }
-      if(this.$route.path.match(/\/edit$/)){
-        if(this.edit){
-          return true
-        }else{
-          return false
+      if (this.$route.path.match(/\/edit$/)) {
+        if (this.edit) {
+          return true;
+        } else {
+          return false;
         }
       }
-    }
+    },
   },
   methods: {
     selectLayer() {
-      if(this.edit){
-        if(this.id !== 'null' || this.id !== 'undefined'){
+      if (this.edit) {
+        if (this.id !== 'null' || this.id !== 'undefined') {
           if (this.id !== 'background')
-            this.$store.dispatch('mapEdit/selectLayer', this.id)
-          else
-            this.$store.dispatch('mapEdit/focusBackground')
-          this.$store.commit('ymap/updateNow')
+            this.$store.dispatch('mapEdit/selectLayer', this.id);
+          else this.$store.dispatch('mapEdit/focusBackground');
+          this.$store.commit('ymap/updateNow');
         }
       }
     },
-    editLayer(){
-      if(this.edit){
+    editLayer() {
+      if (this.edit) {
         //mapId, layerId, layerName, description, color
         this.openPopup('LayerSettingPopup', {
-                mapId: null,
-                layerId: this.id,
-                layerName: this.name,
-                description: null,
-                color: this.color
-        })
+          mapId: null,
+          layerId: this.id,
+          layerName: this.name,
+          description: null,
+          color: this.color,
+        });
       }
-    }
+    },
   },
-  mixins: [ LayerSvc, ModalSvc ]
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "../../../assets/styles/atoms/layerSvg";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '../../../assets/styles/atoms/layerSvg';
 
 .sidebar__layer_selector__item {
   position: relative;

@@ -10,77 +10,88 @@
 </template>
 
 <script>
-import Shared from './Shared.vue'
+import Shared from './Shared.vue';
 
 export default {
   components: {
-    PlotPoint: () => import('./PlotPoint')
+    PlotPoint: () => import('./PlotPoint'),
   },
+  mixins: [Shared],
   data() {
     return {
       prev: {},
-      diff: {}
-    }
-  },
-  mounted() {
-    this.prev = this.$store.state.mapEdit.mousePosition
-    this.diff = {x: 0, y: 0}
+      diff: {},
+    };
   },
   computed: {
     direction() {
-      this.$store.state.ymap.now // To observe map scrolling
+      this.$store.state.ymap.now; // To observe map scrolling
 
-      const prev = Object.assign({}, this.prev)
-      this.prev = this.$store.state.mapEdit.mousePosition
+      const prev = Object.assign({}, this.prev);
+      this.prev = this.$store.state.mapEdit.mousePosition;
 
       // 選択してなかったらpointsをxy座標に変換して返す
       if (!this.selected)
-        return 'M ' + this.attr.points.map(point => {
-          var pixel = self.$store.getters['ymap/latLngToPixel'](point)
-          return pixel.x + ' ' + pixel.y
-        }).join(' L ')
+        return (
+          'M ' +
+          this.attr.points
+            .map(point => {
+              var pixel = self.$store.getters['ymap/latLngToPixel'](point);
+              return pixel.x + ' ' + pixel.y;
+            })
+            .join(' L ')
+        );
 
       // 掴んでないときはdiffをリセット
-      if (!this.$store.state.mapEdit.grabbing)
-        this.diff = {x: 0, y: 0}
+      if (!this.$store.state.mapEdit.grabbing) this.diff = { x: 0, y: 0 };
 
       // diff = now - prev + diff
-      const dx = this.$store.state.mapEdit.mousePosition.x - prev.x + this.diff.x
-      const dy = this.$store.state.mapEdit.mousePosition.y - prev.y + this.diff.y
-      this.diff = {x: dx, y: dy}
+      const dx =
+        this.$store.state.mapEdit.mousePosition.x - prev.x + this.diff.x;
+      const dy =
+        this.$store.state.mapEdit.mousePosition.y - prev.y + this.diff.y;
+      this.diff = { x: dx, y: dy };
 
-      self = this
-      return 'M ' + this.attr.points.map(function(point) {
-        var pixel = self.$store.getters['ymap/latLngToPixel'](point)
+      self = this;
+      return (
+        'M ' +
+        this.attr.points
+          .map(function(point) {
+            var pixel = self.$store.getters['ymap/latLngToPixel'](point);
 
-        // このツールを掴んでいるときはdiff分を補正してpointsを返す
-        if (self.$store.state.mapEdit.grabbing && self.selected)
-          pixel = {x: pixel.x + dx, y: pixel.y + dy}
+            // このツールを掴んでいるときはdiff分を補正してpointsを返す
+            if (self.$store.state.mapEdit.grabbing && self.selected)
+              pixel = { x: pixel.x + dx, y: pixel.y + dy };
 
-        return pixel.x + ' ' + pixel.y
-      }).join(' L ')
-    }
+            return pixel.x + ' ' + pixel.y;
+          })
+          .join(' L ')
+      );
+    },
+  },
+  mounted() {
+    this.prev = this.$store.state.mapEdit.mousePosition;
+    this.diff = { x: 0, y: 0 };
   },
   methods: {
     replotAll() {
-      if (!this.selected) return
+      if (!this.selected) return;
 
       // prevとdiffからnowを算出
       const now = {
         x: this.prev.x + this.diff.x,
-        y: this.prev.y + this.diff.y
-      }
+        y: this.prev.y + this.diff.y,
+      };
 
       // 全pointsにdiffを適用
       this.$store.dispatch('mapEdit/replotAll', {
         prev: this.$store.getters['ymap/pixelToLatLng'](this.prev),
         now: this.$store.getters['ymap/pixelToLatLng'](now),
-        toolId: this.id
-      })
-    }
+        toolId: this.id,
+      });
+    },
   },
-  mixins: [Shared]
-}
+};
 </script>
 
 <style lang="scss">

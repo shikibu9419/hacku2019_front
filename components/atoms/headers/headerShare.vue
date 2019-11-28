@@ -9,29 +9,29 @@
 </template>
 
 <script>
-import ModalSvc from '~/services/ModalSvc'
-import LayerSvc from '~/services/LayerSvc'
+import ModalSvc from '~/services/ModalSvc';
+import LayerSvc from '~/services/LayerSvc';
 export default {
-  components:{
+  components: {
     shareBtn: () => import('~/assets/svgs/share.svg?inline'),
   },
-  methods:{
-    pushShare(){
-      //処理
-      this.openPopup('ShareSettingPopup')
-    }
-  },
-  computed:{
-    mapShareOn(){
+  mixins: [LayerSvc, ModalSvc],
+  computed: {
+    mapShareOn() {
       //VueXから取ってくる
-      return false
-    }
+      return false;
+    },
   },
-  mixins: [ LayerSvc, ModalSvc ]
-}
+  methods: {
+    pushShare() {
+      //処理
+      this.openPopup('ShareSettingPopup');
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/headerButtons.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/headerButtons.scss';
 </style>

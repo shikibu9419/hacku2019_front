@@ -11,23 +11,23 @@
 
 <script>
 export default {
-  name: "PinPopup.vue",
-  props: ['pin_data'],
-  methods: {
-    popup() {
-      this.$emit('popup')
-    }
-  },
+  name: 'PinPopupVue',
   components: {
     ContentBox: () => import('~/components/atoms/mapEdit/ContentBox'),
     CommentBox: () => import('~/components/atoms/mapEdit/CommentBox'),
-    BoxToolBlock: () => import('~/components/atoms/sunaba/BoxToolBlock')
-  }
-}
+    BoxToolBlock: () => import('~/components/atoms/sunaba/BoxToolBlock'),
+  },
+  props: ['pinData'],
+  methods: {
+    popup() {
+      this.$emit('popup');
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .map_edit_tools__pin_popup {
   position: relative;

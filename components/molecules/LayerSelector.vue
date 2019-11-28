@@ -25,54 +25,55 @@
 </template>
 
 <script>
-import ModalSvc from '~/services/ModalSvc'
-import LayerSvc from '~/services/LayerSvc'
-import layerModel from '~/models/layer'
-import Selector from '~/components/atoms/selector/Selector'
+import ModalSvc from '~/services/ModalSvc';
+import LayerSvc from '~/services/LayerSvc';
+import layerModel from '~/models/layer';
+import Selector from '~/components/atoms/selector/Selector';
 
 export default {
+  components: {
+    LayerSelectorItem: () =>
+      import('~/components/atoms/mapEdit/LayerSelectorItem'),
+    Selector,
+  },
+  mixins: [LayerSvc, ModalSvc],
   props: ['layers'],
   data() {
     return {
       backgroundAttr: {
         id: 'background',
         name: 'Yah◯o!地図',
-        color: 'gray'
+        color: 'gray',
       },
       items: [
         { param: {}, value: 'red', selected: true },
         { param: {}, value: 'pink', selected: true },
         { param: {}, value: 'orange', selected: true },
       ],
-    }
+    };
   },
   computed: {
-    CanIEdit(){
-      if(this.$route.path === "/maps/edit"){
-        return true
-      }else{
-        return false
+    CanIEdit() {
+      if (this.$route.path === '/maps/edit') {
+        return true;
+      } else {
+        return false;
       }
-    }
+    },
   },
   methods: {
     // あとでmodalとかに移行
     addLayer() {
-      this.openPopup('LayerPopup', {}, null)
-    }
+      this.openPopup('LayerPopup', {}, null);
+    },
   },
-  components: {
-    LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem'),
-    Selector
-  },
-  mixins: [ LayerSvc, ModalSvc ]
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/Sidebar.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/Sidebar.scss';
 
 .sidebar__layer_selector {
   &__add {

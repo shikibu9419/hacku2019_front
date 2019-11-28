@@ -9,11 +9,11 @@
 </template>
 <script>
 export default {
-  props:["box"],
-  components:{
-    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo')
-  }
-}
+  components: {
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo'),
+  },
+  props: ['box'],
+};
 </script>
 <style lang="scss" scoped>
 .box_comment {

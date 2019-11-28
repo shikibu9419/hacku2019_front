@@ -7,5 +7,5 @@ export default {
   height: 100,
   title: '',
   contents: [],
-  comments: []
-}
+  comments: [],
+};

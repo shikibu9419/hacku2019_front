@@ -22,77 +22,86 @@ export default {
   props: ['id', 'name', 'color', 'visible', 'tools'],
   data() {
     return {
-      center: this.$store.getters['ymap/latLngToPixel'](this.$store.state.ymap.now)
-    }
-  },
-  methods: {
-    moveOrScroll(e) {
-      const prev = this.$store.state.mapEdit.mousePosition
-      const now = {
-        x: e.clientX - this.$store.state.mapEdit.offset.x,
-        y: e.clientY - this.$store.state.mapEdit.offset.y - 80 // header-height
-      }
-      const prop = {
-        prev: this.$store.getters['ymap/pixelToLatLng'](prev),
-        now: this.$store.getters['ymap/pixelToLatLng'](now)
-      }
-
-      if (this.$store.state.mapEdit.grabbing || this.$store.state.mapEdit.mapGrabbing || this.$store.state.mapEdit.plotting) {
-        if (this.$store.state.mapEdit.mapGrabbing)
-          this.$store.dispatch('ymap/scroll', prop)
-        else
-          this.$store.dispatch('mapEdit/moveTools', prop)
-      }
-
-      this.$store.dispatch('mapEdit/setMousePosition', now)
-    },
-    grabMap() {
-      this.$store.dispatch('mapEdit/toggle', 'mapGrabbing')
-      this.$store.dispatch('mapEdit/clearSelection')
-    },
-    resetGrabbing() {
-      if(this.$store.state.mapEdit.grabbing)
-        this.$store.dispatch('mapEdit/toggle', 'grabbing')
-      if(this.$store.state.mapEdit.mapGrabbing)
-        this.$store.dispatch('mapEdit/toggle', 'mapGrabbing')
-      this.$store.dispatch('mapEdit/updateToolPosition')
-    },
-    resetEditting() {
-      if (this.$store.state.mapEdit.plotting)
-        this.$store.dispatch('mapEdit/toggle', 'plotting')
-      this.resetGrabbing()
-    },
+      center: this.$store.getters['ymap/latLngToPixel'](
+        this.$store.state.ymap.now
+      ),
+    };
   },
   computed: {
     unSelectingTools() {
-      const toolIds = Object.keys(this.$store.getters['mapEdit/selecting'])
-      return Object.entries(this.tools).filter(item => !toolIds.includes(item[0]))
+      const toolIds = Object.keys(this.$store.getters['mapEdit/selecting']);
+      return Object.entries(this.tools).filter(
+        item => !toolIds.includes(item[0])
+      );
     },
     selectingTools() {
-      const toolIds = Object.keys(this.$store.getters['mapEdit/selecting'])
-      return Object.entries(this.tools).filter(item => toolIds.includes(item[0]))
+      const toolIds = Object.keys(this.$store.getters['mapEdit/selecting']);
+      return Object.entries(this.tools).filter(item =>
+        toolIds.includes(item[0])
+      );
     },
     isActive() {
-      return this.id === this.$store.state.mapEdit.activeLayer.id
+      return this.id === this.$store.state.mapEdit.activeLayer.id;
     },
-    EditOnly(){
-      if(this.$route.path.match(/\/view$/)){
-        return false
+    EditOnly() {
+      if (this.$route.path.match(/\/view$/)) {
+        return false;
       }
-      if(this.$route.path.match(/\/edit$/)){
-        return true
+      if (this.$route.path.match(/\/edit$/)) {
+        return true;
       }
     },
     pins() {
-      const tools = this.$store.state.mapEdit.activeLayer.tools
-      return Object.values(tools).filter(tool => tool.type === 'pin')
-    }
-  }
-}
+      const tools = this.$store.state.mapEdit.activeLayer.tools;
+      return Object.values(tools).filter(tool => tool.type === 'pin');
+    },
+  },
+  methods: {
+    moveOrScroll(e) {
+      const prev = this.$store.state.mapEdit.mousePosition;
+      const now = {
+        x: e.clientX - this.$store.state.mapEdit.offset.x,
+        y: e.clientY - this.$store.state.mapEdit.offset.y - 80, // header-height
+      };
+      const prop = {
+        prev: this.$store.getters['ymap/pixelToLatLng'](prev),
+        now: this.$store.getters['ymap/pixelToLatLng'](now),
+      };
+
+      if (
+        this.$store.state.mapEdit.grabbing ||
+        this.$store.state.mapEdit.mapGrabbing ||
+        this.$store.state.mapEdit.plotting
+      ) {
+        if (this.$store.state.mapEdit.mapGrabbing)
+          this.$store.dispatch('ymap/scroll', prop);
+        else this.$store.dispatch('mapEdit/moveTools', prop);
+      }
+
+      this.$store.dispatch('mapEdit/setMousePosition', now);
+    },
+    grabMap() {
+      this.$store.dispatch('mapEdit/toggle', 'mapGrabbing');
+      this.$store.dispatch('mapEdit/clearSelection');
+    },
+    resetGrabbing() {
+      if (this.$store.state.mapEdit.grabbing)
+        this.$store.dispatch('mapEdit/toggle', 'grabbing');
+      if (this.$store.state.mapEdit.mapGrabbing)
+        this.$store.dispatch('mapEdit/toggle', 'mapGrabbing');
+      this.$store.dispatch('mapEdit/updateToolPosition');
+    },
+    resetEditting() {
+      if (this.$store.state.mapEdit.plotting)
+        this.$store.dispatch('mapEdit/toggle', 'plotting');
+      this.resetGrabbing();
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
+@import '~/assets/styles/variables.scss';
 
 .map_edit__map__layer {
   position: absolute;

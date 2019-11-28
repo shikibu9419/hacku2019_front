@@ -5,8 +5,8 @@
 </template>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 .top_title {
   margin-bottom: 9vh;
@@ -18,16 +18,16 @@
   }
   &__comment {
     text-align: center;
-    @include noto-font(2rem,$text-black);
-    letter-spacing: .6rem;
+    @include noto-font(2rem, $text-black);
+    letter-spacing: 0.6rem;
   }
 }
 
 @media (max-width: 1000px) {
   .top_title {
     &__comment {
-      @include noto-font(1.8rem,$text-black);
-      letter-spacing: .5rem;
+      @include noto-font(1.8rem, $text-black);
+      letter-spacing: 0.5rem;
     }
   }
 }

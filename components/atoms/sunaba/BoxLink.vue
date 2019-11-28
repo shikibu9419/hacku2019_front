@@ -7,12 +7,12 @@
 </template>
 <script>
 export default {
-  props:["box"]
-}
+  props: ['box'],
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 .box_link {
   padding: 4px 6px;
 }

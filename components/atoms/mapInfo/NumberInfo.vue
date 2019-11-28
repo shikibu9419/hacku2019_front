@@ -12,19 +12,19 @@
 </template>
 
 <script>
-  export default {
-    name: "Comment",
-    components:{
-      commentIcon: () => import('~/assets/svgs/comment_box.svg?inline'),
-      likeIcon: () => import('~/assets/svgs/like.svg?inline'),
-      StockIcon: () => import('~/assets/svgs/stock.svg?inline'),
-    },
-    props: ["comments","like","stock"]
-  }
+export default {
+  name: 'Comment',
+  components: {
+    commentIcon: () => import('~/assets/svgs/comment_box.svg?inline'),
+    likeIcon: () => import('~/assets/svgs/like.svg?inline'),
+    StockIcon: () => import('~/assets/svgs/stock.svg?inline'),
+  },
+  props: ['comments', 'like', 'stock'],
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/mapInfo.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/mapInfo.scss';
 </style>

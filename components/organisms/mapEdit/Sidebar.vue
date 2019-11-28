@@ -17,43 +17,43 @@
 </template>
 
 <script>
-import layer from '~/models/layer'
+import layer from '~/models/layer';
 
 export default {
-  data(){
-    return {
-      menuClose: false,
-    }
-  },
   components: {
     MapInfo: () => import('~/components/molecules/MapInfo'),
     MapTags: () => import('~/components/molecules/MapTags'),
     LayerSelector: () => import('~/components/molecules/LayerSelector'),
-    EditViewButton: () => import('~/components/atoms/mapEdit/EditViewButton')
+    EditViewButton: () => import('~/components/atoms/mapEdit/EditViewButton'),
+  },
+  data() {
+    return {
+      menuClose: false,
+    };
   },
   computed: {
     map() {
-      return this.$store.state.mapEdit.map
+      return this.$store.state.mapEdit.map;
     },
     layers() {
-      return this.$store.state.mapEdit.layers
+      return this.$store.state.mapEdit.layers;
     },
   },
   methods: {
-    toggleBar(){
-      this.menuClose = (this.menuClose ? false : true)
-    }
-  }
-}
+    toggleBar() {
+      this.menuClose = this.menuClose ? false : true;
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 $padding: 16px;
 
-$card-width : $sidemenu-width;
-$card-height : $card-width / 3;
+$card-width: $sidemenu-width;
+$card-height: $card-width / 3;
 
 .sidebar_edit {
   background-color: $back-gray;
@@ -64,16 +64,16 @@ $card-height : $card-width / 3;
   height: 100%;
   z-index: 10;
   transform: translateX(0);
-  transition: .2s $bezier-ease-out;
-  &--close{
+  transition: 0.2s $bezier-ease-out;
+  &--close {
     transform: translateX(-$sidemenu-width);
-    .toggle_sidebar__button_icon{
-      transform: scale(-1,1);
+    .toggle_sidebar__button_icon {
+      transform: scale(-1, 1);
     }
   }
 }
 
-.sidebar_edit__wrapper{
+.sidebar_edit__wrapper {
   position: relative;
   height: 100%;
 }
@@ -86,7 +86,6 @@ $card-height : $card-width / 3;
 }
 
 .sidebar_edit__header {
-
   &__img {
     display: block;
     width: $card-width;
@@ -103,7 +102,7 @@ $card-height : $card-width / 3;
 
 .toggle_sidebar {
   position: absolute;
-  top:12px;
+  top: 12px;
   left: $sidemenu-width;
 }
 .toggle_sidebar__button {
@@ -114,14 +113,14 @@ $card-height : $card-width / 3;
   color: $dark-gray;
   padding: 4px 8px;
   padding-left: 4px;
-  &:focus{
+  &:focus {
     outline: none;
     border-color: $theme-pink;
     color: $theme-pink;
   }
 }
-.toggle_sidebar__button_icon{
-  transition: .2s $bezier-ease-out;
+.toggle_sidebar__button_icon {
+  transition: 0.2s $bezier-ease-out;
   font-size: 1.8rem;
   transform: scale(1);
 }

@@ -12,23 +12,23 @@
 
 <script>
 export default {
-  components:{
+  components: {
     stockBtn: () => import('~/assets/svgs/stock.svg?inline'),
   },
-  methods:{
-    pushStock(){
-      this.$store.dispatch('mapEdit/changeStock')
-    }
+  computed: {
+    mapStockdOn() {
+      return this.$store.state.mapEdit.stocked;
+    },
   },
-  computed:{
-    mapStockdOn(){
-      return this.$store.state.mapEdit.stocked
-    }
-  }
-}
+  methods: {
+    pushStock() {
+      this.$store.dispatch('mapEdit/changeStock');
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
-@import "~/assets/styles/atoms/headerButtons.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
+@import '~/assets/styles/atoms/headerButtons.scss';
 </style>

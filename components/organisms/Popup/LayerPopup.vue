@@ -27,160 +27,162 @@
 </template>
 
 <script>
-  import ModalSvc from '~/services/ModalSvc'
-  import LayerSelectorItem from '~/components/atoms/mapEdit/LayerSelectorItem'
-  import Selector from '~/components/atoms/selector/Selector'
-  import LayerSvc from '~/services/LayerSvc'
-  import layerModel from '~/models/layer'
-  import CustomButton from '~/components/atoms/CustomButton'
-  export default {
-    name: "LayerPopup.vue",
-    props: {
-      params: Object,
-      // {
-      //  mapId: number
-      // }
-      closeModal: () => {},
-      onOk: () => {}
-    },
-    created() {
-      this.layer.name = ''
-      this.layer.color = 'light-pink'
-    },
-    methods: {
-      createLayer() {
-        if(!this.layer.name){
-          alert('レイヤー名を入力してください')
-          return
-        }
-        this.layer.id = this.$store.state.mapEdit.layers.length;
-        this.layer.color = this.getLayerColor()
-        this.$store.dispatch('mapEdit/addLayer', this.layer)
-//         this.layerSvcCreate(this.params.mapId, this.layer.name, this.layer.color)
-        this.closePopup()
+import ModalSvc from '~/services/ModalSvc';
+import LayerSelectorItem from '~/components/atoms/mapEdit/LayerSelectorItem';
+import Selector from '~/components/atoms/selector/Selector';
+import LayerSvc from '~/services/LayerSvc';
+import layerModel from '~/models/layer';
+import CustomButton from '~/components/atoms/CustomButton';
+export default {
+  name: 'LayerPopupVue',
+  components: {
+    LayerSelectorItem,
+    Selector,
+    CustomButton,
+  },
+  mixins: [LayerSvc, ModalSvc],
+  props: {
+    params: Object,
+    // {
+    //  mapId: number
+    // }
+    closeModal: () => {},
+    onOk: () => {},
+  },
+  data() {
+    return {
+      layer: JSON.parse(JSON.stringify(layerModel)),
+      backgroundAttr: {
+        id: 'background',
+        name: 'Yah◯o!地図',
+        color: 'gray',
       },
-      getLayerColor() {
-        return this.layerColorItems.filter(item => {
-          return item.selected
-        })[0].value
+      items: [
+        { text: '拒否', value: 0, selected: true },
+        { text: '無理', value: 1, selected: false },
+        { text: '閲覧可', value: 2, selected: false },
+      ],
+      layerColorItems: [
+        { params: {}, value: 'light-pink', selected: true },
+        { params: {}, value: 'pink', selected: false },
+        { params: {}, value: 'red', selected: false },
+        { params: {}, value: 'light-orange', selected: false },
+        { params: {}, value: 'orange', selected: false },
+        { params: {}, value: 'dark-orange', selected: false },
+        { params: {}, value: 'light-yellow', selected: false },
+        { params: {}, value: 'yellow', selected: false },
+        { params: {}, value: 'dark-yellow', selected: false },
+        { params: {}, value: 'light-green', selected: false },
+        { params: {}, value: 'green', selected: false },
+        { params: {}, value: 'blue-green', selected: false },
+        { params: {}, value: 'light-sky', selected: false },
+        { params: {}, value: 'sky', selected: false },
+        { params: {}, value: 'cyan', selected: false },
+        { params: {}, value: 'light-purple', selected: false },
+        { params: {}, value: 'purple', selected: false },
+        { params: {}, value: 'dark-blue', selected: false },
+        { params: {}, value: 'light-gray', selected: false },
+        { params: {}, value: 'gray', selected: false },
+        { params: {}, value: 'black', selected: false },
+      ],
+    };
+  },
+  computed: {
+    getLayerColorCom() {
+      return this.layerColorItems.filter(item => {
+        return item.selected;
+      })[0].value;
+    },
+  },
+  created() {
+    this.layer.name = '';
+    this.layer.color = 'light-pink';
+  },
+  methods: {
+    createLayer() {
+      if (!this.layer.name) {
+        alert('レイヤー名を入力してください');
+        return;
       }
+      this.layer.id = this.$store.state.mapEdit.layers.length;
+      this.layer.color = this.getLayerColor();
+      this.$store.dispatch('mapEdit/addLayer', this.layer);
+      this.layerSvcCreate(this.params.mapId, this.layer.name, this.layer.color);
+      this.closePopup();
     },
-    computed:{
-      getLayerColorCom() {
-        return this.layerColorItems.filter(item => {
-          return item.selected
-        })[0].value
-      }
+    getLayerColor() {
+      return this.layerColorItems.filter(item => {
+        return item.selected;
+      })[0].value;
     },
-    components: {
-      LayerSelectorItem,
-      Selector,
-      CustomButton
-    },
-    data() {
-      return {
-        layer: JSON.parse(JSON.stringify(layerModel)),
-        backgroundAttr: {
-          id: 'background',
-          name: 'Yah◯o!地図',
-          color: 'gray'
-        },
-        items: [
-          { text: '拒否', value: 0, selected: true },
-          { text: '無理', value: 1, selected: false },
-          { text: '閲覧可', value: 2, selected: false },
-        ],
-        layerColorItems: [
-          { params: {}, value: 'light-pink', selected: true },
-          { params: {}, value: 'pink', selected: false },
-          { params: {}, value: 'red', selected: false },
-          { params: {}, value: 'light-orange', selected: false },
-          { params: {}, value: 'orange', selected: false },
-          { params: {}, value: 'dark-orange', selected: false },
-          { params: {}, value: 'light-yellow', selected: false },
-          { params: {}, value: 'yellow', selected: false },
-          { params: {}, value: 'dark-yellow', selected: false },
-          { params: {}, value: 'light-green', selected: false },
-          { params: {}, value: 'green', selected: false },
-          { params: {}, value: 'blue-green', selected: false },
-          { params: {}, value: 'light-sky', selected: false },
-          { params: {}, value: 'sky', selected: false },
-          { params: {}, value: 'cyan', selected: false },
-          { params: {}, value: 'light-purple', selected: false },
-          { params: {}, value: 'purple', selected: false },
-          { params: {}, value: 'dark-blue', selected: false },
-          { params: {}, value: 'light-gray', selected: false },
-          { params: {}, value: 'gray', selected: false },
-          { params: {}, value: 'black', selected: false }
-        ]
-      }
-    },
-    mixins: [ LayerSvc, ModalSvc ]
-  }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../assets/styles/variables";
-  .layer-popup {
-    height: auto;
-    width: 400px;
+@import '../../../assets/styles/variables';
+.layer-popup {
+  height: auto;
+  width: 400px;
+  flex-direction: column;
+  &__titles {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: solid 2px $white;
+    padding: 8px;
+  }
+  &__title {
+    width: 70%;
+    border: none !important;
+  }
+  &--button {
+    background: $theme-pink;
+    color: $white;
+    transition: 0.3s $bezier-fast-ease-out;
+    cursor: pointer;
+  }
+  &__create {
+    padding: 8px;
+    display: flex;
     flex-direction: column;
-    &__titles {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: solid 2px $white;
-      padding: 8px;
-    }
-    &__title {
-      width: 70%;
-      border: none !important;
-    }
-    &--button {
-      background: $theme-pink;
-      color: $white;
-      transition: .3s $bezier-fast-ease-out;
-      cursor: pointer;
-    }
-    &__create {
+    &__new {
       padding: 8px;
       display: flex;
       flex-direction: column;
-      &__new {
+      font-weight: bold;
+      &__content {
         padding: 8px;
-        display: flex;
-        flex-direction: column;
-        font-weight: bold;
-        &__content {
-          padding: 8px;
-          &__name,&__color {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-          }
+        &__name,
+        &__color {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
         }
       }
-      &__from-stock {
-        padding: 8px;
-        display: flex;
-        flex-direction: column;
-        font-weight: bold;
-      }
     }
-    &__selectors {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      font-weight: normal;
-    }
-    &--column-title {
-      width: 35%;
-      font-weight: normal;
-    }
-    &--column--name_input {
-      margin: 8px;
-      border: 2px solid $dark-gray;
+    &__from-stock {
       padding: 8px;
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
     }
   }
+
+  &__selectors {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: normal;
+  }
+  &--column-title {
+    width: 35%;
+    font-weight: normal;
+  }
+  &--column--name_input {
+    margin: 8px;
+    border: 2px solid $dark-gray;
+    padding: 8px;
+  }
+}
 </style>

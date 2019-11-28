@@ -17,40 +17,41 @@
 </template>
 
 <script>
-import ModalSvc from '~/services/ModalSvc'
+import ModalSvc from '~/services/ModalSvc';
 
 export default {
-  props: ["map"],
+  components: {
+    LayerSelectorItem: () =>
+      import('~/components/atoms/mapEdit/LayerSelectorItem'),
+    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo'),
+    NumberInfo: () => import('~/components/atoms/mapInfo/NumberInfo'),
+  },
+  mixins: [ModalSvc],
+  props: ['map'],
   computed: {
-    layers () {
-      return this.$store.state.mapEdit.layers
-    }
+    layers() {
+      return this.$store.state.mapEdit.layers;
+    },
   },
   methods: {
     // あとでmodalとかに移行
     addLayer() {
       const prop = {
-        name: "layer",
-        color: "red",
-      }
-      this.$store.dispatch('mapEdit/addLayer', prop)
+        name: 'layer',
+        color: 'red',
+      };
+      this.$store.dispatch('mapEdit/addLayer', prop);
     },
     popup() {
-      this.openPopup('BoxAndPinPopup', {}, null)
-    }
+      this.openPopup('BoxAndPinPopup', {}, null);
+    },
   },
-  components: {
-    LayerSelectorItem: () => import('~/components/atoms/mapEdit/LayerSelectorItem'),
-    UserInfo: () => import('~/components/atoms/mapInfo/UserInfo'),
-    NumberInfo: () => import('~/components/atoms/mapInfo/NumberInfo')
-  },
-  mixins: [ ModalSvc ]
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/styles/variables.scss";
-@import "~/assets/styles/mixin.scss";
+@import '~/assets/styles/variables.scss';
+@import '~/assets/styles/mixin.scss';
 
 $padding: 10px;
 
